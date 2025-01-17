@@ -1,4 +1,5 @@
 const path = require('path');
+const fs = require('fs');
 
 // The folders containing files importing twin.macro
 const includedDirs = [
@@ -6,6 +7,19 @@ const includedDirs = [
   path.resolve(__dirname, './styled'),
   path.resolve(__dirname, './pages')
 ];
+
+const folderAliases = () => {
+  const rootDir = path.resolve(__dirname);
+
+  const folders = fs.readdirSync(rootDir, { withFileTypes: true })
+  .filter((dirent) => dirent.isDirectory())
+  .map((dirent) => dirent.name);
+
+  return folders.reduce((aliases, folder) => {
+    aliases[`@${folder}`] = path.resolve(rootDir, folder);
+    return aliases;
+  }, {});
+};
 
 module.exports = function withTwin(nextConfig) {
   return {
@@ -47,6 +61,13 @@ module.exports = function withTwin(nextConfig) {
           os: false,
           fs: false,
         };
+      }
+
+      // Add aliases
+      config.resolve = config.resolve || {};
+      config.resolve.alias = {
+        ...(config.resolve.alias || {}),
+        ...folderAliases()
       }
 
       if (typeof nextConfig.webpack === 'function') {
