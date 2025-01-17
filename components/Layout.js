@@ -39,10 +39,6 @@ const Layout = (props) => {
 	return (
 		<div>
 			<Header openMenuRef={openMenuRef} />
-      
-      <span className="ripple-node cursor-pointer absolute justify-center items-center right-8 md:right-12 lg:right-32 -bottom-8 rounded-full bg-theme-primary text-white text-3xl w-16 h-16 md:w-18 md:h-18 z-10">
-        Button
-      </span>
 			<Navbar closeMenuRef={closeMenuRef} navbarRef={navbarRef} />
 			<ThemeSwitch />
 			

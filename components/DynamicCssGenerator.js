@@ -50,6 +50,7 @@ const DynamicCssGenerator = () => {
         bg-rose-500 text-rose-500 active:bg-rose-500 focus:ring-rose-500 focus:border-rose-500 border-rose-500 bg-rose-50
         bg-white text-white active:bg-white focus:ring-white focus:border-white border-white
         bg-black text-black active:bg-black focus:ring-black focus:border-black border-black
+        dark:bg-red-900 dark:bg-yellow-900 dark:bg-rose-900 dark:bg-teal-900 dark:bg-green-900 dark:bg-blue-900 dark:bg-pink-900
       "
     >
       DynamicCssGenerator

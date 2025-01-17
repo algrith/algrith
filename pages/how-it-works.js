@@ -1,9 +1,9 @@
+import tw, { styled } from 'twin.macro';
+import Link from 'next/link';
 import Head from 'next/head';
 import React from 'react';
-import tw, { styled } from 'twin.macro';
 
 import Layout from '../components/Layout';
-import Link from 'next/link';
 
 const howItWorks = [
   {
@@ -65,7 +65,7 @@ const howItWorks = [
 ];
 
 const StepIconWrapper = styled.div`
-  ${({ isLeft }) => isLeft ? tw`border-l-4 rounded-tl-3xl left-5.5 md:left-15` : tw`border-r-4 rounded-tr-3xl right-5.5 md:right-15`}
+  ${({ isLeft }) => isLeft ? tw`border-l-4 rounded-tl-3xl left-5.5 md:left-15` : tw`border-r-4 rounded-tr-3xl right-5.5 md:right-15`};
   ${tw`absolute top-14 border-t-4 pointer-events-none w-32`};
   ${({ isLast }) => isLast ? tw`h-12 md:h-20` : tw`h-full`};
 
@@ -112,11 +112,11 @@ const ContentWrapper = styled.div`
     
     h2 {
       &.step {
-        ${tw`font-bold text-2xl text-gray-900 mb-2 tracking-wider`};
+        ${tw`font-bold text-2xl mb-2 tracking-wider`};
       }
       
       &.title {
-        ${tw`font-bold text-xl mb-4 tracking-wider`};
+        ${tw`font-bold text-xl mb-4 tracking-wider text-left`};
       }
     }
 
@@ -148,12 +148,12 @@ const Step = ({content, color, title, icon, step, isFirst, isLast, isLeft}) => {
       </svg>
     </SvgWrapper>
   );
-
+  
   return (
     <div className={`flex ${isLeft ? 'justify-end' : 'justify-between'} relative pb-16`}>
-      <ContentWrapper>
-        <div className={`dark:bg-${color}-900 bg-${color}-50`}>
-          <h2 className={`step title-font dark:text-${color}-100`}>
+      <ContentWrapper isLeft={isLeft}>
+        <div className={`inner dark:bg-${color}-900 bg-${color}-50`}>
+          <h2 className={`step title-font text-gray-900 dark:text-${color}-100`}>
             Step {step}
           </h2>
           
