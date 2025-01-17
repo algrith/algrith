@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p $PORT"
+    "start": "next start -p 8080"
   },
   "dependencies": {
     "@algrith/scroll-to-top": "^1.0.4",
