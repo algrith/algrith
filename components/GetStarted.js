@@ -22,7 +22,7 @@ const GetStarted = () => {
               </p>
 
               <Link
-                className="mt-6 md:mt-8 lg:mt-10 md:ml-auto inline-flex items-center gap-4 text-center bg-indigo-600 dark:bg-indigo-700 border border-transparent rounded-md py-2 px-6 text-xl text-white hover:bg-indigo-500 dark:hover:bg-indigo-600"
+                className="mt-6 md:mt-8 lg:mt-10 md:ml-auto inline-flex items-center gap-4 text-center bg-indigo-600 dark:bg-indigo-700 border border-transparent rounded-md py-4 px-12 text-xl text-white hover:bg-indigo-500 dark:hover:bg-indigo-600"
                 href="/contact-us">
                 Get Started
                 <svg xmlns="http://www.w3.org/2000/svg" className="inline h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">

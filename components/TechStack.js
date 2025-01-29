@@ -30,37 +30,9 @@ const TechStack = () => {
       name: 'javascript',
     },
     {
-      dark: '/images/tech-stack/nodejs.svg',
-      name: 'nodejs',
-    },
-    {
-      dark: '/images/tech-stack/tailwindcss-light.png',
-      light: '/images/tech-stack/tailwindcss.png',
-      name: 'tailwindcss',
-    },
-    {
-      dark: '/images/tech-stack/mongodb-light.png',
-      light: '/images/tech-stack/mongodb.png',
-      name: 'mongodb',
-    },
-    {
-      dark: '/images/tech-stack/bootstrap.png',
-      class: 'scale-45 md:scale-65',
-      name: 'bootstrapcss',
-    },
-    {
-      dark: '/images/tech-stack/firebase-light.png',
-      light: '/images/tech-stack/firebase.png',
-      name: 'firebase',
-    },
-    {
       dark: '/images/tech-stack/php.png',
       class: 'scale-65 md:scale-75',
       name: 'php',
-    },
-    {
-      dark: '/images/tech-stack/docker.avif',
-      name: 'docker',
     },
     {
       dark: '/images/tech-stack/python-light.png',
@@ -68,9 +40,30 @@ const TechStack = () => {
       name: 'python',
     },
     {
+      dark: '/images/tech-stack/bash-light.png',
+      light: '/images/tech-stack/bash.png',
+      class: 'md:scale-85',
+      name: 'bash',
+    },
+    {
+      dark: '/images/tech-stack/mongodb-light.png',
+      light: '/images/tech-stack/mongodb.png',
+      name: 'mongodb',
+    },
+    {
+      dark: '/images/tech-stack/firebase-light.png',
+      light: '/images/tech-stack/firebase.png',
+      name: 'firebase',
+    },
+    {
       dark: '/images/tech-stack/redis-light.png',
       light: '/images/tech-stack/redis.png',
       name: 'redis',
+    },
+    {
+      dark: '/images/tech-stack/mysql.png',
+      class: 'md:scale-75',
+      name: 'mysql',
     },
     {
       dark: '/images/tech-stack/flask.png',
@@ -86,9 +79,8 @@ const TechStack = () => {
       name: 'laravel',
     },
     {
-      dark: '/images/tech-stack/git-light.png',
-      light: '/images/tech-stack/git.png',
-      name: 'git',
+      dark: '/images/tech-stack/nodejs.svg',
+      name: 'nodejs',
     },
     {
       dark: '/images/tech-stack/expressjs-light.svg',
@@ -101,18 +93,9 @@ const TechStack = () => {
       name: 'tensorflow',
     },
     {
-      dark: '/images/tech-stack/mysql.png',
-      class: 'md:scale-75',
-      name: 'mysql',
-    },
-    {
       dark: '/images/tech-stack/pytorch-light.png',
       light: '/images/tech-stack/pytorch.png',
       name: 'pytorch',
-    },
-    {
-      dark: '/images/tech-stack/google-cloud.png',
-      name: 'google_cloud',
     },
     {
       dark: '/images/tech-stack/opencv-light.png',
@@ -125,18 +108,48 @@ const TechStack = () => {
       name: 'onnx',
     },
     {
-      dark: '/images/tech-stack/bash-light.png',
-      light: '/images/tech-stack/bash.png',
-      class: 'md:scale-85',
-      name: 'bash',
+      dark: '/images/tech-stack/scikit-learn.png',
+      class: 'scale-45 md:scale-65',
+      name: 'scikit_learn',
+    },
+    {
+      dark: '/images/tech-stack/looker-studio.png',
+      name: 'looker-studio',
+    },
+    {
+      dark: '/images/tech-stack/prophet.png',
+      name: 'prophet',
     },
     {
       dark: '/images/tech-stack/fast-api.png',
       name: 'fast_api',
     },
     {
+      dark: '/images/tech-stack/google-cloud.png',
+      name: 'google_cloud',
+    },
+    {
       dark: '/images/tech-stack/microsoft-azure.png',
       name: 'microsoft_azure',
+    },
+    {
+      dark: '/images/tech-stack/tailwindcss-light.png',
+      light: '/images/tech-stack/tailwindcss.png',
+      name: 'tailwindcss',
+    },
+    {
+      dark: '/images/tech-stack/bootstrap.png',
+      class: 'scale-45 md:scale-65',
+      name: 'bootstrapcss',
+    },
+    {
+      dark: '/images/tech-stack/docker.avif',
+      name: 'docker',
+    },
+    {
+      dark: '/images/tech-stack/git-light.png',
+      light: '/images/tech-stack/git.png',
+      name: 'git',
     }
   ]
 

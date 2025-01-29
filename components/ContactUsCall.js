@@ -16,7 +16,7 @@ const ContactUsCall = () => {
               Our team of skilled developers is dedicated to creating software that aligns seamlessly with your business goals.
             </p>
             <Link
-              className="mt-6 md:mt-8 lg:mt-10 inline-flex items-center gap-4 text-center bg-theme-primary border border-transparent rounded-md py-2 px-6 text-xl text-white hover:bg-theme-primary/80"
+              className="mt-6 md:mt-8 lg:mt-10 inline-flex items-center gap-4 text-center bg-theme-primary border border-transparent rounded-md py-4 px-12 text-xl text-white hover:bg-theme-primary/80"
               href="/contact-us">
               Book a Session
               <i className="bi bi-easel-fill text-xl"></i>

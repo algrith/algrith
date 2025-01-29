@@ -19,9 +19,9 @@ const MissionStatement = () => {
             </p>
             
             <Link
-              className="mt-6 md:mt-8 lg:mt-10 inline-flex items-center gap-4 text-center bg-sky-700 hover:bg-sky-600 dark:bg-teal-700 dark:hover:bg-teal-600 border border-transparent rounded-md py-2 px-6 text-xl text-white"
+              className="mt-6 md:mt-8 lg:mt-10 inline-flex items-center gap-4 text-center bg-sky-700 hover:bg-sky-600 dark:bg-teal-700 dark:hover:bg-teal-600 border border-transparent rounded-md py-4 px-12 text-xl text-white"
               href="/products">
-              Learn how
+              Learn How
               <i className="bi bi-megaphone-fill"></i>
             </Link>
           </div>
