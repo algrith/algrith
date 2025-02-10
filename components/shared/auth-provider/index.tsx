@@ -1,7 +1,7 @@
 'use client';
 
 import { SessionProvider, useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 
 import useRoute from '@/hooks/route';
 
@@ -34,7 +34,7 @@ const AuthProvider = () => {
     }
   }, [status]);
 
-  return null;
+  return <Suspense>{null}</Suspense>;
 };
 
 export default NextAuthProvider;
