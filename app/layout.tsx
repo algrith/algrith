@@ -74,9 +74,6 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
               <LayoutWrapper>
                 <Suspense>
                   <Header />
-                </Suspense>
-
-                <Suspense>
                   <Navbar />
                 </Suspense>
                 
