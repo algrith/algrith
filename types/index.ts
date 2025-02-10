@@ -93,6 +93,20 @@ export interface AlertFeedbackAPIs {
 	info: TypeOpen
 };
 
+export type FooterResource = Array<{
+	icon: ReactNode;
+	title: string;
+	items: Array<{
+		icon?: ReactNode;
+		text?: string;
+		href: string;
+		subItem?: {
+			text?: string;
+			href: string;
+		};
+	}>
+}>;
+
 export interface FilterObjectProps {
   filters: Array<string>;
   target: BaseObject;

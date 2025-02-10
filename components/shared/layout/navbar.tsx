@@ -1,6 +1,6 @@
 'use client';
 
-import { FacebookFilled, LinkedinFilled, MenuOutlined, TwitterOutlined } from '@ant-design/icons';
+import { CloseOutlined, FacebookFilled, LinkedinFilled, TwitterOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 
 import useToggleNavbar from '@/hooks/toggle-tavbar';
@@ -8,30 +8,30 @@ import Link from '@/components/shared/button/link';
 import { NavbarWrapper } from './styled';
 import { assets } from '@/libs/assets';
 
+const socials = [
+	{
+		href: '#',
+		icon: <FacebookFilled />
+	},
+	{
+		href: '#',
+		icon: <TwitterOutlined />
+	},
+	{
+		href: '#',
+		icon: <LinkedinFilled />,
+	}
+];
+
+const links = [
+	{ text: 'Home', href: '/' },
+	{ text: 'About', href: '/about' },
+	{ text: 'How It Works', href: '/how-it-works' },
+	{ text: 'Contact', href: '/contact-us' }
+];
+
 const Navbar = () => {
   const { closeNavbar } = useToggleNavbar();
-
-	const socials = [
-		{
-			href: '#',
-			icon: <FacebookFilled />
-		},
-		{
-			href: '#',
-			icon: <TwitterOutlined />
-		},
-		{
-			href: '#',
-			icon: <LinkedinFilled />,
-		}
-	];
-
-	const links = [
-		{ text: 'Home', href: '/' },
-		{ text: 'About', href: '/about' },
-		{ text: 'How It Works', href: '/how-it-works' },
-		{ text: 'Contact', href: '/contact-us' }
-	];
 
 	return (
     <NavbarWrapper className="navlinks" id="nav-menu">
@@ -42,7 +42,7 @@ const Navbar = () => {
 				</h1>
 
 				<button type="button" onClick={closeNavbar} className="menu">
-					<MenuOutlined />
+					<CloseOutlined />
 				</button>
 			</div>
 

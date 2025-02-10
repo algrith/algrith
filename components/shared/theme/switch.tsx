@@ -38,13 +38,9 @@ const ThemeSwitch = () => {
     const themeSwitch = themeSwitchContainerRef.current.classList;
     
     if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-      if (!['sm', 'md'].includes(viewport)) themeSwitch.add('scrolled-lg');
-      if (['md'].includes(viewport)) themeSwitch.add('scrolled-md');
-      if (['sm'].includes(viewport)) themeSwitch.add('scrolled-sm');
+      themeSwitch.add('scrolled');
     } else {
-      if (!['sm', 'md'].includes(viewport)) themeSwitch.remove('scrolled-lg');
-      if (['md'].includes(viewport)) themeSwitch.remove('scrolled-md');
-      if (['sm'].includes(viewport)) themeSwitch.remove('scrolled-sm');
+      themeSwitch.remove('scrolled');
     }
   };
 

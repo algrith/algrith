@@ -1,7 +1,8 @@
-import { usePathname } from 'next/navigation';
+import { useSearchParams, usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { inProtectedRoute } from '@/middleware';
+import { usePreviousState } from './prev-state';
 
 const initialRouteStates = {
   isWorkspace: false,
@@ -11,10 +12,23 @@ const initialRouteStates = {
 };
 
 const useRoute = () => {
+  const [isRouteChanged, setRouteChanged] = useState(false);
   const [routes, setRoutes] = useState(initialRouteStates);
+  const searchParams = useSearchParams();
   const pathname = usePathname();
 
   const isProtectedRoute = inProtectedRoute(pathname);
+  const previousPath = usePreviousState(pathname);
+
+  useEffect(() => {
+    if (previousPath && previousPath !== pathname) {
+      setRouteChanged(true);
+    }
+  }, [pathname, searchParams]);
+
+  useEffect(() => {
+    if (isRouteChanged) setRouteChanged(false);
+  }, [isRouteChanged]);
 
   useEffect(() => {
     setRoutes({
@@ -25,7 +39,7 @@ const useRoute = () => {
     });
   }, []);
 
-  return { isProtectedRoute, routes };
+  return { isProtectedRoute, isRouteChanged, routes };
 };
 
 export default useRoute;

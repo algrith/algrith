@@ -12,7 +12,7 @@ export const MissionStatementWrapper = styled(SectionLayout)`
     }
     
     p {
-      ${tw`mt-4 mb-8 leading-relaxed text-xl md:leading-relaxed dark:text-dark-mode-septenary text-gray-600`};
+      ${tw`mt-4 mb-8 leading-relaxed text-2xl md:leading-relaxed dark:text-dark-mode-septenary text-gray-600`};
 
       span {
         ${tw`hidden lg:inline`};
@@ -48,7 +48,7 @@ export const SessionBookingWrapper = styled(SectionLayout)`
     }
     
     p {
-      ${tw`mt-4 mb-8 leading-relaxed text-xl md:leading-relaxed dark:text-dark-mode-septenary text-gray-600`};
+      ${tw`mt-4 mb-8 leading-relaxed text-2xl md:leading-relaxed dark:text-dark-mode-septenary text-gray-600`};
     }
   }
 `;
@@ -69,7 +69,7 @@ export const GetStartedWrapper = styled(SectionLayout)`
   }
   
   p {
-    ${tw`mt-4 mb-8 text-xl leading-relaxed md:leading-relaxed dark:text-dark-mode-septenary text-gray-500`};
+    ${tw`mt-4 mb-8 text-2xl leading-relaxed md:leading-relaxed dark:text-dark-mode-septenary text-gray-500`};
 
     span {
       ${tw`hidden lg:inline`};
@@ -96,7 +96,7 @@ export const TechStackWrapper = styled(SectionLayout)`
     ${tw`w-full md:w-3/4 mx-auto sm:mb-6`};
 
     h1 {
-      ${tw`xl:text-4xl md:text-3xl font-nunito-sans text-xl text-center text-theme-secondary font-extrabold mb-5 pt-4`};
+      ${tw`text-3xl md:text-4xl font-nunito-sans text-center text-theme-secondary font-extrabold pt-4`};
     }
   }
   
@@ -149,7 +149,7 @@ export const WhoWeAreWrapper = styled(SectionLayout)`
   }
   
   p {
-    ${tw`mt-4 mb-10 lg:max-w-4xl xl:max-w-6xl leading-9 md:text-2xl font-montserrat dark:text-dark-mode-septenary text-gray-500 lg:mx-auto`};
+    ${tw`mt-4 mb-10 lg:max-w-4xl xl:max-w-6xl leading-9 text-xl md:text-2xl font-montserrat dark:text-dark-mode-septenary text-gray-500 lg:mx-auto`};
   }
 `;
 
@@ -160,7 +160,7 @@ export const ReviewCardWrapper = styled.figure`
     ${tw`text-center xl:text-left space-y-4`};
 
     blockquote p {
-      ${tw`text-lg dark:text-dark-mode-septenary text-gray-500`};
+      ${tw`text-xl dark:text-dark-mode-septenary text-gray-500`};
     }
     
     figcaption {
@@ -171,7 +171,7 @@ export const ReviewCardWrapper = styled.figure`
       }
       
       .name {
-        ${tw`text-xl text-sky-700 dark:text-theme-primary`};
+        ${tw`text-2xl text-sky-700 dark:text-theme-primary`};
       }
     }
   }
