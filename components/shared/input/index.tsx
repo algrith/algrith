@@ -294,7 +294,7 @@ const countries = [
   { text: "Zimbabwe", value: "Zimbabwe" }
 ];
 
-const getClassName = (className: string = '') => {
+const useClassName = (className: string = '') => {
   const { inDarkMode } = useTheme();
   
   return [
@@ -304,7 +304,7 @@ const getClassName = (className: string = '') => {
 };
 
 export const TextArea = forwardRef((props: TextAreaProps, ref: Ref<HTMLTextAreaElement>) => {
-  const className = getClassName(props.className);
+  const className = useClassName(props.className);
 
   const textAreaProps = filterObject({
     // Using the default empty placeholder value to control floating label.
@@ -378,7 +378,7 @@ export const Checkbox = (props: CheckboxProps) => {
 };
 
 export const Password = (props: PasswordProps) => {
-  const className = getClassName(props.className);
+  const className = useClassName(props.className);
 
   const passwordProps = filterObject({
     // Using the default empty placeholder value to control floating label.
@@ -431,7 +431,7 @@ export const Country = (props: SelectProps) => (
 );
 
 export const Select = (props: SelectProps) => {
-  const className = getClassName(props.className);
+  const className = useClassName(props.className);
 
   const {
     showRequiredIndicator,
@@ -510,8 +510,8 @@ const SelectInput = (props: SelectProps) => {
 };
 
 export const Input = (props: InputProps) => {
-  const className = getClassName(props.className);
-  
+  const className = useClassName(props.className);
+
   const inputProps = filterObject({
     // Using default empty value placeholder for floating label control.
     target: { ...props, placeholder: props.placeholder ?? ' ' },

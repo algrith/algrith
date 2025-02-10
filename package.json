@@ -33,6 +33,7 @@
     "@babel/plugin-syntax-typescript": "^7.25.9",
     "@eslint/eslintrc": "^3",
     "@types/aos": "^3.0.7",
+    "@types/graceful-fs": "^4.1.9",
     "@types/node": "^20",
     "@types/nodemailer-express-handlebars": "^4.0.5",
     "@types/react": "^19",
