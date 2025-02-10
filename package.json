@@ -17,7 +17,8 @@
     "next-auth": "^5.0.0-beta.25",
     "next-remove-imports": "^1.0.12",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "twin.macro": "^3.4.1"
   },
   "devDependencies": {
     "@babel/plugin-syntax-typescript": "^7.25.9",
