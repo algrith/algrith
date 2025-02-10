@@ -8,8 +8,8 @@ import useRippleEffect from '@/hooks/ripple-effect';
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import useNavBarLinks from '@/hooks/nav-bar-link';
 import '@algrith/scroll-to-top/dist/index.css';
-import { Suspense, useEffect } from 'react';
 import { Global } from '@emotion/react';
+import { useEffect } from 'react';
 import '../public/css/fonts.css';
 import '../public/css/icons.css';
 import '../public/css/app.css';
@@ -43,12 +43,12 @@ const GlobalStyles = () => {
 	}, []);
   
   return (
-    <Suspense>
+    <>
       <BaseStyles />
       <Global styles={customStyles} />
       <ScrollToTopController />
       <Overlay onClick={closeNavbar} id="overlay" />
-    </Suspense>
+    </>
   );
 };
 

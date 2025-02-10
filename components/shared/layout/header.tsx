@@ -1,7 +1,6 @@
 'use client';
 
 import { MenuOutlined } from '@ant-design/icons';
-import { Suspense } from 'react';
 import { Avatar } from 'antd';
 
 import useResizeHeaderOnScroll from '@/hooks/resize-header-on-scroll';
@@ -15,22 +14,20 @@ const Header = () => {
   useResizeHeaderOnScroll();
 
   return (
-    <Suspense>
-      <HeaderWrapper id="header">
-        <div className="wrapper">
-          <div id="brand">
-            <Link id="brand-title" href="/">
-              <Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
-              <Avatar src={assets.brand.logos.black} className="light" alt="algrith_logo" />
-            </Link>
-          </div>
-          
-          <button onClick={openNavbar} type="button" className="menu">
-            <MenuOutlined />
-          </button>
+    <HeaderWrapper id="header">
+      <div className="wrapper">
+        <div id="brand">
+          <Link id="brand-title" href="/">
+            <Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
+            <Avatar src={assets.brand.logos.black} className="light" alt="algrith_logo" />
+          </Link>
         </div>
-      </HeaderWrapper>
-    </Suspense>
+        
+        <button onClick={openNavbar} type="button" className="menu">
+          <MenuOutlined />
+        </button>
+      </div>
+    </HeaderWrapper>
   );
 };
 

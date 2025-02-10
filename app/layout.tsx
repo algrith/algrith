@@ -72,8 +72,14 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
           <AntDesignThemeProvider>
             <LayoutWrapper>
               <LayoutWrapper>
-                <Header />
-                <Navbar />
+                <Suspense>
+                  <Header />
+                </Suspense>
+
+                <Suspense>
+                  <Navbar />
+                </Suspense>
+                
                 <ThemeSwitch />
 
                 <ContentWrapper>

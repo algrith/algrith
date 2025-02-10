@@ -8,7 +8,9 @@ import useRoute from '@/hooks/route';
 const NextAuthProvider = ({ children }: { children: React.ReactNode }) => (
   <SessionProvider>
     {children}
-    <AuthProvider />
+    <Suspense>
+      <AuthProvider />
+    </Suspense>
   </SessionProvider>
 );
 
@@ -34,7 +36,7 @@ const AuthProvider = () => {
     }
   }, [status]);
 
-  return <Suspense>{null}</Suspense>;
+  return null;
 };
 
 export default NextAuthProvider;
