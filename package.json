@@ -29,6 +29,7 @@
   "devDependencies": {
     "@babel/plugin-syntax-typescript": "^7.25.9",
     "@eslint/eslintrc": "^3",
+    "@types/aos": "^3.0.7",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
