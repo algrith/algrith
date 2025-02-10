@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
 
 import { ContentWrapper, LayoutWrapper } from '@/components/shared/layout/styled';
 import AntDesignThemeProvider from '@/components/shared/theme/provider';
@@ -69,16 +70,18 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
           <AntDesignThemeProvider>
             <LayoutWrapper>
               <LayoutWrapper>
-                <Header />
-                <Navbar />
-                <ThemeSwitch />
+                <Suspense fallback="Loading...">
+                  <Header />
+                  <Navbar />
+                  <ThemeSwitch />
 
-                <ContentWrapper>
-                  {children}
-                </ContentWrapper>
+                  <ContentWrapper>
+                    {children}
+                  </ContentWrapper>
 
-                <Alert />
-                <Footer />
+                  <Alert />
+                  <Footer />
+                </Suspense>
               </LayoutWrapper>
             </LayoutWrapper>
           </AntDesignThemeProvider>
