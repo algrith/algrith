@@ -62,7 +62,7 @@ import colors from '@/libs/colors';
 
 export const metadata: Metadata = {
   keywords: ['Business', 'Artisans', 'Buyers', 'Sellers', 'Online Market', 'Sales'],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
+  // metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
   referrer: 'origin-when-cross-origin',
   description: 'Algrith Website',
   manifest: '/app.webmanifest',
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
   publisher: 'Algrith LLC',
   creator: 'Algrith LLC',
   openGraph: {
-    url: process.env.NEXT_PUBLIC_APP_URL,
+    // url: process.env.NEXT_PUBLIC_APP_URL,
     description: 'Algrith Website',
     siteName: 'Algrith',
     title: 'Algrith',
