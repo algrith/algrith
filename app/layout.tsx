@@ -26,7 +26,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   keywords: ['Business', 'Artisans', 'Buyers', 'Sellers', 'Online Market', 'Sales'],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
+  metadataBase: process.env.NEXT_PUBLIC_APP_URL,
   referrer: 'origin-when-cross-origin',
   description: 'Algrith Website',
   manifest: '/app.webmanifest',
