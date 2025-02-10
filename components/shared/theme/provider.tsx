@@ -92,7 +92,7 @@ const tokenConfigs: AppTheme['tokenConfigs'] = {
 };
 
 const AntDesignThemeProvider = ({ children, type = 'app' }: AntDesignThemeProviderProps) => {
-  const { mode } = useAppSelector(state => state.theme);
+  const { mode } = useAppSelector((state) => state.theme);
   const themeConfig = {
     algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
     ...tokenConfigs[type]

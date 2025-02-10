@@ -12,11 +12,11 @@ const colors: Colors = {
     primary: 'rgb(15 23 42)'
   },
   theme: {
-    secondary: '#fb923c',
+    secondary: '#ecaf22',
     tertiary: '#4f46e5',
     primary: '#2ca374',
     success: '#2ca374',
-    // warning: '#ecaf22',
+    // warning: '#fb923c',
     error: '#ef4444',
     text: '#6b7280',
     link: '#888888'

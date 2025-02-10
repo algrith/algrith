@@ -107,10 +107,10 @@ export const HeaderWrapper = styled(Header)`
 		}
 
 		a {
-			${tw`transform origin-left scale-65 h-16 w-64 flex justify-start items-center self-center uppercase mx-auto text-center transition-all ease-in-out duration-1000`};
+			${tw`transform origin-left scale-65 w-64 flex justify-start items-center self-center uppercase mx-auto text-center transition-all ease-in-out duration-1000`};
 
 			.ant-avatar {
-				${tw`w-auto rounded-none`};
+				${tw`w-full h-full rounded-none`};
 
 				&.dark {
 					${tw`hidden dark:block`};

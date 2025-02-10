@@ -12,7 +12,7 @@ export type AsyncActionTargets = keyof AsyncActionsState;
 export type AuthTypes = 'signIn' | 'signUp' | 'profile';
 export type TextAlignment = 'center' | 'right' | 'left';
 export type BaseStringObject = Record<string, string>;
-export type Themes = 'system' | 'light' | 'dark';
+export type ThemeModes = 'system' | 'light' | 'dark';
 export type BaseObject = Record<string, any>;
 
 export interface InlineFeedbackProps extends HTMLAttributes<HTMLDivElement> {
@@ -127,7 +127,7 @@ export interface FeedbackPayload {
 };
 
 export interface AppThemeState {
-  mode: Themes;
+  mode: ThemeModes;
 };
 
 export interface OAuthProvider {

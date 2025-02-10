@@ -10,9 +10,14 @@ export const themeSlice = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    changeTheme: (state, action: PayloadAction<AppThemeState['mode']>) => {
-      if (action.payload) localStorage.setItem('theme', action.payload);
-      state.mode = action.payload;
+    changeThemeMode: (state, action: PayloadAction<AppThemeState['mode']>) => {
+      const mode = action.payload;
+
+      const isNotDeviceThemeMode = ['light', 'dark'].includes(mode);
+      localStorage.removeItem('themeMode');
+      
+      if (isNotDeviceThemeMode) localStorage.setItem('themeMode', mode);
+      state.mode = mode;
     }
   }
 });
@@ -20,7 +25,7 @@ export const themeSlice = createSlice({
 const { reducer, actions } = themeSlice;
 
 export const {
-  changeTheme
+  changeThemeMode
 } = actions;
 
 export default reducer;

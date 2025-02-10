@@ -1,13 +1,15 @@
 import { LinkWrapper } from '@/components/shared/button/styled';
 import { LinkProps } from '@/types';
 
-const Link = ({ children, asButton = false, ...rest }: LinkProps) => {
+const Link = (props: LinkProps) => {
+  const { children, asButton = false, rounded = false, type, size, ...rest } = props;
+  
   const className = [
-    rest.rounded ? 'rounded' : '',
+    rounded ? 'rounded' : '',
     asButton ? 'button' : '',
-    rest.type ?? 'default',
+    type ?? 'default',
     rest.className,
-    rest.size
+    size
   ].join(' ').trim();
   
   return (

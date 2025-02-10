@@ -3,25 +3,34 @@
 import { MouseEvent, useEffect, useRef, useState } from 'react';
 
 import { DarkThemeIconWrapper, LightThemeIconWrapper, SystemThemeIconWrapper, ThemeWrapper } from './styled';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import useClickAway from '@/hooks/click-away';
+import { changeThemeMode } from './reducer';
 import useViewport from '@/hooks/viewport';
+import { ThemeModes } from '@/types';
 import colors from '@/libs/colors';
-import { Themes } from '@/types';
 
 const ThemeSwitch = () => {
-  const [activeTheme, setActiveTheme] = useState<Themes>('light');
   const themeSwitchContainerRef = useRef<HTMLDivElement>(null);
+  const { mode } = useAppSelector((state) => state.theme);
   const themeSwitchRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const { viewport } = useViewport();
+  const dispatch = useAppDispatch();
   
   const activeThemeClass = {
-    system: !['light', 'dark'].includes(activeTheme) ? 'active' : '',
-    light: activeTheme === 'light' ? 'active' : '',
-    dark: activeTheme === 'dark' ? 'active' : '',
+    system: !['light', 'dark'].includes(mode) ? 'active' : '',
+    light: mode === 'light' ? 'active' : '',
+    dark: mode === 'dark' ? 'active' : '',
   };
 
   useClickAway(themeSwitchRef, setOpen);
+
+  const setTheme = (e?: MouseEvent) => {
+    const mode = e ? (e.target as HTMLElement).dataset.mode as ThemeModes : localStorage?.themeMode;
+    dispatch(changeThemeMode(mode));
+    switchThemeMode();
+  };
 
   const repositionThemeSwitch = () => {
     if (!themeSwitchContainerRef.current) return;
@@ -39,8 +48,12 @@ const ThemeSwitch = () => {
     }
   };
 
-  const switchTheme = () => {
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+  const switchThemeMode = () => {
+    const deviceIsInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const noSavedThemeMode = !('themeMode' in localStorage);
+    const savedThemeMode = localStorage?.themeMode;
+    
+    if (savedThemeMode === 'dark' || (noSavedThemeMode && deviceIsInDarkMode)) {
       (document.querySelector('meta[name="msapplication-TileColor"]') as HTMLElement)?.setAttribute('content', colors.dark.primary);
       (document.querySelector('meta[name="theme-color"]') as HTMLElement)?.setAttribute('content', colors.dark.primary);
       document.documentElement.classList?.add('dark');
@@ -51,18 +64,9 @@ const ThemeSwitch = () => {
     }
   };
 
-  const setTheme = (e: MouseEvent) => {
-    const theme = (e.target as HTMLElement).dataset.theme as Themes;
-    localStorage.removeItem('theme');
-
-    if (theme !== 'system') localStorage.theme = theme;
-    setActiveTheme(theme);
-    switchTheme();
-  };
-
   useEffect(() => {
     window.addEventListener('scroll', repositionThemeSwitch);
-    switchTheme();
+    setTheme();
 
     return () => window.removeEventListener('scroll', repositionThemeSwitch);
   }, [viewport]);
@@ -84,17 +88,17 @@ const ThemeSwitch = () => {
 
       {open && (
         <ul className="dropdown-wrapper">
-          <li className={activeThemeClass.light} onClick={setTheme} data-theme="light" role="option" aria-selected="true" tabIndex={-1}>
+          <li className={activeThemeClass.light} onClick={setTheme} data-mode="light" role="option" aria-selected="true" tabIndex={-1}>
             <LightThemeIcon />
             Light
           </li>
           
-          <li className={activeThemeClass.dark} onClick={setTheme} data-theme="dark" role="option" aria-selected="false" tabIndex={-1}>
+          <li className={activeThemeClass.dark} onClick={setTheme} data-mode="dark" role="option" aria-selected="false" tabIndex={-1}>
             <DarkThemeIcon />
             Dark
           </li>
 
-          <li className={activeThemeClass.system} onClick={setTheme} data-theme="system" role="option" aria-selected="false" tabIndex={-1}>
+          <li className={activeThemeClass.system} onClick={setTheme} data-mode="system" role="option" aria-selected="false" tabIndex={-1}>
             <SystemThemeIcon />
             System
           </li>
