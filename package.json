@@ -34,6 +34,7 @@
     "@eslint/eslintrc": "^3",
     "@types/aos": "^3.0.7",
     "@types/node": "^20",
+    "@types/nodemailer-express-handlebars": "^4.0.5",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-macros": "^3.1.0",
