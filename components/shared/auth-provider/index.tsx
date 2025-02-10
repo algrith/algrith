@@ -1,13 +1,15 @@
 'use client';
 
 import { SessionProvider, useSession } from 'next-auth/react';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
 
 import useRoute from '@/hooks/route';
 
 const NextAuthProvider = ({ children }: { children: React.ReactNode }) => (
   <SessionProvider>
-    {children}
+    <Suspense fallback="Loading...">
+      {children}
+    </Suspense>
     <AuthProvider />
   </SessionProvider>
 );

@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import { Suspense } from 'react';
 
 import { ContentWrapper, LayoutWrapper } from '@/components/shared/layout/styled';
 import AntDesignThemeProvider from '@/components/shared/theme/provider';
@@ -63,30 +62,28 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
   <ReduxProvider>
     <NextAuthProvider>
-      <Suspense fallback="Loading...">
-        <html lang="en-US">
-          <body className={fontClassNames}>
-            <GlobalStyles />
+      <html lang="en-US">
+        <body className={fontClassNames}>
+          <GlobalStyles />
 
-            <AntDesignThemeProvider>
+          <AntDesignThemeProvider>
+            <LayoutWrapper>
               <LayoutWrapper>
-                <LayoutWrapper>
-                  <Header />
-                  <Navbar />
-                  <ThemeSwitch />
+                <Header />
+                <Navbar />
+                <ThemeSwitch />
 
-                  <ContentWrapper>
-                    {children}
-                  </ContentWrapper>
+                <ContentWrapper>
+                  {children}
+                </ContentWrapper>
 
-                  <Alert />
-                  <Footer />
-                </LayoutWrapper>
+                <Alert />
+                <Footer />
               </LayoutWrapper>
-            </AntDesignThemeProvider>
-          </body>
-        </html>
-      </Suspense>
+            </LayoutWrapper>
+          </AntDesignThemeProvider>
+        </body>
+      </html>
     </NextAuthProvider>
   </ReduxProvider>
 );
