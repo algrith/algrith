@@ -1,7 +1,7 @@
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { inProtectedRoute } from '@/middleware';
+// import { inProtectedRoute } from '@/middleware';
 
 const initialRouteStates = {
   isWorkspace: false,
@@ -14,7 +14,7 @@ const useRoute = () => {
   const [routes, setRoutes] = useState(initialRouteStates);
   const pathname = usePathname();
 
-  const isProtectedRoute = inProtectedRoute(pathname);
+  // const isProtectedRoute = inProtectedRoute(pathname);
 
   useEffect(() => {
     setRoutes({
@@ -25,7 +25,7 @@ const useRoute = () => {
     });
   }, []);
 
-  return { isProtectedRoute, routes };
+  return { isProtectedRoute: false, routes };
 };
 
 export default useRoute;
