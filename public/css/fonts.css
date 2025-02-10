@@ -1,0 +1,74 @@
+@font-face {
+	font-family: 'raleway';
+	font-style: normal;
+	font-display: auto;
+	src: url("./webfonts/Raleway/Raleway-Bold.ttf");
+	src: url("./webfonts/Raleway/Raleway-Medium.woff2") format("woff2"), url("./webfonts/Raleway/Raleway-Regular.woff2") format("woff2"), url("./webfonts/Raleway/Raleway-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'dosis';
+	font-style: normal;
+	font-display: auto;
+	src: url("./webfonts/Dosis/Dosis-VariableFont_wght.ttf");
+	src: url("./webfonts/Dosis/Dosis-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'manrope';
+	font-style: normal;
+	font-display: auto;
+	src: url("./webfonts/Manrope/Manrope-VariableFont_wght.ttf");
+	src: url("./webfonts/Manrope/Manrope-VariableFont_wght.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'roboto';
+	font-style: normal;
+	font-display: auto;
+	src: url("./webfonts/Roboto/Roboto-Regular.ttf");
+	src: url("./webfonts/Roboto/Roboto-Medium.ttf") format("truetype"), url("./webfonts/Roboto/Roboto-Regular.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'nunito-light';
+	font-style: normal;
+	font-display: auto;
+	src: url("./webfonts/Nunito/Nunito-Light.ttf");
+	src: url("./webfonts/Nunito/Nunito-Light.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'nunito-black';
+	font-style: normal;
+	font-display: auto;
+	src: url("./webfonts/Nunito/Nunito-Black.ttf");
+	src: url("./webfonts/Nunito/Nunito-Black.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'montserrat';
+	font-style: normal;
+	font-display: auto;
+	src: url("./webfonts/Montserrat/Montserrat-Medium.ttf");
+	src: url("./webfonts/Montserrat/Montserrat-Medium.ttf") format("truetype");
+}
+
+@font-face {
+	font-family: 'gilroy';
+	font-style: normal;
+	font-display: auto;
+	src: url("./webfonts/gilroy/Gilroy-Medium.ttf");
+	src: url("./webfonts/gilroy/Gilroy-Medium.ttf") format("truetype"),
+		url("./webfonts/gilroy/Gilroy-Medium.woff") format("woff"),
+		url("./webfonts/gilroy/Gilroy-Medium.eot") format("eot")
+	;
+}
+
+@font-face {
+	font-family: 'public sans';
+	font-style: normal;
+	font-display: auto;
+	src: url("./webfonts/Public-Sans/PublicSans-VariableFont_wght.ttf");
+	src: url("./webfonts/Public-Sans/PublicSans-VariableFont_wght.ttf") format("truetype");
+}
