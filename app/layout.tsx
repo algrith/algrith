@@ -60,40 +60,40 @@ import colors from '@/libs/colors';
 //   maximumScale: 1
 // };
 
-// export const metadata: Metadata = {
-//   keywords: ['Business', 'Artisans', 'Buyers', 'Sellers', 'Online Market', 'Sales'],
-//   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
-//   referrer: 'origin-when-cross-origin',
-//   description: 'Algrith Website',
-//   manifest: '/app.webmanifest',
-//   applicationName: 'Algrith',
-//   publisher: 'Algrith LLC',
-//   creator: 'Algrith LLC',
-//   openGraph: {
-//     url: process.env.NEXT_PUBLIC_APP_URL,
-//     description: 'Algrith Website',
-//     siteName: 'Algrith',
-//     title: 'Algrith',
-//     locale: 'en_US',
-//     type: 'website',
-//     images: []
-//   },
-//   icons: {},
-//   title: {
-//     template: '%s | Algrith',
-//     default: 'Algrith'
-//   },
-//   robots: {
-//     nocache: !inProduction,
-//     follow: inProduction,
-//     index: inProduction,
-//     googleBot: {
-//       noimageindex: inProduction,
-//       follow: inProduction,
-//       index: inProduction,
-//     },
-//   }
-// };
+export const metadata: Metadata = {
+  keywords: ['Business', 'Artisans', 'Buyers', 'Sellers', 'Online Market', 'Sales'],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL),
+  referrer: 'origin-when-cross-origin',
+  description: 'Algrith Website',
+  manifest: '/app.webmanifest',
+  applicationName: 'Algrith',
+  publisher: 'Algrith LLC',
+  creator: 'Algrith LLC',
+  openGraph: {
+    url: process.env.NEXT_PUBLIC_APP_URL,
+    description: 'Algrith Website',
+    siteName: 'Algrith',
+    title: 'Algrith',
+    locale: 'en_US',
+    type: 'website',
+    images: []
+  },
+  icons: {},
+  title: {
+    template: '%s | Algrith',
+    default: 'Algrith'
+  },
+  robots: {
+    nocache: !inProduction,
+    follow: inProduction,
+    index: inProduction,
+    googleBot: {
+      noimageindex: inProduction,
+      follow: inProduction,
+      index: inProduction,
+    },
+  }
+};
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
   <ReduxProvider>
