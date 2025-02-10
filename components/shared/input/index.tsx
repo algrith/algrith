@@ -21,6 +21,7 @@ import { SelectWrapper, InputWrapper, LabelWrapper, RadioGroupWrapper, CheckboxW
 import useFloatingLabel from '@/hooks/floating-label';
 import { filterObject } from '@/utils';
 import { assets } from '@/libs/assets';
+import useTheme from '@/hooks/theme';
 import colors from '@/libs/colors';
 import { Colors } from '@/types';
 
@@ -293,7 +294,18 @@ const countries = [
   { text: "Zimbabwe", value: "Zimbabwe" }
 ];
 
+const getClassName = (className: string = '') => {
+  const { inDarkMode } = useTheme();
+  
+  return [
+    inDarkMode ? 'dark' : '',
+    className,
+  ].join(' ').trim();
+};
+
 export const TextArea = forwardRef((props: TextAreaProps, ref: Ref<HTMLTextAreaElement>) => {
+  const className = getClassName(props.className);
+
   const textAreaProps = filterObject({
     // Using the default empty placeholder value to control floating label.
     target: { ...props, placeholder: props.placeholder ?? ' '},
@@ -305,7 +317,6 @@ export const TextArea = forwardRef((props: TextAreaProps, ref: Ref<HTMLTextAreaE
     description,
     floatLabel,
     actionText,
-    className,
     helpText,
 		label,
     id
@@ -367,6 +378,8 @@ export const Checkbox = (props: CheckboxProps) => {
 };
 
 export const Password = (props: PasswordProps) => {
+  const className = getClassName(props.className);
+
   const passwordProps = filterObject({
     // Using the default empty placeholder value to control floating label.
     target: { ...props, placeholder: props.placeholder ?? ' '},
@@ -378,7 +391,6 @@ export const Password = (props: PasswordProps) => {
     description,
     floatLabel,
     actionText,
-    className,
     helpText,
 		label,
     size,
@@ -419,14 +431,15 @@ export const Country = (props: SelectProps) => (
 );
 
 export const Select = (props: SelectProps) => {
+  const className = getClassName(props.className);
+
   const {
     showRequiredIndicator,
     floatLabel = true,
     description,
     actionText,
 		prefixIcon,
-		className,
-    helpText,
+		helpText,
     label,
     type,
     size,
@@ -497,6 +510,8 @@ const SelectInput = (props: SelectProps) => {
 };
 
 export const Input = (props: InputProps) => {
+  const className = getClassName(props.className);
+  
   const inputProps = filterObject({
     // Using default empty value placeholder for floating label control.
     target: { ...props, placeholder: props.placeholder ?? ' ' },
@@ -508,9 +523,7 @@ export const Input = (props: InputProps) => {
     description,
     floatLabel,
     actionText,
-    className,
     helpText,
-    onChange,
 		label,
     size,
     id

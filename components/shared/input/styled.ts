@@ -25,10 +25,15 @@ export const InputWrapper = styled.div<InputProps | TextAreaProps | PasswordProp
     :-webkit-autofill:focus,
     :-webkit-autofill {
       -webkit-box-shadow: 0 0 0 30px white inset !important;
-
-      @media (prefers-color-scheme: dark) {
-        -webkit-box-shadow: 0 0 0 30px ${colors.dark.tertiary} inset !important;
-      }
+    }
+  }
+  
+  &.dark {
+    input:-webkit-autofill:active,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 30px ${colors.dark.tertiary} inset !important;
     }
   }
   
