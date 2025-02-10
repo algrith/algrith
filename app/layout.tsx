@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
 
 import { ContentWrapper, LayoutWrapper } from '@/components/shared/layout/styled';
 import AntDesignThemeProvider from '@/components/shared/theme/provider';
@@ -64,7 +65,9 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
     <NextAuthProvider>
       <html lang="en-US">
         <body className={fontClassNames}>
-          <GlobalStyles />
+          <Suspense>
+            <GlobalStyles />
+          </Suspense>
 
           <AntDesignThemeProvider>
             <LayoutWrapper>
