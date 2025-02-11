@@ -145,7 +145,7 @@ export const WhoWeAreWrapper = styled(SectionLayout)`
   ${tw`text-center py-10 lg:py-20 dark:bg-slate-900 bg-white`};
 
   h2 {
-    ${tw`text-3xl md:text-5xl dark:text-theme-secondary text-theme-primary font-extrabold tracking-wide leading-10 md:leading-[54px] uppercase mb-8`};
+    ${tw`text-3xl md:text-5xl dark:text-theme-secondary font-extrabold tracking-wide leading-10 md:leading-[54px] uppercase mb-8`};
   }
   
   p {

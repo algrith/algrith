@@ -19,6 +19,7 @@ import {
 
 import { SelectWrapper, InputWrapper, LabelWrapper, RadioGroupWrapper, CheckboxWrapper } from './styled';
 import useFloatingLabel from '@/hooks/floating-label';
+import useClassName from '@/hooks/class-name';
 import { filterObject } from '@/utils';
 import { assets } from '@/libs/assets';
 import useTheme from '@/hooks/theme';
@@ -293,15 +294,6 @@ const countries = [
   { text: "Zambia", value: "Zambia" },
   { text: "Zimbabwe", value: "Zimbabwe" }
 ];
-
-const useClassName = (className: string = '') => {
-  const { inDarkMode } = useTheme();
-  
-  return [
-    inDarkMode ? 'dark' : '',
-    className,
-  ].join(' ').trim();
-};
 
 export const TextArea = forwardRef((props: TextAreaProps, ref: Ref<HTMLTextAreaElement>) => {
   const className = useClassName(props.className);

@@ -39,7 +39,7 @@ export const LinkWrapper = styled(NextLink)`
 `;
 
 export const ButtonWrapper = styled(Button)`
-	${tw`relative tracking-wide font-nunito-sans text-xl leading-[21.82px]`};
+	${tw`relative tracking-wide font-gilroy text-xl leading-[21.82px]`};
 
 	${({ color, type }: ButtonProps) => {
 		const colorKey = type as keyof Colors['theme'];

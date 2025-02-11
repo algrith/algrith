@@ -16,13 +16,13 @@ import GlobalStyles from '@/styles';
 import colors from '@/libs/colors';
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: colors.theme.primary },
-    { media: '(prefers-color-scheme: dark)', color: colors.theme.primary }
-  ],
   width: 'device-width',
   initialScale: 1,
-  maximumScale: 1
+  maximumScale: 1,
+  themeColor: [
+    { media: '(prefers-color-scheme: dark)', color: colors.dark.primary },
+    { media: '(prefers-color-scheme: light)', color: 'white' }
+  ]
 };
 
 export const metadata: Metadata = {

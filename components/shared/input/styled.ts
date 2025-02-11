@@ -10,7 +10,7 @@ export const InputWrapper = styled.div<InputProps | TextAreaProps | PasswordProp
   ${tw`w-full flex flex-col gap-1 relative`};
 
   .ant-input-affix-wrapper, input {
-    ${tw`h-[46px] text-xm text-[#252525] font-normal leading-[20.8px]`};
+    ${tw`h-[46px] text-[#252525] font-normal leading-[20.8px]`};
     
     &.ant-input-lg {
       ${tw`h-[50px]`};
@@ -19,21 +19,23 @@ export const InputWrapper = styled.div<InputProps | TextAreaProps | PasswordProp
     &.ant-input-sm {
       ${tw`h-[35px]`};
     }
-
-    :-webkit-autofill:active,
-    :-webkit-autofill:hover, 
-    :-webkit-autofill:focus,
-    :-webkit-autofill {
-      -webkit-box-shadow: 0 0 0 30px white inset !important;
-    }
   }
   
-  &.dark {
-    input:-webkit-autofill:active,
-    input:-webkit-autofill:hover, 
-    input:-webkit-autofill:focus,
+  textarea:-webkit-autofill,
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #252525;
+    color-scheme: light dark;
+  }
+  
+  &.dark-theme-mode {
+    textarea:-webkit-autofill,
     input:-webkit-autofill {
-      -webkit-box-shadow: 0 0 0 30px ${colors.dark.tertiary} inset !important;
+      -webkit-box-shadow: 0 0 0 1000px ${colors.dark.tertiary} inset !important;
+      transition: background-color 5000s ease-in-out 0s;
+      -webkit-text-fill-color: #e2e8f0;
+      color-scheme: light dark;
     }
   }
   
@@ -41,8 +43,9 @@ export const InputWrapper = styled.div<InputProps | TextAreaProps | PasswordProp
     ${tw`h-full`};
   }
   
-  textarea, input {
-    ${tw`dark:bg-dark-mode-tertiary dark:border-dark-mode-quaternary dark:text-dark-mode-octonary focus:ring-transparent focus:border-gray-300 dark:focus:border-dark-mode-quaternary border-gray-300`};
+  textarea, .ant-input {
+    ${tw`text-lg dark:bg-dark-mode-tertiary dark:text-dark-mode-octonary dark:border-dark-mode-quaternary dark:hover:border-theme-primary hover:border-theme-primary focus:ring-transparent border-gray-300`};
+    border-radius: 8px;
   }
 `;
 
@@ -95,7 +98,7 @@ export const RadioGroupWrapper = styled(Group)`
 `;
 
 export const LabelWrapper = styled.label`
-  ${tw`text-[#252525] dark:text-dark-mode-octonary`};
+  ${tw`text-xl text-[#252525] dark:text-dark-mode-octonary w-fit`};
 
   .required {
     ${tw`pl-1 text-md text-red-500 text-xl`};

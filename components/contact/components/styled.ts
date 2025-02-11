@@ -32,14 +32,14 @@ export const ContactInquiryCardWrapper = styled.div`
     }
     
     .content {
-      ${tw`px-8 py-8`};
+      ${tw`flex flex-col gap-4 p-6 items-end`};
 
-      .link {
-        ${tw`md:text-right`};
+      a {
+        ${tw`w-fit h-14 lg:h-auto`};
       }
       
-      h3 {
-        ${tw`mb-8 lg:mb-4 text-lg dark:text-dark-mode-septenary text-gray-600 font-semibold`};
+      p {
+        ${tw`text-xl dark:text-dark-mode-septenary text-gray-600`};
       }
     }
   }
@@ -49,7 +49,7 @@ export const ContactDetailsWrapper = styled.div`
   ${tw`lg:order-3 w-full lg:mt-16`};
 
   .top {
-    ${tw`py-4 px-6 mb-4 dark:bg-opacity-50 bg-blue-500 rounded-lg shadow flex gap-4 justify-between items-center`};
+    ${tw`py-4 px-5 mb-4 dark:bg-opacity-50 bg-blue-500 rounded-lg shadow flex gap-4 justify-between items-center`};
 
     span {
       ${tw`dark:bg-opacity-50 bg-blue-400 rounded-lg`};
@@ -60,16 +60,8 @@ export const ContactDetailsWrapper = styled.div`
     }
   }
    
-  .bottom {
-    ${tw`py-4 px-6 dark:bg-opacity-50 bg-gray-400 rounded-lg shadow flex gap-4 items-center`};
-
-    span {
-      ${tw`bg-gray-500 rounded-lg shadow-lg`};
-    }
-
-    p {
-      ${tw`text-lg font-bold dark:text-dark-mode-septenary text-white`};
-    }
+  .email {
+    ${tw`text-xl font-bold dark:text-dark-mode-septenary text-white py-2 px-3.5 dark:bg-opacity-50 bg-gray-400 rounded-lg shadow flex gap-4 justify-between items-center`};
   }
   
   span {
@@ -85,7 +77,7 @@ export const ContactFormWrapper = styled.div`
   ${tw`lg:order-2 md:col-span-2 w-full -mt-24 md:-mt-32 lg:-mt-24`};
 
   form {
-    ${tw`shadow rounded-md overflow-hidden`};
+    ${tw`shadow rounded-2xl overflow-hidden`};
 
     .fields-wrapper {
       ${tw`px-6 py-5 xl:px-12 dark:bg-dark-mode-secondary bg-white space-y-6`};

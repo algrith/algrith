@@ -13,11 +13,8 @@ const ContactInquiryCard = () => {
         </div>
         
         <div className="content">
-          <h3>Do you need understanding on how our system works?</h3>
-
-          <div className="link">
-            <Link rounded size="small" asButton href="/how-it-works">Learn Now</Link>
-          </div>
+          <p>Do you need understanding on how our system works?</p>
+          <Link rounded size="small" asButton href="/how-it-works">Learn Now</Link>
         </div>
       </div>
     </ContactInquiryCardWrapper>

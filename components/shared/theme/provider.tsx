@@ -13,7 +13,7 @@ Spin.setDefaultIndicator(<Spinner />);
 const tokenConfigs: AppTheme['tokenConfigs'] = {
   app: {
     token: {
-      fontFamily: 'var(--font-ibm-plex-sans), var(--font-nunito-sans), sans-serif',
+      fontFamily: 'var(--font-gilroy), var(--font-nunito-sans), var(--font-montserrat), var(--font-raleway), sans-serif',
       colorWarning: colors.theme.secondary,
       colorPrimary: colors.theme.primary,
       // colorError: colors.theme.error

@@ -26,7 +26,7 @@ const customStyles = css`
   }
 
   button, [type='button'], [type='reset'], [type='submit'] {
-    ${tw`disabled:cursor-not-allowed`}
+    ${tw`disabled:cursor-not-allowed`};
   }
 `;
 

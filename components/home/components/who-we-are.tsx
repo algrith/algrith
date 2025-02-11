@@ -5,7 +5,7 @@ const WhoWeAre = () => {
   return (
     <WhoWeAreWrapper id="who-we-are">
       <h2>
-        Welcome! We're sure you would like an introduction.
+        We're sure you would like an introduction.
       </h2>
       
       <p>
