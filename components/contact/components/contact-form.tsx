@@ -1,4 +1,5 @@
 import React, { FormEvent, useState } from 'react';
+import { SendOutlined } from '@ant-design/icons';
 
 import { Country, Input, Select, TextArea } from '@/components/shared/input';
 import Button from '@/components/shared/button';
@@ -142,8 +143,12 @@ const ContactForm = () => {
         </div>
 
         <div className="button-wrapper">
-          <Button type="secondary" loading={feedback.loading} disabled={feedback.loading} htmlType="submit">
-            {/* Icon */}
+          <Button
+            prependedIcon={<SendOutlined />}
+            disabled={feedback.loading}
+            loading={feedback.loading}
+            htmlType="submit"
+            type="secondary">
             Send
           </Button>
         </div>

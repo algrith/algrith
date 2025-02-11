@@ -8,6 +8,7 @@ import { HeaderWrapper } from '@/components/shared/layout/styled';
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
 import { assets } from '@/libs/assets';
+import Button from '../button';
 
 const Header = () => {
   const { openNavbar } = useToggleNavbar();
@@ -23,9 +24,12 @@ const Header = () => {
           </Link>
         </div>
         
-        <button onClick={openNavbar} type="button" className="menu">
-          <MenuOutlined />
-        </button>
+        <Button
+          prependedIcon={<MenuOutlined />}
+          onClick={openNavbar}
+          htmlType="button"
+          className="menu"
+        />
       </div>
     </HeaderWrapper>
   );

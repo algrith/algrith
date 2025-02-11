@@ -123,8 +123,8 @@ export const HeaderWrapper = styled(Header)`
 		}
 	}
 	
-	button.menu {
-		${tw`lg:hidden flex justify-center items-center p-4 -mr-5 dark:text-theme-primary bg-transparent outline-none focus:outline-none border-none transform scale-y-75 transition-all ease-in-out duration-1000`};
+	.menu {
+		${tw`lg:hidden p-4 -mr-5 dark:text-theme-primary bg-transparent outline-none focus:outline-none border-none transform scale-y-75 transition-transform ease-in-out duration-1000`};
 		
 		.anticon {
 			${tw`text-3xl text-gray-600`};
@@ -256,7 +256,7 @@ export const NavbarWrapper = styled.nav`
 	}
 
 	.top {
-		${tw`lg:hidden flex flex-grow-0 flex-shrink justify-between content-center mb-2 text-left w-full text-2xl px-5 lg:px-8 py-1`};
+		${tw`lg:hidden flex flex-grow-0 flex-shrink items-center justify-between content-center mb-2 text-left w-full text-2xl px-5 lg:px-8 py-1`};
 
 		h1 {
 			${tw`w-64 flex justify-start items-center transform scale-65 origin-left transition-all ease-in-out duration-1000`};
@@ -274,8 +274,12 @@ export const NavbarWrapper = styled.nav`
 			}
 		}
 
-		button.menu {
-			${tw`flex justify-center rounded-xl items-center bg-transparent focus:bg-transparent hover:bg-transparent border-none outline-none dark:text-dark-mode-octonary text-black`};
+		.menu {
+			${tw`bg-transparent focus:bg-transparent hover:bg-transparent border-none outline-none dark:text-dark-mode-octonary text-black`};
+
+			.anticon {
+				${tw`text-3xl`}
+			}
 		}
 	}
 	

@@ -25,7 +25,7 @@ export const LinkWrapper = styled(NextLink)`
 		}
 
 		&.default {
-			${tw`border-gray-300 hover:border-gray-200 dark:text-dark-mode-septenary text-gray-800`};
+			${tw`border text-lg border-gray-300 hover:border-gray-200 dark:text-dark-mode-septenary text-theme-text`};
 		}
 		
 		&.rounded {
@@ -39,29 +39,31 @@ export const LinkWrapper = styled(NextLink)`
 `;
 
 export const ButtonWrapper = styled(Button)`
-	${tw`font-nunito-sans font-extrabold text-xm leading-[21.82px]`};
+	${tw`relative tracking-wide font-nunito-sans text-xl leading-[21.82px]`};
+
+	${({ color, type }: ButtonProps) => {
+		const colorKey = type as keyof Colors['theme'];
+
+		return type && `
+			background-color: ${colors.theme[colorKey]};
+			border-color: ${colors.theme[colorKey]};
+			${color && `color: ${color};`}
+		`
+	}};
 	
-	&:not(:disabled):not(:hover) {
-		${({ color, type }: ButtonProps) => {
-			const colorKey = type as keyof Colors['theme'];
-
-			return type && `
-				background-color: ${colors.theme[colorKey]};
-				border-color: ${colors.theme[colorKey]};
-				${color && `color: ${color};`}
-			`
-		}}
+	&:hover:not(:disabled) {
+		${tw`opacity-90`};
 	}
-
+	
 	&:disabled {
-		${({ color, type }: ButtonProps) => {
-			const colorKey = type as keyof Colors['theme'];
-
-			return type && `
-				background-color: ${colors.theme[colorKey]}!important;
-				border-color: ${colors.theme[colorKey]}!important;
-				opacity: 0.5;
-			`
-		}}
+		${tw`opacity-50`};
+	}
+	
+	&.rounded {
+		${tw`rounded-full`};
+	}
+	
+	&.small {
+		${tw`px-6 py-2`};
 	}
 `;

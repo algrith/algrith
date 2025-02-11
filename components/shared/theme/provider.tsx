@@ -48,15 +48,15 @@ const tokenConfigs: AppTheme['tokenConfigs'] = {
         colorText: colors.theme.primary
       },
       Button: {
-        paddingInlineLG: 16,
-        paddingBlockLG: 12,
-        borderRadiusLG: 13,
-        borderRadiusMD: 13,
-        controlHeight: 46,
+        paddingInlineSM: 12,
+        paddingInlineLG: 20,
+        controlHeightLG: 46,
+        controlHeightSM: 30,
+        controlHeight: 40,
+        paddingInline: 16,
         borderRadius: 7,
         algorithm: true,
-        fontWeight: 400,
-        size: 16,
+        fontWeight: 700
       },
       Group: {
         paddingInlineLG: 16,

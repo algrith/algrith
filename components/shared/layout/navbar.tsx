@@ -7,6 +7,7 @@ import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
 import { NavbarWrapper } from './styled';
 import { assets } from '@/libs/assets';
+import Button from '../button';
 
 const socials = [
 	{
@@ -41,9 +42,12 @@ const Navbar = () => {
 					<Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
 				</h1>
 
-				<button type="button" onClick={closeNavbar} className="menu">
-					<CloseOutlined />
-				</button>
+				<Button
+					prependedIcon={<CloseOutlined />}
+					onClick={closeNavbar}
+					htmlType="button"
+					className="menu"
+				/>
 			</div>
 
 			<div id="navbar-links">
