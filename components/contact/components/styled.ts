@@ -4,7 +4,7 @@ import tw, { styled } from 'twin.macro';
 export const ContactWrapper = styled(SectionLayout)`
   ${tw`md:py-12 lg:py-0`};
 
-  .right {
+  .info {
     ${tw`text-center`};
 
     p {
@@ -12,15 +12,15 @@ export const ContactWrapper = styled(SectionLayout)`
     }
   }
   
-  .left {
-    ${tw`flex w-full flex-wrap justify-center mb-4 lg:mb-0`};
+  .inner {
+    ${tw`grid lg:grid-cols-4 w-full gap-10 lg:gap-8 mb-4 lg:mb-0`};
   }
 `;
 
 export const ContactInquiryCardWrapper = styled.div`
-  ${tw`lg:order-1 w-full md:w-2/4 lg:w-3/12 md:pl-4 lg:pr-4 lg:pl-0 mt-10 md:mt-16`};
+  ${tw`lg:order-1 w-full lg:mt-16`};
 
-  .inner {
+  .wrapper {
     ${tw`dark:bg-dark-mode-secondary overflow-hidden bg-white rounded-lg shadow`};
 
     .image-wrapper {
@@ -46,7 +46,7 @@ export const ContactInquiryCardWrapper = styled.div`
 `;
 
 export const ContactDetailsWrapper = styled.div`
-  ${tw`lg:order-3 w-full md:w-2/4 lg:w-3/12 md:pr-4 lg:pl-4 lg:pr-0 mt-10 md:mt-16`};
+  ${tw`lg:order-3 w-full lg:mt-16`};
 
   .top {
     ${tw`py-4 px-6 mb-4 dark:bg-opacity-50 bg-blue-500 rounded-lg shadow flex gap-4 justify-between items-center`};
@@ -61,10 +61,10 @@ export const ContactDetailsWrapper = styled.div`
   }
    
   .bottom {
-    ${tw`py-4 px-6 mb-10 dark:bg-opacity-50 bg-gray-400 rounded-lg shadow flex items-center`};
+    ${tw`py-4 px-6 dark:bg-opacity-50 bg-gray-400 rounded-lg shadow flex gap-4 items-center`};
 
     span {
-      ${tw`mr-2 bg-gray-500 rounded-lg shadow-lg`};
+      ${tw`bg-gray-500 rounded-lg shadow-lg`};
     }
 
     p {
@@ -82,7 +82,7 @@ export const ContactDetailsWrapper = styled.div`
 `;
 
 export const ContactFormWrapper = styled.div`
-  ${tw`lg:order-2 lg:w-6/12 -mt-24 md:-mt-32 lg:-mt-24 sm:px-12 lg:px-4 xl:px-12 2xl:px-4`};
+  ${tw`lg:order-2 md:col-span-2 w-full -mt-24 md:-mt-32 lg:-mt-24`};
 
   form {
     ${tw`shadow rounded-md overflow-hidden`};
@@ -96,7 +96,7 @@ export const ContactFormWrapper = styled.div`
     }
     
     .button-wrapper {
-      ${tw`px-6 xl:px-12 pt-4 pb-6 xl:pb-12 dark:bg-dark-mode-secondary bg-gray-50`};
+      ${tw`px-6 xl:px-12 pt-4 pb-7 xl:pb-12 dark:bg-dark-mode-secondary bg-gray-50`};
     }
   }
 `;

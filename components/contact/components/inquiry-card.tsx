@@ -7,7 +7,7 @@ import Link from '@/components/shared/button/link';
 const ContactInquiryCard = () => {
   return (
     <ContactInquiryCardWrapper>
-      <div className="inner">
+      <div className="wrapper">
         <div className="image-wrapper">
           <Avatar src="/images/illustrations/learn-more.gif" alt="learn_more_icon" />
         </div>

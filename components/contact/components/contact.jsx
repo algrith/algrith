@@ -6,13 +6,13 @@ import ContactDetails from './details';
 const Contact = () => {
   return (
     <ContactWrapper id="contact">
-      <div className="left">
+      <div className="inner">
         <ContactForm />
         <ContactDetails />
         <ContactInquiryCard />
       </div>
 
-      <div className="right">
+      <div className="info">
         <p>
           If you need any support or assistance, do not hesitate to send us a message.
         </p>
