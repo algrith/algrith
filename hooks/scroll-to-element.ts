@@ -23,7 +23,12 @@ const useScrollToElement = () => {
 	};
 
   useEffect(() => {
+		document.addEventListener('click', scrollToElement);
 		scrollToElement();
+
+		return () => {
+			document.removeEventListener('click', scrollToElement);
+		};
 	}, []);
 };
 

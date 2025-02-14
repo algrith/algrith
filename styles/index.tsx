@@ -18,7 +18,7 @@ import AOS from 'aos';
 
 const customStyles = css`
   body, html {
-    ${tw`antialiased font-medium font-gilroy text-theme-text h-full p-0 m-0 dark:bg-dark-mode-primary dark:text-dark-mode-septenary`};
+    ${tw`antialiased font-medium font-gilroy text-theme-text h-full p-0 m-0 bg-gray-50 dark:bg-dark-mode-primary dark:text-dark-mode-septenary`};
   }
   
   a {

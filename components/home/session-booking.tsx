@@ -2,7 +2,7 @@ import { CalendarOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import React from 'react';
 
-import { SessionBookingWrapper } from '@/components/home/components/styled';
+import { SessionBookingWrapper } from '@/components/home/styled';
 import Link from '@/components/shared/button/link';
 
 const SessionBooking = () => {

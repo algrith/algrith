@@ -26,7 +26,7 @@ const socials = [
 
 const links = [
 	{ text: 'Home', href: '/' },
-	{ text: 'About', href: '/about' },
+	{ text: 'About', href: '/about-us' },
 	{ text: 'How It Works', href: '/how-it-works' },
 	{ text: 'Contact', href: '/contact-us' }
 ];

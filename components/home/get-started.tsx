@@ -1,4 +1,4 @@
-import { GetStartedWrapper } from '@/components/home/components/styled';
+import { GetStartedWrapper } from '@/components/home/styled';
 import Link from '@/components/shared/button/link';
 import { Avatar } from 'antd';
 

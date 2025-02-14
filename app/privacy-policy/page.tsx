@@ -1,12 +1,12 @@
-import ContactUs from '@/components/contact';
+import PrivacyPolicy from '@/components/privacy-policy';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Us',
+  title: 'Privacy Policy',
 };
 
 const Page = () => (
-  <ContactUs />
+  <PrivacyPolicy />
 );
 
 export default Page;

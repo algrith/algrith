@@ -1,7 +1,7 @@
 'use client';
 
-import Contact from '@/components/contact/components/contact';
 import Intro from '@/components/shared/layout/intro';
+import Contact from '@/components/contact/contact';
 import { IntroProps } from '@/types';
 
 const intro: IntroProps = {

@@ -1,6 +1,6 @@
 import { Avatar } from 'antd';
 
-import { ReviewCardWrapper } from '@/components/home/components/styled';
+import { ReviewCardWrapper } from '@/components/home/styled';
 import { Review } from '@/types';
 
 const ReviewCard = ({ designation, location, avatar, text, name }: Review) => (

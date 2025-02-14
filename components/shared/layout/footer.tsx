@@ -30,8 +30,8 @@ const resources: FooterResource = [
 				text: 'Contact Us'
 			},
 			{
-				text: 'About Us',
-				href: '/about',
+				href: '/about-us',
+				text: 'About Us'
 			},
 			{
 				text: 'Careers',

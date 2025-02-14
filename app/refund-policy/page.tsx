@@ -1,12 +1,12 @@
-import ContactUs from '@/components/contact';
+import RefundPolicy from '@/components/refund-policy';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Us',
+  title: 'Refund Policy',
 };
 
 const Page = () => (
-  <ContactUs />
+  <RefundPolicy />
 );
 
 export default Page;

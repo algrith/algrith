@@ -2,7 +2,7 @@ import 'react-multi-carousel/lib/styles.css';
 import Carousel from 'react-multi-carousel';
 import { Avatar } from 'antd';
 
-import { TechStackWrapper } from '@/components/home/components/styled';
+import { TechStackWrapper } from '@/components/home/styled';
 import { techStackImages } from '@/libs/ui-data';
 import { toSnakeCase } from '@/utils';
 

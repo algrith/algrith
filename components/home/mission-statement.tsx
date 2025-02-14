@@ -2,7 +2,7 @@ import { BulbOutlined } from '@ant-design/icons';
 import { Avatar } from 'antd';
 import React from 'react';
 
-import { MissionStatementWrapper } from '@/components/home/components/styled';
+import { MissionStatementWrapper } from '@/components/home/styled';
 import Link from '@/components/shared/button/link';
 
 const MissionStatement = () => {

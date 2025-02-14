@@ -1,4 +1,4 @@
-import Home from '@/components/home/components';
+import Home from '@/components/home';
 
 const Page = () => (
   <Home />

@@ -8,10 +8,6 @@ import useSendMail from '@/hooks/send-mail';
 
 const topicOptions = [
   {
-    text: '--select--',
-    value: ''
-  },
-  {
     value: 'Web Application Development',
     text: 'Web Application Development'
   },

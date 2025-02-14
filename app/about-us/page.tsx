@@ -1,12 +1,12 @@
-import ContactUs from '@/components/contact';
+import AboutUs from '@/components/about';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Contact Us',
+  title: 'About Us',
 };
 
 const Page = () => (
-  <ContactUs />
+  <AboutUs />
 );
 
 export default Page;

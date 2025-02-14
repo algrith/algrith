@@ -1,5 +1,5 @@
 import { SectionCardWrapper, SectionWrapper } from '@/components/shared/layout/styled';
-import ReviewCard from '@/components/home/components/review-card';
+import ReviewCard from '@/components/home/review-card';
 import { SectionProps, SectionItemProps, Review } from '@/types';
 import { Avatar } from 'antd';
 

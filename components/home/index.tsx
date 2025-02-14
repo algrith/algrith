@@ -11,13 +11,13 @@ import {
   StarOutlined
 } from '@ant-design/icons';
 
-import MissionStatement from '@/components/home/components/mission-statement';
-import SessionBooking from '@/components/home/components/session-booking';
-import WelcomeIntro from '@/components/home/components/welcome-intro';
-import GetStarted from '@/components/home/components/get-started';
-import TechStack from '@/components/home/components/tech-stack';
-import WhoWeAre from '@/components/home/components/who-we-are';
+import MissionStatement from '@/components/home/mission-statement';
+import SessionBooking from '@/components/home/session-booking';
+import WelcomeIntro from '@/components/home/welcome-intro';
 import Section from '@/components/shared/layout/section';
+import GetStarted from '@/components/home/get-started';
+import TechStack from '@/components/home/tech-stack';
+import WhoWeAre from '@/components/home/who-we-are';
 import { IntroProps, SectionProps } from '@/types';
 import reviewData from '@/libs/reviews.json';
 
