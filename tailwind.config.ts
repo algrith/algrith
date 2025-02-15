@@ -61,10 +61,6 @@ module.exports = {
         '65': '.65',
         '85': '.85'
       }
-    },
-  },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/forms'),
-  ]
+    }
+  }
 } satisfies Config;

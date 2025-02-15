@@ -87,6 +87,17 @@ export interface AuthFormWrapperProps {
 	children: ReactNode;
 };
 
+export interface HowItWorksStepProps {
+  isFirst: boolean;
+  isLast: boolean;
+  isLeft: boolean;
+  content: string;
+  color: string;
+  title: string;
+  icon: string;
+  step: number;
+};
+
 export interface AlertFeedbackAPIs {
 	warning: TypeOpen;
 	success: TypeOpen;
