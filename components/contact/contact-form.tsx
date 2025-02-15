@@ -86,6 +86,7 @@ const ContactForm = () => {
             
             <Country
               onChange={(value) => handleChange('country', value)}
+              placeholder="Select your country"
               defaultValue={details.country}
               showRequiredIndicator
               label="Location"
@@ -107,9 +108,10 @@ const ContactForm = () => {
           <Select
             onChange={(value) => handleChange('topic', value)}
             label="Topic (What are you interested in?)"
+            placeholder="Select an interest"
+            defaultValue={details.topic}
             options={topicOptions}
             showRequiredIndicator
-            value={details.topic}
             id="topic"
           />
 

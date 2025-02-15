@@ -1,7 +1,7 @@
 import { IntroWrapper } from './styled';
 import useTypist from '@/hooks/typist';
 import { IntroProps } from '@/types';
-import Link from '../button/link';
+import Button from '../button';
 
 const Intro = (props: IntroProps) => {
   useTypist(props.title);
@@ -62,11 +62,11 @@ const Intro = (props: IntroProps) => {
 				</div>
 
 				{action.scrollTo && (
-          <Link href={`#${action.scrollTo}`} className={classNames.action}>
+          <Button type="primary" className={classNames.action} data-scroll-to={action.scrollTo}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M17 13l-5 5m0 0l-5-5m5 5V6" />
             </svg>
-          </Link>
+          </Button>
         )}
 			</div>
 		</IntroWrapper>

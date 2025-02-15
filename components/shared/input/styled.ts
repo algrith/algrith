@@ -98,10 +98,10 @@ export const RadioGroupWrapper = styled(Group)`
 `;
 
 export const LabelWrapper = styled.label`
-  ${tw`text-xl text-[#252525] dark:text-dark-mode-octonary w-fit`};
+  ${tw`text-lg text-[#252525] dark:text-dark-mode-octonary w-fit`};
 
   .required {
-    ${tw`pl-1 text-md text-red-500 text-xl`};
+    ${tw`pl-1 text-red-500 text-xl`};
   }
 `;
 
@@ -156,8 +156,8 @@ export const SelectWrapper = styled.div`
   .ant-select-arrow {
     ${tw`z-[2]`};
 
-    .ant-avatar {
-      ${tw`w-full h-full rounded-none`};
+    .anticon {
+      ${tw`text-xl`};
     }
   }
 `;

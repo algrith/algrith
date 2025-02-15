@@ -4,9 +4,7 @@ import tw, { css, GlobalStyles as BaseStyles } from 'twin.macro';
 import { ScrollToTopController } from '@algrith/scroll-to-top';
 import { Overlay } from '@/components/shared/layout/styled';
 import useScrollToElement from '@/hooks/scroll-to-element';
-import useRippleEffect from '@/hooks/ripple-effect';
 import useToggleNavbar from '@/hooks/toggle-tavbar';
-import useNavBarLinks from '@/hooks/nav-bar-link';
 import '@algrith/scroll-to-top/dist/index.css';
 import { Global } from '@emotion/react';
 import { useEffect } from 'react';
@@ -33,8 +31,6 @@ const customStyles = css`
 const GlobalStyles = () => {
   const { closeNavbar } = useToggleNavbar();
 	useScrollToElement();
-	useRippleEffect();
-	useNavBarLinks();
   
   useEffect(() => { 
 		AOS.init({

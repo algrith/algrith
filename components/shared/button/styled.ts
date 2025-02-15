@@ -1,11 +1,8 @@
 'use client';
 
-import { Button, ButtonProps } from 'antd';
 import tw, { styled } from 'twin.macro';
 import NextLink from 'next/link';
-
-import colors from '@/libs/colors';
-import { Colors } from '@/types';
+import { Button } from 'antd';
 
 export const LinkWrapper = styled(NextLink)`
 	&.button {
@@ -39,18 +36,10 @@ export const LinkWrapper = styled(NextLink)`
 `;
 
 export const ButtonWrapper = styled(Button)`
-	${tw`relative tracking-wide font-gilroy text-xl leading-[21.82px]`};
+	${tw`relative tracking-wide font-gilroy text-xl leading-[21.82px] border-none`};
+	background-color: var(--color);
+	border-color: var(--color);
 
-	${({ color, type }: ButtonProps) => {
-		const colorKey = type as keyof Colors['theme'];
-
-		return type && `
-			background-color: ${colors.theme[colorKey]};
-			border-color: ${colors.theme[colorKey]};
-			${color && `color: ${color};`}
-		`
-	}};
-	
 	&:hover:not(:disabled) {
 		${tw`opacity-90`};
 	}

@@ -391,14 +391,14 @@ export const IntroWrapper = styled.div`
     }
 		
 		.action {
-			${tw`flex cursor-pointer absolute justify-center items-center right-8 md:right-12 lg:right-20 xl:right-28 -bottom-8 rounded-full bg-theme-primary text-white text-3xl w-16 h-16 z-10`};
+			${tw`p-0 absolute right-8 md:right-12 lg:right-16 xl:right-24 2xl:right-144 -bottom-8 rounded-full w-16 h-16 z-10`};
 
 			&.accomodate {
-				${tw`hidden md:flex`};
+				${tw`hidden lg:flex`};
 			}
 			
 			svg {
-				${tw`h-10 w-10`};
+				${tw`w-12 h-12 pointer-events-none`};
 			}
 		}
   }

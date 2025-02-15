@@ -1,25 +1,45 @@
 'use client';
 
-import { forwardRef, Ref } from 'react';
+import { CSSProperties, forwardRef, Ref } from 'react';
 import { ButtonProps } from 'antd';
 
 import { ButtonWrapper } from '@/components/shared/button/styled';
 import { Spinner } from '@/components/shared/icon/spinner';
+import useClassName from '@/hooks/class-name';
 import { filterObject } from '@/utils';
+import colors from '@/libs/colors';
+import { Colors } from '@/types';
 
 const customButtonProps = [
 	'prependedIcon',
 	'appendedIcon',
 	'loading',
+	'rounded',
 	'icon'
 ];
 
 const Button = forwardRef((props: ButtonProps, ref: Ref<HTMLButtonElement>) => {
 	const buttonProps = filterObject({ target: props, filters: customButtonProps });
 	const { prependedIcon, appendedIcon, children, loading, size, icon } = props;
+	
+	const style = {
+		'--color': colors.theme[props.type as keyof Colors['theme']],
+		...props.style
+	} as CSSProperties;
+
+	const className = useClassName([
+		props.rounded ? 'rounded' : '',
+		props?.className ?? ''
+	]);
 
 	return (
-		<ButtonWrapper ref={ref} {...buttonProps} size={size ?? 'middle'}>
+		<ButtonWrapper
+			{...buttonProps}
+			size={size ?? 'middle'}
+			className={className}
+			style={style}
+			ref={ref}
+		>
 			{((prependedIcon || icon) && !loading) && (
 				<span className="ant-btn-icon">
 					{prependedIcon || icon}

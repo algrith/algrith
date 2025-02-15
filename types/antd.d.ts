@@ -50,6 +50,7 @@ declare module 'antd' {
 		prependedIcon?: ReactNode;
 		appendedIcon?: ReactNode;
 		noLoaderMargin?: boolean;
+		rounded?: boolean;
 	}
 
 	interface SpinProps extends SpinProps {

@@ -1,30 +1,26 @@
 import { useEffect } from 'react';
 
 const useScrollToElement = () => {
-	const scrollToElement = () => {
-		const scrollSelectors = document.querySelectorAll('[href^="#"]');
+	const scrollToElement = (e: Event) => {
+		const target = e.target as HTMLElement;
+		const targetId = target.dataset.scrollTo;
 
-		scrollSelectors.forEach((selector) => {
-			selector.addEventListener('click', (e) => {
-				e.preventDefault();
+		if (targetId) {
+			e.preventDefault();
 
-				const target = e.target as HTMLElement;
-				const href = target.getAttribute('href') as string;
-				const targetElement = document.querySelector(href) as HTMLElement;
-				let offsetTop = 0;
-				
-				if (!targetElement) return;
+			const targetElement = document.querySelector(`#${targetId}`) as HTMLElement;
+			let offsetTop = 0;
+			
+			if (!targetElement) return;
 
-				offsetTop = targetElement.offsetTop;
+			offsetTop = targetElement.offsetTop;
 
-				scroll({ behavior: 'smooth', top: offsetTop });
-			});
-		});
+			scroll({ behavior: 'smooth', top: offsetTop });
+		}
 	};
 
   useEffect(() => {
 		document.addEventListener('click', scrollToElement);
-		scrollToElement();
 
 		return () => {
 			document.removeEventListener('click', scrollToElement);
