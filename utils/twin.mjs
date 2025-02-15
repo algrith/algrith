@@ -31,7 +31,6 @@ export default function withTwin(
             options: {
               sourceMaps: options.dev,
               plugins: [
-                // babelPluginTwin, // Optional
                 babelPluginMacros,
                 [babelPluginTypescript, { isTSX: true }],
               ],

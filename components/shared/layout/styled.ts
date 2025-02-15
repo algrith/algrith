@@ -48,8 +48,7 @@ export const SectionWrapper = styled(SectionLayout)`
   }
   
   .items {
-    ${tw`relative w-full flex flex-wrap py-4 md:pt-16 lg:pb-16`};
-    // ${tw`relative w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10 py-4 md:pt-16 lg:pb-16`};
+    ${tw`relative w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10 py-4 md:pt-16 lg:pb-16`};
   }
 `;
 
@@ -58,7 +57,7 @@ export const ContentWrapper = styled(Content)`
 `;
 
 export const SectionCardWrapper = styled.div`
-  ${tw`basis-full md:basis-2xs bg-red-400`};
+  ${tw`w-full`};
 
   .content {
     ${tw`overflow-hidden w-full px-6 pb-16 dark:bg-slate-800 bg-white dark:text-dark-mode-septenary text-gray-500 text-xl md:leading-9 rounded-xl text-center shadow dark:shadow-none md:min-h-84 lg:min-h-80`};

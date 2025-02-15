@@ -1,6 +1,6 @@
 import { SectionCardWrapper, SectionWrapper } from '@/components/shared/layout/styled';
-import ReviewCard from '@/components/home/review-card';
 import { SectionProps, SectionItemProps, Review } from '@/types';
+import ReviewCard from '@/components/home/review-card';
 import { Avatar } from 'antd';
 
 const getTitle = (title: SectionProps['title']) => {
