@@ -185,7 +185,7 @@ export const HowItWorksWrapper = styled(SectionLayout)`
     }
     
     .aims {
-      ${tw`grid md:grid-cols-2 xl:grid-cols-1 gap-8 dark:text-dark-mode-senary`};
+      ${tw`grid md:grid-cols-2 xl:grid-cols-1 self-start gap-8 dark:text-dark-mode-senary`};
 
       .item {
         ${tw`rounded-2xl border border-gray-100 bg-white p-6 md:p-8`};
