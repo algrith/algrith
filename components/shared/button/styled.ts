@@ -41,7 +41,7 @@ export const ButtonWrapper = styled(Button)`
 	border-color: var(--color);
 
 	&:hover:not(:disabled) {
-		${tw`opacity-90`};
+		${tw`filter brightness-90`};
 	}
 	
 	&:disabled {

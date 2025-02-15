@@ -48,7 +48,7 @@ export const SectionWrapper = styled(SectionLayout)`
   }
   
   .items {
-    ${tw`relative w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10 py-4 md:pt-16 lg:pb-16`};
+    ${tw`relative w-full grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-10 justify-center py-4 md:pt-16 lg:pb-16`};
   }
 `;
 
