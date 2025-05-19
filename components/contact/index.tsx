@@ -1,7 +1,7 @@
 'use client';
 
+import GoogleCaptchaWrapper from '../shared/recaptcha';
 import Intro from '@/components/shared/layout/intro';
-import GoogleCaptchaWrapper from '../shared/layout';
 import Contact from '@/components/contact/contact';
 import { IntroProps } from '@/types';
 
