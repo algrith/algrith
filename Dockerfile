@@ -38,6 +38,8 @@ RUN npm ci
 
 # COPY .env .env
 
+RUN npm install
+
 RUN npm run build
 
 CMD ["npm", "start"]
