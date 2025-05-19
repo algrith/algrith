@@ -35,7 +35,23 @@ jobs:
           registry: ${{ secrets.GAR_LOCATION }}-docker.pkg.dev
           username: _json_key
           password: ${{ secrets.GCP_CREDENTIALS }}
-
+      
+      - name: Create .env File
+        run: |
+          echo "NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}" >> .env
+          echo "CONTACT_MAIL_AUTH_USERNAME=${{ secrets.CONTACT_MAIL_AUTH_USERNAME }}" >> .env
+          echo "CONTACT_MAIL_AUTH_PASSWORD=${{ secrets.CONTACT_MAIL_AUTH_PASSWORD }}" >> .env
+          echo "AUTH_GOOGLE_CLIENT_SECRET=${{ secrets.AUTH_GOOGLE_CLIENT_SECRET }}" >> .env
+          echo "CONTACT_MAIL_AUTH_PORT=${{ secrets.CONTACT_MAIL_AUTH_PORT }}" >> .env
+          echo "CONTACT_MAIL_AUTH_HOST=${{ secrets.CONTACT_MAIL_AUTH_HOST }}" >> .env
+          echo "AUTH_GOOGLE_CLIENT_ID=${{ secrets.AUTH_GOOGLE_CLIENT_ID }}" >> .env
+          echo "CONTACT_MAIL_RECEIVER=${{ secrets.CONTACT_MAIL_RECEIVER }}" >> .env
+          echo "RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}" >> .env
+          echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> .env
+          echo "CONTACT_MAIL_SENDER=${{ secrets.CONTACT_MAIL_SENDER }}" >> .env
+          echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env
+          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env
+          echo "AUTH_URL=${{ secrets.AUTH_URL }}" >> .env
       - name: Build and Push Container
         run: |-
           docker build -t "${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }}:${{ github.sha }}" ./
