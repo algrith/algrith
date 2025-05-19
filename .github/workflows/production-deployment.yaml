@@ -49,6 +49,7 @@ jobs:
           region: ${{ secrets.REGION }}
           image: ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }}:${{ github.sha }}
           env_vars: |
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
             CONTACT_MAIL_AUTH_USERNAME=${{ secrets.CONTACT_MAIL_AUTH_USERNAME }}
             CONTACT_MAIL_AUTH_PASSWORD=${{ secrets.CONTACT_MAIL_AUTH_PASSWORD }}
             AUTH_GOOGLE_CLIENT_SECRET=${{ secrets.AUTH_GOOGLE_CLIENT_SECRET }}
@@ -56,6 +57,7 @@ jobs:
             CONTACT_MAIL_AUTH_HOST=${{ secrets.CONTACT_MAIL_AUTH_HOST }}
             AUTH_GOOGLE_CLIENT_ID=${{ secrets.AUTH_GOOGLE_CLIENT_ID }}
             CONTACT_MAIL_RECEIVER=${{ secrets.CONTACT_MAIL_RECEIVER }}
+            RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}
             NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}
             CONTACT_MAIL_SENDER=${{ secrets.CONTACT_MAIL_SENDER }}
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
