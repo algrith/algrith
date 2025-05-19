@@ -87,8 +87,20 @@ export const ContactFormWrapper = styled.div`
       }
     }
     
-    .button-wrapper {
+    .footer {
       ${tw`px-6 xl:px-12 pt-4 pb-7 xl:pb-12 dark:bg-dark-mode-secondary bg-gray-50`};
+
+      .feedback {
+        ${tw`text-md mb-4`};
+
+        &.success {
+          ${tw`text-theme-success`};
+        }
+        
+        &.error {
+          ${tw`text-theme-error`};
+        }
+      }
     }
   }
 `;

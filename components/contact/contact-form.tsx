@@ -4,7 +4,7 @@ import { SendOutlined } from '@ant-design/icons';
 import { Country, Input, Select, TextArea } from '@/components/shared/input';
 import Button from '@/components/shared/button';
 import { ContactFormWrapper } from './styled';
-import useSendMail from '@/hooks/send-mail';
+import useSendMail from '@/hooks/mailer';
 
 const topicOptions = [
   {
@@ -29,32 +29,36 @@ const topicOptions = [
   }
 ];
 
-const ContactForm = () => {
-  const { feedback, sendMail } = useSendMail();
-  const [details, setDetails] = useState({
-    subject: 'New Contact Mail',
-    template: 'contact-email',
-    customTopic: '',
-    country: '',
-    message: '',
-    email: '',
-    phone: '',
-    topic: '',
-    name: ''
-  });
+const initialModel = {
+  subject: 'New Contact Mail',
+  customTopic: '',
+  country: '',
+  message: '',
+  email: '',
+  phone: '',
+  topic: '',
+  token: '',
+  name: ''
+};
 
+const ContactForm = () => {
+  const [model, updateModel] = useState(initialModel);
+  const { feedback, sendMail } = useSendMail();
+  
   const handleChange = (key: string, value: string) => {
-    const newDetails = { ...details, [key]: value };
+    const newModel = { ...model, [key]: value };
     if (key === 'topic' && value !== 'other') {
-      newDetails.customTopic = '';
+      newModel.customTopic = '';
     }
 
-    setDetails({ ...newDetails });
+    updateModel({ ...newModel });
   };
   
-  const handleSendMail = (e: FormEvent) => {
+  const handleSendMail = async (e: FormEvent) => {
     e.preventDefault();
-    sendMail(details);
+    
+    const { success } = await sendMail(model);
+    if (success) updateModel(initialModel);
   };
 
   return (
@@ -65,8 +69,7 @@ const ContactForm = () => {
             <Input
               onChange={(e) => handleChange('name', e.target.value)}
               placeholder="e.g. John Doe"
-              showRequiredIndicator
-              value={details.name}
+              value={model.name}
               label="Name"
               type="text"
               id="name"
@@ -76,8 +79,7 @@ const ContactForm = () => {
             <Input
               onChange={(e) => handleChange('email', e.target.value)}
               placeholder="e.g. johndoe@email.com"
-              showRequiredIndicator
-              value={details.email}
+              value={model.email}
               label="Email"
               type="email"
               id="email"
@@ -87,17 +89,16 @@ const ContactForm = () => {
             <Country
               onChange={(value) => handleChange('country', value)}
               placeholder="Select your country"
-              defaultValue={details.country}
-              showRequiredIndicator
+              defaultValue={model.country}
               label="Location"
               id="country"
+              required
             />
             
             <Input
               onChange={(e) => handleChange('phone', e.target.value)}
               placeholder="e.g. +88 9209 635"
-              showRequiredIndicator
-              value={details.phone}
+              value={model.phone}
               label="Phone"
               id="phone"
               type="tel"
@@ -109,16 +110,16 @@ const ContactForm = () => {
             onChange={(value) => handleChange('topic', value)}
             label="Topic (What are you interested in?)"
             placeholder="Select an interest"
-            defaultValue={details.topic}
+            defaultValue={model.topic}
             options={topicOptions}
-            showRequiredIndicator
             id="topic"
+            required
           />
 
-          {details.topic === "other" && (
+          {model.topic === "other" && (
             <Input
               onChange={(e) => handleChange('customTopic', e.target.value)}
-              value={details.customTopic}
+              value={model.customTopic}
               placeholder="e.g. Custom topic"
               label="Specify your topic"
               id="customTopic"
@@ -131,8 +132,7 @@ const ContactForm = () => {
             description="(Briefly describe your business, and include links if any.)"
             onChange={(e) => handleChange('message', e.target.value)}
             placeholder="I need a corporate website for my business"
-            value={details.message}
-            showRequiredIndicator
+            value={model.message}
             label="Message"
             id="message"
             rows={7}
@@ -140,7 +140,13 @@ const ContactForm = () => {
           />
         </div>
 
-        <div className="button-wrapper">
+        <div className="footer">
+          {feedback.message && (
+            <p className={`feedback ${feedback.success ? 'success' : 'error'}`}>
+              {feedback.message}
+            </p>
+          )}
+            
           <Button
             prependedIcon={<SendOutlined />}
             disabled={feedback.loading}

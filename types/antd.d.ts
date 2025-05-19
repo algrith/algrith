@@ -63,10 +63,10 @@ declare module 'antd' {
 	}
 	
 	interface InputLabelProps {
-		showRequiredIndicator?: boolean;
 		label?: ReactNode | string;
 		size?: InputProps['type'];
 		floatLabel?: boolean;
+		required?: boolean;
 		id?: string;
 	}
 };

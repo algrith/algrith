@@ -178,6 +178,19 @@ export interface ResponseData {
   data: {};
 };
 
+export interface ContactModel {
+	customTopic: string;
+	template?: string;
+	subject: string;
+	country: string;
+	message: string;
+	email: string;
+	phone: string;
+	topic: string;
+	token: string;
+	name: string;
+};
+
 export interface UserProfile {
 	auth_provider: 'google' | 'email';
 	date_modified: string;

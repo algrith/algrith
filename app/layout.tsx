@@ -62,7 +62,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
   <ReduxProvider>
-    <NextAuthProvider>
+    {/* <NextAuthProvider> */}
       <html lang="en-US">
         <body className={fontClassNames}>
           <Suspense>
@@ -90,7 +90,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
           </AntDesignThemeProvider>
         </body>
       </html>
-    </NextAuthProvider>
+    {/* </NextAuthProvider> */}
   </ReduxProvider>
 );
 

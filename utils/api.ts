@@ -1,23 +1,20 @@
-import { getSession, signOut } from 'next-auth/react';
-
 import { FetchPayload, FetchResponse } from 'api';
 
-export const Fetch = async ({
-  contentType = 'application/json',
-  isExternalApi = false,
-  removeToken = false,
-  body = undefined,
-  method = 'GET',
-	path,
-  url,
-}: FetchPayload) => {
+export const Fetch = async (props: FetchPayload): Promise<FetchResponse | any> => {
+  const {
+    contentType = 'application/json',
+    isExternalApi = false,
+    body = undefined,
+    method = 'GET',
+    path,
+    url,
+  } = props;
+
 	if (!url && !path) throw new Error('One of url or path parameters must be provided');
 	const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}/api${path}`;
-  const session = await getSession();
-  
+
   const config: RequestInit = {
     headers: {
-      Authorization: !removeToken ? `Bearer ${session?.accessToken}` : '',
       'Content-Type': contentType,
     },
     redirect: 'follow',
@@ -35,20 +32,10 @@ export const Fetch = async ({
 
     const data = await response.json();
 
-    if (!response.ok) {
-      const isExpiredTokenError = ['authentication_failed', 'token_not_valid'].includes(data?.data?.response_code);
-      console.error(data.message, response.status);
-      
-      if (isExpiredTokenError) {
-        localStorage.intendedRoute = location.pathname;
-        signOut({ callbackUrl: '/auth' }).finally(() => {
-          // Perform any reset here
-        });
-      }
-    }
+    if (!response.ok) console.error(data.message, response.status);
 
     if (isExternalApi) return data;
-
+    
     return data as FetchResponse;
   } catch (error: any) {
     if (error instanceof SyntaxError) {
@@ -69,6 +56,6 @@ export const Fetch = async ({
       message: error?.message ?? 'An error occurred',
       success: false,
       data: null,
-    };
+    } as FetchResponse;
   }
 };

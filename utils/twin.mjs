@@ -39,15 +39,15 @@ export default function withTwin(
         ],
       });
 
-      config.resolve.alias = {
-        ...(config.resolve.alias || {}),
-        'handlebars': 'handlebars/runtime.js'
-      };
+      // config.resolve.alias = {
+      //   ...(config.resolve.alias || {}),
+      //   'handlebars': 'handlebars/runtime.js'
+      // };
       
-      config.resolveLoader.alias = {
-        ...(config.resolveLoader.alias || {}),
-        'hbs': 'handlebars-loader'
-      };
+      // config.resolveLoader.alias = {
+      //   ...(config.resolveLoader.alias || {}),
+      //   'hbs': 'handlebars-loader'
+      // };
 
       if (typeof nextConfig.webpack === 'function') {
         return nextConfig.webpack(config, options);

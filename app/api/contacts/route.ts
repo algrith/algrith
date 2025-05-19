@@ -8,13 +8,11 @@ import { ResponseData } from '@/types';
 const response = (data: ResponseData, status: number) => Response.json(data, { status });
 
 const POST = async (request: NextRequest) => {
-  const baseResponse = { message: 'Server error', success: false, data: {} };
-
   try {
     const templatesDir = path.resolve('./templates');
     const {
+      template = 'contact-email',
       customTopic,
-      template,
       subject,
       country,
       message,
@@ -71,9 +69,13 @@ const POST = async (request: NextRequest) => {
       data
     }, 200);
   } catch (error) {
-    console.log(error);
+    console.error('Server Error', error);
     
-    return response(baseResponse, 500);
+    return response({
+      message: 'Server Error',
+      success: false,
+      data: {}
+    }, 500);
   }
 };
 

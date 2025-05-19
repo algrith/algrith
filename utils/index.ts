@@ -11,6 +11,11 @@ export const filterObject = ({ target, filters, include = false }: FilterObjectP
 	);
 };
 
+export const isValidEmail = (email: string): boolean => {
+	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	return emailRegex.test(email);
+};
+
 export const kebabToCamelCase = (str: string) => {
   return str.replace(/-(\w)/g, (match, letter) => letter.toUpperCase());
 };

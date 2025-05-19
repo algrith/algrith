@@ -5,6 +5,7 @@ import withTwin from './utils/twin.mjs';
 export default removeImports()(
   withTwin({
     reactStrictMode: true,
+    output: 'standalone',
     experimental: {
       turbo: {}
     }

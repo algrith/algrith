@@ -33,6 +33,8 @@ module.exports = {
         'dark-mode-primary': colors.dark.primary,
         'dark-mode-senary': colors.dark.senary,
         'theme-primary': colors.theme.primary,
+        'theme-success': colors.theme.success,
+        'theme-error': colors.theme.error,
         'theme-text': colors.theme.text,
         'theme-link': colors.theme.link,
         'navyblue': '#0b214a'

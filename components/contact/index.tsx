@@ -1,6 +1,7 @@
 'use client';
 
 import Intro from '@/components/shared/layout/intro';
+import GoogleCaptchaWrapper from '../shared/layout';
 import Contact from '@/components/contact/contact';
 import { IntroProps } from '@/types';
 
@@ -18,10 +19,10 @@ const intro: IntroProps = {
 
 const ContactUs = () => {
   return (
-    <>
+    <GoogleCaptchaWrapper>
       <Intro id="intro-about" {...intro} />
       <Contact />
-    </>
+    </GoogleCaptchaWrapper>
   );
 };
 

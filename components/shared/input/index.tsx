@@ -24,7 +24,6 @@ import colors from '@/libs/colors';
 import { Colors } from '@/types';
 
 const genericCustomProps = [
-  'showRequiredIndicator',
   'description',
   'floatLabel',
   'actionText',
@@ -40,6 +39,7 @@ const customProps = {
     ...genericCustomProps,
     'onFloatLabelChange',
     'prefixIcon',
+    'required',
     'type'
   ]
 };
@@ -301,11 +301,11 @@ export const TextArea = forwardRef((props: TextAreaProps, ref: Ref<HTMLTextAreaE
   });
 
   const {
-    showRequiredIndicator,
     description,
     floatLabel,
     actionText,
     helpText,
+    required,
 		label,
     id
   } = props;
@@ -316,8 +316,8 @@ export const TextArea = forwardRef((props: TextAreaProps, ref: Ref<HTMLTextAreaE
     <InputWrapper className={className}>
       {label && (
         <Label
-          showRequiredIndicator={showRequiredIndicator}
           floatLabel={isFloating}
+          required={required}
           label={label}
           id={id}
         />
@@ -375,11 +375,11 @@ export const Password = (props: PasswordProps) => {
   });
 
   const {
-    showRequiredIndicator,
     description,
     floatLabel,
     actionText,
     helpText,
+    required,
 		label,
     size,
     id
@@ -391,8 +391,8 @@ export const Password = (props: PasswordProps) => {
     <InputWrapper className={className}>
       {label && (
         <Label
-          showRequiredIndicator={showRequiredIndicator}
           floatLabel={isFloating}
+          required={required}
           label={label}
           size={size}
           id={id}
@@ -422,12 +422,12 @@ export const Select = (props: SelectProps) => {
   const className = useClassName(props.className);
 
   const {
-    showRequiredIndicator,
     floatLabel = true,
     description,
     actionText,
 		prefixIcon,
 		helpText,
+    required,
     label,
     type,
     size,
@@ -444,8 +444,8 @@ export const Select = (props: SelectProps) => {
     <SelectWrapper className={className}>
       {label && (
         <Label
-          showRequiredIndicator={showRequiredIndicator}
           floatLabel={isFloatingLabel}
+          required={required}
           label={label}
           size={size}
           id={id}
@@ -507,11 +507,11 @@ export const Input = (props: InputProps) => {
   });
 
   const {
-    showRequiredIndicator,
     description,
     floatLabel,
     actionText,
     helpText,
+    required,
 		label,
     size,
     id
@@ -523,8 +523,8 @@ export const Input = (props: InputProps) => {
     <InputWrapper className={className}>
       {label && (
         <Label
-          showRequiredIndicator={showRequiredIndicator}
           floatLabel={isFloating}
+          required={required}
           label={label}
           size={size}
           id={id}
@@ -546,7 +546,7 @@ export const Input = (props: InputProps) => {
 };
 
 const Label = (props: InputLabelProps) => {
-  const { showRequiredIndicator = false, floatLabel, label, size, id } = props;
+  const { required = false, floatLabel, label, size, id } = props;
   const className = [floatLabel ? 'floating' : '', size ?? ''].join(' ').trim();
 
   return (
@@ -556,7 +556,7 @@ const Label = (props: InputLabelProps) => {
       htmlFor={id}
     >
       {label}
-      {showRequiredIndicator && <span className="required">*</span>}
+      {required && <span className="required">*</span>}
     </LabelWrapper>
   );
 };
