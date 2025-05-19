@@ -23,10 +23,6 @@ const useMailer = () => {
   const { executeRecaptcha } = useGoogleReCaptcha();
 
   const verifyReCaptchaToken = async () => {
-    console.log('EXECUTE RECAPTCHA: ', executeRecaptcha);
-    console.log('NEXT_PUBLIC_RECAPTCHA_SITE_KEY: ', process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY);
-    console.log('RECAPTCHA_SECRET_KEY: ', process.env.RECAPTCHA_SECRET_KEY);
-    
     if (!executeRecaptcha) return false;
     
     const token = await executeRecaptcha('contact');
