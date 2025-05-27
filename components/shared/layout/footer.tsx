@@ -43,12 +43,16 @@ const resources: FooterResource = [
 			},
 			{
 				text: 'Blog',
-				href: '/'
+				href: '/',
+				subItem: {
+					text: 'Coming soon',
+					href: '/'
+				}
 			},
-			{
-				text: 'FAQ',
-				href: '/'
-			}					
+			// {
+			// 	text: 'FAQ',
+			// 	href: '/'
+			// }					
 		]
 	},
 	{
@@ -86,34 +90,38 @@ const resources: FooterResource = [
 
 const features = [
 	{
-		text: 'Data for scientists',
+		text: 'Harness the power of structured datasets tailored for scientific research. Our curated collections support advanced analytics, machine learning models, and reproducible experiments, ensuring researchers have access to reliable and comprehensive data.',
+		title: 'Data for scientists',
 		icon: <BugOutlined />
 	},
 	{
+		text: `Elevate your web applications with our extensive datasets optimized for frontend and backend development. Whether you're building dynamic interfaces or robust APIs, our data solutions enhance functionality and user engagement.`,
 		icon: <DesktopOutlined />,
-		text: 'Data for Web'
+		title: 'Data for Web'
 	},
 	{
+		text: `Design intuitive and user-centric interfaces using our datasets focused on user behavior and interaction patterns. Gain insights into user preferences to create seamless and engaging user experiences across platforms.`,
 		icon: <AntDesignOutlined />,
-		text: 'Data for UI/UX'
+		title: 'Data for UI/UX'
 	},
 	{
+		text: `Kickstart your data journey with resources tailored for interns and beginners. Our beginner-friendly datasets and tutorials provide a solid foundation in data analysis, helping you build skills and confidence in real-world applications.`,
 		icon: <DeploymentUnitOutlined />,
-		text: 'Data for Interns'
+		title: 'Data for Interns'
 	}
 ];
 
 const socials = [
 	{
-		href: '#',
+		href: '/',
 		icon: <FacebookFilled />
 	},
 	{
-		href: '#',
+		href: '/',
 		icon: <TwitterOutlined />
 	},
 	{
-		href: '#',
+		href: '/',
 		icon: <LinkedinFilled />,
 	}
 ];
@@ -135,15 +143,14 @@ const Footer = () => {
 						Featured
 					</h1>
 					<div className="section">
-						{features.map(({ text, icon }) => (
-							<details key={text}>
+						{features.map(({ title, text, icon }) => (
+							<details key={title}>
 								<summary>
-									<span>{text}</span>
+									<span>{title}</span>
 									{icon}
 								</summary>
-								<p>
-									More Content for {text}
-								</p>
+
+								<p>{text}</p>
 							</details>
 						))}
 					</div>
