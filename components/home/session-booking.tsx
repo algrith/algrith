@@ -11,7 +11,9 @@ const SessionBooking = () => {
       <div className="left">
         <h1>
           Looking for ways to optimize your business using technology while saving time and money?
+          <br />
           Not sure how technology can enhance your business?
+          <br />
           Looking for excellence at an affordable rate?
         </h1>
         

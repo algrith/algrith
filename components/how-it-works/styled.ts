@@ -199,7 +199,7 @@ export const HowItWorksWrapper = styled(SectionLayout)`
         }
         
         img {
-          ${tw`filter dark:brightness-75 object-cover object-center rounded-lg`};
+          ${tw`filter dark:brightness-75 object-cover object-center rounded-lg transition-all ease-in-out hover:scale-[105%]`};
         }
       }
     }
@@ -283,7 +283,7 @@ export const ContentWrapper = styled.div`
 `;
 
 export const StepWrapper = styled.div`
-  ${tw`flex justify-between relative pb-16`};
+  ${tw`flex justify-between relative pb-16 transition-all ease-in-out hover:scale-[103%]`};
 
   &.left {
     ${tw`justify-end`};

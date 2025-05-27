@@ -27,7 +27,7 @@ export const ContactInquiryCardWrapper = styled.div`
       ${tw`h-64`};
 
       .ant-avatar {
-        ${tw`filter rounded-none dark:brightness-75 h-full w-full object-cover`};
+        ${tw`filter rounded-none dark:brightness-75 h-full w-full object-cover transition-all ease-in-out hover:scale-[105%]`};
       }
     }
     

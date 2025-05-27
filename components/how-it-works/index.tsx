@@ -95,7 +95,7 @@ const HowItWorks = () => {
             <p>
               Please note that while this represents an idealized workflow, adjustments may be made based on the unique industry and services involved, such as the integration technologies like Artificial Intelligence.
             </p>
-            <Link type="primary" asButton href="/contact-us">
+            <Link size="middle" type="primary" asButton href="/contact-us">
               Get Started
             </Link>
           </div>

@@ -5,7 +5,7 @@ const WhoWeAre = () => {
   return (
     <WhoWeAreWrapper id="who-we-are">
       <h2>
-        We're sure you would like an introduction.
+        Your Partner in Cutting-Edge Software Solutions.
       </h2>
       
       <p>
@@ -14,7 +14,7 @@ const WhoWeAre = () => {
       </p>
       
       <div>
-        <Link type="primary" asButton href="/products">Get Started</Link>
+        <Link type="primary" asButton href="/contact-us">Get Started</Link>
       </div>
     </WhoWeAreWrapper>
   )

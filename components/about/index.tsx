@@ -1,10 +1,12 @@
 'use client';
 
-import { Html5Outlined, LineChartOutlined, RobotOutlined, StarOutlined } from '@ant-design/icons';
+import { Html5Outlined, LineChartOutlined, RobotOutlined, SearchOutlined, StarOutlined } from '@ant-design/icons';
 
 import Intro from '@/components/shared/layout/intro';
 import { IntroProps, SectionProps } from '@/types';
 import Section from '../shared/layout/section';
+import GetStarted from './get-started';
+import OurValues from './our-values';
 
 const whatWeDoOutlines: SectionProps = {
   illustration: './images/illustrations/girl_3.gif',
@@ -12,10 +14,10 @@ const whatWeDoOutlines: SectionProps = {
   id: 'what-we-do',
   items: [
     {
-      content: 'Elevate businesses with cutting-edge web applications. Seamless, efficient, and tailored solutions for success.',
-      title: 'Web Application Development',
+      content: `We develop custom web applications that streamline operations, enhance user engagement, and drive business growth.`,
+      title: 'Responsive Web Development',
       icon: <Html5Outlined />,
-      subtitle: 'Exposure'
+      subtitle: 'Visibility'
     },
     {
       content: 'Unlock possibilities with our AI services—innovative solutions for smarter automation, enhanced decision-making, and unparalleled efficiency.',
@@ -34,6 +36,12 @@ const whatWeDoOutlines: SectionProps = {
       title: 'Business Optimization',
       icon: <LineChartOutlined />,
       subtitle: 'Upgrade'
+    },
+    {
+      content: 'Beyond development, we empower your digital presence through SEO optimization, targeted content creation, and digital marketing campaigns to boost your visibility.',
+      title: 'Digital Strategy & Online Growth',
+      icon: <SearchOutlined />,
+      subtitle: 'Reach'
     }
   ]
 };
@@ -41,9 +49,9 @@ const whatWeDoOutlines: SectionProps = {
 const intro: IntroProps = {
   title: 'Who we really are!',
   description: {
-    text: `We are a software company dedicated to delivering elegant, efficient,\n secure, accessible etc, web applications and websites for use by\n clients both in the public and private sector.`,
+    text: `We are a software company dedicated to delivering elegant, efficient,\n secure, accessible etc, web applications and websites for use by\n clients both in the public and private sector.`
   },
-  subtitle: "We make happy clients",
+  subtitle: "Your Strategic Partner in Digital Excellence",
   action: {
     scrollTo: 'outline'
   }
@@ -53,7 +61,9 @@ const About = () => {
   return (
     <>
       <Intro id="intro-about" {...intro} />
+      <OurValues />
       <Section {...whatWeDoOutlines} />
+      <GetStarted />
     </>
   );
 };

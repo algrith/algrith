@@ -24,7 +24,7 @@ export const MissionStatementWrapper = styled(SectionLayout)`
     ${tw`md:max-w-lg`};
 
     .ant-avatar {
-      ${tw`rounded-3xl filter dark:brightness-75 w-full h-auto object-center object-contain`};
+      ${tw`rounded-3xl filter dark:brightness-75 w-full h-auto object-center object-contain transition-all ease-in-out hover:scale-[105%]`};
     }
   }
 `;
@@ -36,7 +36,7 @@ export const SessionBookingWrapper = styled(SectionLayout)`
     ${tw`sm:max-w-lg mt-12 md:mt-0 overflow-hidden`};
 
     .ant-avatar {
-      ${tw`filter dark:brightness-75 w-full h-full object-center object-cover rounded-3xl`};
+      ${tw`filter dark:brightness-75 w-full h-full object-center object-cover rounded-3xl transition-all ease-in-out hover:scale-[105%]`};
     }
   }
   
@@ -44,7 +44,7 @@ export const SessionBookingWrapper = styled(SectionLayout)`
     ${tw`md:pr-6 lg:pr-28 xl:pr-32`};
 
     h1 {
-      ${tw`text-2xl font-semibold leading-tight sm:leading-tight`};
+      ${tw`text-2xl md:text-3xl lg:text-4xl dark:text-theme-secondary font-extrabold tracking-wide leading-10 md:leading-[1.5] mb-3`};
     }
     
     p {
@@ -84,7 +84,7 @@ export const GetStartedWrapper = styled(SectionLayout)`
     ${tw`sm:max-w-2xl mt-8 md:mt-0 overflow-hidden`};
 
     .ant-avatar {
-      ${tw`filter dark:brightness-75 w-full h-full object-contain lg:object-cover rounded-3xl`};
+      ${tw`filter dark:brightness-75 w-full h-full object-contain lg:object-cover rounded-3xl transition-all ease-in-out hover:scale-[95%]`};
     }
   }
 `;
@@ -145,11 +145,11 @@ export const WhoWeAreWrapper = styled(SectionLayout)`
   ${tw`text-center py-10 lg:py-20 dark:bg-slate-900 bg-white`};
 
   h2 {
-    ${tw`text-3xl md:text-5xl dark:text-theme-secondary font-extrabold tracking-wide leading-10 md:leading-[54px] uppercase mb-8`};
+    ${tw`text-3xl md:text-5xl lg:text-7xl xl:text-8xl dark:text-theme-secondary font-extrabold tracking-wide leading-10 md:leading-[54px] mb-8`};
   }
   
   p {
-    ${tw`mt-4 mb-10 lg:max-w-4xl xl:max-w-6xl leading-9 text-xl md:text-2xl font-montserrat dark:text-dark-mode-septenary text-gray-500 lg:mx-auto`};
+    ${tw`mt-4 mb-10 lg:max-w-4xl xl:max-w-6xl md:leading-[1.8] text-xl md:text-2xl font-montserrat dark:text-dark-mode-septenary text-gray-500 lg:mx-auto`};
   }
 `;
 
@@ -157,7 +157,7 @@ export const ReviewCardWrapper = styled.figure`
   ${tw`flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start gap-6 bg-slate-100 dark:bg-dark-mode-secondary rounded-xl w-full p-8`};
 
   .content {
-    ${tw`text-center xl:text-left space-y-4`};
+    ${tw`text-center 2xl:text-left space-y-4 transition-all ease-in-out hover:scale-[105%]`};
 
     blockquote p {
       ${tw`text-xl dark:text-dark-mode-septenary text-gray-500`};
@@ -194,7 +194,7 @@ export const PingAnimationWrapper = styled.div`
 `;
 
 export const WelcomeIntroWrapper = styled.div`
-  ${tw`relative w-full h-auto lg:h-188 bg-intro-index bg-right-top md:bg-left-top bg-cover bg-scroll lg:bg-fixed bg-no-repeat`};
+  ${tw`relative w-full h-auto lg:h-188 bg-intro-index bg-right-top md:bg-left-top bg-cover bg-scroll xl:bg-fixed bg-no-repeat`};
   
   .inner {
     ${tw`bg-theme-primary/80 dark:bg-dark-mode-primary/90 h-full w-full mx-auto flex justify-between items-center px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144 py-16`};
@@ -209,7 +209,7 @@ export const WelcomeIntroWrapper = styled.div`
   }
 
   .typing-pad {
-    ${tw`w-full font-bold leading-tight md:leading-tight lg:leading-tight dark:text-dark-mode-octonary text-white text-5xl lg:text-7xl 2xl:text-8xl`};
+    ${tw`w-full font-bold leading-tight md:leading-tight lg:leading-tight xl:leading-tight dark:text-dark-mode-octonary text-white text-5xl lg:text-7xl xl:text-8xl`};
   }
 
   .description {

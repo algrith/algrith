@@ -10,7 +10,7 @@ const MissionStatement = () => {
     <MissionStatementWrapper>
       <div className="left">
         <h1>
-          Let us handle your online presence and visibillity while you focus on your business.
+          Enhance your digital presence with Algrith, allowing you to concentrate on growing your business.
         </h1>
 
         <p>
@@ -21,7 +21,7 @@ const MissionStatement = () => {
           <span> Elevate your online journey with our expertise.</span>
         </p>
         
-        <Link asButton type="secondary" href="/products">
+        <Link asButton type="secondary" href="/contact-us">
           Learn How
           <BulbOutlined />
         </Link>

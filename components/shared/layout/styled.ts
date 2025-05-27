@@ -32,7 +32,7 @@ export const SectionWrapper = styled(SectionLayout)`
   }
   
   h1 {
-    ${tw`relative text-5xl leading-tight sm:leading-tight font-extrabold tracking-tight dark:text-slate-200 text-gray-900 sm:text-5xl py-4 mx-auto w-full text-center`};
+    ${tw`relative text-5xl capitalize leading-tight sm:leading-tight font-extrabold tracking-tight dark:text-slate-200 text-gray-900 sm:text-5xl py-4 mx-auto w-full text-center`};
 
     &.center {
       ${tw`text-center`};
@@ -60,7 +60,7 @@ export const SectionCardWrapper = styled.div`
   ${tw`w-full`};
 
   .content {
-    ${tw`overflow-hidden w-full px-6 pb-16 dark:bg-slate-800 bg-white dark:text-dark-mode-septenary text-gray-500 text-xl md:leading-9 rounded-xl text-center shadow dark:shadow-none md:min-h-84 lg:min-h-80`};
+    ${tw`overflow-hidden w-full px-6 pb-16 dark:bg-slate-800 bg-white dark:text-dark-mode-septenary text-gray-500 text-xl md:leading-9 rounded-xl text-center shadow dark:shadow-none md:min-h-84 lg:min-h-80 transition-all ease-in-out hover:scale-[105%]`};
 
     .top {
       ${tw`pt-6 w-full flex justify-between`};
@@ -133,7 +133,7 @@ export const HeaderWrapper = styled(Header)`
 `;
 
 export const FooterWrapper = styled(Footer)`
-	${tw`relative dark:bg-dark-mode-secondary bg-gray-100 px-0 py-0`};
+	${tw`relative dark:bg-dark-mode-secondary bg-gray-100 px-0 pb-0 pt-8`};
 
 	details {
 		${tw`my-4 rounded-xl dark:bg-dark-mode-tertiary bg-white shadow-lg border-gray-200 cursor-pointer`};
