@@ -188,7 +188,7 @@ export const HowItWorksWrapper = styled(SectionLayout)`
       ${tw`grid md:grid-cols-2 xl:grid-cols-1 self-start gap-8 dark:text-dark-mode-senary`};
 
       .item {
-        ${tw`rounded-2xl border border-gray-100 bg-white p-6 md:p-8`};
+        ${tw`rounded-2xl border border-gray-100 dark:border-dark-mode-secondary dark:bg-dark-mode-secondary bg-white p-6 md:p-8`};
 
         h2 {
           ${tw`mb-4 text-2xl dark:text-theme-primary font-bold`};
@@ -199,7 +199,7 @@ export const HowItWorksWrapper = styled(SectionLayout)`
         }
         
         img {
-          ${tw`filter dark:brightness-75 object-cover object-center rounded-lg transition-all ease-in-out hover:scale-[105%]`};
+          ${tw`filter dark:brightness-75 object-cover object-center rounded-lg transition-all ease-in-out hover:scale-[95%]`};
         }
       }
     }

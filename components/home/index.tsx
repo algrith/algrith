@@ -1,15 +1,16 @@
 'use client';
 
 import {
-  CheckCircleOutlined,
-  LineChartOutlined,
-  CompassOutlined,
-  SearchOutlined,
-  RocketOutlined,
-  Html5Outlined,
-  RobotOutlined,
+  FundProjectionScreenOutlined,
+  SlidersOutlined,
+  SafetyOutlined,
+  GlobalOutlined,
+  OpenAIOutlined,
+  AlertOutlined,
   FireOutlined,
-  StarOutlined
+  RiseOutlined,
+  AimOutlined,
+  SunOutlined
 } from '@ant-design/icons';
 
 import MissionStatement from '@/components/home/mission-statement';
@@ -30,18 +31,18 @@ const whyChooseUsOutlines: SectionProps = {
     {
       content: 'We prioritize timely delivery, ensuring our clients receive efficient solutions that meet their business.',
       title: 'Swift and Accurate',
-      icon: <RocketOutlined />,
+      icon: <AlertOutlined />,
       subtitle: 'Delivery'
     },
     {
       content: 'We stay ahead of the curve, incorporating the latest technologies to ensure your business remains competitive in a rapidly evolving landscape.',
-      icon: <FireOutlined />,
+      icon: <SunOutlined />,
       title: 'Innovative',
       subtitle: 'Skilled'
     },
     {
       content: 'Integrity defines business life span and we are determined to live long with you.',
-      icon: <CheckCircleOutlined />,
+      icon: <SafetyOutlined />,
       subtitle: 'Reputable',
       title: 'Trusted'
     }
@@ -56,31 +57,37 @@ const whatWeDoOutlines: SectionProps = {
     {
       content: `We develop custom web applications that streamline operations, enhance user engagement, and drive business growth.`,
       title: 'Responsive Web Development',
-      icon: <Html5Outlined />,
+      icon: <GlobalOutlined />,
       subtitle: 'Visibility'
     },
     {
       content: 'Unlock possibilities with our AI services—innovative solutions for smarter automation, enhanced decision-making, and unparalleled efficiency.',
       title: 'Artificial Intelligence',
-      icon: <RobotOutlined />,
+      icon: <OpenAIOutlined />,
       subtitle: 'Relief'
     },
     {
       content: 'Transform online presence to reflect modern, user-friendly design for a powerful impact!',
       title: 'Website Revamp (Redesign)',
       subtitle: 'Sophistication',
-      icon: <StarOutlined />
+      icon: <FireOutlined />
     },
     {
       content: 'Maximize efficiency, minimize costs. Elevate your business with our tailored solutions for streamlined operations and growth.',
       title: 'Business Optimization',
-      icon: <LineChartOutlined />,
+      icon: <RiseOutlined />,
       subtitle: 'Upgrade'
     },
     {
       content: 'Beyond development, we empower your digital presence through SEO optimization, targeted content creation, and digital marketing campaigns to boost your visibility.',
       title: 'Digital Strategy & Online Growth',
-      icon: <SearchOutlined />,
+      icon: <SlidersOutlined />,
+      subtitle: 'Reach'
+    },
+    {
+      content: 'Design data pipelines, dashboards, and predictive models that help businesses understand trends, optimize operations, and uncover insights.',
+      title: 'Data Strategy & Analytics',
+      icon: <FundProjectionScreenOutlined />,
       subtitle: 'Reach'
     }
   ]
@@ -99,7 +106,7 @@ const reviews: SectionProps = {
 const intro: IntroProps = {
   title: 'The best software algorithm solution',
   action: {
-    icon: <CompassOutlined />,
+    icon: <AimOutlined />,
     scrollTo: 'who-we-are',
     text: 'Get Started'
   },

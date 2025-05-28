@@ -24,7 +24,7 @@ export const MissionStatementWrapper = styled(SectionLayout)`
     ${tw`md:max-w-lg`};
 
     .ant-avatar {
-      ${tw`rounded-3xl filter dark:brightness-75 w-full h-auto object-center object-contain transition-all ease-in-out hover:scale-[105%]`};
+      ${tw`rounded-3xl filter dark:brightness-75 w-full h-auto object-center object-contain transition-all ease-in-out hover:scale-[95%]`};
     }
   }
 `;
@@ -36,7 +36,7 @@ export const SessionBookingWrapper = styled(SectionLayout)`
     ${tw`sm:max-w-lg mt-12 md:mt-0 overflow-hidden`};
 
     .ant-avatar {
-      ${tw`filter dark:brightness-75 w-full h-full object-center object-cover rounded-3xl transition-all ease-in-out hover:scale-[105%]`};
+      ${tw`filter dark:brightness-75 w-full h-full object-center object-cover rounded-3xl transition-all ease-in-out hover:scale-[95%]`};
     }
   }
   
@@ -205,6 +205,10 @@ export const WelcomeIntroWrapper = styled.div`
 
     .left {
       ${tw`relative w-full lg:w-3/5`};
+
+      .anticon {
+        ${tw`text-2xl`};
+      }
     }
   }
 

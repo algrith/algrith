@@ -66,7 +66,7 @@ export const SectionCardWrapper = styled.div`
       ${tw`pt-6 w-full flex justify-between`};
 
       span {
-        ${tw`flex justify-center items-center p-2 text-md text-white bg-theme-primary w-10 h-10 rounded-full shadow-lg`};
+        ${tw`flex shadow-2xl justify-center items-center p-2 text-md text-white bg-theme-primary w-10 h-10 rounded-full shadow-lg`};
 
 				.anticon {
 					${tw`text-3xl`};
@@ -74,7 +74,7 @@ export const SectionCardWrapper = styled.div`
       }
       
       h3 {
-        ${tw`text-lg tracking-widest italic text-theme-secondary`};
+        ${tw`flex items-center px-3 py-1 text-sm tracking-widest text-theme-secondary font-semibold rounded-2xl dark:bg-[linear-gradient(145deg, #233045, #192231)] dark:shadow-[inset 3.6px 3.6px 2px #17202E, inset -3.6px -3.6px 2px #253248] bg-[linear-gradient(145deg, #FFFFFF, #DCDCDC)] shadow-[inset 3.6px 3.6px 2px #ECECEC, inset -3.6px -3.6px 2px #FFFFFF]`};
       }
     }
 		
@@ -133,7 +133,7 @@ export const HeaderWrapper = styled(Header)`
 `;
 
 export const FooterWrapper = styled(Footer)`
-	${tw`relative dark:bg-dark-mode-secondary bg-gray-100 px-0 pb-0 pt-8`};
+	${tw`relative dark:bg-dark-mode-secondary bg-gray-100 px-0 pb-0 dark:pt-4 pt-8`};
 
 	details {
 		${tw`my-4 rounded-xl dark:bg-dark-mode-tertiary bg-white shadow-lg border-gray-200 cursor-pointer`};
@@ -228,7 +228,7 @@ export const FooterWrapper = styled(Footer)`
 	}
 
 	a.copyright {
-		${tw`flex justify-center items-center mx-0 py-8 text-lg dark:bg-transparent bg-gray-800 text-white`};
+		${tw`flex justify-center items-center mx-0 py-8 text-lg dark:bg-gray-900 bg-gray-800 text-white`};
 
 		span {
 			${tw`ml-1 text-theme-primary`};

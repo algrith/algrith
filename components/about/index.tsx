@@ -1,6 +1,6 @@
 'use client';
 
-import { Html5Outlined, LineChartOutlined, RobotOutlined, SearchOutlined, StarOutlined } from '@ant-design/icons';
+import { FireOutlined, FundProjectionScreenOutlined, GlobalOutlined, OpenAIOutlined, RiseOutlined, SlidersOutlined } from '@ant-design/icons';
 
 import Intro from '@/components/shared/layout/intro';
 import { IntroProps, SectionProps } from '@/types';
@@ -16,31 +16,37 @@ const whatWeDoOutlines: SectionProps = {
     {
       content: `We develop custom web applications that streamline operations, enhance user engagement, and drive business growth.`,
       title: 'Responsive Web Development',
-      icon: <Html5Outlined />,
+      icon: <GlobalOutlined />,
       subtitle: 'Visibility'
     },
     {
       content: 'Unlock possibilities with our AI services—innovative solutions for smarter automation, enhanced decision-making, and unparalleled efficiency.',
       title: 'Artificial Intelligence',
-      icon: <RobotOutlined />,
+      icon: <OpenAIOutlined />,
       subtitle: 'Relief'
     },
     {
       content: 'Transform online presence to reflect modern, user-friendly design for a powerful impact!',
       title: 'Website Revamp (Redesign)',
       subtitle: 'Sophistication',
-      icon: <StarOutlined />
+      icon: <FireOutlined />
     },
     {
       content: 'Maximize efficiency, minimize costs. Elevate your business with our tailored solutions for streamlined operations and growth.',
       title: 'Business Optimization',
-      icon: <LineChartOutlined />,
+      icon: <RiseOutlined />,
       subtitle: 'Upgrade'
     },
     {
       content: 'Beyond development, we empower your digital presence through SEO optimization, targeted content creation, and digital marketing campaigns to boost your visibility.',
       title: 'Digital Strategy & Online Growth',
-      icon: <SearchOutlined />,
+      icon: <SlidersOutlined />,
+      subtitle: 'Reach'
+    },
+    {
+      content: 'Design data pipelines, dashboards, and predictive models that help businesses understand trends, optimize operations, and uncover insights.',
+      title: 'Data Strategy & Analytics',
+      icon: <FundProjectionScreenOutlined />,
       subtitle: 'Reach'
     }
   ]

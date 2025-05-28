@@ -1,3 +1,5 @@
+'use client';
+
 import {
 	DeploymentUnitOutlined,
 	AntDesignOutlined,
@@ -90,22 +92,22 @@ const resources: FooterResource = [
 
 const features = [
 	{
-		text: 'Harness the power of structured datasets tailored for scientific research. Our curated collections support advanced analytics, machine learning models, and reproducible experiments, ensuring researchers have access to reliable and comprehensive data.',
+		text: 'Access structured datasets tailored for scientific research, supporting advanced analytics, machine learning models, and reproducible experiments.',
 		title: 'Data for scientists',
 		icon: <BugOutlined />
 	},
 	{
-		text: `Elevate your web applications with our extensive datasets optimized for frontend and backend development. Whether you're building dynamic interfaces or robust APIs, our data solutions enhance functionality and user engagement.`,
+		text: `Enhance your web applications with datasets optimized for both frontend and backend development, improving functionality and user engagement.`,
 		icon: <DesktopOutlined />,
 		title: 'Data for Web'
 	},
 	{
-		text: `Design intuitive and user-centric interfaces using our datasets focused on user behavior and interaction patterns. Gain insights into user preferences to create seamless and engaging user experiences across platforms.`,
+		text: `Utilize datasets focused on user behavior and interaction patterns to design intuitive, user-centric interfaces across platforms.`,
 		icon: <AntDesignOutlined />,
 		title: 'Data for UI/UX'
 	},
 	{
-		text: `Kickstart your data journey with resources tailored for interns and beginners. Our beginner-friendly datasets and tutorials provide a solid foundation in data analysis, helping you build skills and confidence in real-world applications.`,
+		text: `Begin your data journey with beginner-friendly datasets and tutorials, building a solid foundation in data analysis for real-world applications.`,
 		icon: <DeploymentUnitOutlined />,
 		title: 'Data for Interns'
 	}
