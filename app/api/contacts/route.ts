@@ -11,7 +11,7 @@ const POST = async (request: NextRequest) => {
   try {
     const templatesDir = path.resolve('./templates');
     const {
-      template = 'contact-email',
+      template = 'contact-us',
       customTopic,
       subject,
       country,

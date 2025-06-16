@@ -19,7 +19,7 @@ const ReviewCard = ({ designation, location, avatar, text, name }: Review) => (
         </div>
 
         <div className="designation">
-          {designation}, ${location}
+          {designation}, {location}
         </div>
       </figcaption>
     </div>
