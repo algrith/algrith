@@ -51,7 +51,7 @@ const PrivacyPolicy = () => {
               </li>
               <li>
                 No request for refund will be entertained after inaction by the customer after 30 days.
-                All refund request should be made to Algrith support (support@algrith.com).
+                All refund request should be made to Algrith support (algrithllc@gmail.com).
                 Algrith reserves the right to approve/reject any and all refund requests based
                 on an individual case to case premise.
               </li>
@@ -99,7 +99,7 @@ const PrivacyPolicy = () => {
                 To ensure that your refund request is processed effectively and is approved,
                 please make sure that you meet the following requirements.
                 <br />
-                Specify your concern and claim your refund through email at support@algrith.com.
+                Specify your concern and claim your refund through email at algrithllc@gmail.com.
               </p>
             </div>
           </div>

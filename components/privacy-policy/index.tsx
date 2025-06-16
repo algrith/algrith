@@ -384,7 +384,7 @@ const PrivacyPolicy = () => {
             <p>
               If you have a question about this Privacy Policy, or you would like to contact us about
               any of the rights mentioned in the Your Rights section above, please contact us:
-              support@algrith.com
+              algrithllc@gmail.com
             </p>
           </div>
 
