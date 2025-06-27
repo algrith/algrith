@@ -13,6 +13,7 @@ import {
 import { FooterWrapper } from './styled';
 import { FooterResource } from '@/types';
 import Link from '../button/link';
+import NPM from '../icon/npm';
 
 const resources: FooterResource = [
 	{
@@ -110,6 +111,17 @@ const features = [
 		text: `Begin your data journey with beginner-friendly datasets and tutorials, building a solid foundation in data analysis for real-world applications.`,
 		icon: <DeploymentUnitOutlined />,
 		title: 'Data for Interns'
+	},
+	{
+		text: `Explore our curated NPM packages designed to simplify your development process:
+			<ul>
+				<li><a href="https://www.npmjs.com/package/@algrith/transcriber">@algrith/transcriber</a>: A powerful tool for converting audio to text seamlessly, enabling efficient transcription workflows for various applications.</li>
+				<li><a href="https://www.npmjs.com/package/@algrith/scroll-to-top">@algrith/scroll-to-top</a>: Enhance user experience with smooth scrolling functionality, allowing effortless navigation back to the top of your web pages.</li>
+				<li><a href="https://www.npmjs.com/package/@algrith/safari-numfix">@algrith/safari-numfix</a>: Resolve Safari-specific rendering issues with numeric inputs, ensuring consistent behavior across browsers.</li>
+			</ul>
+		`,
+		icon: <NPM type="primary" />,
+		title: 'NPM Packages'
 	}
 ];
 
@@ -152,7 +164,7 @@ const Footer = () => {
 									{icon}
 								</summary>
 
-								<p>{text}</p>
+								<div className="description" dangerouslySetInnerHTML={{ __html: text }} />
 							</details>
 						))}
 					</div>

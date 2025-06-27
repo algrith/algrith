@@ -3,7 +3,6 @@ import { Suspense } from 'react';
 
 import { ContentWrapper, LayoutWrapper } from '@/components/shared/layout/styled';
 import AntDesignThemeProvider from '@/components/shared/theme/provider';
-import NextAuthProvider from '@/components/shared/auth-provider';
 import ThemeSwitch from '@/components/shared/theme/switch';
 import Alert from '@/components/shared/feedback/alert';
 import Header from '@/components/shared/layout/header';
@@ -12,6 +11,7 @@ import Footer from '@/components/shared/layout/footer';
 import { fontClassNames } from '@/libs/fonts';
 import ReduxProvider from '@/store/provider';
 import { inProduction } from '@/utils';
+import { assets } from '@/libs/assets';
 import GlobalStyles from '@/styles';
 import colors from '@/libs/colors';
 
@@ -26,27 +26,38 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  keywords: ['Business', 'Artisans', 'Buyers', 'Sellers', 'Online Market', 'Sales'],
+  keywords: ['Algrith', 'Web', 'Web design', 'Business', 'Artisans', 'Buyers', 'Sellers', 'Online Market', 'Sales', 'Marketplace', 'Algorithms'],
+  description: 'A creative solutions company helping businesses turn ideas into impactful digital products, designs, and experiences.',
   metadataBase: process.env.NEXT_PUBLIC_APP_URL,
   referrer: 'origin-when-cross-origin',
-  description: 'Algrith Website',
   manifest: '/app.webmanifest',
   applicationName: 'Algrith',
   publisher: 'Algrith LLC',
   creator: 'Algrith LLC',
   openGraph: {
+    description: 'A creative solutions company helping businesses turn ideas into impactful digital products, designs, and experiences.',
     url: process.env.NEXT_PUBLIC_APP_URL,
-    description: 'Algrith Website',
     siteName: 'Algrith',
     title: 'Algrith',
     locale: 'en_US',
     type: 'website',
     images: []
   },
-  icons: {},
-  title: {
-    template: '%s | Algrith',
-    default: 'Algrith'
+  twitter: {
+    description: 'A creative solutions company helping businesses turn ideas into impactful digital products, designs, and experiences.',
+    title: 'Algrith: Strategic Digital Solutions for Modern Businesses.',
+    images: [
+      {
+        url: assets.brand.logos.white,
+        height: 600,
+        width: 800,
+      },
+      {
+        url: assets.brand.logos.white,
+        height: 1600,
+        width: 1800,
+      },
+    ]
   },
   robots: {
     nocache: !inProduction,
@@ -57,40 +68,74 @@ export const metadata: Metadata = {
       follow: inProduction,
       index: inProduction,
     },
+  },
+  icons: {
+    shortcut: assets.icons.favicon,
+    icon: assets.icons.favicon,
+    apple: assets.icons.apple,
+    other: [
+      {
+        color: colors.theme.primary,
+        url: assets.icons.safari,
+        rel: 'mask-icon'
+      },
+      {
+        url: assets.icons.chrome512,
+        sizes: '512x512',
+        rel: 'icon',
+      },
+      {
+        url: assets.icons.chrome192,
+        sizes: '192x192',
+        rel: 'icon',
+      },
+      {
+        url: assets.icons.favicon32,
+        sizes: '32x32',
+        rel: 'icon',
+      },
+      {
+        url: assets.icons.favicon16,
+        sizes: '16x16',
+        rel: 'icon',
+      },
+    ]
+  },
+  title: {
+    template: '%s | Algrith',
+    default: 'Algrith'
   }
 };
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
   <ReduxProvider>
-    {/* <NextAuthProvider> */}
-      <html lang="en-US">
-        <body className={fontClassNames}>
-          <Suspense>
-            <GlobalStyles />
-          </Suspense>
+    <html lang="en-US">
+      <body className={fontClassNames}>
+        <Suspense>
+          <GlobalStyles />
+        </Suspense>
 
-          <AntDesignThemeProvider>
+        <AntDesignThemeProvider>
+          <LayoutWrapper>
             <LayoutWrapper>
-              <LayoutWrapper>
-                <Suspense>
-                  <Header />
-                  <Navbar />
-                </Suspense>
-                
-                <ThemeSwitch />
+              <Suspense>
+                <Header />
+                <Navbar />
+              </Suspense>
+              
+              <ThemeSwitch />
 
-                <ContentWrapper>
-                  {children}
-                </ContentWrapper>
+              <ContentWrapper>
+                {children}
+              </ContentWrapper>
 
-                <Alert />
-                <Footer />
-              </LayoutWrapper>
+              <Alert />
+              <Footer />
             </LayoutWrapper>
-          </AntDesignThemeProvider>
-        </body>
-      </html>
-    {/* </NextAuthProvider> */}
+          </LayoutWrapper>
+        </AntDesignThemeProvider>
+      </body>
+    </html>
   </ReduxProvider>
 );
 

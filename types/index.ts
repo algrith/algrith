@@ -3,7 +3,7 @@ import { OAuthProviderType, Provider } from 'next-auth/providers';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { LinkProps as NextLinkProps } from 'next/link';
 import { TypeOpen } from 'antd/es/message/interface';
-import { HTMLAttributes, ReactNode } from 'react';
+import { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
 
 export type InlineFeedbackWrapperProps = Omit<InlineFeedbackProps, 'target'> & Pick<FeedbackState, 'type'>;
 export type OAuthProviderIcons = Partial<Record<OAuthProviderType, string>>;
@@ -45,6 +45,8 @@ export type Messages = Partial<Record<AsyncActionTargets, {
 }>>;
 
 export interface LinkProps extends NextLinkProps {
+	target?: HTMLAnchorElement['target'];
+	rel?: HTMLAnchorElement['rel'];
 	type?: ButtonProps['type'];
 	children: ReactNode;
 	asButton?: boolean;
@@ -179,15 +181,14 @@ export interface ResponseData {
 };
 
 export interface ContactModel {
-	customTopic: string;
+	customTopic?: string;
 	template?: string;
+	country?: string;
 	subject: string;
-	country: string;
 	message: string;
+	topic?: string;
 	email: string;
 	phone: string;
-	topic: string;
-	token: string;
 	name: string;
 };
 
@@ -210,7 +211,7 @@ export interface AsyncAction {
 };
 
 export type SectionProps = {
-	items: Array<SectionItemProps | Review>;
+	items: Array<SectionItemProps>;
 	illustration: string;
 	id: string;
 	title: {
@@ -221,14 +222,6 @@ export type SectionProps = {
 
 export interface AppTheme {
 	tokenConfigs: Record<string, ThemeConfig>;
-};
-
-export interface Review {
-	designation: string;
-	location: string;
-	avatar: string;
-	text: string;
-	name: string;
 };
 
 export type Colors = {

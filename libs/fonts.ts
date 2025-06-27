@@ -62,5 +62,3 @@ export const fontClassNames = [
   roboto.variable,
   dosis.variable
 ].join(' ');
-
-// 'gilroy': ['gilroy-font', 'sans-serif'],

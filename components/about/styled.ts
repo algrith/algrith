@@ -1,3 +1,5 @@
+'use client';
+
 import { SectionLayout } from '@/components/shared/layout/styled';
 import tw, { styled } from 'twin.macro';
 

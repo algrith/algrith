@@ -1,0 +1,26 @@
+[
+  {
+    "description": "MegaQuest helps you collect rich, authentic voice responses and transform them into actionable insights, effortlessly and in multiple languages.",
+    "image": "./images/projects/megaquest.png",
+    "company": "Dobande Technologies",
+    "url": "https://megaquest.io",
+    "location": "Accra, Ghana",
+    "name": "MegaQuest"
+  },
+  {
+    "description": "Ability Design specializes in transforming ideas and visions into aesthetically captivating designs that elevate your business or event.",
+    "image": "./images/projects/ability-design.png",
+    "url": "https://abilitydesign.co",
+    "company": "Ability Design",
+    "location": "Delaware, USA",
+    "name": "Ability Design"
+  },
+  {
+    "description": "Tailwind CSS is the only framework that I've seen scale on large teams. It’s easy to customize, adapts to any design, and the build size is tiny.",
+    "image": "./images/reviews/maddy-paddington.jpeg",
+    "url": "https://megaquest.io",
+    "company": "Architect/Designer",
+    "name": "Maddy Paddignton",
+    "location": "India"
+  }
+]

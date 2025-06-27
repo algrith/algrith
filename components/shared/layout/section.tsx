@@ -1,6 +1,7 @@
+'use client';
+
 import { SectionCardWrapper, SectionWrapper } from '@/components/shared/layout/styled';
-import { SectionProps, SectionItemProps, Review } from '@/types';
-import ReviewCard from '@/components/home/review-card';
+import { SectionProps, SectionItemProps } from '@/types';
 import { Avatar } from 'antd';
 
 const getTitle = (title: SectionProps['title']) => {
@@ -41,7 +42,7 @@ const Section = ({ illustration, title, items, id }: SectionProps) => {
 	};
 
 	return (
-		<SectionWrapper id="outline">
+		<SectionWrapper id={id}>
 			<div className={illustrationAttr.className}>
 				<Avatar src={illustration} alt={illustrationAttr.altText} />
 			</div>
@@ -52,11 +53,7 @@ const Section = ({ illustration, title, items, id }: SectionProps) => {
 
 			<div className="items">
 				{items.map((item, index) => (
-          id == 'reviews' ? (
-            <ReviewCard key={index} {...item as Review} />
-          ) : (
-            <SectionItem key={index} {...item as SectionItemProps} />
-          )
+          <SectionItem key={index} {...item as SectionItemProps} />
 				))}
 			</div>
 		</SectionWrapper>

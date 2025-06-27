@@ -1,4 +1,4 @@
-import { SectionLayout } from '@/components/shared/layout/styled';
+import { SectionLayout, SectionWrapper } from '@/components/shared/layout/styled';
 import tw, { styled } from 'twin.macro';
 
 export const MissionStatementWrapper = styled(SectionLayout)`
@@ -141,6 +141,62 @@ export const TechStackWrapper = styled(SectionLayout)`
   }
 `;
 
+export const ProjectsWrapper = styled(SectionWrapper)`
+  .illustration.projects {
+    ${tw`md:-right-32 md:-top-52 md:scale-65 lg:-right-36 lg:-top-64 w-auto md:w-11/12 lg:w-auto`};
+  }
+  
+  figure {
+    ${tw`relative flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start bg-slate-100 dark:bg-dark-mode-secondary rounded-xl w-full overflow-hidden shadow-md`};
+
+    .top {
+      ${tw`w-full md:h-64 lg:h-80`};
+
+      .ant-avatar {
+        ${tw`rounded-none w-full h-full border-none items-start`};
+
+        img {
+          ${tw`object-top dark:brightness-75`};
+        }
+      }
+      
+      blockquote {
+        ${tw`opacity-0 flex absolute -bottom-full left-0 bg-black/80 text-xl text-dark-mode-septenary items-center justify-center w-full h-full p-6 transition-all ease-in-out duration-500`};
+      }
+    }
+    
+    figcaption {
+      ${tw`flex justify-between font-medium w-full px-4 py-2 transition-all ease-in-out`};
+      
+      .company {
+        ${tw`text-sm text-dark-mode-quinary`};
+      }
+      
+      .name {
+        ${tw`text-lg text-theme-primary font-semibold tracking-wide`};
+      }
+      
+      a .anticon {
+        ${tw`text-xl hover:text-theme-primary`};
+      }
+    }
+    
+    &:hover {
+      .top blockquote {
+        ${tw`bottom-0 opacity-100`};
+      }
+      
+      figcaption {
+        ${tw`scale-[95%]`};
+
+        .company {
+          ${tw`text-slate-400`};
+        }
+      }
+    }
+  }
+`;
+
 export const WhoWeAreWrapper = styled(SectionLayout)`
   ${tw`text-center py-10 lg:py-20 dark:bg-slate-900 bg-white`};
 
@@ -153,31 +209,37 @@ export const WhoWeAreWrapper = styled(SectionLayout)`
   }
 `;
 
-export const ReviewCardWrapper = styled.figure`
-  ${tw`flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start gap-6 bg-slate-100 dark:bg-dark-mode-secondary rounded-xl w-full p-8`};
-
-  .content {
-    ${tw`text-center 2xl:text-left space-y-4 transition-all ease-in-out hover:scale-[105%]`};
-
-    blockquote p {
-      ${tw`text-xl dark:text-dark-mode-septenary text-gray-500`};
-    }
-    
-    figcaption {
-      ${tw`font-medium`};
-      
-      .designation {
-        ${tw`text-slate-700 dark:text-dark-mode-quinary`};
-      }
-      
-      .name {
-        ${tw`text-2xl text-sky-700 dark:text-theme-primary`};
-      }
-    }
+export const ReviewsWrapper = styled(SectionWrapper)`
+  .illustration.reviews {
+    ${tw`md:-right-32 md:-top-52 md:scale-65 lg:-right-36 lg:-top-64 w-auto md:w-11/12 lg:w-auto`};
   }
   
-  .ant-avatar {
-    ${tw`w-24 h-24`};
+  figure {
+    ${tw`flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start gap-6 bg-slate-100 dark:bg-dark-mode-secondary rounded-xl w-full p-8`};
+
+    .content {
+      ${tw`text-center 2xl:text-left space-y-4 transition-all ease-in-out hover:scale-[105%]`};
+
+      blockquote p {
+        ${tw`text-xl dark:text-dark-mode-septenary text-gray-500`};
+      }
+      
+      figcaption {
+        ${tw`font-medium`};
+        
+        .designation {
+          ${tw`text-slate-700 dark:text-dark-mode-quinary`};
+        }
+        
+        .name {
+          ${tw`text-2xl text-sky-700 dark:text-theme-primary`};
+        }
+      }
+    }
+    
+    .ant-avatar {
+      ${tw`w-24 h-24`};
+    }
   }
 `;
 

@@ -21,7 +21,8 @@ import GetStarted from '@/components/home/get-started';
 import TechStack from '@/components/home/tech-stack';
 import WhoWeAre from '@/components/home/who-we-are';
 import { IntroProps, SectionProps } from '@/types';
-import reviewData from '@/libs/reviews.json';
+import Projects from '@/components/home/projects';
+import Reviews from '@/components/home/reviews';
 
 const whyChooseUsOutlines: SectionProps = {
   illustration: './images/illustrations/team.png',
@@ -93,21 +94,11 @@ const whatWeDoOutlines: SectionProps = {
   ]
 };
 
-const reviews: SectionProps = {
-  illustration: './images/illustrations/testimonial.gif',
-  items: reviewData,
-  id: 'reviews',
-  title: {
-    alignment: 'left',
-    text: 'Reviews'
-  }
-};
-
 const intro: IntroProps = {
   title: 'The best software algorithm solution',
   action: {
-    icon: <AimOutlined />,
     scrollTo: 'who-we-are',
+    icon: <AimOutlined />,
     text: 'Get Started'
   },
   description: {
@@ -125,7 +116,8 @@ const Home = () => {
       <Section {...whyChooseUsOutlines} />
       <TechStack />
       <MissionStatement />
-      <Section {...reviews} />
+      {/* <Reviews /> */}
+      <Projects />
       <GetStarted />
     </>
   );

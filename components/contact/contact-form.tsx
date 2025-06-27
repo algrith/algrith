@@ -31,13 +31,12 @@ const topicOptions = [
 
 const initialModel = {
   subject: 'New Contact Mail',
-  customTopic: '',
-  country: '',
+  customTopic: undefined,
+  country: undefined,
+  topic: undefined,
   message: '',
   email: '',
   phone: '',
-  topic: '',
-  token: '',
   name: ''
 };
 
@@ -48,7 +47,7 @@ const ContactForm = () => {
   const handleChange = (key: string, value: string) => {
     const newModel = { ...model, [key]: value };
     if (key === 'topic' && value !== 'other') {
-      newModel.customTopic = '';
+      newModel.customTopic = undefined;
     }
 
     updateModel({ ...newModel });

@@ -1,3 +1,5 @@
+'use client';
+
 import { IntroWrapper } from './styled';
 import useTypist from '@/hooks/typist';
 import { IntroProps } from '@/types';

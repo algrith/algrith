@@ -22,10 +22,6 @@ export const SectionWrapper = styled(SectionLayout)`
       ${tw`md:-left-20 md:-top-32 md:scale-65 lg:-left-52 lg:-top-72 lg:scale-45`};
     }
     
-    &.reviews {
-      ${tw`md:-right-32 md:-top-52 md:scale-65 lg:-right-36 lg:-top-64 w-auto md:w-11/12 lg:w-auto`};
-    }
-    
     .ant-avatar {
       ${tw`w-auto h-auto rounded-full filter dark:brightness-75`};
     }
@@ -142,12 +138,20 @@ export const FooterWrapper = styled(Footer)`
 			${tw`relative flex justify-between gap-4 items-center p-4 dark:text-dark-mode-septenary text-black focus:outline-none hover:outline-none outline-none transition-all ease-in-out duration-700`};
 
 			span:nth-of-type(1) {
-				${tw`absolute left-10`};
+				${tw`absolute left-14`};
+			}
+			
+			.anticon {
+				${tw`text-xl text-theme-primary`};
 			}
 		}
 		
-		p {
-			${tw`px-10 pt-2 pb-6 dark:text-slate-200 text-gray-600 transition-all ease-in-out duration-700`};
+		.description {
+			${tw`pl-14 pr-10 pt-2 pb-6 dark:text-slate-200 text-gray-600 transition-all ease-in-out duration-700`};
+
+			a {
+				${tw`text-theme-secondary hover:text-theme-secondary/80 transition-all ease-in-out duration-500`};
+			}
 		}
 	}
 
@@ -178,7 +182,7 @@ export const FooterWrapper = styled(Footer)`
 							${tw`order-2 text-theme-primary lg:mt-3 lg:mb-4 flex justify-start items-center`};
 
 							a {
-								${tw`flex text-theme-primary justify-center mx-1 items-center rounded-xl text-xl h-8 w-8 dark:bg-dark-mode-tertiary bg-white shadow-lg`};
+								${tw`flex text-theme-primary justify-center mx-1 items-center rounded-xl text-xl h-8 w-8 dark:bg-dark-mode-tertiary bg-white shadow-lg hover:text-theme-secondary transition-all ease-in-out duration-500`};
 
 								&:first-of-type {
 									${tw`ml-0`};
@@ -194,7 +198,7 @@ export const FooterWrapper = styled(Footer)`
 							${tw`order-1 md:mt-4`};
 
 							a {
-								${tw`text-gray-500`};
+								${tw`text-gray-500 hover:text-theme-secondary transition-all ease-in-out duration-500`};
 							}
 						}
 					}
@@ -206,10 +210,10 @@ export const FooterWrapper = styled(Footer)`
 							${tw`py-2`};
 
 							a {
-								${tw`text-gray-500`};
+								${tw`text-gray-500 hover:text-theme-secondary transition-all ease-in-out duration-500`};
 
 								span.careers {
-									${tw`text-sm italic text-gray-600 bg-theme-secondary/60 px-2 py-1 rounded-full`};
+									${tw`text-[12px] italic text-gray-700 font-medium bg-theme-secondary/60 px-2 py-1 rounded-full`};
 								}
 							}
 						}

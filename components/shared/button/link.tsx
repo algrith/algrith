@@ -1,3 +1,5 @@
+'use client';
+
 import { LinkWrapper } from '@/components/shared/button/styled';
 import { LinkProps } from '@/types';
 
