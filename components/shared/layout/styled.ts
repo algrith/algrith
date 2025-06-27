@@ -4,6 +4,8 @@ import { Content, Footer, Header } from 'antd/es/layout/layout';
 import tw, { styled } from 'twin.macro';
 import { Layout } from 'antd';
 
+import Button from '../button';
+
 export const SectionLayout = styled.div`
   ${tw`relative w-full 2xl:w-8/12 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-0 mx-auto`};
 `;

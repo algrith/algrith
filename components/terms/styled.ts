@@ -35,25 +35,5 @@ export const TermsOfServiceWrapper = styled(SectionLayout)`
         ${tw`pl-4 md:pl-8 my-8`};
       }
     }
-    
-    .table-of-content {
-      ${tw`hidden md:block`};
-
-      .sticky {
-        ${tw`sticky top-16 flex flex-col gap-4`};
-
-        h2 {
-          ${tw`text-2xl md:text-3xl font-bold`};
-        }
-        
-        ul {
-          ${tw`flex flex-col gap-2`};
-
-          li {
-            ${tw`cursor-pointer`};
-          }
-        }
-      }
-    }
   }
 `;

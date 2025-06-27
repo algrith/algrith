@@ -150,7 +150,7 @@ export const ProjectsWrapper = styled(SectionWrapper)`
     ${tw`p-2 relative flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start bg-white dark:bg-dark-mode-secondary rounded-xl w-full overflow-hidden shadow`};
 
     .top {
-      ${tw`w-full md:h-64 lg:h-80`};
+      ${tw`w-full h-80`};
 
       .ant-avatar {
         ${tw`rounded-t-lg rounded-bl-lg rounded-br-[42px] w-full h-full border-none items-start`};

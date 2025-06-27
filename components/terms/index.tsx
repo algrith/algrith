@@ -1,6 +1,6 @@
 'use client';
 
-import Link from '@/components/shared/button/link';
+import TableOfContent from '../shared/table-of-content';
 import { TermsOfServiceWrapper } from './styled';
 
 const tableOfContent = [
@@ -286,20 +286,7 @@ const TermsOfService = () => {
           </div>
         </div>
         
-        <div className="table-of-content">
-          <div className="sticky">
-            <h2>Table of Content</h2>
-            <ul>
-              {tableOfContent.map((item) => (
-                <li key={item.id}>
-                  <Link href={`#${item.id}`}>
-                    {item.text}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        <TableOfContent items={tableOfContent} />
       </div>
     </TermsOfServiceWrapper>
   );
