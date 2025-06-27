@@ -402,16 +402,18 @@ const PrivacyPolicy = () => {
         </div>
         
         <div className="table-of-content">
-          <h2>Table of Content</h2>
-          <ul>
-            {tableOfContent.map((item) => (
-              <li key={item.id}>
-                <Link href={`#${item.id}`}>
-                  {item.text}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <div className="sticky">
+            <h2>Table of Content</h2>
+            <ul>
+              {tableOfContent.map((item) => (
+                <li key={item.id}>
+                  <Link href={`#${item.id}`}>
+                    {item.text}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </PrivacyPolicyWrapper>

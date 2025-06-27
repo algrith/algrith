@@ -15,7 +15,7 @@ const Projects = () => {
 			</div>
 			
 			<h1 className="left">
-				Projects
+				Recent Projects
 			</h1>
 
 			<div className="items">

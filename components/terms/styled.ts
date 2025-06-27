@@ -22,7 +22,7 @@ export const TermsOfServiceWrapper = styled(SectionLayout)`
   }
   
   .content {
-    ${tw`relative grid md:grid-cols-3 gap-8`};
+    ${tw`grid md:grid-cols-3 gap-8`};
 
     .terms {
       ${tw`md:col-span-2 relative flex flex-col gap-8 dark:bg-dark-mode-secondary bg-white leading-relaxed shadow-sm rounded-2xl text-xl p-4 md:p-10 text-justify`};
@@ -37,17 +37,21 @@ export const TermsOfServiceWrapper = styled(SectionLayout)`
     }
     
     .table-of-content {
-      ${tw`hidden md:flex flex-col gap-4 sticky top-16`};
-      
-      h2 {
-        ${tw`text-2xl md:text-3xl font-bold`};
-      }
-      
-      ul {
-        ${tw`flex flex-col gap-2`};
+      ${tw`hidden md:block`};
 
-        li {
-          ${tw`cursor-pointer`};
+      .sticky {
+        ${tw`sticky top-16 flex flex-col gap-4`};
+
+        h2 {
+          ${tw`text-2xl md:text-3xl font-bold`};
+        }
+        
+        ul {
+          ${tw`flex flex-col gap-2`};
+
+          li {
+            ${tw`cursor-pointer`};
+          }
         }
       }
     }

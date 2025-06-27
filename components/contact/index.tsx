@@ -13,7 +13,7 @@ const intro: IntroProps = {
     text: `Are you looking for ways to optimize your business using technology to save time and money?\n Looking for business excellence at an affordable rate?\n Not sure how technology can help your business?`,
   },
   action: {
-    scrollTo: `contact`,
+    scrollTo: `#contact`,
   }
 };
 

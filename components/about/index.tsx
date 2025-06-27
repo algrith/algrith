@@ -59,7 +59,7 @@ const intro: IntroProps = {
   },
   subtitle: "Your Strategic Partner in Digital Excellence",
   action: {
-    scrollTo: 'outline'
+    scrollTo: '#what-we-do'
   }
 };
 

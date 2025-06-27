@@ -14,13 +14,5 @@
     "company": "Ability Design",
     "location": "Delaware, USA",
     "name": "Ability Design"
-  },
-  {
-    "description": "Tailwind CSS is the only framework that I've seen scale on large teams. It’s easy to customize, adapts to any design, and the build size is tiny.",
-    "image": "./images/reviews/maddy-paddington.jpeg",
-    "url": "https://megaquest.io",
-    "company": "Architect/Designer",
-    "name": "Maddy Paddignton",
-    "location": "India"
   }
 ]

@@ -49,17 +49,21 @@ export const PrivacyPolicyWrapper = styled(SectionLayout)`
     }
     
     .table-of-content {
-      ${tw`hidden md:flex flex-col gap-4 sticky top-16`};
+      ${tw`hidden md:block`};
       
-      h2 {
-        ${tw`text-2xl md:text-3xl font-bold`};
-      }
-      
-      ul {
-        ${tw`flex flex-col gap-2`};
+      .sticky {
+        ${tw`sticky top-16 flex flex-col gap-4`};
+        
+        h2 {
+          ${tw`text-2xl md:text-3xl font-bold`};
+        }
+        
+        ul {
+          ${tw`flex flex-col gap-2`};
 
-        li {
-          ${tw`cursor-pointer`};
+          li {
+            ${tw`cursor-pointer`};
+          }
         }
       }
     }

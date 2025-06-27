@@ -147,13 +147,13 @@ export const ProjectsWrapper = styled(SectionWrapper)`
   }
   
   figure {
-    ${tw`relative flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start bg-slate-100 dark:bg-dark-mode-secondary rounded-xl w-full overflow-hidden shadow-md`};
+    ${tw`p-2 relative flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start bg-slate-100 dark:bg-dark-mode-secondary rounded-xl w-full overflow-hidden shadow-md`};
 
     .top {
       ${tw`w-full md:h-64 lg:h-80`};
 
       .ant-avatar {
-        ${tw`rounded-none w-full h-full border-none items-start`};
+        ${tw`rounded-t-lg rounded-bl-lg rounded-br-[42px] w-full h-full border-none items-start`};
 
         img {
           ${tw`object-top dark:brightness-75`};
