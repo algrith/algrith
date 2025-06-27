@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   keywords: ['Algrith', 'Web', 'Web design', 'Business', 'Artisans', 'Buyers', 'Sellers', 'Online Market', 'Sales', 'Marketplace', 'Algorithms'],
-  description: 'A creative solutions company helping businesses turn ideas into impactful digital products, designs, and experiences.',
+  description: 'Turning ideas into impactful digital products, designs, and experiences.',
   metadataBase: process.env.NEXT_PUBLIC_APP_URL,
   referrer: 'origin-when-cross-origin',
   manifest: '/app.webmanifest',
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   publisher: 'Algrith LLC',
   creator: 'Algrith LLC',
   openGraph: {
-    description: 'A creative solutions company helping businesses turn ideas into impactful digital products, designs, and experiences.',
+    description: 'Turning ideas into impactful digital products, designs, and experiences.',
     url: process.env.NEXT_PUBLIC_APP_URL,
     siteName: 'Algrith',
     title: 'Algrith',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     images: []
   },
   twitter: {
-    description: 'A creative solutions company helping businesses turn ideas into impactful digital products, designs, and experiences.',
+    description: 'Turning ideas into impactful digital products, designs, and experiences.',
     title: 'Algrith: Strategic Digital Solutions for Modern Businesses.',
     images: [
       {

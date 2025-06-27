@@ -147,7 +147,7 @@ export const ProjectsWrapper = styled(SectionWrapper)`
   }
   
   figure {
-    ${tw`p-2 relative flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start bg-slate-100 dark:bg-dark-mode-secondary rounded-xl w-full overflow-hidden shadow-md`};
+    ${tw`p-2 relative flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start bg-white dark:bg-dark-mode-secondary rounded-xl w-full overflow-hidden shadow`};
 
     .top {
       ${tw`w-full md:h-64 lg:h-80`};
