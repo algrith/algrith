@@ -36,12 +36,41 @@ export const metadata: Metadata = {
   creator: 'Algrith LLC',
   openGraph: {
     description: 'Turning ideas into impactful digital products, designs, and experiences.',
+    title: 'Algrith - Strategic Digital Solutions for Modern Businesses',
     url: process.env.NEXT_PUBLIC_APP_URL,
     siteName: 'Algrith',
-    title: 'Algrith',
     locale: 'en_US',
     type: 'website',
-    images: []
+    images: [
+      {
+        url: assets.icons.safari,
+        type: 'mask-icon'
+      },
+      {
+        url: assets.icons.chrome512,
+        type: 'icon',
+        height: 512,
+        width: 512
+      },
+      {
+        url: assets.icons.chrome192,
+        type: 'icon',
+        height: 192,
+        width: 192
+      },
+      {
+        url: assets.icons.favicon32,
+        type: 'icon',
+        height: 32,
+        width: 32
+      },
+      {
+        url: assets.icons.favicon16,
+        type: 'icon',
+        height: 16,
+        width: 16
+      },
+    ]
   },
   twitter: {
     description: 'Turning ideas into impactful digital products, designs, and experiences.',
@@ -102,8 +131,8 @@ export const metadata: Metadata = {
     ]
   },
   title: {
-    template: '%s | Algrith',
-    default: 'Algrith'
+    template: '%s | Algrith - Strategic Digital Solutions for Modern Businesses',
+    default: 'Algrith - Strategic Digital Solutions for Modern Businesses'
   }
 };
 
