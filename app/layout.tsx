@@ -107,6 +107,8 @@ export const metadata: Metadata = {
   }
 };
 
+console.log('THIS APP IS IN PRODUCTION TRUE OR FALSE:', inProduction);
+
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
   <ReduxProvider>
     <html lang="en-US">
