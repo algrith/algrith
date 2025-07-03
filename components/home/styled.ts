@@ -256,7 +256,7 @@ export const PingAnimationWrapper = styled.div`
 `;
 
 export const WelcomeIntroWrapper = styled.div`
-  ${tw`relative w-full h-auto lg:h-188 bg-intro-index bg-right-top md:bg-left-top bg-cover bg-scroll xl:bg-fixed bg-no-repeat`};
+  ${tw`relative w-full h-auto lg:h-232 bg-intro-index bg-right-top md:bg-left-top bg-cover bg-scroll xl:bg-fixed bg-no-repeat`};
   
   .inner {
     ${tw`bg-theme-primary/80 dark:bg-dark-mode-primary/90 h-full w-full mx-auto flex justify-between items-center px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144 py-16`};
@@ -266,7 +266,7 @@ export const WelcomeIntroWrapper = styled.div`
     }
 
     .left {
-      ${tw`relative w-full lg:w-3/5`};
+      ${tw`relative w-full lg:w-3/5 py-4`};
 
       .anticon {
         ${tw`text-2xl`};
@@ -275,10 +275,18 @@ export const WelcomeIntroWrapper = styled.div`
   }
 
   .typing-pad {
-    ${tw`w-full font-bold leading-tight md:leading-tight lg:leading-tight xl:leading-tight dark:text-dark-mode-octonary text-white text-5xl lg:text-7xl xl:text-8xl`};
+    ${tw`w-full font-bold leading-tight md:leading-tight lg:leading-tight xl:leading-tight dark:text-dark-mode-octonary text-white text-[40px] lg:text-7xl xl:text-8xl`};
   }
 
   .description {
-    ${tw`text-left block mt-4 mb-10 md:mb-16 text-theme-secondary tracking-wide text-2xl font-semibold lg:text-3xl`};
+    ${tw`flex flex-col gap-2 text-left block mt-8 mb-10 md:mb-16 text-gray-200 lg:text-gray-300 dark:text-theme-secondary tracking-wide text-xl font-semibold`};
+
+    li {
+      ${tw`leading-7 items-start flex gap-2`};
+      
+      .anticon {
+        ${tw`mr-2 pt-0.5`};
+      }
+    }
   }
 `;

@@ -45,9 +45,9 @@ const whatWeDoOutlines: SectionProps = {
     },
     {
       content: 'Design data pipelines, dashboards, and predictive models that help businesses understand trends, optimize operations, and uncover insights.',
-      title: 'Data Strategy & Analytics',
       icon: <FundProjectionScreenOutlined />,
-      subtitle: 'Reach'
+      title: 'Data Strategy & Analytics',
+      subtitle: 'Analytics'
     }
   ]
 };

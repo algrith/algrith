@@ -10,7 +10,7 @@ const ContactDetails = () => {
             <path strokeLinecap="round" strokeLinejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14" />
           </svg>
         </span>
-        <Link href="#">
+        <Link href="https://web.facebook.com/algrithllc">
           <i className="fab fa-facebook"></i>
         </Link>
         <Link href="#">

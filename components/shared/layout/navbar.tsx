@@ -1,17 +1,19 @@
 'use client';
 
 import { CloseOutlined, FacebookFilled, LinkedinFilled, TwitterOutlined } from '@ant-design/icons';
+import { usePathname } from 'next/navigation';
 import { Avatar } from 'antd';
 
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
+import useClassName from '@/hooks/class-name';
 import { NavbarWrapper } from './styled';
 import { assets } from '@/libs/assets';
 import Button from '../button';
 
 const socials = [
 	{
-		href: '#',
+		href: 'https://web.facebook.com/algrithllc',
 		icon: <FacebookFilled />
 	},
 	{
@@ -33,6 +35,12 @@ const links = [
 
 const Navbar = () => {
   const { closeNavbar } = useToggleNavbar();
+	const pathname = usePathname();
+
+	const getClassName = (path: string) => useClassName([
+		pathname === path ? 'active' : '',
+		'ripple-node',
+	]);
 
 	return (
 		<NavbarWrapper className="navlinks" id="nav-menu">
@@ -52,7 +60,7 @@ const Navbar = () => {
 
 			<div id="navbar-links">
 				{links.map((link) => (
-					<Link className="ripple-node" key={link.href} href={link.href}>
+					<Link className={getClassName(link.href)} key={link.href} href={link.href}>
 						{link.text}
 					</Link>
 				))}

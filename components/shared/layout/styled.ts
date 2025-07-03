@@ -72,7 +72,7 @@ export const SectionCardWrapper = styled.div`
       }
       
       h3 {
-        ${tw`flex items-center px-3 py-1 text-sm tracking-widest text-theme-secondary font-semibold rounded-2xl dark:bg-[linear-gradient(145deg, #233045, #192231)] dark:shadow-[inset 3.6px 3.6px 2px #17202E, inset -3.6px -3.6px 2px #253248] bg-[linear-gradient(145deg, #FFFFFF, #DCDCDC)] shadow-[inset 3.6px 3.6px 2px #ECECEC, inset -3.6px -3.6px 2px #FFFFFF]`};
+        ${tw`flex items-center px-3 py-1 text-sm tracking-widest text-gray-600 font-semibold rounded-2xl`};
       }
     }
 		
@@ -294,6 +294,10 @@ export const NavbarWrapper = styled.nav`
 
 		a {
 			${tw`transition-all ease-in-out duration-500 my-2 mx-auto lg:mx-4 px-0 lg:pt-2 hover:border-opacity-100 border-theme-primary border-b-4 border-opacity-0 dark:border-opacity-0 text-left lg:text-center w-full lg:w-auto text-lg dark:text-dark-mode-octonary text-gray-600`};
+
+			&.active {
+				${tw`lg:border-opacity-70`};
+			}
 		}
 	}
 

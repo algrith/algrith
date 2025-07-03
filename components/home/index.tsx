@@ -9,7 +9,6 @@ import {
   AlertOutlined,
   FireOutlined,
   RiseOutlined,
-  AimOutlined,
   SunOutlined
 } from '@ant-design/icons';
 
@@ -20,9 +19,8 @@ import Section from '@/components/shared/layout/section';
 import GetStarted from '@/components/home/get-started';
 import TechStack from '@/components/home/tech-stack';
 import WhoWeAre from '@/components/home/who-we-are';
-import { IntroProps, SectionProps } from '@/types';
 import Projects from '@/components/home/projects';
-import Reviews from '@/components/home/reviews';
+import { SectionProps } from '@/types';
 
 const whyChooseUsOutlines: SectionProps = {
   illustration: './images/illustrations/team.png',
@@ -87,29 +85,17 @@ const whatWeDoOutlines: SectionProps = {
     },
     {
       content: 'Design data pipelines, dashboards, and predictive models that help businesses understand trends, optimize operations, and uncover insights.',
-      title: 'Data Strategy & Analytics',
       icon: <FundProjectionScreenOutlined />,
-      subtitle: 'Reach'
+      title: 'Data Strategy & Analytics',
+      subtitle: 'Analytics'
     }
   ]
-};
-
-const intro: IntroProps = {
-  title: 'The best software algorithm solution',
-  action: {
-    scrollTo: 'who-we-are',
-    icon: <AimOutlined />,
-    text: 'Get Started'
-  },
-  description: {
-    text: 'Strategic Digital Solutions for Modern Businesses.'
-  }
 };
 
 const Home = () => {
   return (
     <>
-      <WelcomeIntro id="intro-index" {...intro} />
+      <WelcomeIntro />
       <WhoWeAre />
       <Section {...whatWeDoOutlines} />
       <SessionBooking />
