@@ -46,12 +46,6 @@ export const metadata: Metadata = {
     url: appUrl,
     images: [
       {
-        url: assets.icons.chrome384,
-        type: 'icon',
-        height: 384,
-        width: 384,
-      },
-      {
         url: assets.icons.chrome192,
         type: 'icon',
         height: 192,
