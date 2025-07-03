@@ -15,6 +15,8 @@ import { assets } from '@/libs/assets';
 import GlobalStyles from '@/styles';
 import colors from '@/libs/colors';
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL;
+
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
@@ -28,26 +30,21 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   keywords: ['Algrith', 'Web', 'Web design', 'Business', 'Artisans', 'Buyers', 'Sellers', 'Online Market', 'Sales', 'Marketplace', 'Algorithms'],
   description: 'Turning ideas into impactful digital products, designs, and experiences.',
-  metadataBase: process.env.NEXT_PUBLIC_APP_URL,
   referrer: 'origin-when-cross-origin',
+  bookmarks: `${appUrl}/bookmarks`,
   manifest: '/app.webmanifest',
   applicationName: 'Algrith',
   publisher: 'Algrith LLC',
   creator: 'Algrith LLC',
+  metadataBase: appUrl,
   openGraph: {
     description: 'Turning ideas into impactful digital products, designs, and experiences.',
     title: 'Algrith - Strategic Digital Solutions for Modern Businesses',
-    url: process.env.NEXT_PUBLIC_APP_URL,
     siteName: 'Algrith',
     locale: 'en_US',
     type: 'website',
+    url: appUrl,
     images: [
-      {
-        url: assets.icons.chrome512,
-        type: 'icon',
-        height: 512,
-        width: 512
-      },
       {
         url: assets.icons.chrome384,
         type: 'icon',
@@ -74,6 +71,9 @@ export const metadata: Metadata = {
       },
     ]
   },
+  // facebook: {
+  //   appId: '123456789012345',
+  // },
   twitter: {
     description: 'Turning ideas into impactful digital products, designs, and experiences.',
     title: 'Algrith: Strategic Digital Solutions for Modern Businesses.',
@@ -89,6 +89,10 @@ export const metadata: Metadata = {
         width: 1800,
       },
     ]
+  },
+  authors: {
+    name: 'Algrith LLC',
+    url: appUrl
   },
   robots: {
     nocache: !inProduction,
