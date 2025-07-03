@@ -69,12 +69,13 @@ export interface Assets extends BaseObject {
 	};
 	icons: {
 		chrome512: string;
+		chrome384: string;
 		chrome192: string;
-		safari: string;
 		favicon32: string;
 		favicon16: string;
-		apple: string;
 		favicon: string;
+		safari: string;
+		apple: string;
 	};
 };
 

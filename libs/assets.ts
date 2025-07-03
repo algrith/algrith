@@ -31,6 +31,7 @@ export const assets: Assets = {
 	},
 	icons: {
 		chrome512: '/images/favicons/android-chrome-512x512.png',
+		chrome384: '/images/favicons/android-chrome-384x384.png',
 		chrome192: '/images/favicons/android-chrome-192x192.png',
 		safari: '/images/favicons/safari-pinned-tab.svg',
 		favicon32: '/images/favicons/favicon-32x32.png',

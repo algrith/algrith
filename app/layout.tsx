@@ -43,14 +43,16 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: assets.icons.safari,
-        type: 'mask-icon'
-      },
-      {
         url: assets.icons.chrome512,
         type: 'icon',
         height: 512,
         width: 512
+      },
+      {
+        url: assets.icons.chrome384,
+        type: 'icon',
+        height: 384,
+        width: 384,
       },
       {
         url: assets.icons.chrome192,
@@ -96,7 +98,7 @@ export const metadata: Metadata = {
       noimageindex: inProduction,
       follow: inProduction,
       index: inProduction,
-    },
+    }
   },
   icons: {
     shortcut: assets.icons.favicon,
