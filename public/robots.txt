@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://algrith.com
+
+# Sitemaps
+Sitemap: https://algrith.com/sitemap.xml

@@ -6,8 +6,6 @@ export default removeImports()(
   withTwin({
     reactStrictMode: true,
     output: 'standalone',
-    experimental: {
-      turbo: {}
-    }
+    turbo: {}
   })
 );
