@@ -168,7 +168,7 @@ export const HowItWorksWrapper = styled(SectionLayout)`
   }
   
   .content {
-    ${tw`grid xl:grid-cols-3 gap-8 md:gap-12 w-full`};
+    ${tw`grid xl:grid-cols-3 gap-8 md:gap-12 w-full mb-16`};
 
     .steps {
       ${tw`xl:col-span-2 text-xl`};

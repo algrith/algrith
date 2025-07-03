@@ -74,6 +74,7 @@ const HowItWorks = () => {
           the steps outlined below to know better.
         </p>
       </div>
+      
       <div className="content">
         <div className="steps">
           {howItWorks.map(({direction, content, color, title, icon, step}) => (

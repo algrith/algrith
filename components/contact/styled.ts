@@ -2,7 +2,7 @@ import { SectionLayout } from '@/components/shared/layout/styled';
 import tw, { styled } from 'twin.macro';
 
 export const ContactWrapper = styled(SectionLayout)`
-  ${tw`md:py-12 lg:py-0`};
+  ${tw`md:pt-12 lg:pt-0 pb-16`};
 
   .info {
     ${tw`text-center`};

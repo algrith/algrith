@@ -44,7 +44,7 @@ export const SessionBookingWrapper = styled(SectionLayout)`
     ${tw`md:pr-6 lg:pr-28 xl:pr-32`};
 
     h1 {
-      ${tw`text-2xl md:text-3xl lg:text-4xl dark:text-theme-secondary font-extrabold tracking-wide leading-10 md:leading-[1.5] mb-3`};
+      ${tw`text-2xl md:text-3xl lg:text-4xl dark:text-theme-secondary font-extrabold tracking-wide leading-10 md:leading-[1.5] lg:leading-[1.5] mb-3`};
     }
     
     p {
@@ -205,7 +205,7 @@ export const WhoWeAreWrapper = styled(SectionLayout)`
   }
   
   p {
-    ${tw`mt-4 mb-10 lg:max-w-4xl xl:max-w-6xl md:leading-[1.8] text-xl md:text-2xl font-montserrat dark:text-dark-mode-septenary text-gray-500 lg:mx-auto`};
+    ${tw`mt-4 mb-10 lg:max-w-4xl xl:max-w-6xl leading-[1.8] lg:leading-[2.0] text-xl md:text-2xl font-montserrat dark:text-dark-mode-septenary text-gray-500 lg:mx-auto`};
   }
 `;
 

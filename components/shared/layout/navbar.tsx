@@ -6,7 +6,6 @@ import { Avatar } from 'antd';
 
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
-import useClassName from '@/hooks/class-name';
 import { NavbarWrapper } from './styled';
 import { assets } from '@/libs/assets';
 import Button from '../button';
@@ -37,10 +36,10 @@ const Navbar = () => {
   const { closeNavbar } = useToggleNavbar();
 	const pathname = usePathname();
 
-	const getClassName = (path: string) => useClassName([
+	const getClassName = (path: string) => [
 		pathname === path ? 'active' : '',
 		'ripple-node',
-	]);
+	].filter(Boolean).join(' ');
 
 	return (
 		<NavbarWrapper className="navlinks" id="nav-menu">

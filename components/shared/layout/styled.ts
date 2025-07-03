@@ -4,8 +4,6 @@ import { Content, Footer, Header } from 'antd/es/layout/layout';
 import tw, { styled } from 'twin.macro';
 import { Layout } from 'antd';
 
-import Button from '../button';
-
 export const SectionLayout = styled.div`
   ${tw`relative w-full 2xl:w-8/12 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-0 mx-auto`};
 `;
@@ -293,10 +291,14 @@ export const NavbarWrapper = styled.nav`
 		${tw`flex flex-col lg:flex-row flex-grow flex-shrink-0 w-11/12 lg:w-full p-2 rounded-xl my-4 lg:my-0 mx-auto`};
 
 		a {
-			${tw`transition-all ease-in-out duration-500 my-2 mx-auto lg:mx-4 px-0 lg:pt-2 hover:border-opacity-100 border-theme-primary border-b-4 border-opacity-0 dark:border-opacity-0 text-left lg:text-center w-full lg:w-auto text-lg dark:text-dark-mode-octonary text-gray-600`};
+			${tw`relative my-2 mx-auto lg:mx-4 px-0 text-left lg:text-center w-full lg:w-auto text-lg dark:text-dark-mode-octonary text-gray-600`};
 
-			&.active {
-				${tw`lg:border-opacity-70`};
+			&:after {
+				${tw`absolute content rounded-full left-0 -bottom-1 h-1 w-full bg-transparent transition-all ease-in-out duration-500`};
+			}
+			
+			&:hover:after, &.active:after {
+				${tw`lg:bg-theme-primary`};
 			}
 		}
 	}

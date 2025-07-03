@@ -127,7 +127,7 @@ const features = [
 
 const socials = [
 	{
-		href: '/',
+		href: 'https://web.facebook.com/algrithllc',
 		icon: <FacebookFilled />
 	},
 	{

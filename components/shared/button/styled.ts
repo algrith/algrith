@@ -6,7 +6,7 @@ import { Button } from 'antd';
 
 export const LinkWrapper = styled(NextLink)`
 	&.button {
-		${tw`relative font-semibold tracking-wide inline-flex items-center gap-4 text-center rounded-md py-4 px-10 text-xl`};
+		${tw`relative font-semibold tracking-wide inline-flex items-center gap-4 text-center rounded-full py-3.5 px-8 text-xl`};
 		line-height: 23px;
 
 		&.secondary {
