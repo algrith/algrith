@@ -193,16 +193,16 @@ const Footer = () => {
 									<div className="contacts">
 										<div className="socials">
 											{socials.map((social, index) => (
-												<a key={index} href={social.href}>
+												<Link key={index} href={social.href} target="_blank">
 													{social.icon}
-												</a>
+												</Link>
 											))}
 										</div>
 										
 										<div className="email">
-											<a href={email.href}>
+											<Link href={email.href}>
 												{email.text}
-											</a>
+											</Link>
 										</div>
 									</div>
 								)}
