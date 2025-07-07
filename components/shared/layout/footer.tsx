@@ -135,7 +135,7 @@ const socials = [
 		icon: <TwitterOutlined />
 	},
 	{
-		href: '/',
+		href: 'https://www.linkedin.com/company/algrith',
 		icon: <LinkedinFilled />,
 	}
 ];

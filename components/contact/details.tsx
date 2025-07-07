@@ -16,7 +16,7 @@ const ContactDetails = () => {
         <Link href="#">
           <i className="fab fa-twitter"></i>
         </Link>
-        <Link href="#">
+        <Link href="https://www.linkedin.com/company/algrith">
           <i className="fab fa-linkedin"></i>
         </Link>
       </div>
