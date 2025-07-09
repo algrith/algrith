@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
+
 import TableOfContent from '../shared/table-of-content';
 import { TermsOfServiceWrapper } from './styled';
 
@@ -7,7 +9,7 @@ const tableOfContent = [
   { text: 'Purchase', id: 'purchase' },
   { text: 'Availability, Errors and Inaccuracies', id: 'availability' },
   { text: 'Content', id: 'content' },
-  { text: 'Account', id: 'account' },
+  { text: 'Account', id: 'accounts' },
   { text: 'Links To Other Web Sites', id: 'links' },
   { text: 'Termination', id: 'termination' },
   { text: 'Disclaimer', id: 'disclaimer' },
@@ -15,16 +17,18 @@ const tableOfContent = [
   { text: 'Cookies', id: 'cookies' },
   { text: 'License', id: 'license' },
   { text: 'iFrames', id: 'iFrames' },
-  { text: 'Application', id: 'application' },
+  { text: 'Web application/design', id: 'application' },
   { text: 'Miscellaneous', id: 'miscellaneous' }
 ];
 
 const TermsOfService = () => {
+  const containerRef = useRef(null);
+
   return (
     <TermsOfServiceWrapper>
       <div className="intro">
         <h1>
-          <span>Updated on 5th June, 2022</span>
+          <span>Updated on 9th July, 2025</span>
           Terms of Service
         </h1>
         <p>
@@ -48,7 +52,7 @@ const TermsOfService = () => {
       </div>
 
       <div className="content">
-        <div className="terms">
+        <div ref={containerRef} className="terms">
           <div id="purchase">
             <h1>Purchase</h1>
             <p>
@@ -56,15 +60,15 @@ const TermsOfService = () => {
               ("Purchase"), you may be asked to supply certain information relevant to your Purchase
               including, without limitation, your credit card number, the expiration date of your credit
               card, your billing address, and your shipping information.
-              You represent and warrant that:
+              You represent and warrant that;
             </p>
-            <ul>
+            <ul className="list-lower-roman">
               <li>
-                (i) you have the legal right to use any credit card(s) or
+                you have the legal right to use any credit card(s) or
                 other payment method(s) in connection with any Purchase; and that
               </li>
               <li>
-                (ii) the information you supply to us is true, correct and complete.
+                the information you supply to us is true, correct and complete.
               </li>
             </ul>
             <p>
@@ -101,15 +105,15 @@ const TermsOfService = () => {
               appropriateness.
               You retain any and all of your rights to any Content you submit, post or display on or
               through the Service and you are responsible for protecting those rights.
-              You represent and warrant that:
+              You represent and warrant that;
             </p>
-            <ul>
+            <ul className="list-lower-roman">
               <li>
-                (i) the Content is yours (you own it) or you have the right
+                the Content is yours (you own it) or you have the right
                 to use it and grant us the rights and license as provided in these Terms, and
               </li>
               <li>
-                (ii) the posting of your Content on or through the Service does not violate the
+                the posting of your Content on or through the Service does not violate the
                 privacy rights, publicity rights, copyrights, contract rights
                 or any other rights of any person.
               </li>
@@ -163,19 +167,19 @@ const TermsOfService = () => {
               particular purpose, non-infringement or course of performance.
               Algrith LLC subsidiaries, affiliates, and its licensors do not warrant that;
             </p>
-            <ul>
+            <ul className="list-lower-alpha">
               <li>
-                a) the Service will function uninterrupted, secure or available at any
+                the Service will function uninterrupted, secure or available at any
                 particular time or location;
               </li>
               <li>
-                b) any errors or defects will be corrected;
+                any errors or defects will be corrected;
               </li>
               <li>
-                c) the Service is free of viruses or other harmful components; or
+                the Service is free of viruses or other harmful components; or
               </li>
               <li>
-                d) the results of using the Service will meet your requirements.
+                the results of using the Service will meet your requirements.
               </li>
             </ul>
           </div>
@@ -196,7 +200,7 @@ const TermsOfService = () => {
             <h1>Cookies</h1>
             <p>
               We employ the use of cookies. By accessing Algrith LLC, you agreed to use cookies in
-              agreement with the Algrith LLC's Privacy Policy.Most interactive websites use cookies
+              agreement with the Algrith LLC's Privacy Policy. Most interactive websites use cookies
               to let us retrieve the user’s details for each visit. Cookies are used by our website
               to enable the functionality of certain areas to make it easier for people visiting our website.
             </p>
@@ -226,7 +230,7 @@ const TermsOfService = () => {
             <ul>
               <li>
                 The Customer is solely responsible for preparing and sending detailed answers
-                to our web application/design service requirement ("through the Order requirement Form").
+                to our web application/design service requirement ("through the Contact Us Form").
                 Algrith.com is under no obligation to review a requirement for
                 further Feedbacks for any purpose, including accuracy, completeness of information, quality or clarity.
               </li>
@@ -249,7 +253,7 @@ const TermsOfService = () => {
                 that incorporate changes requested by the Customer in the
                 Revision Brief. The purpose of the revision process is to create
                 designs that move forward in a specific direction as determined
-                by the Customer. Algrith LLC.com offers Unlimited Revisions to a choosen package.
+                by the Customer.
               </li>
               <li>
                 Upon expiration of the 1 year website free maintenance, hosting and domain
@@ -264,7 +268,7 @@ const TermsOfService = () => {
           <div id="miscellaneous">
             <h1>Miscellaneous</h1>
             <p>
-              Project duration: The Customer agrees to provide timely responses to 'Algrith.com'
+              <span>Project duration:</span> The Customer agrees to provide timely responses to 'Algrith.com'
               after receiving status notifications from 'Algrith.com'. The Customer shall have
               30 days to respond to each set of deliveries sent to the Customer for review.
               If after 30 days the Customer has failed to respond, 'Algrith.com' will assume the
@@ -273,12 +277,16 @@ const TermsOfService = () => {
               In rare cases, if the customer feels that it may take him more than 30 days to respond
               then he is requested to inform 'Algrith.com' accordingly either by email or live chat,
               so that 'Algrith.com' keeps the project in active state.
-              Eligibility Requirements: By asking for our services, you represent and warrant that
+            </p>
+            <p>
+              <span>Eligibility Requirements:</span> By asking for our services, you represent and warrant that
               you meet our requirements, that the information you include as part of the ordering
               process is complete and accurate and, if you are ordering services on behalf of an
               entity, that you are authorise to bind that entity to these Terms and Conditions.
               'Algrith.com' may accept or reject your order in its sole discretion.
-              Authorisation to Use: Permitted Uses. You may access and use the Service solely
+            </p>
+            <p>
+              <span>Authorisation to Use:</span> Permitted Uses. You may access and use the Service solely
               in accordance with the Terms and Conditions and any posted policies and procedures
               that appear on the Web Site. You may provide Creative Briefs and obtain Responses
               only if you register as a Customer.
@@ -286,7 +294,7 @@ const TermsOfService = () => {
           </div>
         </div>
         
-        <TableOfContent items={tableOfContent} />
+        <TableOfContent targetRef={containerRef} items={tableOfContent} />
       </div>
     </TermsOfServiceWrapper>
   );

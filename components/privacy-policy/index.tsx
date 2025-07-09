@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef } from 'react';
+
 import TableOfContent from '../shared/table-of-content';
 import { PrivacyPolicyWrapper } from './styled';
 
@@ -11,17 +13,19 @@ const tableOfContent = [
   { text: 'Security', id: 'security' },
   { text: 'Choices', id: 'choices' },
   { text: 'Your Rights', id: 'rights' },
-  { text: 'Controllers and Responsible Companies', id: 'responsiblities' },
-  { text: 'How to Reach Us', id: 'contact-method' },
+  { text: 'Controllers and Responsible Companies', id: 'responsibilities' },
+  { text: 'How to Reach Us', id: 'contact-methods' },
   { text: 'Privacy Policy Changes', id: 'changes' }
 ];
 
 const PrivacyPolicy = () => {
+  const containerRef = useRef(null);
+
   return (
     <PrivacyPolicyWrapper>
       <div className="intro">
         <h1>
-          <span>Updated on 5th June, 2022</span>
+          <span>Updated on 9th July, 2025</span>
           Privacy Policy
         </h1>
         <p>
@@ -34,11 +38,11 @@ const PrivacyPolicy = () => {
       </div>
 
       <div className="content">
-        <div className="policies">
+        <div ref={containerRef} className="policies">
           <div id="information-collection">
             <h1>Information We Collect</h1>
             <p>
-              We only collect information about you if we have a reason to do so–for example, to
+              We only collect information about you if we have a reason to do so — for example, to
               provide our Services, to communicate with you, or to make our Services better. We
               collect information in three ways: if and when you provide information to us,
               automatically through operating our Services, and from outside sources. Let’s go over
@@ -54,21 +58,21 @@ const PrivacyPolicy = () => {
               </p>
               <ul>
                 <li>
-                  <span>- Basic Account Information: </span>
+                  <span>Basic Account Information: </span>
                   We ask for basic information from you in order to set
                   up your account. For example, we require individuals who sign up for an account
                   to provide email address. You may provide us with more information–like your
                   name–but we don’t require that information to create an Algrith.com account.
                 </li>
                 <li>
-                  <span>- Payment Information: </span>
+                  <span>Payment Information: </span>
                   If you use our paid Services you will have to create an
                   Algrith.com account or connect an existing account. You may also provide us with
                   information about your financial account to set up a payments integration, such
                   as the email address for your payment invoice.
                 </li>
                 <li>
-                  <span>- Communications With Us: </span>
+                  <span>Communications With Us: </span>
                   You may also provide us information when you
                   respond to surveys, communicate with our Customer Service about a support
                   question.
@@ -85,7 +89,7 @@ const PrivacyPolicy = () => {
               </p>
               <ul>
                 <li>
-                  <span>- Log Information: </span>
+                  <span>Log Information: </span>
                   Like most online service providers, we collect information that
                   web browsers, mobile devices, and servers typically make available, such as the
                   browser type, IP address, unique device identifiers, language preference,
@@ -93,7 +97,7 @@ const PrivacyPolicy = () => {
                   information.
                 </li>
                 <li>
-                  <span>- Usage Information: </span>
+                  <span>Usage Information: </span>
                   We collect information about your usage of our Services. For
                   example, we collect information about the actions that site administrators and
                   users perform on a site using our Service–in other words, who did what, when
@@ -102,7 +106,7 @@ const PrivacyPolicy = () => {
                   make our Services better.
                 </li>
                 <li>
-                  <span>- Location Information: </span>
+                  <span>Location Information: </span>
                   We may determine the approximate location of your
                   device from your IP address. We collect and use this information to, for example,
                   calculate how many people visit our Services from certain geographic regions. We
@@ -111,7 +115,7 @@ const PrivacyPolicy = () => {
                   allow us to do so through your mobile device operating system’s permissions.
                 </li>
                 <li>
-                  <span>- Information from Cookies & Other Technologies: </span>
+                  <span>Information from Cookies & Other Technologies: </span>
                   A cookie is a string of
                   information that a website stores on a visitor’s computer, and that the visitor’s
                   browser provides to the website each time the visitor returns. Pixel tags (also
@@ -132,40 +136,40 @@ const PrivacyPolicy = () => {
               <p>
                 We use information about you as mentioned above and for the purposes listed below:
               </p>
-              <ul>
+              <ul className="list-disc">
                 <li>
-                  - To provide our Services–for example, to set up and maintain your account, host
+                  To provide our Services–for example, to set up and maintain your account, host
                   your website, backup and restore your website, or charge you for any of our paid
                   Services;
                 </li>
                 <li>
-                  - To further develop and improve our Services–for example by adding new
+                  To further develop and improve our Services – for example by adding new
                   features that we think our users will enjoy or will help them to create and manage
                   their websites more efficiently;
                 </li>
                 <li>
-                  - To monitor and analyze trends and better understand how users interact with
+                  To monitor and analyze trends and better understand how users interact with
                   our Services, which helps us improve our Services and make them easier to use;
                 </li>
                 <li>
-                  - To measure, gauge, and improve the effectiveness of our advertising, and better
-                  understand user retention and attrition--for example, we may analyze how many
+                  To measure, gauge, and improve the effectiveness of our advertising, and better
+                  understand user retention and attrition — for example, we may analyze how many
                   individuals purchased a plan after receiving a marketing message or the features
                   used by those who continue to use our Services after a certain length of time;
                 </li>
                 <li>
-                  - To monitor and prevent any problems with our Services, protect the security of
+                  To monitor and prevent any problems with our Services, protect the security of
                   our Services, detect and prevent fraudulent transactions and other illegal
                   activities, fight spam, and protect the rights and property of Algrith.com and
                   others, which may result in us declining a transaction or the use of our Services;
                 </li>
                 <li>
-                  - To communicate with you, for example through an email, about offers and
+                  To communicate with you, for example through an email, about offers and
                   promotions offered by Algrith.com and others we think will be of interest to you,
                   solicit your feedback, or keep you up to date on Algrith.com and our products; and
                 </li>
                 <li>
-                  - To personalize your experience using our Services, provide content
+                  To personalize your experience using our Services, provide content
                   recommendations, target our marketing messages to groups of our users (for
                   example, those who have a particular plan with us or have been our user for a
                   certain length of time), and serve relevant advertisements.
@@ -186,7 +190,7 @@ const PrivacyPolicy = () => {
               </p>
               <ul>
                 <li>
-                  <span>- Subsidiaries, Employees, and Independent Contractors: </span>
+                  <span>Subsidiaries, Employees, and Independent Contractors: </span>
                   We may disclose
                   information about you to our subsidiaries, our employees, and individuals who
                   are our independent contractors that need to know the information in order to
@@ -195,7 +199,7 @@ const PrivacyPolicy = () => {
                   Privacy Policy for personal information that we share with them.
                 </li>
                 <li>
-                  <span>- Third Party Vendors: </span>
+                  <span>Third Party Vendors: </span>
                   We may share information about you with third party
                   vendors who need to know information about you in order to provide their
                   services to us, or to provide their services to you or your site. This group includes
@@ -213,12 +217,12 @@ const PrivacyPolicy = () => {
                   commitments in order to share information with them.
                 </li>
                 <li>
-                  <span>- Legal Requests: </span>
+                  <span>Legal Requests: </span>
                   We may disclose information about you in response to a
                   subpoena, court order, or other governmental request.
                 </li>
                 <li>
-                  <span>- To Protect Rights, Property, and Others: </span>
+                  <span>To Protect Rights, Property, and Others: </span>
                   We may disclose information about you
                   when we believe in good faith that disclosure is reasonably necessary to protect
                   the property or rights of Algrith.com, third parties, or the public at large. For
@@ -227,7 +231,7 @@ const PrivacyPolicy = () => {
                   without delay.
                 </li>
                 <li>
-                  <span>- Business Transfers: </span>
+                  <span>Business Transfers: </span>
                   In connection with any merger, sale of company assets, or
                   acquisition of all or a portion of our business by another company, or in the
                   unlikely event that Algrith.com goes out of business or enters bankruptcy, user
@@ -238,14 +242,14 @@ const PrivacyPolicy = () => {
                   Policy.
                 </li>
                 <li>
-                  <span>- With Your Consent: </span>
+                  <span>With Your Consent: </span>
                   We may share and disclose information with your consent or
                   at your direction. For example, we may share your information with third parties
                   with which you authorize us to do so, such as the social media services that you
                   connect to your site through our Publicize feature.
                 </li>
                 <li>
-                  <span>- Aggregated or De-Identified Information: </span>
+                  <span>Aggregated or De-Identified Information: </span>
                   We may share information that has
                   been aggregated or reasonably de-identified, so that the information could not
                   reasonably be used to identify you. For instance, we may publish aggregate
@@ -253,7 +257,7 @@ const PrivacyPolicy = () => {
                   your email address to facilitate customized ad campaigns on other platforms.
                 </li>
                 <li>
-                  <span>- Published Support Requests: </span>
+                  <span>Published Support Requests: </span>
                   And if you send us a request (for example, via a
                   support email or one of our feedback mechanisms), we reserve the right to
                   publish that request in order to help us clarify or respond to your request or to
@@ -267,8 +271,8 @@ const PrivacyPolicy = () => {
             <h1>How Long We Keep Information</h1>
             <p>
               We generally discard information about you when we no longer need the information
-              for the purposes for which we collect and use it--which are described in the section
-              above on How and Why We Use Information--and we are not legally required to
+              for the purposes for which we collect and use it — which are described in the section
+              above on How and Why We Use Information — and we are not legally required to
               continue to keep it. For example, we keep the web server logs that record information
               about a visitor to out website, such as the visitor’s IP address, browser type, and
               operating system, for approximately 30 days. We retain the logs for this period of time in
@@ -297,21 +301,21 @@ const PrivacyPolicy = () => {
             <div className="sub-policy">
               <ul>
                 <li>
-                  <span>- Limit the Information that You Provide: </span>
+                  <span>Limit the Information that You Provide: </span>
                   If you have an account with us, you can
                   choose not to provide the optional account information, profile information, and
                   transaction and billing information. Please keep in mind that if you do not
                   provide this information, certain features of our Services may not be accessible.
                 </li>
                 <li>
-                  <span>- Opt-Out of Electronic Communications: </span>
+                  <span>Opt-Out of Electronic Communications: </span>
                   You may opt out of receiving
                   promotional messages from us. Just follow the instructions in those messages. If
                   you opt out of promotional messages, we may still send you other messages, like
                   those about your account and legal notices.
                 </li>
                 <li>
-                  <span>- Set Your Browser to Reject Cookies: </span>
+                  <span>Set Your Browser to Reject Cookies: </span>
                   At this time, Algrith.com does not respond to
                   “do not track” signals in our Services. However, you can usually choose to set
                   your browser to remove or reject browser cookies before using Algrith.com
@@ -319,11 +323,11 @@ const PrivacyPolicy = () => {
                   function properly without the aid of cookies.
                 </li>
                 <li>
-                  <span>- Close Your Account: </span>
+                  <span>Close Your Account: </span>
                   While we’d be very sad to see you go, if you no longer want
                   to use our Services you can close your Algrith.com account. Please keep in mind
                   that we may continue to retain your information after closing your account, as
-                  described in How Long We Keep Information above--for example, when that
+                  described in How Long We Keep Information above — for example, when that
                   information is reasonably needed to comply with (or demonstrate our
                   compliance with) legal obligations such as law enforcement requests, or
                   reasonably needed for our legitimate business interests.
@@ -344,21 +348,22 @@ const PrivacyPolicy = () => {
             <div className="sub-policy">
               <ul>
                 <li>
-                  - Request access to your personal data;
+                  Request access to your personal data;
                 </li>
                 <li>
-                  - Request correction or deletion of your personal data;
+                  Request correction or deletion of your personal data;
                 </li>
                 <li>
-                  - Object to our use and processing of your personal data;
+                  Object to our use and processing of your personal data;
                 </li>
                 <li>
-                  - Request that we limit our use and processing of your personal data; and
+                  Request that we limit our use and processing of your personal data; and
                 </li>
                 <li>
-                  - Request portability of your personal data.
+                  Request portability of your personal data.
                 </li>
               </ul>
+
               <p>
                 You can usually access, correct, or delete your personal data using your account settings
                 and tools that we offer, but if you aren’t able to do that, or you would like to contact us
@@ -372,8 +377,8 @@ const PrivacyPolicy = () => {
           <div id="responsibilities">
             <h1>Controllers and Responsible Companies</h1>
             <p>
-              Algrith.com has been created by REALWEB. Company that entered into the contract with
-              you under the Terms of Service for the the product or service you use. REALWEB is
+              Algrith.com has been created by Algrith LLC. Company that entered into the contract with
+              you under the Terms of Service for the the product or service you use. Algrith LLC is
               controller of the personal information, which means that it is the company responsible
               for processing that information.
             </p>
@@ -401,7 +406,7 @@ const PrivacyPolicy = () => {
           </div>
         </div>
         
-        <TableOfContent items={tableOfContent} />
+        <TableOfContent targetRef={containerRef} items={tableOfContent} />
       </div>
     </PrivacyPolicyWrapper>
   );

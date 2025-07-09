@@ -3,7 +3,7 @@ import { OAuthProviderType, Provider } from 'next-auth/providers';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { LinkProps as NextLinkProps } from 'next/link';
 import { TypeOpen } from 'antd/es/message/interface';
-import { AnchorHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
+import { AnchorHTMLAttributes, HTMLAttributes, ReactNode, RefObject } from 'react';
 
 export type InlineFeedbackWrapperProps = Omit<InlineFeedbackProps, 'target'> & Pick<FeedbackState, 'type'>;
 export type OAuthProviderIcons = Partial<Record<OAuthProviderType, string>>;
@@ -99,6 +99,14 @@ export interface HowItWorksStepProps {
   title: string;
   icon: string;
   step: number;
+};
+
+export interface TableOfContentProps {
+	targetRef?: RefObject<HTMLDivElement>;
+	items: Array<{
+		text: string;
+		id: string;
+	}>;
 };
 
 export interface AlertFeedbackAPIs {

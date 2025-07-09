@@ -3,12 +3,13 @@ import { useEffect, useState } from 'react';
 
 import { TableOfContentWrapper } from './styled';
 import useClassName from '@/hooks/class-name';
+import { TableOfContentProps } from '@/types';
 import { Overlay } from '../layout/styled';
 import useViewport from '@/hooks/viewport';
 import Link from '../button/link';
 import Button from '../button';
 
-const TableOfContent = ({ items }: { items: Array<{ text: string; id: string; }> }) => {
+const TableOfContent = ({ targetRef, items }: TableOfContentProps) => {
   const [togglerOffsetClass, setTogglerOffsetClass] = useState('');
   const [activeItemId, setActiveItemId] = useState(items[0]?.id);
   const [show, setShow] = useState(false);
@@ -36,6 +37,19 @@ const TableOfContent = ({ items }: { items: Array<{ text: string; id: string; }>
 
   useEffect(() => {
     window.addEventListener('scroll', offsetToggler);
+
+    const observer = new IntersectionObserver((entries) => {
+			const targetId = entries[0].target.id;
+      if (entries[0].isIntersecting) {
+				setActiveItemId(targetId);
+      }
+		}, { threshold: [0.3] });
+	
+    const observed = Array.from(targetRef?.current?.childNodes || []).filter(
+      (node): node is Element => node.nodeType === Node.ELEMENT_NODE
+    );
+
+    observed.forEach((element) => observer.observe(element));
       
     return () => {
       window.removeEventListener(

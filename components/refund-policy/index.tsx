@@ -1,13 +1,23 @@
 'use client';
 
+import { useRef } from 'react';
+
+import TableOfContent from '../shared/table-of-content';
 import { RefundPolicyWrapper } from './styled';
 
-const PrivacyPolicy = () => {
+const tableOfContent = [
+  { text: 'Policies', id: 'policies' },
+  { text: 'How To Claim Your Refund', id: 'claim-refund' }
+];
+
+const RefundPolicy = () => {
+  const containerRef = useRef(null);
+
   return (
     <RefundPolicyWrapper>
       <div className="intro">
         <h1>
-          <span>Updated on 23th March, 2019</span>
+          <span>Updated on 9th July, 2025</span>
           Refund Policy
         </h1>
         <p>
@@ -19,94 +29,95 @@ const PrivacyPolicy = () => {
       </div>
 
       <div className="content">
-        <div className="policies">
-          <div>
-            <ul className="list-decimal">
+        <div ref={containerRef} className="policies">
+          <div id="policies">
+            <h1>Policies</h1>
+
+            <ul className="list-decimal relaxed">
               <li>
-                You make a solicitation when the underlying ideas for a package services
-                are provided. However, once you approve or ask for changes in the initial
-                delivery or request additional features, the refund offer will be void and
-                a request for refund will not be entertained.
-                <br />
-                Once the project has been entered in revision phase, the refund offer will be
-                void and a request for refund will not be made. However, we believe in 100%
-                customer satisfaction so we will make corrections till satisfaction.
-                <br />
-                On the off chance that demand for refund is made before the initial delivery
-                due to any of these reasons;
+                <span>Before Approval or Revisions</span>
+                You may request a refund only before approving or requesting changes to the initial delivery or asking for additional features. Once approval or a change request is made, the refund offer becomes void.
               </li>
+
               <li>
+                <span>Revision Phase</span>
+                Once the project enters the revision phase, the refund offer becomes void. However, we are committed to 100% customer satisfaction and will continue making corrections until you are satisfied.
+              </li>
+              
+              <li>
+                <span>Valid Refund Scenarios Before Initial Delivery</span>
+                A full refund (minus a 10% administrative and processing fee) will be issued if:
                 <ul>
-                  <li>
-                    No requirements for design filled in the process of order placement.
-                  </li>
-                  <li>
-                    Duplicate orders placed by mistake
-                    (in which the client notifies Algrith of such mistake within 48 hours).
-                  </li>
-                  <li>
-                    Then you would qualify for a full refund (less 10% administration and preparing charge).
-                  </li>
+                  <li>No design requirements were submitted at the time of order.</li>
+                  <li>A duplicate order was placed by mistake, and you notify Algrith within 48 hours.</li>
                 </ul>
               </li>
+
               <li>
-                No request for refund will be entertained after inaction by the customer after 30 days.
-                All refund request should be made to Algrith support (algrithllc@gmail.com).
-                Algrith reserves the right to approve/reject any and all refund requests based
-                on an individual case to case premise.
+                <span>Refund Request Deadline</span>
+                Refund requests will not be entertained after 30 days of client inactivity. All refund requests must be sent to algrithllc@gmail.com.
+                Algrith reserves the right to approve or deny refund requests on a case-by-case basis.
               </li>
+
               <li>
-                No refund will be entertained after the final files have been delivered.
+                <span>Final Delivery</span>
+                No refund will be issued once the final files have been delivered.
               </li>
+
               <li>
-                For Website bundles, no refund will be made once the initial design mock
-                up has been revised or the inner pages have been created with client's approval.
-                <br />
-                For instance, in the event that you request for a application and website design and approve of
-                the application, you are eligible for the refund of the website service at
-                the time of initial delivery only.
-                <br />
-                A refund request should have a legitimate reason which must be qualified
-                against the outline brief and client input for revisions. Unless an idea
-                has not been composed as per brief, a refund will not be approved also
-                discount won’t be given, however further revisions will be provided until
-                you are satisfied.
-                <br />
-                It is also to be noted that, under any circumstances, both parties
-                (Algrith & Client) agree not to attack/criticize each other and any of
-                its employee, associate/s or partner/s publicly (on public forums, blogs,
-                social networks etc.) at any given time during or subsequent to contract period.
-                Similarly, both parties agree not to talk on forums, blogs, community groups or
-                any social media in a way which brings bad name to either party or any of its
-                employee, associate or partner. In case of breach, the breaching party would
-                have to pay a reasonable compensation decided by the non-breaching party as
-                damages.
-                <br />
-                All orders require client input before finishing the during design which is
-                why it is requested that the customer is active throughout the process and
-                gives feedback in order to get the required results.
-                <br />
-                100% unique design guarantee qualifies you for a custom website or custom web application
-                if the website or web application designed by Algrith is found to be considerably similar
-                to another design that already exists. Any likeness to a current outline will be just a
-                fortuitous event and Algrith won’t acknowledge any responsibility or claim of any compensation
-                in such a case. It is the client’s responsibility to get their artwork Trademarked.
+                <span>Website Packages</span>
+                For website service packages, no refund will be granted after:
+                <ul>
+                  <li>The initial design mock-up has been revised, or</li>
+                  <li>Inner pages have been developed and approved by the client.</li>
+                </ul>
+              </li>
+
+              <li>
+                <span>Partial Refunds</span>
+                If your project includes both a website and an application, and you approve only the application, you may be eligible for a refund for the website portion only, provided the request is made before its initial delivery.
+              </li>
+
+              <li>
+                <span>Valid Refund Criteria</span>
+                Refund requests must include a valid reason and will be reviewed against the original project brief and revision feedback. A refund will only be considered if the delivered concept does not align with the agreed brief. If the concept meets the brief, refunds will not be approved — however, we will continue to offer revisions to ensure your satisfaction.
+              </li>
+
+              <li>
+                <span>Non-Disparagement Clause</span>
+                Both parties (Algrith and the Client) agree not to publicly attack or criticize each other or any associates, employees, or partners on public forums, blogs, or social media at any time during or after the contract period. Any breach of this clause may result in a reasonable compensation determined by the non-breaching party.
+              </li>
+              
+              <li>
+                <span>Client Cooperation</span>
+                To ensure successful delivery, client feedback is essential throughout the design process. Delays or lack of input may impact delivery and eligibility for refunds.
+              </li>
+
+              <li>
+                <span>Unique Design Guarantee</span>
+                We guarantee 100% original design. If the final design is found to be significantly similar to an existing design, we will provide a new custom design. However, any similarity is purely coincidental. It is the client’s responsibility to trademark their artwork.
               </li>
             </ul>
-            <div className="sub-policy">
-              <h2>How To Claim Your Refund</h2>
-              <p>
-                To ensure that your refund request is processed effectively and is approved,
-                please make sure that you meet the following requirements.
-                <br />
-                Specify your concern and claim your refund through email at algrithllc@gmail.com.
-              </p>
-            </div>
+          </div>
+
+          <div id="claim-refund">
+            <h2>How To Claim Your Refund</h2>
+
+            <p>
+              To ensure that your refund request is processed effectively and approved, please do the following;
+            </p>
+
+            <ul className="list-disc">
+              <li>Clearly specify your concerns.</li>
+              <li>Send your request via email to: algrithllc@gmail.com</li>
+            </ul>
           </div>
         </div>
+
+        <TableOfContent targetRef={containerRef} items={tableOfContent} />
       </div>
     </RefundPolicyWrapper>
   );
 };
 
-export default PrivacyPolicy;
+export default RefundPolicy;

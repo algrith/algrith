@@ -32,7 +32,23 @@ export const TermsOfServiceWrapper = styled(SectionLayout)`
       }
       
       ul {
-        ${tw`pl-4 md:pl-8 my-8`};
+        ${tw`pl-4 md:pl-8 my-8 marker:text-pink-500`};
+
+        &.list-lower-roman {
+          ${tw`list-[lower-roman]`};
+        }
+        
+        &.list-lower-alpha {
+          ${tw`list-[lower-alpha]`};
+        }
+      }
+      
+      p {
+        ${tw`mb-4`};
+
+        span {
+          ${tw`text-pink-500`};
+        }
       }
     }
   }

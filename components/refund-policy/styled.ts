@@ -31,48 +31,38 @@ export const RefundPolicyWrapper = styled(SectionLayout)`
         ${tw`text-left mb-8 text-theme-secondary text-3xl font-bold`};
       }
       
-      .sub-policy {
-        ${tw`mt-4 pl-4`};
-
-        h2 {
-          ${tw`text-2xl mb-4`};
-        }
-      }
-      
       ul {
-        ${tw`pl-4 my-8`};
+        ${tw`pl-8 my-8 marker:text-theme-secondary`};
+        
+        &.relaxed li {
+          ${tw`mb-4`};
 
+          ul li {
+            ${tw`mb-[unset]`};
+          }
+        }
+        
         &.list-decimal {
           ${tw`list-decimal`};
         }
-      
-        li span {
-          ${tw`text-theme-secondary`};
-        }
         
-        ul {
-          ${tw`pl-4 list-disc`};
+        &.list-disc {
+          ${tw`list-disc`};
         }
-      }
-    }
-    
-    .table-of-content {
-      ${tw`hidden md:block`};
       
-      .sticky {
-        ${tw`sticky top-16 flex flex-col gap-4`};
-      
-        h2 {
-          ${tw`text-2xl md:text-3xl font-bold`};
-        }
-        
-        ul {
-          ${tw`flex flex-col gap-2`};
-
-          li {
-            ${tw`cursor-pointer`};
+        li {
+          span {
+            ${tw`text-theme-secondary block`};
+          }
+          
+          ul {
+            ${tw`pl-4 list-disc`};
           }
         }
+      }
+      
+      p {
+        ${tw`mb-4`};
       }
     }
   }

@@ -40,11 +40,19 @@ export const PrivacyPolicyWrapper = styled(SectionLayout)`
       }
       
       ul {
-        ${tw`pl-4 md:pl-8 my-8`};
-
+        ${tw`pl-4 md:pl-8 my-8 marker:text-teal-500`};
+        
+        &.list-disc {
+          ${tw`list-disc`};
+        }
+        
         li span {
           ${tw`text-teal-500`};
         }
+      }
+      
+      p {
+        ${tw`mb-4`};
       }
     }
   }
