@@ -37,6 +37,9 @@ export const metadata: Metadata = {
   publisher: 'Algrith LLC',
   creator: 'Algrith LLC',
   metadataBase: appUrl,
+  alternates: {
+    canonical: appUrl
+  },
   openGraph: {
     description: 'Turning ideas into impactful digital products, designs, and experiences.',
     title: 'Algrith - Strategic Digital Solutions for Modern Businesses',
