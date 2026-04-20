@@ -5,19 +5,12 @@ const SchemaMarkup = () => {
     description: 'Turning ideas into impactful digital products, designs, and experiences.',
     image: 'https://algrith.com/images/logo/algrith-logo.png',
     logo: 'https://algrith.com/images/logo/algrith-logo.png',
-    operatingSystem: 'Windows, MacOS, Android, iOS, Linux',
-    applicationCategory: 'SocialNetworkingApplication',
     '@context': 'https://schema.org',
     '@type': 'ProfessionalService',
     email: 'algrithllc@gmail.com',
     url: 'https://algrith.com',
     areaServed: 'Worldwide',
     name: 'Algrith',
-    // aggregateRating: {
-    //   '@type': 'AggregateRating',
-    //   ratingValue: 4.6,
-    //   ratingCount: 8864
-    // },
     serviceType: [
       'Artificial Intelligence',
       'Business Optimization',
@@ -34,11 +27,6 @@ const SchemaMarkup = () => {
       'https://web.facebook.com/algrithllc'
 
     ],
-    // offers: {
-    //   priceCurrency: 'USD',
-    //   '@type': 'Offer',
-    //   price: 1.00
-    // }
   };
 
   return (
