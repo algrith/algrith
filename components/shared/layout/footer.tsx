@@ -38,18 +38,18 @@ const resources: FooterResource = [
 			},
 			{
 				text: 'Careers',
-				href: '/',
+				href: '#',
 				subItem: {
 					text: 'Not hiring',
-					href: '/'
+					href: '#'
 				}
 			},
 			{
 				text: 'Blog',
-				href: '/',
+				href: '#',
 				subItem: {
 					text: 'Coming soon',
-					href: '/'
+					href: '#'
 				}
 			},
 			// {
@@ -130,10 +130,10 @@ const socials = [
 		href: 'https://web.facebook.com/algrithllc',
 		icon: <FacebookFilled />
 	},
-	{
-		href: '/',
-		icon: <TwitterOutlined />
-	},
+	// {
+	// 	href: '/',
+	// 	icon: <TwitterOutlined />
+	// },
 	{
 		href: 'https://www.linkedin.com/company/algrith',
 		icon: <LinkedinFilled />,
@@ -171,7 +171,10 @@ const Footer = () => {
 				</div>
 				<div className="right">
 					{resources.map(({ icon, ...resource }) => (
-						<div key={resource.title} className={`section ${resource.title === 'Contact' ? 'full-on-mobile' : ''}`}>
+						<div
+							className={`section ${resource.title.toLowerCase()}`}
+							key={resource.title}
+						>
 							<h1>
 								{icon}
 								{resource.title}

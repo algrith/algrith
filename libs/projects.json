@@ -1,5 +1,13 @@
 [
   {
+    "description": "Streamline your workflow with ProPulse. Featuring real-time client feedback, industry-adaptive UI modes, and visual milestone tracking. Start your project today.",
+    "image": "./images/projects/propulse.png",
+    "url": "https://getpropulse.app",
+    "company": "Jilcon Engineering",
+    "location": "Uyo, Nigeria",
+    "name": "Propulse"
+  },
+  {
     "description": "MegaQuest helps you collect rich, authentic voice responses and transform them into actionable insights, effortlessly and in multiple languages.",
     "image": "./images/projects/megaquest.png",
     "company": "Dobande Technologies",

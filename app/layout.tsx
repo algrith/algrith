@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 
 import { ContentWrapper, LayoutWrapper } from '@/components/shared/layout/styled';
 import AntDesignThemeProvider from '@/components/shared/theme/provider';
+import SchemaMarkup from '@/components/shared/schema/markup';
 import ThemeSwitch from '@/components/shared/theme/switch';
 import Alert from '@/components/shared/feedback/alert';
 import Header from '@/components/shared/layout/header';
@@ -49,24 +50,28 @@ export const metadata: Metadata = {
     url: appUrl,
     images: [
       {
+        alt: 'Algrith - Strategic Digital Solutions',
         url: assets.icons.chrome384,
         type: 'icon',
         height: 384,
         width: 384,
       },
       {
+        alt: 'Algrith - Strategic Digital Solutions',
         url: assets.icons.chrome192,
         type: 'icon',
         height: 192,
         width: 192
       },
       {
+        alt: 'Algrith - Strategic Digital Solutions',
         url: assets.icons.favicon32,
         type: 'icon',
         height: 32,
         width: 32
       },
       {
+        alt: 'Algrith - Strategic Digital Solutions',
         url: assets.icons.favicon16,
         type: 'icon',
         height: 16,
@@ -82,11 +87,13 @@ export const metadata: Metadata = {
     title: 'Algrith: Strategic Digital Solutions for Modern Businesses.',
     images: [
       {
+        alt: 'Algrith - Strategic Digital Solutions',
         url: assets.brand.logos.white,
         height: 600,
         width: 800,
       },
       {
+        alt: 'Algrith - Strategic Digital Solutions',
         url: assets.brand.logos.white,
         height: 1600,
         width: 1800,
@@ -102,7 +109,7 @@ export const metadata: Metadata = {
     follow: inProduction,
     index: inProduction,
     googleBot: {
-      noimageindex: inProduction,
+      noimageindex: !inProduction,
       follow: inProduction,
       index: inProduction,
     }
@@ -149,6 +156,8 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
   <ReduxProvider>
     <html lang="en-US">
       <body className={fontClassNames}>
+        <SchemaMarkup />
+        
         <Suspense>
           <GlobalStyles />
         </Suspense>

@@ -151,17 +151,17 @@ export const ProjectsWrapper = styled(SectionWrapper)`
 
     .top {
       ${tw`w-full h-80`};
-
+      
       .ant-avatar {
         ${tw`rounded-t-lg rounded-bl-lg rounded-br-[42px] w-full h-full border-none items-start`};
 
         img {
-          ${tw`object-top dark:brightness-75`};
+          ${tw`object-top dark:brightness-75 w-full h-full`};
         }
       }
       
       blockquote {
-        ${tw`opacity-0 flex absolute -bottom-full left-0 bg-black/80 text-xl text-dark-mode-septenary items-center justify-center w-full h-full p-6 transition-all ease-in-out duration-500`};
+        ${tw`opacity-0 flex absolute -bottom-full left-0 bg-white dark:bg-black/80 text-xl text-theme-text dark:text-dark-mode-septenary items-center justify-center w-full h-full p-6 transition-all ease-in-out duration-500`};
       }
     }
     

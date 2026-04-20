@@ -156,10 +156,10 @@ export const FooterWrapper = styled(Footer)`
 	}
 
 	.top {
-		${tw`grid lg:grid-cols-3 lg:gap-10 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-0 pb-12 2xl:w-8/12 2xl:mx-auto`};
+		${tw`grid grid-cols-1 lg:grid-cols-3 lg:gap-10 justify-between px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-0 pb-12 2xl:w-8/12 2xl:mx-auto`};
 
 		.left {
-			${tw`w-full pt-8`};
+			${tw`w-full pt-8 lg:pr-16`};
 
 			.section {
 				${tw`relative text-lg pt-0.5`};
@@ -170,7 +170,15 @@ export const FooterWrapper = styled(Footer)`
 			${tw`flex flex-wrap justify-between lg:col-span-2 md:pt-4`};
 
 			.section {
-				${tw`pt-8 md:pt-4 flex-grow`};
+				${tw`text-center lg:text-left pt-8 md:pt-4 flex-grow`};
+
+				&.contact {
+					${tw`w-full pt-16 md:pt-4 md:w-auto`};
+
+					h1 {
+						${tw`hidden md:block`};
+					}
+				}
 
 				.wrapper {
 					${tw`relative text-lg`};
@@ -179,7 +187,7 @@ export const FooterWrapper = styled(Footer)`
 						${tw`md:block flex items-center justify-between relative pt-0.5`};
 
 						.socials {
-							${tw`order-2 text-theme-primary lg:mt-3 lg:mb-4 flex justify-start items-center`};
+							${tw`order-2 text-theme-primary lg:mt-3 lg:mb-4 flex justify-center lg:justify-start items-center`};
 
 							a {
 								${tw`flex text-theme-primary justify-center mx-1 items-center rounded-xl text-xl h-8 w-8 dark:bg-dark-mode-tertiary bg-white shadow-lg hover:text-theme-secondary transition-all ease-in-out duration-500`};
