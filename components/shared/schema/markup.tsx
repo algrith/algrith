@@ -11,13 +11,6 @@ const SchemaMarkup = () => {
     url: 'https://algrith.com',
     areaServed: 'Worldwide',
     name: 'Algrith',
-    serviceType: [
-      'Artificial Intelligence',
-      'Business Optimization',
-      'Digital Strategy',
-      'Web Development',
-      'Data Analytics'
-    ],
     founder: {
       name: 'Algrith LLC',
       '@type': 'Person'
@@ -25,8 +18,7 @@ const SchemaMarkup = () => {
     sameAs: [
       'https://www.linkedin.com/company/algrith',
       'https://web.facebook.com/algrithllc'
-
-    ],
+    ]
   };
 
   return (
