@@ -4,33 +4,33 @@ import { MouseEvent, useEffect, useRef, useState } from 'react';
 
 import { DarkThemeIconWrapper, LightThemeIconWrapper, SystemThemeIconWrapper, ThemeWrapper } from './styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { setTheme, setIsSystemTheme } from './reducer';
 import useClickAway from '@/hooks/click-away';
-import { changeThemeMode } from './reducer';
 import useViewport from '@/hooks/viewport';
-import { ThemeModes } from '@/types';
+import { Themes } from '@/types';
 
 const ThemeSwitch = () => {
+  const { isSystemTheme, theme } = useAppSelector((state) => state.theme);
   const themeSwitchContainerRef = useRef<HTMLDivElement>(null);
-  const { mode } = useAppSelector((state) => state.theme);
   const themeSwitchRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const { viewport } = useViewport();
   const dispatch = useAppDispatch();
   
   const activeThemeClass = {
-    system: !['light', 'dark'].includes(mode) ? 'active' : '',
-    light: mode === 'light' ? 'active' : '',
-    dark: mode === 'dark' ? 'active' : '',
+    light: !isSystemTheme && theme === 'light' ? 'active' : '',
+    dark: !isSystemTheme && theme === 'dark' ? 'active' : '',
+    system: isSystemTheme ? 'active' : ''
   };
 
   useClickAway(themeSwitchRef, setOpen);
 
-  const switchThemeMode = (mode: ThemeModes) => {
-    const themeColor = mode === 'dark' ? '#050d1f' : '#ffffff';
-    (document.querySelector('meta[name="msapplication-TileColor"]') as HTMLElement)?.setAttribute('content', themeColor);
-    (document.querySelector('meta[name="theme-color"]') as HTMLElement)?.setAttribute('content', themeColor);
+  const switchTheme = (color: string, theme: Themes) => {
+    // Update dark meta element only if the theme is dark or system with device in dark mode, otherwise update light meta element.
+    document.querySelector('meta[name="theme-color"][media*="prefers-color-scheme: dark"]')?.setAttribute('content', color);
+    document.querySelector('meta[name="msapplication-TileColor"]')?.setAttribute('content', color);
     
-    if (mode === 'dark') {
+    if (theme === 'dark') {
       document.documentElement.classList?.remove('light');
       document.documentElement.classList?.add('dark');
     } else {
@@ -39,18 +39,21 @@ const ThemeSwitch = () => {
     }
   };
 
-  const setTheme = (e?: MouseEvent) => {
-    let mode = e ? (e.target as HTMLElement).dataset.mode as ThemeModes : localStorage?.themeMode;
+  const applyTheme = (e?: MouseEvent) => {
+    let theme = e ? (e.target as HTMLElement).dataset.theme as Themes : localStorage?.theme;
     const deviceIsInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const isSystemTheme = !mode || mode === 'undefined' || mode === 'system';
+    const isSystemTheme = !theme || theme === 'undefined' || theme === 'system';
+    let color = theme === 'dark' ? '#050d1f' : '#ffffff';
+    dispatch(setIsSystemTheme(isSystemTheme));
+    localStorage.theme = theme;
     
     if (isSystemTheme) {
-      mode = deviceIsInDarkMode ? 'dark' : 'light';
+      if (deviceIsInDarkMode && theme !== 'light') color = '#050d1f';
+      theme = deviceIsInDarkMode ? 'dark' : 'light';
     }
     
-    dispatch(changeThemeMode(mode));
-    localStorage.themeMode = mode;
-    switchThemeMode(mode);
+    switchTheme(color, theme);
+    dispatch(setTheme(theme));
   };
 
   const repositionThemeSwitch = () => {
@@ -65,31 +68,13 @@ const ThemeSwitch = () => {
     }
   };
 
-  // const switchThemeMode = () => {
-  //   const deviceIsInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  //   const noSavedThemeMode = !('themeMode' in localStorage);
-  //   const savedThemeMode = localStorage?.themeMode;
-
-  //   const isSystemTheme = !savedThemeMode || savedThemeMode === 'undefined' || savedThemeMode === 'system';
-  //   localStorage.themeMode = savedThemeMode;
-
-  //   (document.querySelector('meta[name="msapplication-TileColor"]') as HTMLElement)?.setAttribute('content', '#050d1f');
-  //   (document.querySelector('meta[name="theme-color"]') as HTMLElement)?.setAttribute('content', '#050d1f');
-  
-  //   if (savedThemeMode === 'dark') {
-  //     document.documentElement.classList?.remove('light');
-  //     document.documentElement.classList?.add('dark');
-  //   } else {
-  //     (document.documentElement).classList?.remove('dark');
-  //     (document.documentElement).classList?.add('light');
-  //   }
-  // };
-
   useEffect(() => {
     window.addEventListener('scroll', repositionThemeSwitch);
-    setTheme();
+    applyTheme();
 
-    return () => window.removeEventListener('scroll', repositionThemeSwitch);
+    return () => {
+      window.removeEventListener('scroll', repositionThemeSwitch);
+    };
   }, [viewport]);
 
   return (
@@ -109,17 +94,17 @@ const ThemeSwitch = () => {
 
       {open && (
         <ul className="dropdown-wrapper">
-          <li className={activeThemeClass.light} onClick={setTheme} data-mode="light" role="option" aria-selected="true" tabIndex={-1}>
+          <li className={activeThemeClass.light} onClick={applyTheme} data-theme="light" role="option" aria-selected="true" tabIndex={-1}>
             <LightThemeIcon />
             Light
           </li>
           
-          <li className={activeThemeClass.dark} onClick={setTheme} data-mode="dark" role="option" aria-selected="false" tabIndex={-1}>
+          <li className={activeThemeClass.dark} onClick={applyTheme} data-theme="dark" role="option" aria-selected="false" tabIndex={-1}>
             <DarkThemeIcon />
             Dark
           </li>
 
-          <li className={activeThemeClass.system} onClick={setTheme} data-mode="system" role="option" aria-selected="false" tabIndex={-1}>
+          <li className={activeThemeClass.system} onClick={applyTheme} data-theme="system" role="option" aria-selected="false" tabIndex={-1}>
             <SystemThemeIcon />
             System
           </li>

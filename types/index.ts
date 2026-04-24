@@ -14,7 +14,7 @@ export type TextAlignment = 'center' | 'right' | 'left';
 export type BaseStringObject = Record<string, string>;
 export type UseClassName = Array<string> | string;
 export type BaseObject = Record<string, any>;
-export type ThemeModes = 'light' | 'dark';
+export type Themes = 'light' | 'dark';
 
 export interface InlineFeedbackProps extends HTMLAttributes<HTMLDivElement> {
 	withBlockMargin?: boolean;
@@ -171,7 +171,8 @@ export interface FeedbackPayload {
 };
 
 export interface AppThemeState {
-  mode: ThemeModes;
+	isSystemTheme: boolean;
+  theme: Themes;
 };
 
 export interface OAuthProvider {

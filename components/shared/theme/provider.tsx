@@ -1,6 +1,6 @@
 'use client';
 
-import { AntDesignThemeProviderProps, ConfigProvider, ThemeConfig, theme, Spin } from 'antd';
+import { AntDesignThemeProviderProps, ConfigProvider, ThemeConfig, theme as antTheme, Spin } from 'antd';
 import { AntdRegistry } from '@ant-design/nextjs-registry';
 
 import { Spinner } from '@/components/shared/icon/spinner';
@@ -92,9 +92,9 @@ const tokenConfigs: AppTheme['tokenConfigs'] = {
 };
 
 const AntDesignThemeProvider = ({ children, type = 'app' }: AntDesignThemeProviderProps) => {
-  const { mode } = useAppSelector((state) => state.theme);
+  const { theme } = useAppSelector((state) => state.theme);
   const themeConfig = {
-    algorithm: mode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm,
+    algorithm: theme === 'dark' ? antTheme.darkAlgorithm : antTheme.defaultAlgorithm,
     ...tokenConfigs[type]
   };
   

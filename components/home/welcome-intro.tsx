@@ -18,7 +18,7 @@ const WelcomeIntro = () => {
           <li>Get a professionally crafted digital solution.</li>
         </ul>
         
-        <Link type="primary" href="#what-we-do" rounded asButton shadow>
+        <Link type="primary" href="#what-we-do" size="large" rounded asButton shadow>
           <PingAnimationWrapper>
             <div className="animator">
               <div className="background" />

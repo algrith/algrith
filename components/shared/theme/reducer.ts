@@ -3,21 +3,20 @@ import { AppThemeState } from '@/types';
 
 // Define the initial state using that type
 const initialState: AppThemeState = {
-  mode: 'light'
+  isSystemTheme: false,
+  theme: 'light'
 };
 
 export const themeSlice = createSlice({
   name: 'theme',
   initialState,
   reducers: {
-    changeThemeMode: (state, action: PayloadAction<AppThemeState['mode']>) => {
-      const mode = action.payload;
-
-      const isNotDeviceThemeMode = ['light', 'dark'].includes(mode);
-      localStorage.removeItem('themeMode');
-      
-      if (isNotDeviceThemeMode) localStorage.setItem('themeMode', mode);
-      state.mode = mode;
+    setTheme: (state, action: PayloadAction<AppThemeState['theme']>) => {
+      if (action.payload) localStorage.setItem('theme', action.payload);
+      state.theme = action.payload;
+    },
+    setIsSystemTheme: (state, action: PayloadAction<boolean>) => {
+      state.isSystemTheme = action.payload;
     }
   }
 });
@@ -25,7 +24,8 @@ export const themeSlice = createSlice({
 const { reducer, actions } = themeSlice;
 
 export const {
-  changeThemeMode
+  setIsSystemTheme,
+  setTheme
 } = actions;
 
 export default reducer;

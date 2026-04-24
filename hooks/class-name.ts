@@ -1,12 +1,12 @@
+import { useAppSelector } from '@/store/hooks';
 import { UseClassName } from '@/types';
-import useTheme from './theme';
 
 const useClassName = (className: UseClassName = '') => {
-  const { inDarkMode } = useTheme();
+  const { theme } = useAppSelector((state) => state.theme);
 
   return [
     ...(typeof className === 'string' ? [className] : className),
-    inDarkMode ? 'dark-theme-mode' : ''
+    theme === 'dark' ? 'dark-theme-mode' : ''
   ].join(' ').trim();
 };
 
