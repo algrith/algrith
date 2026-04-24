@@ -8,7 +8,6 @@ import useClickAway from '@/hooks/click-away';
 import { changeThemeMode } from './reducer';
 import useViewport from '@/hooks/viewport';
 import { ThemeModes } from '@/types';
-import colors from '@/libs/colors';
 
 const ThemeSwitch = () => {
   const themeSwitchContainerRef = useRef<HTMLDivElement>(null);
@@ -26,10 +25,32 @@ const ThemeSwitch = () => {
 
   useClickAway(themeSwitchRef, setOpen);
 
+  const switchThemeMode = (mode: ThemeModes) => {
+    const themeColor = mode === 'dark' ? '#050d1f' : '#ffffff';
+    (document.querySelector('meta[name="msapplication-TileColor"]') as HTMLElement)?.setAttribute('content', themeColor);
+    (document.querySelector('meta[name="theme-color"]') as HTMLElement)?.setAttribute('content', themeColor);
+    
+    if (mode === 'dark') {
+      document.documentElement.classList?.remove('light');
+      document.documentElement.classList?.add('dark');
+    } else {
+      (document.documentElement).classList?.remove('dark');
+      (document.documentElement).classList?.add('light');
+    }
+  };
+
   const setTheme = (e?: MouseEvent) => {
-    const mode = e ? (e.target as HTMLElement).dataset.mode as ThemeModes : localStorage?.themeMode;
+    let mode = e ? (e.target as HTMLElement).dataset.mode as ThemeModes : localStorage?.themeMode;
+    const deviceIsInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const isSystemTheme = !mode || mode === 'undefined' || mode === 'system';
+    
+    if (isSystemTheme) {
+      mode = deviceIsInDarkMode ? 'dark' : 'light';
+    }
+    
     dispatch(changeThemeMode(mode));
-    switchThemeMode();
+    localStorage.themeMode = mode;
+    switchThemeMode(mode);
   };
 
   const repositionThemeSwitch = () => {
@@ -44,21 +65,25 @@ const ThemeSwitch = () => {
     }
   };
 
-  const switchThemeMode = () => {
-    const deviceIsInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const noSavedThemeMode = !('themeMode' in localStorage);
-    const savedThemeMode = localStorage?.themeMode;
-    
-    if (savedThemeMode === 'dark' || (noSavedThemeMode && deviceIsInDarkMode)) {
-      (document.querySelector('meta[name="msapplication-TileColor"]') as HTMLElement)?.setAttribute('content', colors.dark.primary);
-      (document.querySelector('meta[name="theme-color"]') as HTMLElement)?.setAttribute('content', colors.dark.primary);
-      document.documentElement.classList?.add('dark');
-    } else {
-      (document.querySelector('meta[name="msapplication-TileColor"]') as HTMLElement)?.setAttribute('content', colors.theme.primary);
-      (document.querySelector('meta[name="theme-color"]') as HTMLElement)?.setAttribute('content', '#ffffff');
-      (document.documentElement as HTMLElement).classList?.remove('dark');
-    }
-  };
+  // const switchThemeMode = () => {
+  //   const deviceIsInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  //   const noSavedThemeMode = !('themeMode' in localStorage);
+  //   const savedThemeMode = localStorage?.themeMode;
+
+  //   const isSystemTheme = !savedThemeMode || savedThemeMode === 'undefined' || savedThemeMode === 'system';
+  //   localStorage.themeMode = savedThemeMode;
+
+  //   (document.querySelector('meta[name="msapplication-TileColor"]') as HTMLElement)?.setAttribute('content', '#050d1f');
+  //   (document.querySelector('meta[name="theme-color"]') as HTMLElement)?.setAttribute('content', '#050d1f');
+  
+  //   if (savedThemeMode === 'dark') {
+  //     document.documentElement.classList?.remove('light');
+  //     document.documentElement.classList?.add('dark');
+  //   } else {
+  //     (document.documentElement).classList?.remove('dark');
+  //     (document.documentElement).classList?.add('light');
+  //   }
+  // };
 
   useEffect(() => {
     window.addEventListener('scroll', repositionThemeSwitch);

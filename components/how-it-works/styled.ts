@@ -1,6 +1,6 @@
 import tw, { css, styled } from 'twin.macro';
 
-import { SectionLayout } from '../shared/layout/styled';
+import { darkBgGradient, SectionLayout } from '../shared/layout/styled';
 
 const DarkTextStyles = css`
   &.yellow {
@@ -159,11 +159,11 @@ export const HowItWorksWrapper = styled(SectionLayout)`
     ${tw`text-center py-2`};
 
     h1 {
-      ${tw`mb-8 text-3xl md:text-5xl dark:text-slate-200 font-bold`};
+      ${tw`mb-8 text-3xl md:text-5xl dark:text-slate-200 font-bold tracking-widest`};
     }
     
     p {
-      ${tw`leading-relaxed dark:text-slate-300 text-lg md:text-xl md:leading-relaxed mb-12`};
+      ${tw`dark:text-slate-300 text-2xl mb-12`};
     }
   }
   
@@ -188,10 +188,11 @@ export const HowItWorksWrapper = styled(SectionLayout)`
       ${tw`grid md:grid-cols-2 xl:grid-cols-1 self-start gap-8 dark:text-dark-mode-senary`};
 
       .item {
-        ${tw`rounded-2xl border border-gray-100 dark:border-dark-mode-secondary dark:bg-dark-mode-secondary bg-white p-6 md:p-8`};
+        ${tw`rounded-2xl border border-gray-100 dark:border-dark-mode-secondary bg-white p-6 md:p-8`};
+        ${darkBgGradient.fourLayers};
 
         h2 {
-          ${tw`mb-4 text-2xl dark:text-theme-primary font-bold`};
+          ${tw`mb-4 text-2xl dark:text-slate-300 font-bold`};
         }
         
         p {

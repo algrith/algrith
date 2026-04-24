@@ -28,6 +28,7 @@ const socials = [
 const links = [
 	{ text: 'Home', href: '/' },
 	{ text: 'About', href: '/about-us' },
+	{ text: 'Pricing', href: '/pricing' },
 	{ text: 'How It Works', href: '/how-it-works' },
 	{ text: 'Contact', href: '/contact-us' }
 ];

@@ -2,7 +2,7 @@
 
 import { SectionCardWrapper, SectionWrapper } from '@/components/shared/layout/styled';
 import { SectionProps, SectionItemProps } from '@/types';
-import { Avatar } from 'antd';
+import { Avatar, Tag } from 'antd';
 
 const getTitle = (title: SectionProps['title']) => {
   const data = { text: '', alignment: '' };
@@ -21,11 +21,13 @@ const SectionItem = ({ subtitle, content, title, icon }: SectionItemProps) => (
 	<SectionCardWrapper key={title} data-aos="fade-up">
 		<div className="content">
 			<div className="top">
-				<span>
+				<span className="icon">
 					{icon}
 				</span>
 
-				<h3>{subtitle}</h3>
+				<Tag color="orange-inverse">
+					{subtitle}
+				</Tag>
 			</div>
 
 			<h2>{title}</h2>

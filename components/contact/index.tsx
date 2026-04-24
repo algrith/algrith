@@ -1,8 +1,8 @@
 'use client';
 
-import GoogleCaptchaWrapper from '../shared/recaptcha';
 import Intro from '@/components/shared/layout/intro';
 import Contact from '@/components/contact/contact';
+import useRecaptcha from '@/hooks/recaptcha';
 import { IntroProps } from '@/types';
 
 const intro: IntroProps = {
@@ -18,11 +18,13 @@ const intro: IntroProps = {
 };
 
 const ContactUs = () => {
+  useRecaptcha();
+
   return (
-    <GoogleCaptchaWrapper>
+    <>
       <Intro id="intro-about" {...intro} />
       <Contact />
-    </GoogleCaptchaWrapper>
+    </>
   );
 };
 

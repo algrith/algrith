@@ -1,8 +1,8 @@
 'use client';
 
+import { darkBgGradient, Overlay } from '@/components/shared/layout/styled';
 import tw, { css, GlobalStyles as BaseStyles } from 'twin.macro';
 import { ScrollToTopController } from '@algrith/scroll-to-top';
-import { Overlay } from '@/components/shared/layout/styled';
 import useScrollToElement from '@/hooks/scroll-to-element';
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import '@algrith/scroll-to-top/dist/index.css';
@@ -25,6 +25,18 @@ const customStyles = css`
 
   button, [type='button'], [type='reset'], [type='submit'] {
     ${tw`disabled:cursor-not-allowed`};
+  }
+  
+  .ant-select-dropdown {
+    ${darkBgGradient.twoLayers};
+    
+    .ant-select-item-option {
+      ${tw`dark:text-gray-300 hover:(bg-gray-200 dark:bg-dark-mode-secondary)`};
+
+      &.ant-select-item-option-selected {
+        ${tw`dark:bg-dark-mode-secondary/50`};
+      }
+    }
   }
 `;
 

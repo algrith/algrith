@@ -21,6 +21,7 @@ import TechStack from '@/components/home/tech-stack';
 import WhoWeAre from '@/components/home/who-we-are';
 import Projects from '@/components/home/projects';
 import { SectionProps } from '@/types';
+import Pricing from '../pricing';
 
 const whyChooseUsOutlines: SectionProps = {
   illustration: './images/illustrations/team.png',
@@ -96,9 +97,10 @@ const Home = () => {
   return (
     <>
       <WelcomeIntro />
-      <WhoWeAre />
       <Section {...whatWeDoOutlines} />
-      <SessionBooking />
+      <WhoWeAre />
+      <Pricing inHomePage />
+      {/* <SessionBooking /> */}
       <Section {...whyChooseUsOutlines} />
       <TechStack />
       <MissionStatement />

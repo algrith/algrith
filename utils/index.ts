@@ -11,6 +11,14 @@ export const filterObject = ({ target, filters, include = false }: FilterObjectP
 	);
 };
 
+export const formatCurrency = (value?: number | string, currency = 'USD') => {
+	if (typeof value === 'string') return value;
+	return new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency,
+	}).format(value || 0);
+};
+
 export const isValidEmail = (email: string): boolean => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	return emailRegex.test(email);

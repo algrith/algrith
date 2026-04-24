@@ -1,6 +1,6 @@
 import tw, { styled } from 'twin.macro';
 
-import { SectionLayout } from '../shared/layout/styled';
+import { darkBgGradient, SectionLayout } from '../shared/layout/styled';
 
 export const PrivacyPolicyWrapper = styled(SectionLayout)`
   ${tw`dark:text-slate-200 text-gray-600 pt-8 md:pt-12 pb-8 md:pb-16`};
@@ -25,7 +25,8 @@ export const PrivacyPolicyWrapper = styled(SectionLayout)`
     ${tw`relative grid md:grid-cols-3 gap-8`};
 
     .policies {
-      ${tw`md:col-span-2 relative flex flex-col gap-8 dark:bg-dark-mode-secondary bg-white leading-relaxed shadow-sm rounded-2xl text-xl p-4 md:p-10 text-justify`};
+      ${tw`md:col-span-2 relative flex flex-col gap-8 bg-white leading-relaxed shadow-sm rounded-2xl text-xl p-4 md:p-10 text-justify`};
+      ${darkBgGradient.fourLayers};
 
       h1, h2 {
         ${tw`text-left mb-8 text-teal-500 text-3xl font-bold`};

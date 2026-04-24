@@ -1,4 +1,4 @@
-import { SectionLayout } from '@/components/shared/layout/styled';
+import { darkBgGradient, SectionLayout } from '@/components/shared/layout/styled';
 import tw, { styled } from 'twin.macro';
 
 export const ContactWrapper = styled(SectionLayout)`
@@ -21,7 +21,8 @@ export const ContactInquiryCardWrapper = styled.div`
   ${tw`lg:order-1 w-full lg:mt-16`};
 
   .wrapper {
-    ${tw`dark:bg-dark-mode-secondary overflow-hidden bg-white rounded-lg shadow`};
+    ${tw`overflow-hidden bg-white rounded-lg shadow`};
+    ${darkBgGradient.twoLayers};
 
     .image-wrapper {
       ${tw`h-64`};
@@ -49,26 +50,28 @@ export const ContactDetailsWrapper = styled.div`
   ${tw`lg:order-3 w-full lg:mt-16`};
 
   .top {
-    ${tw`py-4 px-5 mb-4 dark:bg-opacity-50 bg-blue-500 rounded-lg shadow flex gap-4 justify-between items-center`};
+    ${tw`py-4 px-5 mb-4 bg-blue-500 rounded-lg shadow flex gap-4 justify-between items-center`};
+    ${darkBgGradient.twoLayers};
 
     span {
-      ${tw`dark:bg-opacity-50 bg-blue-400 rounded-lg`};
+      ${tw`bg-blue-400 dark:bg-transparent rounded-lg`};
     }
     
     a {
-      ${tw`px-2 text-white flex justify-center items-center rounded-xl text-2xl h-12 w-12 dark:bg-opacity-50 bg-blue-400 shadow-lg`};
+      ${tw`px-2 text-white dark:text-gray-400 flex justify-center items-center rounded-xl text-2xl h-12 w-12 bg-blue-400 dark:bg-transparent shadow-lg`};
     }
   }
    
   .email {
-    ${tw`text-xl font-bold dark:text-dark-mode-septenary text-white py-2 px-3.5 dark:bg-opacity-50 bg-gray-400 rounded-lg shadow flex gap-4 justify-between items-center`};
+    ${tw`text-xl font-bold dark:text-gray-400 text-white py-2 px-3.5 bg-gray-400 rounded-lg shadow flex gap-4 justify-between items-center`};
+    ${darkBgGradient.twoLayers};
   }
   
   span {
     ${tw`px-2 flex items-center justify-center w-12 h-12`};
     
     svg {
-      ${tw`h-6 w-6`};
+      ${tw`h-6 w-6 text-white dark:text-gray-400`};
     }
   }
 `;
@@ -80,7 +83,8 @@ export const ContactFormWrapper = styled.div`
     ${tw`shadow rounded-2xl overflow-hidden`};
 
     .fields-wrapper {
-      ${tw`px-6 py-5 xl:px-12 dark:bg-dark-mode-secondary bg-white space-y-6`};
+      ${tw`px-6 py-5 xl:px-12 bg-white space-y-6`};
+      ${darkBgGradient.fourLayers};
 
       .grid-fields {
         ${tw`grid sm:grid-cols-2 gap-6`};
@@ -88,7 +92,8 @@ export const ContactFormWrapper = styled.div`
     }
     
     .footer {
-      ${tw`px-6 xl:px-12 pt-4 pb-7 xl:pb-12 dark:bg-dark-mode-secondary bg-gray-50`};
+      ${tw`px-6 xl:px-12 pt-4 pb-7 xl:pb-12 bg-gray-50`};
+      ${darkBgGradient.twoLayers};
 
       .feedback {
         ${tw`text-md mb-4`};

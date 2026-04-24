@@ -1,20 +1,20 @@
 import { NotificationArgsProps, ButtonProps, ThemeConfig } from 'antd';
-import { OAuthProviderType, Provider } from 'next-auth/providers';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
+import { ProviderType, Provider } from 'next-auth/providers';
+import { HTMLAttributes, ReactNode, RefObject } from 'react';
 import { LinkProps as NextLinkProps } from 'next/link';
 import { TypeOpen } from 'antd/es/message/interface';
-import { AnchorHTMLAttributes, HTMLAttributes, ReactNode, RefObject } from 'react';
 
 export type InlineFeedbackWrapperProps = Omit<InlineFeedbackProps, 'target'> & Pick<FeedbackState, 'type'>;
-export type OAuthProviderIcons = Partial<Record<OAuthProviderType, string>>;
+export type OAuthProviderIcons = Partial<Record<ProviderType, string>>;
 export type TextCase = 'capitalize' | 'uppercase' | 'lowercase';
 export type AsyncActionTargets = keyof AsyncActionsState;
 export type AuthTypes = 'signIn' | 'signUp' | 'profile';
 export type TextAlignment = 'center' | 'right' | 'left';
 export type BaseStringObject = Record<string, string>;
-export type ThemeModes = 'system' | 'light' | 'dark';
 export type UseClassName = Array<string> | string;
 export type BaseObject = Record<string, any>;
+export type ThemeModes = 'light' | 'dark';
 
 export interface InlineFeedbackProps extends HTMLAttributes<HTMLDivElement> {
 	withBlockMargin?: boolean;
@@ -44,6 +44,12 @@ export type Messages = Partial<Record<AsyncActionTargets, {
   [key: string]: string;
 }>>;
 
+export type PaystackProps = Customer & ButtonProps & {
+	onSuccess?: (response: BaseObject) => void;
+	description: string;
+	amount: number;
+};
+
 export interface LinkProps extends NextLinkProps {
 	target?: HTMLAnchorElement['target'];
 	rel?: HTMLAnchorElement['rel'];
@@ -52,6 +58,7 @@ export interface LinkProps extends NextLinkProps {
 	asButton?: boolean;
 	className?: string;
 	rounded?: boolean;
+	shadow?: boolean;
 	size?: SizeType;
 	id?: string;
 };
@@ -169,8 +176,8 @@ export interface AppThemeState {
 
 export interface OAuthProvider {
 	name: Provider['name'];
-	id: OAuthProviderType;
 	authType: AuthTypes;
+	id: ProviderType;
 };
 
 export interface FeedbackState {
@@ -219,6 +226,23 @@ export interface AsyncAction {
   message: string;
 };
 
+export interface OrderModel {
+	addons: 	Array<Addon>;
+	customer: Customer;
+	plan: Plan;
+	order: {
+		addon_total: number;
+		reference: string;
+		total: number;
+		date: string;
+	}
+};
+
+export interface AddonsProps {
+	proceedToPayment?: (addons: Array<Addon>) => void;
+	inPaymentModal?: boolean;
+};
+
 export type SectionProps = {
 	items: Array<SectionItemProps>;
 	illustration: string;
@@ -231,6 +255,29 @@ export type SectionProps = {
 
 export interface AppTheme {
 	tokenConfigs: Record<string, ThemeConfig>;
+};
+
+export interface Customer {
+	phone?: string;
+	email: string;
+	name: string;
+};
+
+export interface Addon {
+	billing_cycle: 'one-time' | 'monthly';
+	price: number;
+	text: string;
+	id: string;
+};
+
+export interface Plan {
+	name: 'Professional' | 'Enterprise' | 'Business' | 'Starter';
+	one_time_payment: boolean;
+	features: Array<string>;
+	most_popular: boolean;
+	description: string;
+	action: string;
+	price: number;
 };
 
 export type Colors = {
@@ -257,6 +304,9 @@ export type Colors = {
 
 declare global {
 	interface Window {
+		grecaptcha: {
+			execute: (recaptchaKey: string, options: { action?: string; }) => Promise<string>;
+		};
 		typingTimeout: NodeJS.Timeout;
 	}
 };

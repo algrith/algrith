@@ -23,8 +23,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   themeColor: [
-    { media: '(prefers-color-scheme: dark)', color: colors.dark.primary },
-    { media: '(prefers-color-scheme: light)', color: 'white' }
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#071a14' }
   ]
 };
 
@@ -164,21 +164,19 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
 
         <AntDesignThemeProvider>
           <LayoutWrapper>
-            <LayoutWrapper>
-              <Suspense>
-                <Header />
-                <Navbar />
-              </Suspense>
-              
-              <ThemeSwitch />
+            <Suspense>
+              <Header />
+              <Navbar />
+            </Suspense>
+            
+            <ThemeSwitch />
 
-              <ContentWrapper>
-                {children}
-              </ContentWrapper>
+            <ContentWrapper>
+              {children}
+            </ContentWrapper>
 
-              <Alert />
-              <Footer />
-            </LayoutWrapper>
+            <Alert />
+            <Footer />
           </LayoutWrapper>
         </AntDesignThemeProvider>
       </body>

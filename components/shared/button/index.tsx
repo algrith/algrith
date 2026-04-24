@@ -29,7 +29,9 @@ const Button = forwardRef((props: ButtonProps, ref: Ref<HTMLButtonElement>) => {
 
 	const className = useClassName([
 		props.rounded ? 'rounded' : '',
-		props?.className ?? ''
+		props.type ?? 'default',
+		props?.className ?? '',
+		size ?? 'middle'
 	]);
 
 	return (

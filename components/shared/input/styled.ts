@@ -1,16 +1,17 @@
 'use client';
 
 import { PasswordProps, TextAreaProps } from 'antd/es/input';
+import { darkBgGradient } from '../layout/styled';
 import { Checkbox, InputProps } from 'antd';
 import tw, { styled } from 'twin.macro';
 import { Group } from 'antd/es/radio';
 import colors from '@/libs/colors';
 
 export const InputWrapper = styled.div<InputProps | TextAreaProps | PasswordProps>`
-  ${tw`w-full flex flex-col gap-1 relative`};
+  ${tw`w-full flex flex-col gap-1 relative px-0.5`};
 
   .ant-input-affix-wrapper, input {
-    ${tw`h-[46px] text-[#252525] font-normal leading-[20.8px]`};
+    ${tw`h-[46px] text-gray-600 font-normal leading-[20.8px]`};
     
     &.ant-input-lg {
       ${tw`h-[50px]`};
@@ -44,7 +45,8 @@ export const InputWrapper = styled.div<InputProps | TextAreaProps | PasswordProp
   }
   
   textarea, .ant-input {
-    ${tw`text-lg dark:bg-dark-mode-tertiary dark:text-dark-mode-octonary dark:border-dark-mode-quaternary dark:hover:border-theme-primary hover:border-theme-primary focus:ring-transparent border-gray-300`};
+    ${tw`text-[14px] dark:placeholder:text-gray-600 dark:text-gray-300 dark:border-dark-mode-quaternary dark:hover:border-theme-primary hover:border-theme-primary focus:ring-transparent border-gray-300`};
+    ${darkBgGradient.twoLayers};
     border-radius: 8px;
   }
 `;
@@ -98,7 +100,7 @@ export const RadioGroupWrapper = styled(Group)`
 `;
 
 export const LabelWrapper = styled.label`
-  ${tw`text-lg text-[#252525] dark:text-dark-mode-octonary w-fit`};
+  ${tw`text-[13px] text-gray-600 dark:text-dark-mode-octonary w-fit font-bold`};
 
   .required {
     ${tw`pl-1 text-red-500 text-xl`};
@@ -109,10 +111,11 @@ export const SelectWrapper = styled.div`
 	${tw`flex flex-col gap-1 relative`};
 
   .ant-select {
-    ${tw`h-[46px] text-xm text-[#252525] font-normal leading-[20.8px]`};
+    ${tw`h-[46px] text-xm text-[#252525] font-normal leading-[20.8px] px-0.5`};
     
     .ant-select-selector {
-      ${tw`dark:bg-dark-mode-tertiary dark:border-dark-mode-quaternary dark:text-dark-mode-octonary focus:ring-transparent focus:border-gray-300 dark:focus:border-dark-mode-quaternary border-gray-300`};
+      ${tw`dark:border-dark-mode-quaternary dark:text-gray-300 focus:ring-transparent focus:border-gray-300 dark:focus:border-dark-mode-quaternary border-gray-300`};
+      ${darkBgGradient.twoLayers};
     }
     
     &.ant-select-lg {
@@ -139,8 +142,9 @@ export const SelectWrapper = styled.div`
       }
     }
   }
-
+  
   .ant-select-multiple .ant-select-selection-item {
+    ${tw`dark:text-gray-300`};
     background-color: #f7fafc !important;
     padding-right: 15px !important;
     padding-left: 15px !important;
@@ -151,6 +155,10 @@ export const SelectWrapper = styled.div`
       font-size: 12px;
       color: #718096;
     }
+  }
+  
+  .ant-select-selection-placeholder {
+    ${tw`dark:text-gray-600`};
   }
 
   .ant-select-arrow {

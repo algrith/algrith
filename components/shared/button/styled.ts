@@ -6,7 +6,7 @@ import { Button } from 'antd';
 
 export const LinkWrapper = styled(NextLink)`
 	&.button {
-		${tw`relative font-semibold tracking-wide inline-flex items-center gap-4 text-center rounded-full py-3.5 px-8 text-xl`};
+		${tw`relative font-semibold tracking-wide inline-flex items-center gap-4 text-center rounded-full py-3.5 px-8 text-xl shadow-lg`};
 		line-height: 23px;
 
 		&.secondary {
@@ -27,6 +27,10 @@ export const LinkWrapper = styled(NextLink)`
 		
 		&.rounded {
 			${tw`rounded-full`};
+		}
+		
+		&.shadow {
+			${tw`shadow-lg`};
 		}
 		
 		&.small {
@@ -52,7 +56,11 @@ export const ButtonWrapper = styled(Button)`
 		${tw`rounded-full`};
 	}
 	
+	&.success {
+		${tw`text-white`};
+	}
+	
 	&.small {
-		${tw`px-6 py-2`};
+		${tw`px-4 py-2 text-lg`};
 	}
 `;

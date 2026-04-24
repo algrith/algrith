@@ -2,17 +2,17 @@ import { SectionLayout, SectionWrapper } from '@/components/shared/layout/styled
 import tw, { styled } from 'twin.macro';
 
 export const MissionStatementWrapper = styled(SectionLayout)`
-  ${tw`flex flex-col md:flex-row justify-between gap-8 lg:gap-28 xl:gap-32 pt-10 md:pt-16 lg:pt-24 py-24 bg-white dark:bg-dark-mode-secondary`};
+  ${tw`flex flex-col md:flex-row justify-between gap-8 lg:gap-28 xl:gap-32 pt-10 md:pt-16 lg:pt-24 py-24`};
 
   .left {
     ${tw`lg:w-3/4`};
 
     h1 {
-      ${tw`text-4xl font-semibold text-sky-700 dark:text-teal-600 leading-tight sm:leading-tight sm:text-7xl`};
+      ${tw`text-4xl font-semibold text-gray-600 dark:text-gray-300 leading-tight sm:leading-tight sm:text-7xl`};
     }
     
     p {
-      ${tw`mt-4 mb-8 leading-relaxed text-2xl md:leading-relaxed dark:text-dark-mode-septenary text-gray-600`};
+      ${tw`mt-4 mb-8 leading-relaxed text-2xl md:leading-relaxed text-gray-600 dark:text-gray-400`};
 
       span {
         ${tw`hidden lg:inline`};
@@ -30,7 +30,7 @@ export const MissionStatementWrapper = styled(SectionLayout)`
 `;
 
 export const SessionBookingWrapper = styled(SectionLayout)`
-  ${tw`md:flex justify-between overflow-hidden bg-white pt-10 md:pt-16 lg:pt-24 py-24 dark:bg-dark-mode-secondary`};
+  ${tw`md:flex justify-between overflow-hidden pt-10 md:pt-16 lg:pt-24 py-24`};
 
   .right {
     ${tw`sm:max-w-lg mt-12 md:mt-0 overflow-hidden`};
@@ -44,20 +44,20 @@ export const SessionBookingWrapper = styled(SectionLayout)`
     ${tw`md:pr-6 lg:pr-28 xl:pr-32`};
 
     h1 {
-      ${tw`text-2xl md:text-3xl lg:text-4xl dark:text-theme-secondary font-extrabold tracking-wide leading-10 md:leading-[1.5] lg:leading-[1.5] mb-3`};
+      ${tw`text-2xl md:text-3xl lg:text-4xl text-gray-300 font-extrabold tracking-wide leading-10 md:leading-[1.5] lg:leading-[1.5] mb-3`};
     }
     
     p {
-      ${tw`mt-4 mb-8 leading-relaxed text-2xl md:leading-relaxed dark:text-dark-mode-septenary text-gray-600`};
+      ${tw`mt-4 mb-8 leading-relaxed text-2xl md:leading-relaxed text-gray-300`};
     }
   }
 `;
 
 export const GetStartedWrapper = styled(SectionLayout)`
-  ${tw`mt-8 mb-24`};
+  ${tw`pt-8 pb-24`};
   
   .shadow-wrapper {
-    ${tw`w-full px-4 py-6 md:p-6 lg:p-8 rounded-3xl shadow-lg dark:bg-dark-mode-primary bg-white md:flex justify-between items-start`};
+    ${tw`w-full px-4 py-6 md:p-6 lg:p-8 rounded-3xl md:flex justify-between items-start shadow dark:shadow-none bg-white dark:bg-transparent`};
   }
   
   .left {
@@ -65,7 +65,7 @@ export const GetStartedWrapper = styled(SectionLayout)`
   }
   
   h1 {
-    ${tw`leading-tight text-4xl font-extrabold tracking-wide dark:text-theme-primary text-gray-900 sm:leading-tight sm:text-6xl`};
+    ${tw`leading-tight text-4xl font-extrabold tracking-wide text-gray-500 dark:text-gray-300 sm:leading-tight sm:text-6xl`};
   }
   
   p {
@@ -90,13 +90,13 @@ export const GetStartedWrapper = styled(SectionLayout)`
 `;
 
 export const TechStackWrapper = styled(SectionLayout)`
-  ${tw`dark:bg-dark-mode-secondary bg-theme-secondary/10 pt-8 lg:pt-12 pb-10 lg:pb-14`};
+  ${tw`pt-8 lg:pt-12 pb-10 lg:pb-14`};
 
   .intro {
     ${tw`w-full md:w-3/4 mx-auto sm:mb-6`};
 
     h1 {
-      ${tw`text-3xl md:text-4xl font-nunito-sans text-center text-theme-secondary font-extrabold pt-4`};
+      ${tw`text-3xl md:text-4xl font-nunito-sans text-center text-gray-500 dark:text-gray-300 font-extrabold pt-4`};
     }
   }
   
@@ -147,7 +147,7 @@ export const ProjectsWrapper = styled(SectionWrapper)`
   }
   
   figure {
-    ${tw`p-2 relative flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start bg-white dark:bg-dark-mode-secondary rounded-xl w-full overflow-hidden shadow`};
+    ${tw`p-4 relative flex flex-col 2xl:flex-row justify-center items-center 2xl:items-start bg-white dark:bg-black rounded-xl w-full overflow-hidden shadow-lg`};
 
     .top {
       ${tw`w-full h-80`};
@@ -166,14 +166,14 @@ export const ProjectsWrapper = styled(SectionWrapper)`
     }
     
     figcaption {
-      ${tw`flex justify-between font-medium w-full px-4 py-2 transition-all ease-in-out`};
+      ${tw`flex justify-between font-medium w-full py-2 transition-all ease-in-out`};
       
       .company {
-        ${tw`text-sm text-dark-mode-quinary`};
+        ${tw`text-sm text-dark-mode-quinary dark:text-gray-400`};
       }
       
       .name {
-        ${tw`text-lg text-theme-primary font-semibold tracking-wide`};
+        ${tw`text-lg text-theme-primary dark:text-white font-semibold tracking-wide`};
       }
       
       a .anticon {
@@ -198,14 +198,14 @@ export const ProjectsWrapper = styled(SectionWrapper)`
 `;
 
 export const WhoWeAreWrapper = styled(SectionLayout)`
-  ${tw`text-center py-10 lg:py-20 dark:bg-slate-900 bg-white`};
+  ${tw`text-center pt-10 lg:pt-20`};
 
   h2 {
-    ${tw`text-3xl md:text-5xl lg:text-7xl xl:text-8xl dark:text-theme-secondary font-extrabold tracking-wide leading-10 md:leading-[54px] mb-8`};
+    ${tw`text-3xl md:text-5xl lg:text-7xl xl:text-8xl text-gray-500 dark:text-gray-300 font-extrabold tracking-wide leading-10 md:leading-[54px] mb-8`};
   }
   
   p {
-    ${tw`mt-4 mb-10 lg:max-w-4xl xl:max-w-6xl leading-[1.8] lg:leading-[2.0] text-xl md:text-2xl font-montserrat dark:text-dark-mode-septenary text-gray-500 lg:mx-auto`};
+    ${tw`mt-4 mb-10 lg:max-w-4xl xl:max-w-6xl leading-[1.8] lg:leading-[2.0] text-xl md:text-2xl font-montserrat text-gray-500 dark:text-gray-400 lg:mx-auto`};
   }
 `;
 
@@ -256,37 +256,21 @@ export const PingAnimationWrapper = styled.div`
 `;
 
 export const WelcomeIntroWrapper = styled.div`
-  ${tw`relative w-full h-auto lg:h-232 bg-intro-index bg-right-top md:bg-left-top bg-cover bg-scroll xl:bg-fixed bg-no-repeat`};
-  
+  ${tw`relative w-full h-auto lg:h-232 xl:bg-fixed px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144 py-16 bg-white dark:bg-transparent`};
+
   .inner {
-    ${tw`bg-theme-primary/80 dark:bg-dark-mode-primary/90 h-full w-full mx-auto flex justify-between items-center px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144 py-16`};
-
-    .right {
-      ${tw`hidden lg:block w-4/12 xl:w-5/12`};
-    }
-
-    .left {
-      ${tw`relative w-full lg:w-3/5 py-4`};
-
-      .anticon {
-        ${tw`text-2xl`};
-      }
-    }
+    ${tw`h-full w-full mx-auto flex flex-col justify-center items-center`};
   }
 
   .typing-pad {
-    ${tw`w-full font-bold leading-tight md:leading-tight lg:leading-tight xl:leading-tight dark:text-dark-mode-octonary text-white text-[40px] lg:text-7xl xl:text-8xl`};
+    ${tw`w-full font-bold leading-tight md:leading-tight lg:leading-tight xl:leading-tight dark:text-dark-mode-octonary text-theme-primary text-center text-[40px] lg:text-7xl xl:text-8xl`};
   }
 
   .description {
-    ${tw`flex flex-col gap-2 text-left block mt-8 mb-10 md:mb-16 text-gray-200 lg:text-gray-300 dark:text-theme-secondary tracking-wide text-xl font-semibold`};
+    ${tw`flex flex-col gap-2 text-left block mt-8 mb-10 md:mb-16 text-gray-500 tracking-wide text-2xl font-medium`};
 
     li {
-      ${tw`leading-7 items-start flex gap-2`};
-      
-      .anticon {
-        ${tw`mr-2 pt-0.5`};
-      }
+      ${tw`leading-7 text-center`};
     }
   }
 `;

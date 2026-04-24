@@ -37,6 +37,10 @@ const resources: FooterResource = [
 				text: 'About Us'
 			},
 			{
+				href: '/pricing',
+				text: 'Pricing'
+			},
+			{
 				text: 'Careers',
 				href: '#',
 				subItem: {

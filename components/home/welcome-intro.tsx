@@ -1,4 +1,4 @@
-import { AimOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { AimOutlined } from '@ant-design/icons';
 
 import { PingAnimationWrapper, WelcomeIntroWrapper } from './styled';
 import Link from '@/components/shared/button/link';
@@ -9,31 +9,25 @@ const WelcomeIntro = () => {
 
   return (
     <WelcomeIntroWrapper>
-      <div className="inner">
-        <div data-aos="fade" className="left">
-          <span className="typing-pad"></span>
-          
-          <ul className="description">
-            <li><CheckCircleOutlined /> Share detailed insights into your business operations and needs.</li>
-            <li><CheckCircleOutlined /> Receive a personalized quote tailored to your business needs.</li>
-            <li><CheckCircleOutlined /> Get a professionally crafted digital solution.</li>
-          </ul>
-          
-          <Link type="primary" href="#who-we-are" rounded asButton>
-            <PingAnimationWrapper>
-              <div className="animator">
-                <div className="background" />
-              </div>
-            </PingAnimationWrapper>
+      <div className="inner" data-aos="fade">
+        <span className="typing-pad"></span>
+        
+        <ul className="description">
+          <li>Share detailed insights into your business operations and needs.</li>
+          <li>Receive a personalized quote tailored to your business needs.</li>
+          <li>Get a professionally crafted digital solution.</li>
+        </ul>
+        
+        <Link type="primary" href="#what-we-do" rounded asButton shadow>
+          <PingAnimationWrapper>
+            <div className="animator">
+              <div className="background" />
+            </div>
+          </PingAnimationWrapper>
 
-            Get Started
-            <AimOutlined />
-          </Link>
-        </div>
-
-        {/* <div data-aos="fade" className="description right">
-          Right content
-        </div> */}
+          Get Started
+          <AimOutlined />
+        </Link>
       </div>
     </WelcomeIntroWrapper>
   );

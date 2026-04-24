@@ -30,7 +30,7 @@ export const ThemeWrapper = styled.div`
   }
   
   .inner {
-    ${tw`flex items-center dark:bg-dark-mode-secondary bg-theme-primary/10 px-2 rounded-lg py-1`};
+    ${tw`flex items-center dark:bg-dark-mode-secondary bg-white px-2 rounded-lg py-1`};
 
     svg {
       ${tw`w-8 h-8`};
