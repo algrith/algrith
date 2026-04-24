@@ -33,6 +33,10 @@ export const LinkWrapper = styled(NextLink)`
 			${tw`shadow-lg`};
 		}
 		
+		&.large {
+			${tw`px-10 py-5.5 text-2xl`};
+		}
+		
 		&.small {
 			${tw`px-6 py-2`};
 		}
