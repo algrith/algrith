@@ -153,13 +153,13 @@ const BgStyles = css`
 `;
 
 export const HowItWorksWrapper = styled(SectionLayout)`
-  ${tw`text-gray-500 py-12`};
+  ${tw`text-gray-500 py-16 lg:py-32`};
 
   .title {
     ${tw`text-center py-2`};
 
     h1 {
-      ${tw`mb-8 text-3xl md:text-5xl dark:text-slate-200 font-bold tracking-widest`};
+      ${tw`mb-8 text-5xl dark:text-gray-200 text-gray-700 font-extrabold tracking-widest`};
     }
     
     p {

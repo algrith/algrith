@@ -256,10 +256,10 @@ export const PingAnimationWrapper = styled.div`
 `;
 
 export const WelcomeIntroWrapper = styled.div`
-  ${tw`relative w-full h-auto lg:h-232 xl:bg-fixed px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144 py-16 bg-white dark:bg-transparent`};
+  ${tw`relative w-full h-232 xl:bg-fixed px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144 py-16 bg-transparent`};
 
   .inner {
-    ${tw`h-full w-full mx-auto flex flex-col justify-center items-center`};
+    ${tw`relative z-1 h-full w-full mx-auto flex flex-col justify-center items-center`};
   }
 
   .typing-pad {
@@ -267,7 +267,7 @@ export const WelcomeIntroWrapper = styled.div`
   }
 
   .description {
-    ${tw`flex flex-col gap-2 text-left block mt-8 mb-10 md:mb-16 text-gray-500 tracking-wide text-2xl font-medium`};
+    ${tw`flex flex-col gap-2 text-left block mt-8 mb-10 md:mb-16 text-gray-500 dark:text-gray-400 tracking-wide text-2xl font-medium`};
 
     li {
       ${tw`leading-7 text-center`};

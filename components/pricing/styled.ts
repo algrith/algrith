@@ -1,6 +1,6 @@
 import tw, { styled } from 'twin.macro';
 
-import { darkBgGradient, SectionLayout } from '../shared/layout/styled';
+import { darkBgGradient, SectionLayout, squareWaves } from '../shared/layout/styled';
 
 
 export const PricingWrapper = styled(SectionLayout)`
@@ -10,7 +10,7 @@ export const PricingWrapper = styled(SectionLayout)`
     ${tw`text-center`};
 
     h1 {
-      ${tw`capitalize leading-tight sm:leading-tight font-extrabold tracking-widest text-gray-500 dark:text-gray-300 mb-8 text-5xl font-bold`};
+      ${tw`capitalize leading-tight sm:leading-tight font-extrabold tracking-widest dark:text-gray-200 text-gray-700 mb-8 text-5xl font-bold`};
     }
     
     p {
@@ -82,8 +82,9 @@ export const PlansWrapper = styled.div`
     ${tw`w-full grid md:grid-cols-2 lg:grid-cols-4 gap-8`};
     
     .plan {
-      ${tw`flex flex-col gap-8 border dark:border-theme-secondary rounded-xl p-8 dark:backdrop-blur-sm shadow`};
+      ${tw`flex flex-col gap-8 border dark:border-[#272f16] rounded-xl p-8 dark:backdrop-blur-sm shadow`};
       ${darkBgGradient.fourLayers};
+      ${squareWaves(true)};
 
       .metadata {
         ${tw`flex flex-col gap-8`};

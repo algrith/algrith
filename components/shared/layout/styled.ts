@@ -2,10 +2,68 @@
 
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import tw, { css, styled } from 'twin.macro';
+import { keyframes } from '@emotion/react';
 import { Layout } from 'antd';
+
+export const squareWaves = (inverse: boolean = false, height = '') => css`
+	${tw`relative overflow-hidden`};
+
+	&:before,
+	&:after {
+		${tw`absolute w-[110%] h-full inset-0 z-0 pointer-events-none content`};
+		${height && `height: ${height}`};
+	}
+
+	/* 🌊 Teal wave */
+	&:before {
+		${tw`bg-[rgba(44,163,116,0.18)] blur-[80px] dark:bg-[rgba(44,163,116,0.28)] dark:blur-[60px]`};
+		animation: ${waveAnimation} 8s ease-in-out infinite alternate;
+		clip-path: ${inverse ? `polygon(
+			0% 0%, 100% 0%,
+			100% 24%, 96% 26%, 88% 22%, 80% 29%,
+			72% 25%, 64% 32%, 56% 28%, 48% 35%,
+			40% 31%, 32% 37%, 24% 34%, 16% 39%,
+			8% 37%, 0% 40%
+		)` : `polygon(
+			0% 60%,
+			8% 63%, 16% 61%, 24% 66%, 32% 63%, 40% 69%,
+			48% 65%, 56% 72%, 64% 68%, 72% 75%,
+			80% 71%, 88% 78%, 96% 74%, 100% 76%,
+			100% 100%, 0% 100%
+		)`};
+	}
+
+	/* 🌊 Gold wave */
+	&:after {
+		${tw`bg-[rgba(236,175,34,0.18)] blur-[90px] dark:bg-[rgba(236,175,34,0.22)] dark:blur-[70px]`};
+		animation: ${waveAnimation} 10s ease-in-out infinite alternate-reverse;
+		clip-path: ${inverse ? `polygon(
+			0% 0%, 100% 0%,
+			100% 15%, 96% 13%, 88% 18%, 80% 15%,
+			72% 20%, 64% 17%, 56% 22%, 48% 19%,
+			40% 24%, 32% 21%, 24% 26%, 16% 23%,
+			8% 27%, 0% 25%
+		)` : `polygon(
+			0% 75%,
+			8% 73%, 16% 77%, 24% 74%, 32% 79%, 40% 76%,
+			48% 81%, 56% 78%, 64% 83%, 72% 80%,
+			80% 85%, 88% 82%, 96% 87%, 100% 85%,
+			100% 100%, 0% 100%
+		)`};
+	}
+`;
 
 export const SectionLayout = styled.div`
   ${tw`relative w-full 2xl:w-8/12 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-0 mx-auto dark:bg-transparent`};
+`;
+
+export const waveAnimation = keyframes`
+	0% {
+		transform: translateX(0);
+	}
+	100% {
+		transform: translateX(-9.09%);
+	}
 `;
 
 export const darkBgGradient = {
@@ -73,7 +131,8 @@ export const SectionCardWrapper = styled.div`
   ${tw`w-full`};
 
   .content {
-    ${tw`overflow-hidden w-full px-6 pb-16 backdrop-blur-sm dark:text-dark-mode-septenary border dark:border-theme-secondary bg-white dark:bg-transparent text-xl md:leading-9 rounded-xl text-center shadow dark:shadow-none md:min-h-84 lg:min-h-80 transition-all ease-in-out hover:scale-[105%]`};
+    ${tw`overflow-hidden w-full px-6 pb-16 backdrop-blur-sm dark:text-dark-mode-septenary border shadow dark:border-[#404524] bg-white dark:bg-transparent text-xl md:leading-9 rounded-xl text-center shadow dark:shadow-none md:min-h-84 lg:min-h-80 transition-all ease-in-out hover:scale-[105%]`};
+		${squareWaves()};
 		
     .top {
       ${tw`pt-6 w-full flex justify-between`};
@@ -100,10 +159,11 @@ export const SectionCardWrapper = styled.div`
 export const LayoutWrapper = styled(Layout)`
 	${tw`relative w-full w-full bg-gray-50`};
 	${darkBgGradient.fourLayers};
+  ${squareWaves(true, '1400px')};
 `;
 
 export const HeaderWrapper = styled(Header)`
-	${tw`w-full h-[unset] px-0 sticky top-0 z-20 bg-white dark:bg-transparent`};
+	${tw`w-full h-[4.4rem] px-0 fixed top-0 z-20 bg-transparent`};
 
 	&.scrolled {
 		${tw`scale-x-[1] scale-y-[0.7] origin-top shadow-lg backdrop-blur-lg`};
@@ -147,13 +207,14 @@ export const HeaderWrapper = styled(Header)`
 `;
 
 export const FooterWrapper = styled(Footer)`
-	${tw`relative bg-gray-100 dark:bg-transparent px-0 pb-0 dark:pt-4 pt-8`};
+	${tw`flex flex-col gap-12 relative bg-transparent px-0 pb-0 dark:pt-4 pt-8`};
+    ${squareWaves()};
 
 	details {
 		${tw`my-4 rounded-xl bg-white dark:bg-transparent shadow-lg border-gray-200 cursor-pointer backdrop-blur-lg`};
 
 		summary {
-			${tw`relative flex justify-between gap-4 items-center p-4 dark:text-gray-500 text-black focus:outline-none hover:outline-none outline-none transition-all ease-in-out duration-700`};
+			${tw`relative flex justify-between gap-4 items-center p-4 dark:text-gray-400 text-black focus:outline-none hover:outline-none outline-none transition-all ease-in-out duration-700`};
 
 			span:nth-of-type(1) {
 				${tw`absolute left-14`};
@@ -174,7 +235,7 @@ export const FooterWrapper = styled(Footer)`
 	}
 
 	.top {
-		${tw`grid grid-cols-1 lg:grid-cols-3 lg:gap-10 justify-between px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-0 pb-12 2xl:w-8/12 2xl:mx-auto`};
+		${tw`grid grid-cols-1 lg:grid-cols-3 lg:gap-10 justify-between px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-0 2xl:w-8/12 2xl:mx-auto`};
 
 		.left {
 			${tw`w-full pt-8 lg:pr-16`};
@@ -224,7 +285,7 @@ export const FooterWrapper = styled(Footer)`
 							${tw`order-1 md:mt-4`};
 
 							a {
-								${tw`text-gray-500 hover:text-theme-secondary transition-all ease-in-out duration-500`};
+								${tw`text-gray-500 dark:text-gray-400 hover:text-theme-secondary transition-all ease-in-out duration-500`};
 							}
 						}
 					}
@@ -236,7 +297,7 @@ export const FooterWrapper = styled(Footer)`
 							${tw`py-2`};
 
 							a {
-								${tw`text-gray-500 hover:text-theme-secondary transition-all ease-in-out duration-500`};
+								${tw`text-gray-500 dark:text-gray-400 hover:text-theme-secondary transition-all ease-in-out duration-500`};
 
 								span.careers {
 									${tw`text-[12px] italic text-gray-700 font-medium bg-theme-secondary/60 px-2 py-1 rounded-full`};
@@ -357,14 +418,10 @@ export const NavbarWrapper = styled.nav`
 `;
 
 export const IntroWrapper = styled.div`
-  ${tw`relative w-full bg-left-top bg-cover bg-scroll lg:bg-fixed bg-no-repeat`};
+  ${tw`relative w-full bg-left-top bg-cover bg-scroll lg:bg-fixed bg-no-repeat bg-transparent`};
 
-	&#intro-about {
-		${tw`bg-intro-about dark:bg-none`};
-	}
-  
   .inner {
-    ${tw`w-full h-full mx-auto dark:bg-transparent pb-12 py-16 lg:py-32 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144`};
+    ${tw`w-full h-full mx-auto bg-transparent pb-12 py-24 lg:py-32 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144`};
 
     .content {
       ${tw`2xl:w-8/12 mx-auto relative`};
@@ -414,7 +471,7 @@ export const IntroWrapper = styled.div`
 			}
 			
 			.title {
-				${tw`relative text-4xl lg:text-7xl dark:text-gray-300 text-gray-500 py-8 m-0 w-full text-center font-bold tracking-widest`};
+				${tw`relative text-5xl lg:text-7xl dark:text-gray-200 text-gray-700 py-8 m-0 w-full text-center font-bold tracking-widest`};
 
 				&.capitalize {
 					${tw`capitalize`};
@@ -446,6 +503,41 @@ export const IntroWrapper = styled.div`
 			}
 		}
   }
+`;
+
+export const WavesWrapper = styled.div`
+	${tw`absolute inset-0 w-full h-full pointer-events-none overflow-hidden z-0`};
+	clip-path: inset(0);
+
+	&.inverse {
+		${tw`rotate-180`};
+
+		.bottom-wave {
+			animation: ${waveAnimation} 8s ease-in-out infinite alternate;
+		}
+
+		.top-wave {
+			animation: ${waveAnimation} 10s ease-in-out infinite alternate-reverse;
+		}
+	}
+
+	.bottom-wave {
+		animation: ${waveAnimation} 10s ease-in-out infinite alternate-reverse;
+		${tw`absolute bottom-0 left-0 w-[110%]`};
+
+		path {
+			${tw`dark:fill-[rgba(236,175,34,0.16)] fill-[rgba(236,175,34,0.18)]`};
+		}
+	}
+
+	.top-wave {
+		animation: ${waveAnimation} 8s ease-in-out infinite alternate;
+		${tw`absolute bottom-0 left-0 w-[110%]`};
+
+		path {
+			${tw`dark:fill-[rgba(44,163,116,0.22)] fill-[rgba(44,163,116,0.20)]`};
+		}
+	}
 `;
 
 export const Overlay = styled.div`

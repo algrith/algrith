@@ -43,12 +43,12 @@ const ThemeSwitch = () => {
     let theme = e ? (e.target as HTMLElement).dataset.theme as Themes : localStorage?.theme;
     const deviceIsInDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const isSystemTheme = !theme || theme === 'undefined' || theme === 'system';
-    let color = theme === 'dark' ? '#050d1f' : '#ffffff';
+    let color = theme === 'dark' ? '#272f29' : '#e8ecdd';
     dispatch(setIsSystemTheme(isSystemTheme));
     localStorage.theme = theme;
     
     if (isSystemTheme) {
-      if (deviceIsInDarkMode && theme !== 'light') color = '#050d1f';
+      if (deviceIsInDarkMode && theme !== 'light') color = '#272f29';
       theme = deviceIsInDarkMode ? 'dark' : 'light';
     }
     

@@ -3,7 +3,7 @@ import tw, { styled } from 'twin.macro';
 import { darkBgGradient, SectionLayout } from '../shared/layout/styled';
 
 export const PrivacyPolicyWrapper = styled(SectionLayout)`
-  ${tw`dark:text-slate-200 text-gray-600 pt-8 md:pt-12 pb-8 md:pb-16`};
+  ${tw`dark:text-slate-200 text-gray-600 pt-24 md:pt-32 pb-8 md:pb-16`};
 
   .intro {
     ${tw`py-2`};

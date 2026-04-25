@@ -4,7 +4,7 @@ import { SectionLayout } from '@/components/shared/layout/styled';
 import tw, { styled } from 'twin.macro';
 
 export const OurValuesWrapper = styled(SectionLayout)`
-  ${tw`text-center py-10 lg:py-20 bg-white dark:bg-transparent flex flex-col gap-8`};
+  ${tw`text-center py-10 lg:py-20 bg-transparent flex flex-col gap-8`};
 
   h2 {
     ${tw`text-3xl md:text-5xl lg:text-6xl dark:text-[#fa8c16] font-extrabold tracking-wide leading-10 md:leading-[1.5] mb-4`};

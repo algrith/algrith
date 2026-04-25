@@ -22,7 +22,7 @@ const ContactUs = () => {
 
   return (
     <>
-      <Intro id="intro-about" {...intro} />
+      <Intro id="intro-contact" {...intro} />
       <Contact />
     </>
   );

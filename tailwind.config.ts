@@ -9,10 +9,6 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
-      backgroundImage: () => ({
-        'intro-index': "url('/images/section-backgrounds/abstract-art-atom.jpeg')",
-        'intro-about': "url('/images/section-backgrounds/intro-about.jpg')",
-      }),
       fontFamily: {
         'nunito-sans': ['var(--font-nunito-sans)', 'Sans-serif'],
         'montserrat': ['var(--font-montserrat)', 'Sans-serif'],
