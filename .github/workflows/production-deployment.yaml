@@ -38,6 +38,8 @@ jobs:
       
       - name: Create .env File
         run: |
+          echo "NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY }}" >> .env
+          echo "NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY }}" >> .env
           echo "NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}" >> .env
           echo "CONTACT_MAIL_AUTH_USERNAME=${{ secrets.CONTACT_MAIL_AUTH_USERNAME }}" >> .env
           echo "CONTACT_MAIL_AUTH_PASSWORD=${{ secrets.CONTACT_MAIL_AUTH_PASSWORD }}" >> .env
