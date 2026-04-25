@@ -153,7 +153,7 @@ const BgStyles = css`
 `;
 
 export const HowItWorksWrapper = styled(SectionLayout)`
-  ${tw`text-gray-500 pt-32 pb-16`};
+  ${tw`text-gray-500 pt-32 pb-16 z-1`};
 
   .title {
     ${tw`text-center py-2`};

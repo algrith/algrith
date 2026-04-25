@@ -4,7 +4,7 @@ import { darkBgGradient, SectionLayout, squareWaves } from '../shared/layout/sty
 
 
 export const PricingWrapper = styled(SectionLayout)`
-  ${tw`w-full flex flex-col gap-16 pt-32 pb-16`};
+  ${tw`w-full flex flex-col gap-16 pt-32 pb-16 z-1`};
 
   .title {
     ${tw`text-center`};
@@ -90,7 +90,7 @@ export const PlansWrapper = styled.div`
         ${tw`flex flex-col gap-8`};
         
         .description {
-          ${tw`text-sm font-semibold text-gray-400 tracking-wide`};
+          ${tw`text-sm font-semibold text-gray-500 dark:text-gray-300 tracking-wide`};
         }
         
         .price {
@@ -106,10 +106,10 @@ export const PlansWrapper = styled.div`
         }
         
         .name {
-          ${tw`text-2xl text-theme-primary dark:text-white font-bold mb-2 tracking-widest`};
+          ${tw`text-3xl text-theme-primary dark:text-white font-extrabold mb-2 tracking-widest`};
 
           .ant-tag {
-            ${tw`-mt-0.5 ml-3 rounded-full`};
+            ${tw`-mt-0.5 ml-3 rounded-full tracking-wide`};
           }
         }
       }

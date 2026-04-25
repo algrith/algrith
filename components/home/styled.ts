@@ -263,7 +263,7 @@ export const WelcomeIntroWrapper = styled.div`
   }
 
   .typing-pad {
-    ${tw`w-full font-bold leading-tight md:leading-tight lg:leading-tight xl:leading-tight dark:text-dark-mode-octonary text-theme-primary text-center text-[40px] lg:text-7xl xl:text-8xl`};
+    ${tw`w-full font-bold leading-tight md:leading-tight lg:leading-tight xl:leading-tight dark:text-gray-200 text-gray-700 text-center text-[40px] lg:text-7xl xl:text-8xl`};
   }
 
   .description {

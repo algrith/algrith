@@ -138,20 +138,20 @@ export const SectionCardWrapper = styled.div`
       ${tw`pt-6 w-full flex justify-between`};
 
       .icon {
-        ${tw`flex shadow-2xl justify-center items-center p-2 text-md text-white bg-theme-primary w-10 h-10 rounded-full shadow-lg`};
+        ${tw`flex shadow-2xl justify-center items-center p-2 text-md text-theme-primary w-10 h-10 rounded-full shadow-lg`};
 
 				.anticon {
-					${tw`text-3xl`};
+					${tw`text-2xl font-extrabold`};
 				}
       }
       
       .ant-tag {
-        ${tw`border-none flex items-center px-3 py-0 text-sm tracking-widest text-white font-semibold rounded-full`};
+        ${tw`border-none flex items-center h-8 px-3 py-0 text-sm m-0 tracking-widest text-white font-semibold rounded-full rounded-tl-[0]`};
       }
     }
 		
 		h2 {
-			${tw`text-2xl text-theme-primary dark:text-white font-bold mb-4 mt-8`};
+			${tw`text-2xl text-gray-700 dark:text-white font-bold mb-4 mt-8`};
 		}
   }
 `;
@@ -418,10 +418,10 @@ export const NavbarWrapper = styled.nav`
 `;
 
 export const IntroWrapper = styled.div`
-  ${tw`relative w-full bg-left-top bg-cover bg-scroll lg:bg-fixed bg-no-repeat bg-transparent`};
+  ${tw`relative w-full z-1`};
 
   .inner {
-    ${tw`w-full h-full mx-auto bg-transparent pb-12 py-24 lg:py-32 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144`};
+    ${tw`w-full h-full mx-auto pb-12 py-24 lg:py-32 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144`};
 
     .content {
       ${tw`2xl:w-8/12 mx-auto relative`};
@@ -471,7 +471,7 @@ export const IntroWrapper = styled.div`
 			}
 			
 			.title {
-				${tw`relative text-5xl lg:text-7xl dark:text-gray-200 text-gray-700 py-8 m-0 w-full text-center font-bold tracking-widest`};
+				${tw`relative text-5xl lg:text-7xl dark:text-gray-200 text-gray-700 py-8 m-0 w-full text-center font-extrabold tracking-widest`};
 
 				&.capitalize {
 					${tw`capitalize`};
