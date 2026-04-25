@@ -1,20 +1,19 @@
 'use client';
 
 import { SessionProvider, useSession } from 'next-auth/react';
-import { Suspense, useEffect } from 'react';
+import { ReactNode, useEffect } from 'react';
 
 import useRoute from '@/hooks/route';
 
 const NextAuthProvider = ({ children }: { children: React.ReactNode }) => (
   <SessionProvider>
-    {children}
-    <Suspense>
-      <AuthProvider />
-    </Suspense>
+    <AuthProvider>
+      {children}
+    </AuthProvider>
   </SessionProvider>
 );
 
-const AuthProvider = () => {
+const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { isProtectedRoute, routes: { isAuth } } = useRoute();
   const { data: session, status } = useSession();
   
@@ -36,7 +35,7 @@ const AuthProvider = () => {
     }
   }, [status]);
 
-  return null;
+  return children;
 };
 
 export default NextAuthProvider;

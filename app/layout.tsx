@@ -153,35 +153,31 @@ export const metadata: Metadata = {
 };
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
-  <ReduxProvider>
-    <html lang="en-US">
-      <body className={fontClassNames}>
-        <SchemaMarkup />
-        
-        <Suspense>
+  <Suspense>
+    <ReduxProvider>
+      <html lang="en-US">
+        <body className={fontClassNames}>
+          <SchemaMarkup />
           <GlobalStyles />
-        </Suspense>
 
-        <AntDesignThemeProvider>
-          <LayoutWrapper>
-            <Suspense>
+          <AntDesignThemeProvider>
+            <LayoutWrapper>
               <Header />
               <Navbar />
-            </Suspense>
-            
-            <ThemeSwitch />
+              <ThemeSwitch />
 
-            <ContentWrapper>
-              {children}
-            </ContentWrapper>
+              <ContentWrapper>
+                {children}
+              </ContentWrapper>
 
-            <Alert />
-            <Footer />
-          </LayoutWrapper>
-        </AntDesignThemeProvider>
-      </body>
-    </html>
-  </ReduxProvider>
+              <Alert />
+              <Footer />
+            </LayoutWrapper>
+          </AntDesignThemeProvider>
+        </body>
+      </html>
+    </ReduxProvider>
+  </Suspense>
 );
 
 export default RootLayout;
