@@ -1,34 +1,23 @@
 'use client';
 
 import { MinusOutlined, PlusOutlined } from '@ant-design/icons';
-import { useState } from 'react';
-
 import { Addon, AddonsProps } from '@/types';
 import { formatCurrency } from '@/utils';
 import { AddonsWrapper } from './styled';
 import { addons } from '@/libs/plans';
-import Button from '../shared/button';
 
-const Addons = ({ proceedToPayment, inPaymentModal }: AddonsProps) => {
-  const [selectedAddons, setSelectedAddons] = useState<Array<Addon>>([]);
-
-  const handleConfirmation = (type: 'skip' | 'proceed') => () => {
-    proceedToPayment?.(type === 'proceed' ? selectedAddons : []);
-  };
+const Addons = ({ inPaymentModal, onSelect, selected }: AddonsProps) => {
+  const isSelected = (addon: Addon) => selected?.some(({ id }) => id === addon.id);
   
-  const handleAddon = (addon: Addon) => () => {
-    if (!inPaymentModal) return;
+  const handleSelection = (addon: Addon) => () => {
+    if (!inPaymentModal || !selected) return;
     
-    const addonIndex = selectedAddons.findIndex(({ id }) => id === addon.id);
-    const newAddons = [...selectedAddons];
+    const addonIndex = selected.findIndex(({ id }) => id === addon.id);
+    const newAddons = [...selected];
 
     if (addonIndex < 0) newAddons.push(addon);
     else newAddons.splice(addonIndex, 1);
-    setSelectedAddons(newAddons);
-  };
-
-  const isSelected = (addon: Addon) => {
-    return selectedAddons.some(({ id }) => id === addon.id);
+    onSelect?.(newAddons);
   };
 
   return (
@@ -42,7 +31,7 @@ const Addons = ({ proceedToPayment, inPaymentModal }: AddonsProps) => {
         </li>
 
         {addons.map((addon) => (
-          <li key={addon.id} onClick={handleAddon(addon)}>
+          <li key={addon.id} onClick={handleSelection(addon)}>
             <span>{addon.text}</span>
 
             <span className={isSelected(addon) ? 'selected' : ''}>
@@ -53,20 +42,6 @@ const Addons = ({ proceedToPayment, inPaymentModal }: AddonsProps) => {
           </li>
         ))}
       </ul>
-
-      {inPaymentModal && (
-        <div className="actions">
-          <Button type="secondary" onClick={handleConfirmation('skip')}>
-            Skip
-          </Button>
-          
-          {Boolean(selectedAddons.length) && (
-            <Button type="primary" onClick={handleConfirmation('proceed')}>
-              Proceed
-            </Button>
-          )}
-        </div>
-      )}
     </AddonsWrapper>
   );
 };

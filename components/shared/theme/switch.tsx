@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setTheme, setIsSystemTheme } from './reducer';
 import useClickAway from '@/hooks/click-away';
 import useViewport from '@/hooks/viewport';
+import useRoute from '@/hooks/route';
 import { Themes } from '@/types';
 
 const ThemeSwitch = () => {
@@ -16,6 +17,7 @@ const ThemeSwitch = () => {
   const [open, setOpen] = useState(false);
   const { viewport } = useViewport();
   const dispatch = useAppDispatch();
+  const { pathname } = useRoute();
   
   const activeThemeClass = {
     light: !isSystemTheme && theme === 'light' ? 'active' : '',
@@ -75,7 +77,7 @@ const ThemeSwitch = () => {
     return () => {
       window.removeEventListener('scroll', repositionThemeSwitch);
     };
-  }, [viewport]);
+  }, [viewport, pathname]);
 
   return (
     <ThemeWrapper ref={themeSwitchContainerRef}>

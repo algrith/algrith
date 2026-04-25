@@ -39,7 +39,7 @@ const useRoute = () => {
     });
   }, []);
 
-  return { isProtectedRoute, isRouteChanged, routes };
+  return { isProtectedRoute, isRouteChanged, pathname, routes };
 };
 
 export default useRoute;

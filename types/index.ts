@@ -240,8 +240,9 @@ export interface OrderModel {
 };
 
 export interface AddonsProps {
-	proceedToPayment?: (addons: Array<Addon>) => void;
+	onSelect?: (addons: Array<Addon>) => void;
 	inPaymentModal?: boolean;
+	selected?: Array<Addon>;
 };
 
 export type SectionProps = {

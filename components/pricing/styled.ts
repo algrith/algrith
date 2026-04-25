@@ -19,12 +19,12 @@ export const PricingWrapper = styled(SectionLayout)`
   }
   
   .content {
-    ${tw`w-full flex flex-col gap-8`};
+    ${tw`w-full flex flex-col gap-16`};
   }
 `;
 
 export const AddonsWrapper = styled.div`
-  ${tw`w-full md:w-3/5 mx-auto flex flex-col gap-8 pt-10`};
+  ${tw`w-full md:w-3/5 mx-auto flex flex-col gap-8`};
 
   &.in-modal {
     ${tw`md:w-full`};
