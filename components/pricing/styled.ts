@@ -4,7 +4,7 @@ import { darkBgGradient, SectionLayout, squareWaves } from '../shared/layout/sty
 
 
 export const PricingWrapper = styled(SectionLayout)`
-  ${tw`w-full flex flex-col gap-16 py-16 lg:py-32`};
+  ${tw`w-full flex flex-col gap-16 pt-32 pb-16`};
 
   .title {
     ${tw`text-center`};
@@ -14,7 +14,7 @@ export const PricingWrapper = styled(SectionLayout)`
     }
     
     p {
-      ${tw`leading-relaxed dark:text-slate-300 text-lg md:text-2xl md:leading-relaxed`};
+      ${tw`dark:text-slate-300 text-2xl`};
     }
   }
   

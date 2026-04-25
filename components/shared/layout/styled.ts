@@ -427,7 +427,7 @@ export const IntroWrapper = styled.div`
       ${tw`2xl:w-8/12 mx-auto relative`};
 
 			.description {
-				${tw`w-full text-center md:whitespace-pre dark:text-dark-mode-senary text-gray-700 leading-relaxed text-xl lg:leading-relaxed lg:text-2xl`};
+				${tw`w-full text-center md:whitespace-pre dark:text-dark-mode-senary text-gray-700 text-2xl`};
 
 				&.capitalize {
 					${tw`capitalize`};
