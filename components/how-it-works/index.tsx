@@ -1,6 +1,7 @@
 'use client';
 
 import { HowItWorksWrapper } from './styled';
+import Intro from '../shared/layout/intro';
 import Link from '../shared/button/link';
 import Step from './step';
 
@@ -65,17 +66,18 @@ const howItWorks = [
 
 const HowItWorks = () => {
   return (
-    <HowItWorksWrapper>
-      <div className="title">
-        <h1>How it Works</h1>
-        <p>
-          Howdy! You are at the right place. <br/>
-          In order to have a comprehensive overview of how we get things done, please follow
-          the steps outlined below to know better.
-        </p>
-      </div>
+    <>
+      <Intro
+        title="How it Works"
+        description={{
+          text: `Howdy! You are at the right place.
+            <br />
+            Please follow the outlined steps to have a comprehensive overview of how we get things done.
+          `
+        }}
+      />
       
-      <div className="content">
+      <HowItWorksWrapper>
         <div className="steps">
           {howItWorks.map(({direction, content, color, title, icon, step}) => (
             <Step
@@ -122,8 +124,8 @@ const HowItWorks = () => {
             <img src="/images/illustrations/payment-terminal.gif" alt="pricing_illustration" />
           </div>
         </div>
-      </div>
-    </HowItWorksWrapper>
+      </HowItWorksWrapper>
+    </>
   );
 };
 

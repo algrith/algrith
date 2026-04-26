@@ -103,7 +103,7 @@ export const SectionWrapper = styled(SectionLayout)`
   }
   
   h1 {
-    ${tw`relative text-5xl capitalize leading-tight sm:leading-tight font-extrabold tracking-widest text-gray-600 dark:text-gray-300 sm:text-5xl py-4 mx-auto w-full text-center`};
+    ${tw`relative text-5xl sm:text-5xl capitalize leading-tight font-extrabold tracking-widest text-gray-600 dark:text-gray-300 py-4 mx-auto w-full text-center`};
 
     &.center {
       ${tw`text-center`};
@@ -328,7 +328,7 @@ export const FooterWrapper = styled(Footer)`
 `;
 
 export const NavbarWrapper = styled.nav`
-	${tw`transition-all z-50 ease-in-out duration-500 shadow lg:shadow-none bg-white lg:bg-transparent dark:bg-transparent backdrop-blur-lg fixed top-0 -right-full lg:right-24 xl:right-32 2xl:right-166 lg:mr-3 flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center w-10/12 md:w-5/12 lg:w-auto h-[100dvh] lg:h-16 text-gray-600 lg:p-4`};
+	${tw`transition-all z-50 ease-in-out duration-500 shadow lg:shadow-none bg-white lg:bg-transparent dark:bg-transparent fixed top-0 -right-full lg:right-24 xl:right-32 2xl:right-166 lg:mr-3 flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center w-10/12 md:w-5/12 lg:w-auto h-[100dvh] lg:h-16 text-gray-600 lg:p-4`};
 
 	@media (min-width: 1024px) {
 		background-image: none !important;
@@ -343,7 +343,7 @@ export const NavbarWrapper = styled.nav`
 	}
 	
 	&.open {
-		${tw`right-0 lg:right-24 xl:right-32 2xl:right-166`};
+		${tw`right-0 lg:right-24 xl:right-32 2xl:right-166 backdrop-blur-lg`};
 	}
 	
 	&:not(.scrolled):not(.open) {
@@ -417,91 +417,87 @@ export const NavbarWrapper = styled.nav`
 `;
 
 export const IntroWrapper = styled.div`
-  ${tw`relative w-full z-1`};
+  ${tw`relative flex justify-center items-center w-screen h-[69vh] md:h-[80vh] z-1`};
 
   .inner {
-    ${tw`w-full h-full mx-auto pb-12 py-24 lg:py-32 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144`};
+    ${tw`relative flex flex-col justify-center items-center w-full 2xl:w-8/12 h-full px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144`};
 
-    .content {
-      ${tw`2xl:w-8/12 mx-auto relative`};
+		.description {
+			${tw`w-full md:w-3/5 text-center dark:text-dark-mode-senary text-gray-700 text-2xl`};
 
-			.description {
-				${tw`w-full text-center md:whitespace-pre dark:text-dark-mode-senary text-gray-700 text-2xl`};
-
-				&.capitalize {
-					${tw`capitalize`};
-				}
-				
-				&.uppercase {
-					${tw`uppercase`};
-				}
-				
-				&.right {
-					${tw`text-right`};
-				}
-				
-				&.left {
-					${tw`text-left`};
-				}
+			&.capitalize {
+				${tw`capitalize`};
 			}
 			
-			.subtitle {
-				${tw`mt-4 md:mt-8 font-nunito-sans dark:text-theme-secondary text-navyblue text-lg font-bold lg:text-2xl text-center`};
-
-				&.capitalize {
-					${tw`capitalize`};
-				}
-				
-				&.uppercase {
-					${tw`uppercase`};
-				}
-				
-				&.accomodate {
-					${tw`mb-16`};
-				}
-				
-				&.right {
-					${tw`text-right`};
-				}
-				
-				&.left {
-					${tw`text-left`};
-				}
+			&.uppercase {
+				${tw`uppercase`};
 			}
 			
-			.title {
-				${tw`relative text-5xl lg:text-7xl dark:text-gray-200 text-gray-700 py-8 m-0 w-full text-center font-extrabold tracking-widest`};
-
-				&.capitalize {
-					${tw`capitalize`};
-				}
-				
-				&.uppercase {
-					${tw`uppercase`};
-				}
-				
-				&.right {
-					${tw`text-right`};
-				}
-				
-				&.left {
-					${tw`text-left`};
-				}
+			&.right {
+				${tw`text-right`};
 			}
-    }
+			
+			&.left {
+				${tw`text-left`};
+			}
+		}
 		
-		.action {
-			${tw`p-0 absolute right-8 md:right-12 lg:right-16 xl:right-24 2xl:right-144 -bottom-8 rounded-full w-16 h-16 z-10`};
+		.subtitle {
+			${tw`mt-4 md:mt-8 font-nunito-sans dark:text-theme-secondary text-navyblue text-lg font-bold lg:text-2xl text-center`};
 
-			&.accomodate {
-				${tw`hidden lg:flex`};
+			&.capitalize {
+				${tw`capitalize`};
 			}
 			
-			svg {
-				${tw`w-12 h-12 pointer-events-none`};
+			&.uppercase {
+				${tw`uppercase`};
+			}
+			
+			&.accomodate {
+				${tw`mb-16`};
+			}
+			
+			&.right {
+				${tw`text-right`};
+			}
+			
+			&.left {
+				${tw`text-left`};
+			}
+		}
+		
+		.title {
+			${tw`relative text-5xl lg:text-7xl dark:text-gray-200 text-gray-700 py-8 m-0 w-full text-center font-extrabold tracking-widest`};
+
+			&.capitalize {
+				${tw`capitalize`};
+			}
+			
+			&.uppercase {
+				${tw`uppercase`};
+			}
+			
+			&.right {
+				${tw`text-right`};
+			}
+			
+			&.left {
+				${tw`text-left`};
 			}
 		}
   }
+	
+	.action {
+		${tw`p-0 absolute right-8 md:right-12 lg:right-16 xl:right-24 2xl:right-144 -bottom-8 rounded-full w-16 h-16 z-10`};
+
+		&.accomodate {
+			${tw`hidden lg:flex`};
+		}
+		
+		svg {
+			${tw`w-12 h-12 pointer-events-none`};
+		}
+	}
 `;
 
 export const WavesWrapper = styled.div`

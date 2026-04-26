@@ -33,7 +33,7 @@ export interface IntroProps extends HTMLAttributes<HTMLDivElement> {
     case?: TextCase;
     text: string;
   };
-  action: {
+  action?: {
 		scrollTo?: string;
     icon?: ReactNode;
     text?: string;

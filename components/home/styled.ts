@@ -8,7 +8,7 @@ export const MissionStatementWrapper = styled(SectionLayout)`
     ${tw`lg:w-3/4`};
 
     h1 {
-      ${tw`text-4xl font-semibold text-gray-600 dark:text-gray-300 leading-tight sm:leading-tight sm:text-7xl`};
+      ${tw`text-4xl sm:text-7xl font-semibold text-gray-600 dark:text-gray-300 leading-tight`};
     }
     
     p {
@@ -65,7 +65,7 @@ export const GetStartedWrapper = styled(SectionLayout)`
   }
   
   h1 {
-    ${tw`leading-tight text-4xl font-extrabold tracking-wide text-gray-500 dark:text-gray-300 sm:leading-tight sm:text-6xl`};
+    ${tw`leading-tight text-4xl sm:text-6xl font-extrabold tracking-wide text-gray-500 dark:text-gray-300`};
   }
   
   p {
@@ -256,10 +256,10 @@ export const PingAnimationWrapper = styled.div`
 `;
 
 export const WelcomeIntroWrapper = styled.div`
-  ${tw`relative flex justify-center items-center w-screen h-screen xl:bg-fixed px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144 bg-transparent`};
+  ${tw`relative flex justify-center items-center w-screen h-screen xl:bg-fixed px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144 bg-transparent z-1`};
 
   .inner {
-    ${tw`relative z-1 h-full w-full flex flex-col justify-center items-center`};
+    ${tw`relative h-full w-full flex flex-col justify-center items-center`};
     
     .typing-pad {
       ${tw`w-full font-bold leading-tight dark:text-gray-200 text-gray-700 text-center text-[40px] lg:text-7xl xl:text-8xl`};

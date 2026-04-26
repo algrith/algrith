@@ -1,5 +1,6 @@
 'use client';
 
+import useClassName from '@/hooks/class-name';
 import { IntroWrapper } from './styled';
 import useTypist from '@/hooks/typist';
 import { IntroProps } from '@/types';
@@ -19,58 +20,59 @@ const Intro = (props: IntroProps) => {
     ...rest
   } = props;
 
-  const classNames = {
-    subtitle: [
-      accomodate ? 'accomodate' : '',
-      description.alignment,
-      description.case,
-      'subtitle'
-    ].join(' ').trim(),
-    description: [
-      description.alignment,
-      description.case,
-      'description'
-    ].join(' ').trim(),
-    title: [
-      titleAlignment,
-      'typing-pad',
-      titleCase,
-      'title'
-    ].join(' ').trim(),
-    action: [
-      accomodate ? 'accomodate' : '',
-      'ripple-node',
-      'action'
-    ].join(' ').trim()
-  };
+  const descriptionClassName = useClassName([
+    description.alignment ?? '',
+    description.case ?? '',
+    'description'
+  ]);
+
+  const subtitleClassName = useClassName([
+    accomodate ? 'accomodate' : '',
+    description.alignment ?? '',
+    description.case ?? '',
+    'subtitle'
+  ]);
+
+  const actionClassName = useClassName([
+    accomodate ? 'accomodate' : '',
+    'ripple-node',
+    'action'
+  ]);
+
+  const titleClassName = useClassName([
+    titleAlignment ?? '',
+    titleCase ?? '',
+    'typing-pad',
+    'title'
+  ]);
 
 	return (
 		<IntroWrapper {...rest}>
 			<div className="inner">
-				<div className="content">
-					{title && <h1 data-aos="fade-down" className={classNames.title}></h1>}
-					
-					{description.text && (
-            <p data-aos="fade-up" className={classNames.description}>
-              {description.text}
-            </p>
-          )}
-					
-					{subtitle && (
-            <aside data-aos="fade-right" className={classNames.subtitle}>
-              {subtitle}
-            </aside>
-          )}
-				</div>
-
-				{action.scrollTo && (
-          <Button type="primary" className={classNames.action} data-scroll-to={action.scrollTo}>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M17 13l-5 5m0 0l-5-5m5 5V6" />
-            </svg>
-          </Button>
+        {title && <h1 data-aos="fade-down" className={titleClassName}></h1>}
+        
+        {description.text && (
+          <p
+            dangerouslySetInnerHTML={{ __html: description.text }}
+            className={descriptionClassName}
+            data-aos="fade-up"
+          />
         )}
-			</div>
+        
+        {subtitle && (
+          <aside data-aos="fade-right" className={subtitleClassName}>
+            {subtitle}
+          </aside>
+        )}
+      </div>
+
+      {action?.scrollTo && (
+        <Button type="primary" className={actionClassName} data-scroll-to={action.scrollTo}>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17 13l-5 5m0 0l-5-5m5 5V6" />
+          </svg>
+        </Button>
+      )}
 		</IntroWrapper>
 	);
 };

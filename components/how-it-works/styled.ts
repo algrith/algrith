@@ -153,55 +153,39 @@ const BgStyles = css`
 `;
 
 export const HowItWorksWrapper = styled(SectionLayout)`
-  ${tw`text-gray-500 pt-32 pb-16 z-1`};
+  ${tw`grid xl:grid-cols-3 gap-8 md:gap-12 w-full pb-16`};
 
-  .title {
-    ${tw`text-center py-2`};
+  .steps {
+    ${tw`xl:col-span-2 text-xl`};
 
-    h1 {
-      ${tw`mb-8 text-5xl dark:text-gray-200 text-gray-700 font-extrabold tracking-widest`};
-    }
-    
-    p {
-      ${tw`dark:text-slate-300 text-2xl mb-24`};
+    .get-started {
+      h2 {
+        ${tw`mb-4 dark:text-dark-mode-senary text-lg md:text-xl font-bold`};
+      }
+      
+      p {
+        ${tw`leading-relaxed dark:text-dark-mode-senary text-lg md:text-xl md:leading-relaxed mb-8`};
+      }
     }
   }
   
-  .content {
-    ${tw`grid xl:grid-cols-3 gap-8 md:gap-12 w-full mb-16`};
+  .aims {
+    ${tw`grid md:grid-cols-2 xl:grid-cols-1 self-start gap-8 dark:text-dark-mode-senary`};
 
-    .steps {
-      ${tw`xl:col-span-2 text-xl`};
+    .item {
+      ${tw`rounded-2xl border border-gray-100 dark:border-dark-mode-secondary bg-white p-6 md:p-8`};
+      ${darkBgGradient.fourLayers};
 
-      .get-started {
-        h2 {
-          ${tw`mb-4 dark:text-dark-mode-senary text-lg md:text-xl font-bold`};
-        }
-        
-        p {
-          ${tw`leading-relaxed dark:text-dark-mode-senary text-lg md:text-xl md:leading-relaxed mb-8`};
-        }
+      h2 {
+        ${tw`mb-4 text-2xl dark:text-slate-300 font-bold`};
       }
-    }
-    
-    .aims {
-      ${tw`grid md:grid-cols-2 xl:grid-cols-1 self-start gap-8 dark:text-dark-mode-senary`};
-
-      .item {
-        ${tw`rounded-2xl border border-gray-100 dark:border-dark-mode-secondary bg-white p-6 md:p-8`};
-        ${darkBgGradient.fourLayers};
-
-        h2 {
-          ${tw`mb-4 text-2xl dark:text-slate-300 font-bold`};
-        }
-        
-        p {
-          ${tw`leading-relaxed text-lg md:text-xl md:leading-relaxed mb-8`};
-        }
-        
-        img {
-          ${tw`filter dark:brightness-75 object-cover object-center rounded-lg transition-all ease-in-out hover:scale-[95%]`};
-        }
+      
+      p {
+        ${tw`leading-relaxed text-lg md:text-xl md:leading-relaxed mb-8`};
+      }
+      
+      img {
+        ${tw`filter dark:brightness-75 object-cover object-center rounded-lg transition-all ease-in-out hover:scale-[95%]`};
       }
     }
   }

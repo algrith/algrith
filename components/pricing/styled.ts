@@ -4,23 +4,7 @@ import { darkBgGradient, SectionLayout, squareWaves } from '../shared/layout/sty
 
 
 export const PricingWrapper = styled(SectionLayout)`
-  ${tw`w-full flex flex-col gap-16 pt-32 pb-16 z-1`};
-
-  .title {
-    ${tw`text-center`};
-
-    h1 {
-      ${tw`capitalize leading-tight sm:leading-tight font-extrabold tracking-widest dark:text-gray-200 text-gray-700 mb-8 text-5xl font-bold`};
-    }
-    
-    p {
-      ${tw`dark:text-slate-300 text-2xl`};
-    }
-  }
-  
-  .content {
-    ${tw`w-full flex flex-col gap-16`};
-  }
+  ${tw`flex flex-col gap-16 pb-16`};
 `;
 
 export const AddonsWrapper = styled.div`
@@ -74,8 +58,16 @@ export const AddonsWrapper = styled.div`
 export const PlansWrapper = styled.div`
   ${tw`w-full flex flex-col items-center gap-8 lg:gap-16`};
 
+  &.in-home-page {
+    ${tw`pt-24`};
+
+    h1 {
+      ${tw`text-5xl`};
+    }
+  }
+
   h1 {
-    ${tw`relative mx-auto w-full text-center text-3xl capitalize leading-tight sm:leading-tight font-extrabold tracking-widest text-gray-500 dark:text-white`};
+    ${tw`relative mx-auto w-full text-center text-3xl capitalize leading-tight font-extrabold tracking-widest text-gray-600 dark:text-gray-300`};
   }
   
   .plans {
