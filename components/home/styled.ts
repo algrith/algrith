@@ -104,7 +104,7 @@ export const TechStackWrapper = styled(SectionLayout)`
     ${tw`flex items-center md:px-12 px-6 justify-center`};
     
     .ant-avatar {
-      ${tw`w-auto rounded-none`};
+      ${tw`w-full rounded-none`};
 
       img {
         ${tw`object-contain`};
