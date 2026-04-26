@@ -328,8 +328,7 @@ export const FooterWrapper = styled(Footer)`
 `;
 
 export const NavbarWrapper = styled.nav`
-	${tw`transition-all z-50 ease-in-out duration-500 shadow lg:shadow-none bg-white lg:bg-transparent fixed top-0 -right-full lg:right-24 xl:right-32 2xl:right-166 lg:mr-3 flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center w-10/12 md:w-5/12 lg:w-auto h-screen lg:h-16 text-gray-600 lg:p-4`};
-	${darkBgGradient.fourLayers};
+	${tw`transition-all z-50 ease-in-out duration-500 shadow lg:shadow-none bg-white lg:bg-transparent dark:bg-transparent backdrop-blur-lg fixed top-0 -right-full lg:right-24 xl:right-32 2xl:right-166 lg:mr-3 flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center w-10/12 md:w-5/12 lg:w-auto h-[100dvh] lg:h-16 text-gray-600 lg:p-4`};
 
 	@media (min-width: 1024px) {
 		background-image: none !important;
@@ -383,7 +382,7 @@ export const NavbarWrapper = styled.nav`
 		${tw`flex flex-col lg:flex-row flex-grow flex-shrink-0 w-11/12 lg:w-full p-2 rounded-xl my-4 lg:my-0 mx-auto`};
 
 		a {
-			${tw`relative my-2 mx-auto lg:mx-4 px-0 text-left lg:text-center w-full lg:w-auto text-lg dark:text-gray-400 dark:lg:text-dark-mode-octonary text-gray-600 font-semibold`};
+			${tw`relative my-2 mx-auto lg:mx-4 px-0 text-left lg:text-center w-full lg:w-auto text-lg dark:text-gray-300 dark:lg:text-dark-mode-octonary text-gray-600 font-semibold`};
 
 			&:after {
 				${tw`absolute content rounded-full left-0 -bottom-1 h-1 w-full bg-transparent transition-all ease-in-out duration-500`};
@@ -541,7 +540,7 @@ export const WavesWrapper = styled.div`
 `;
 
 export const Overlay = styled.div`
-	${tw`fixed hidden top-0 left-0 z-[21] bg-black opacity-50 h-screen w-screen`};
+	${tw`fixed hidden inset-0 z-[21] bg-black/60 h-screen w-screen`};
 
 	&.closed {
 		${tw`hidden`};

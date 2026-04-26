@@ -5,7 +5,7 @@ import Link from '@/components/shared/button/link';
 import useTypist from '@/hooks/typist';
 
 const WelcomeIntro = () => {
-  useTypist('A Strategic Digital Solutions for Modern Businesses.');
+  useTypist('Strategic Digital Solutions for Modern Businesses.');
 
   return (
     <WelcomeIntroWrapper>

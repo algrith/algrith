@@ -67,13 +67,13 @@ const Navbar = () => {
 			</div>
 			
 			<div className="bottom">
-				<div id="navbar-footer-brand" data-aos="fade-right" className="copyright">
+				<div id="navbar-footer-brand" className="copyright">
 					© Copyright <span> Algrith {new Date().getFullYear()} </span>
 				</div>
 
 				<div id="navbar-footer-socials" className="socials">
 					{socials.map((social, index) => (
-						<span key={index} data-aos="fade-left">
+						<span key={index}>
 							{social.icon}
 						</span>
 					))}
