@@ -136,6 +136,8 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
                     placeholder="E.g. mycompany name"
                     label="Business/website name"
                     id="business_name"
+                    tabIndex={0}
+                    autoFocus
                     required
                   />
                   

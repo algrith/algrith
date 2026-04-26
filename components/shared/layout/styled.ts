@@ -183,15 +183,19 @@ export const HeaderWrapper = styled(Header)`
 		a {
 			${tw`transform origin-left scale-65 w-64 flex justify-start items-center self-center uppercase mx-auto text-center transition-all ease-in-out duration-1000`};
 
-			img {
+			.ant-avatar {
 				${tw`w-full h-full rounded-none rounded-none p-0`};
+				
+				&.light {
+					${tw`dark:hidden block`};
+				}
 				
 				&.dark {
 					${tw`dark:block hidden`};
 				}
-				
-				&.light {
-					${tw`dark:hidden block`};
+
+				img {
+					${tw`object-contain`};
 				}
 			}
 		}
@@ -357,15 +361,19 @@ export const NavbarWrapper = styled.nav`
 			${tw`w-64 flex justify-start items-center transform scale-65 origin-left transition-all ease-in-out duration-1000`};
 		}
 		
-		img {
+		.ant-avatar {
 			${tw`w-full h-full rounded-none`};
+			
+			&.light {
+				${tw`dark:hidden`};
+			}
 
 			&.dark {
 				${tw`hidden dark:block`};
 			}
 			
-			&.light {
-				${tw`dark:hidden`};
+			img {
+				${tw`object-contain`};
 			}
 		}
 

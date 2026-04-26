@@ -2,6 +2,7 @@
 
 import { CloseOutlined, FacebookFilled, LinkedinFilled, XOutlined } from '@ant-design/icons';
 import { usePathname } from 'next/navigation';
+import { Avatar } from 'antd';
 
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
@@ -45,8 +46,8 @@ const Navbar = () => {
 		<NavbarWrapper className="navlinks" id="nav-menu">
 			<div className="top">
 				<h1 id="navbar-title">
-					<img src={assets.brand.logos.black} className="light" alt="algrith_logo" />
-					<img src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
+					<Avatar src={assets.brand.logos.black} className="light" alt="algrith_logo" />
+					<Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
 				</h1>
 
 				<Button

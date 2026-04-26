@@ -105,6 +105,10 @@ export const TechStackWrapper = styled(SectionLayout)`
 
     .ant-avatar {
       ${tw`w-full`};
+
+      img {
+        ${tw`object-contain`};
+      }
     }
 
     .scikit-learn {

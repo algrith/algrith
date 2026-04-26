@@ -57,7 +57,7 @@ const TechStack = () => {
         rtl={false}
         swipeable
         draggable
-        // autoPlay
+        autoPlay
         infinite
       >
         {techStackImages.map((image) => (
