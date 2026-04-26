@@ -93,7 +93,7 @@ export const TechStackWrapper = styled(SectionLayout)`
   ${tw`pt-8 lg:pt-12 pb-10 lg:pb-14`};
 
   .intro {
-    ${tw`w-full md:w-3/4 mx-auto sm:mb-6`};
+    ${tw`w-full md:w-3/4 mx-auto mb-16`};
 
     h1 {
       ${tw`text-3xl md:text-4xl font-nunito-sans text-center text-gray-500 dark:text-gray-300 font-extrabold pt-4`};
@@ -104,7 +104,7 @@ export const TechStackWrapper = styled(SectionLayout)`
     ${tw`flex items-center md:px-12 px-6 justify-center`};
     
     .ant-avatar {
-      ${tw`w-full rounded-none`};
+      ${tw`w-full h-full rounded-none`};
 
       img {
         ${tw`object-contain`};
