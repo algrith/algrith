@@ -3,11 +3,11 @@
 import {
 	DeploymentUnitOutlined,
 	AntDesignOutlined,
-	TwitterOutlined,
 	DesktopOutlined,
 	LinkedinFilled,
 	FacebookFilled,
-	BugOutlined
+	BugOutlined,
+	XOutlined
 } from '@ant-design/icons';
 
 import { FooterWrapper } from './styled';
@@ -131,16 +131,16 @@ const features = [
 
 const socials = [
 	{
+		href: 'https://www.linkedin.com/company/algrith',
+		icon: <LinkedinFilled />,
+	},
+	{
 		href: 'https://web.facebook.com/algrithllc',
 		icon: <FacebookFilled />
 	},
-	// {
-	// 	href: '/',
-	// 	icon: <TwitterOutlined />
-	// },
 	{
-		href: 'https://www.linkedin.com/company/algrith',
-		icon: <LinkedinFilled />,
+		href: 'https://x.com/algrithllc',
+		icon: <XOutlined />
 	}
 ];
 

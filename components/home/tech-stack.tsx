@@ -57,18 +57,18 @@ const TechStack = () => {
         rtl={false}
         swipeable
         draggable
-        autoPlay
+        // autoPlay
         infinite
       >
         {techStackImages.map((image) => (
           <div key={image.name} className={image.name}>
-            <img
+            <Avatar
               alt={`${toSnakeCase(image.name)}_logo`}
               src={image?.light || image.dark}
               className="light"
             />
 
-            <img
+            <Avatar
               alt={`${toSnakeCase(image.name)}_logo`}
               className="dark"
               src={image.dark}

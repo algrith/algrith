@@ -1,8 +1,7 @@
 'use client';
 
-import { CloseOutlined, FacebookFilled, LinkedinFilled, TwitterOutlined } from '@ant-design/icons';
+import { CloseOutlined, FacebookFilled, LinkedinFilled, XOutlined } from '@ant-design/icons';
 import { usePathname } from 'next/navigation';
-import { Avatar } from 'antd';
 
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
@@ -16,11 +15,11 @@ const socials = [
 		icon: <FacebookFilled />
 	},
 	{
-		href: '#',
-		icon: <TwitterOutlined />
+		href: 'https://x.com/algrithllc',
+		icon: <XOutlined />
 	},
 	{
-		href: '#',
+		href: 'https://www.linkedin.com/company/algrith',
 		icon: <LinkedinFilled />,
 	}
 ];
