@@ -362,7 +362,7 @@ export const NavbarWrapper = styled.nav`
 		}
 		
 		.ant-avatar {
-			${tw`w-full h-full rounded-none`};
+			${tw`w-full rounded-none`};
 			
 			&.light {
 				${tw`dark:hidden`};

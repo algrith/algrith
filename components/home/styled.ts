@@ -102,9 +102,9 @@ export const TechStackWrapper = styled(SectionLayout)`
   
   .carousel-item-class {
     ${tw`flex items-center md:px-12 px-6 justify-center`};
-
+    
     .ant-avatar {
-      ${tw`w-full`};
+      ${tw`w-auto rounded-none`};
 
       img {
         ${tw`object-contain`};
@@ -133,10 +133,6 @@ export const TechStackWrapper = styled(SectionLayout)`
     
     .php {
       ${tw`scale-65 md:scale-75`};
-    }
-
-    .ant-avatar {
-      ${tw`w-auto h-full rounded-none`};
     }
 
     .light {
