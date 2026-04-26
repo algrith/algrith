@@ -62,13 +62,13 @@ const TechStack = () => {
       >
         {techStackImages.map((image) => (
           <div key={image.name} className={image.name}>
-            <Avatar
+            <img
               alt={`${toSnakeCase(image.name)}_logo`}
               src={image?.light || image.dark}
               className="light"
             />
 
-            <Avatar
+            <img
               alt={`${toSnakeCase(image.name)}_logo`}
               className="dark"
               src={image.dark}
