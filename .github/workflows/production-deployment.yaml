@@ -26,8 +26,7 @@ jobs:
         uses: 'google-github-actions/auth@v3'
         with:
           workload_identity_provider: 'projects/328175798914/locations/global/workloadIdentityPools/github-actions-pool/providers/github-actions-oidc'
-          # credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
-          # token_format: 'access_token'
+          service_account: 'algrith-cloud-run-deployment@algrith.iam.gserviceaccount.com'
           project_id: 'algrith'
         
       - name: Docker Auth
