@@ -103,6 +103,10 @@ export const TechStackWrapper = styled(SectionLayout)`
   .carousel-item-class {
     ${tw`flex items-center md:px-12 px-6 justify-center`};
 
+    .ant-avatar {
+      ${tw`w-full`};
+    }
+
     .scikit-learn {
       ${tw`scale-45 md:scale-65`};
     }
