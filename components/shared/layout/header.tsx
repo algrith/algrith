@@ -19,8 +19,8 @@ const Header = () => {
       <div className="wrapper">
         <div id="brand">
           <Link id="brand-title" href="/">
-            <Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
-            <Avatar src={assets.brand.logos.black} className="light" alt="algrith_logo" />
+            <img src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
+            <img src={assets.brand.logos.black} className="light" alt="algrith_logo" />
           </Link>
         </div>
         

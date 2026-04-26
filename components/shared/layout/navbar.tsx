@@ -46,8 +46,8 @@ const Navbar = () => {
 		<NavbarWrapper className="navlinks" id="nav-menu">
 			<div className="top">
 				<h1 id="navbar-title">
-					<Avatar src={assets.brand.logos.black} className="light" alt="algrith_logo" />
-					<Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
+					<img src={assets.brand.logos.black} className="light" alt="algrith_logo" />
+					<img src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
 				</h1>
 
 				<Button
