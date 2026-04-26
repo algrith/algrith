@@ -69,6 +69,20 @@ jobs:
           image: ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }}:${{ github.sha }}
           service: ${{ secrets.SERVICE }}
           region: ${{ secrets.REGION }}
+      
+      - name: Cleanup Old Revisions
+        run: |
+          gcloud run revisions list \
+            --service=${{ secrets.SERVICE }} \
+            --region=${{ secrets.REGION }} \
+            --sort-by="~createTime" \
+            --format="value(name)" \
+            --project=algrith \
+            | tail -n +2 \
+            | xargs -I {} gcloud run revisions delete {} \
+            --region=${{ secrets.REGION }} \
+            --project=algrith \
+            --quiet --async
 
       - name: Use Output
         run: curl ${{ steps.deploy.outputs.url }}
