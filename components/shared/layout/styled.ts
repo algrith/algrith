@@ -198,7 +198,7 @@ export const HeaderWrapper = styled(Header)`
 	}
 	
 	.menu {
-		${tw`lg:hidden p-4 -mr-5 dark:text-theme-primary bg-transparent outline-none focus:outline-none border-none transform scale-y-75 transition-transform ease-in-out duration-1000`};
+		${tw`lg:hidden shadow-none p-4 -mr-5 dark:text-theme-primary bg-transparent outline-none focus:outline-none border-none transform scale-y-75 transition-transform ease-in-out duration-1000`};
 		
 		.anticon {
 			${tw`text-3xl text-gray-600 dark:text-white`};
