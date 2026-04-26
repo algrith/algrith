@@ -29,13 +29,13 @@ jobs:
           service_account: 'algrith-cloud-run-deployment@algrith.iam.gserviceaccount.com'
           project_id: 'algrith'
         
-      - name: Docker Auth
-        id: docker-auth
-        uses: 'docker/login-action@v2'
-        with:
-          registry: ${{ secrets.GAR_LOCATION }}-docker.pkg.dev
-          password: ${{ steps.auth.outputs.auth_token }}
-          username: 'oauth2accesstoken'
+      # - name: Docker Auth
+      #   id: docker-auth
+      #   uses: 'docker/login-action@v2'
+      #   with:
+      #     registry: ${{ secrets.GAR_LOCATION }}-docker.pkg.dev
+      #     password: ${{ steps.auth.outputs.auth_token }}
+      #     username: 'oauth2accesstoken'
       
       - name: Create .env File
         run: |

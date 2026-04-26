@@ -537,7 +537,7 @@ export const WavesWrapper = styled.div`
 
 export const Overlay = styled.div`
 	${tw`fixed hidden inset-0 z-[21] bg-black/60 h-screen w-screen`};
-
+	
 	&.closed {
 		${tw`hidden`};
 	}
