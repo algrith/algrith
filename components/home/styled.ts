@@ -100,6 +100,10 @@ export const TechStackWrapper = styled(SectionLayout)`
     }
   }
   
+  .react-multi-carousel-list {
+    ${tw`h-20`};
+  }
+
   .carousel-item-class {
     ${tw`flex items-center md:px-12 px-6 justify-center`};
     
@@ -110,6 +114,10 @@ export const TechStackWrapper = styled(SectionLayout)`
         ${tw`object-contain`};
       }
     }
+    
+    .bootstrapcss {
+      ${tw`scale-45 md:scale-65`};
+    }
 
     .scikit-learn {
       ${tw`scale-45 md:scale-65`};
@@ -119,16 +127,12 @@ export const TechStackWrapper = styled(SectionLayout)`
       ${tw`scale-45 md:scale-65`};
     }
     
-    .bootstrap {
-      ${tw`scale-45 md:scale-65`};
-    }
-    
     .mysql {
-      ${tw`md:scale-75`};
+      ${tw`scale-65 md:scale-75`};
     }
       
     .bash {
-      ${tw`md:scale-65`};
+      ${tw`scale-[60%] md:scale-65`};
     }
     
     .php {
