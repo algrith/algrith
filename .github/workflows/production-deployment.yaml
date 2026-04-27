@@ -79,6 +79,7 @@ jobs:
             | tail -n +2 \
             | xargs -I {} gcloud artifacts docker images delete \
             "${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }}@{}" \
+            --delete-tags \
             --quiet --async
       
       - name: Cleanup Old Revisions
