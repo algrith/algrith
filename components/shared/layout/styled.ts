@@ -170,7 +170,7 @@ export const HeaderWrapper = styled(Header)`
 	}
 	
 	.wrapper {
-		${tw`2xl:w-8/12 mx-auto px-6 md:px-12 lg:px-14 xl:px-24 2xl:px-0 py-1 flex justify-between items-center`};
+		${tw`2xl:w-8/12 mx-auto px-6 md:px-12 lg:px-14 xl:px-24 2xl:px-0 flex justify-between items-center`};
 	}
 	
 	#brand {
@@ -202,7 +202,7 @@ export const HeaderWrapper = styled(Header)`
 	}
 	
 	.menu {
-		${tw`top-0 lg:hidden shadow-none dark:text-theme-primary bg-transparent px-1 outline-none focus:outline-none border-none transform scale-y-75 transition-transform ease-in-out duration-1000`};
+		${tw`lg:hidden shadow-none dark:text-theme-primary bg-transparent px-1 outline-none focus:outline-none border-none transform scale-y-75 transition-transform ease-in-out duration-1000`};
 		
 		.anticon {
 			${tw`text-3xl text-gray-600 dark:text-white`};
