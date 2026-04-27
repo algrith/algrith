@@ -73,9 +73,13 @@ jobs:
       - name: Cleanup Old Images
         run: |
           gcloud artifacts docker images list \
-            ...
+            ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }} \
+            --format="value(version)" \
+            --sort-by="~createTime" \
             | tail -n +2 \
-            | xargs -I {} gcloud artifacts docker images delete ...
+            | xargs -I {} gcloud artifacts docker images delete \
+            "${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }}@{}" \
+            --quiet --async
       
       - name: Cleanup Old Revisions
         run: |
