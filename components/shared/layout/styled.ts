@@ -170,7 +170,7 @@ export const HeaderWrapper = styled(Header)`
 	}
 	
 	.wrapper {
-		${tw`2xl:w-8/12 mx-auto px-6 md:px-12 lg:px-14 xl:px-24 2xl:px-0 flex justify-between items-center`};
+		${tw`h-full 2xl:w-8/12 mx-auto px-6 md:px-12 lg:px-14 xl:px-24 2xl:px-0 flex justify-between items-center`};
 	}
 	
 	#brand {
