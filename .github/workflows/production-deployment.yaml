@@ -70,6 +70,13 @@ jobs:
           service: ${{ secrets.SERVICE }}
           region: ${{ secrets.REGION }}
       
+      - name: Cleanup Old Images
+        run: |
+          gcloud artifacts docker images list \
+            ...
+            | tail -n +2 \
+            | xargs -I {} gcloud artifacts docker images delete ...
+      
       - name: Cleanup Old Revisions
         run: |
           gcloud run revisions list \

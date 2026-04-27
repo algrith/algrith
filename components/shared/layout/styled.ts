@@ -202,7 +202,7 @@ export const HeaderWrapper = styled(Header)`
 	}
 	
 	.menu {
-		${tw`justify-center items-center lg:hidden shadow-none p-4 -mr-5 dark:text-theme-primary bg-transparent outline-none focus:outline-none border-none transform scale-y-75 transition-transform ease-in-out duration-1000`};
+		${tw`justify-center items-center lg:hidden shadow-none dark:text-theme-primary bg-transparent px-1 outline-none focus:outline-none border-none transform scale-y-75 transition-transform ease-in-out duration-1000`};
 		
 		.anticon {
 			${tw`text-3xl text-gray-600 dark:text-white`};
