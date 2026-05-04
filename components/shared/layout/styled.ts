@@ -54,7 +54,7 @@ export const squareWaves = (inverse: boolean = false, height = '') => css`
 `;
 
 export const SectionLayout = styled.div`
-  ${tw`relative w-full 2xl:w-8/12 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-0 mx-auto dark:bg-transparent`};
+  ${tw`relative w-full 2xl:w-8/12 px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-0 mx-auto dark:bg-transparent z-1`};
 `;
 
 export const waveAnimation = keyframes`
@@ -388,6 +388,10 @@ export const NavbarWrapper = styled.nav`
 	
 	#navbar-links {
 		${tw`flex flex-col lg:flex-row flex-grow flex-shrink-0 w-11/12 lg:w-full p-2 rounded-xl my-4 lg:my-0 mx-auto`};
+
+		.user-avatar {
+			${tw`my-2`};
+		}
 
 		a {
 			${tw`relative my-2 mx-auto lg:mx-4 px-0 text-left lg:text-center w-full lg:w-auto text-lg dark:text-gray-300 dark:lg:text-dark-mode-octonary text-gray-600 font-semibold`};

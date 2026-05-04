@@ -37,9 +37,15 @@ const useRoute = () => {
       isAuth: pathname.includes('/auth'),
       isHomePage: pathname === '/'
     });
-  }, []);
+  }, [pathname]);
 
-  return { isProtectedRoute, isRouteChanged, pathname, routes };
+  return {
+    isProtectedRoute,
+    isRouteChanged,
+    searchParams,
+    pathname,
+    routes
+  };
 };
 
 export default useRoute;

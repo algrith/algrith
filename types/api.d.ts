@@ -3,11 +3,9 @@ declare module 'api' {
     method?: 'DELETE' | 'PATCH' | 'POST' | 'PUT' | 'GET';
     body?: BodyInit | BaseObject | null | undefined;
     url?: string | URL | Request;
-    shouldStringify?: boolean;
-    isExternalApi?: boolean;
-    removeToken?: boolean;
+		access_token?: string;
     contentType?: string;
-    accessToken?: string;
+    isSecure?: boolean;
     path?: string;
 	}
 	
@@ -15,5 +13,6 @@ declare module 'api' {
 		data: null | Array<any> | BaseObject;
 		success: boolean;
 		message: string;
+		code: string;
 	}
 }

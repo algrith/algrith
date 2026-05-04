@@ -99,6 +99,47 @@ export const RadioGroupWrapper = styled(Group)`
   }
 `;
 
+export const FileUploadWrapper = styled.div`
+  ${tw`flex flex-col gap-2 rounded-xl relative`};
+
+  .ant-upload-wrapper {
+    ${tw`rounded-lg border-dashed border-2 hover:border-gray-400 dark:hover:border-gray-300`};
+    
+    .ant-upload {
+      ${tw`border-none`};
+    }
+    
+    &.ant-upload-drag {
+      ${tw`border-none`}
+    }
+  }
+
+  .format-text {
+    ${tw`text-orange-500 text-xs`};
+    line-height: 16.9px;
+    font-weight: 400;
+  }
+
+  .icon {
+    ${tw`px-2 pt-1.5 pb-1 w-fit mx-auto mt-6 mb-4 rounded-md bg-theme-secondary`};
+
+    .anticon {
+      ${tw`font-semibold text-xl`};
+    }
+  }
+
+  .hint-text {
+    ${tw`m-2 text-center font-semibold`};
+    line-height: 18.2px;
+  }
+  
+  .ant-upload-list-item {
+    padding-block: 0 !important;
+    margin-top: 0 !important;
+    border: none !important;
+  }
+`;
+
 export const LabelWrapper = styled.label`
   ${tw`text-[13px] text-gray-600 dark:text-dark-mode-octonary w-fit font-bold`};
 

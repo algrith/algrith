@@ -1,15 +1,17 @@
+import { HTMLAttributes, InputHTMLAttributes, ReactNode, RefObject } from 'react';
+import { ProviderType, Provider, OAuthProviderId } from 'next-auth/providers';
 import { NotificationArgsProps, ButtonProps, ThemeConfig } from 'antd';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
-import { ProviderType, Provider } from 'next-auth/providers';
-import { HTMLAttributes, ReactNode, RefObject } from 'react';
 import { LinkProps as NextLinkProps } from 'next/link';
 import { TypeOpen } from 'antd/es/message/interface';
+import { User } from 'next-auth';
 
+export type AuthTypes = 'signIn' | 'signUp' | 'forgotPassword' | 'passwordReset' | 'emailVerification' | 'resendVerification';
 export type InlineFeedbackWrapperProps = Omit<InlineFeedbackProps, 'target'> & Pick<FeedbackState, 'type'>;
-export type OAuthProviderIcons = Partial<Record<ProviderType, string>>;
+export type OAuthProviderIcons = Partial<Record<ProviderType | OAuthProviderId, string>>;
+export type FileUploadButtonProps = InputHTMLAttributes<HTMLInputElement> & ButtonProps;
 export type TextCase = 'capitalize' | 'uppercase' | 'lowercase';
 export type AsyncActionTargets = keyof AsyncActionsState;
-export type AuthTypes = 'signIn' | 'signUp' | 'profile';
 export type TextAlignment = 'center' | 'right' | 'left';
 export type BaseStringObject = Record<string, string>;
 export type UseClassName = Array<string> | string;
@@ -39,10 +41,6 @@ export interface IntroProps extends HTMLAttributes<HTMLDivElement> {
     text?: string;
   };
 };
-
-export type Messages = Partial<Record<AsyncActionTargets, {
-  [key: string]: string;
-}>>;
 
 export type PaystackProps = Customer & ButtonProps & {
 	onSuccess?: (response: BaseObject) => void;
@@ -155,11 +153,6 @@ export interface SectionItemProps {
 	title: string;
 };
 
-export interface GetMessageProps {
-  resourceType: keyof Messages;
-  responseCode: string;
-};
-
 export interface FeedbackPayload {
   feedbackType?: FeedbackState['feedbackType'];
   placement?: FeedbackState['placement'];
@@ -178,6 +171,7 @@ export interface AppThemeState {
 export interface OAuthProvider {
 	name: Provider['name'];
 	authType: AuthTypes;
+	isLoading: boolean;
 	id: ProviderType;
 };
 
@@ -244,6 +238,19 @@ export interface AddonsProps {
 	inPaymentModal?: boolean;
 	selected?: Array<Addon>;
 };
+
+export interface AuthState {
+	isVerifying: boolean;
+	isLoading: boolean;
+	user?: User;
+	model: {
+		confirm_password: string;
+		password: string;
+		image: string;
+		email: string;
+		name: string;
+	}
+}
 
 export type SectionProps = {
 	items: Array<SectionItemProps>;

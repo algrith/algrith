@@ -15,9 +15,9 @@ const ThemeSwitch = () => {
   const themeSwitchContainerRef = useRef<HTMLDivElement>(null);
   const themeSwitchRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
+  const { pathname, routes } = useRoute();
   const { viewport } = useViewport();
   const dispatch = useAppDispatch();
-  const { pathname } = useRoute();
   
   const activeThemeClass = {
     light: !isSystemTheme && theme === 'light' ? 'active' : '',
@@ -80,7 +80,7 @@ const ThemeSwitch = () => {
   }, [viewport, pathname]);
 
   return (
-    <ThemeWrapper ref={themeSwitchContainerRef}>
+    <ThemeWrapper ref={themeSwitchContainerRef} className={routes.isAuth ? 'in-auth-page' : ''}>
       <div ref={themeSwitchRef} onClick={() => setOpen(!open)} className="inner">
         <label className="sr-only">Theme</label>
         <button type="button" aria-haspopup="true" aria-expanded="false">

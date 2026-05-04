@@ -20,17 +20,9 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (status === 'unauthenticated' && isProtectedRoute) {
       console.log('Logging out...');
-      location.href = '/auth';
     }
 
     if (status === 'authenticated') {
-      if (isAuth) {
-        const intendedRoute = localStorage?.intendedRoute ?? '/';
-        console.log('Redirecting to intended route...');
-        location.href = intendedRoute;
-      }
-
-      localStorage.removeItem('intendedRoute');
       console.log('Removed intended route.');
     }
   }, [status]);

@@ -8,12 +8,14 @@ import { HeaderWrapper } from '@/components/shared/layout/styled';
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
 import { assets } from '@/libs/assets';
+import useRoute from '@/hooks/route';
 import Button from '../button';
 
 const Header = () => {
   const { openNavbar } = useToggleNavbar();
+  const { routes } = useRoute();
   useResizeHeaderOnScroll();
-
+  
   return (
     <HeaderWrapper id="header">
       <div className="wrapper">
@@ -24,12 +26,14 @@ const Header = () => {
           </Link>
         </div>
         
-        <Button
-          prependedIcon={<MenuOutlined />}
-          onClick={openNavbar}
-          htmlType="button"
-          className="menu"
-        />
+        {!routes.isAuth && (
+          <Button
+            prependedIcon={<MenuOutlined />}
+            onClick={openNavbar}
+            htmlType="button"
+            className="menu"
+          />
+        )}
       </div>
     </HeaderWrapper>
   );

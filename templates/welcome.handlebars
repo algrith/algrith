@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome to Algrith</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body, #bodyTable {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100% !important;
+      background-color: #f0ede8;
+      font-family: 'DM Sans', Arial, sans-serif;
+      color: #1a1a18;
+    }
+
+    img {
+      border: 0;
+      display: block;
+      outline: none;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #888880;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .headline {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 36px;
+      line-height: 1.15;
+      color: #1a1a18;
+      margin-bottom: 24px;
+    }
+
+    .headline em {
+      font-style: italic;
+      color: #5a7a2e;
+    }
+
+    .body-text {
+      font-size: 15px;
+      font-weight: 300;
+      line-height: 1.75;
+      color: #44443e;
+      margin-bottom: 32px;
+    }
+
+    .body-text strong {
+      font-weight: 500;
+      color: #1a1a18;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background-color: #1a1a18;
+      color: #2ca374 !important;
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 16px 32px;
+      border-radius: 8px;
+    }
+
+    .header-tag {
+      font-size: 11px;
+      font-weight: 500;
+      color: #2ca374;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border: 1px solid #2ca37433;
+      padding: 4px 10px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .features-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #888880;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .feature-text {
+      font-size: 13px;
+      font-weight: 400;
+      color: #44443e;
+      font-family: 'DM Sans', Arial, sans-serif;
+      vertical-align: middle;
+    }
+
+    .footer-link {
+      font-size: 12px;
+      color: #666660 !important;
+      text-decoration: none;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+  <table id="bodyTable" width="100%" cellpadding="0" cellspacing="0" border="0">
+    <tr>
+      <td align="center" style="padding: 48px 16px; background-color: #f0ede8;">
+
+        <!-- Wrapper -->
+        <table width="560" cellpadding="0" cellspacing="0" border="0" style="max-width: 560px;">
+
+          <!-- ===== HEADER ===== -->
+          <tr>
+            <td style="border-radius: 16px 16px 0 0; background-color: #1a1a18; padding: 32px 48px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <!-- Logo -->
+                  <td style="vertical-align: middle;">
+                    <img
+                      src="https://algrith.com/images/logo/algrith-logo-light.png"
+                      alt="Algrith"
+                      width="120"
+                    />
+                  </td>
+                  <!-- Header tag -->
+                  <td align="right" style="vertical-align: middle;">
+                    <span class="header-tag">Welcome</span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- ===== BODY ===== -->
+          <tr>
+            <td style="background-color: #ffffff; padding: 48px;">
+
+              <!-- Eyebrow -->
+              <p class="eyebrow">You're in</p>
+
+              <!-- Headline -->
+              <h1 class="headline">
+                Good to have you,<br/>
+                <em>{{name}}</em>.
+              </h1>
+
+              <!-- Divider -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 24px;">
+                <tr>
+                  <td style="width: 40px; height: 3px; background-color: #2ca374; border-radius: 2px; font-size: 0; line-height: 0;">&nbsp;</td>
+                </tr>
+              </table>
+
+              <!-- Body text -->
+              <p class="body-text">
+                Your account is ready. At <strong>Algrith</strong>, we build strategic digital solutions
+                that help modern businesses save time, reduce friction, and grow with confidence.
+                You've just taken the first step.
+              </p>
+
+              <!-- CTA Button -->
+              <table cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 40px;">
+                <tr>
+                  <td align="left" style="border-radius: 8px; background-color: #1a1a18;">
+                    <a href="{{dashboard_url}}" class="cta-btn">
+                      Go to Dashboard &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Feature Strip -->
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f7f6f2; border-radius: 12px;">
+                <tr>
+                  <td style="padding: 28px 32px;">
+
+                    <!-- Features label -->
+                    <p class="features-label">What's waiting for you</p>
+
+                    <!-- Feature 1 -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px;">
+                      <tr>
+                        <td width="16" style="vertical-align: middle;">
+                          <table cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                              <td style="width: 6px; height: 6px; background-color: #2ca374; border-radius: 50%; font-size: 0; line-height: 0;">&nbsp;</td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td style="padding-left: 10px; vertical-align: middle;">
+                          <span class="feature-text">Custom websites tailored to your brand and goals</span>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 2 -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom: 10px;">
+                      <tr>
+                        <td width="16" style="vertical-align: middle;">
+                          <table cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                              <td style="width: 6px; height: 6px; background-color: #2ca374; border-radius: 50%; font-size: 0; line-height: 0;">&nbsp;</td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td style="padding-left: 10px; vertical-align: middle;">
+                          <span class="feature-text">Fast, scalable solutions built for real business needs</span>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- Feature 3 -->
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td width="16" style="vertical-align: middle;">
+                          <table cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                              <td style="width: 6px; height: 6px; background-color: #2ca374; border-radius: 50%; font-size: 0; line-height: 0;">&nbsp;</td>
+                            </tr>
+                          </table>
+                        </td>
+                        <td style="padding-left: 10px; vertical-align: middle;">
+                          <span class="feature-text">Dedicated support from strategy to launch</span>
+                        </td>
+                      </tr>
+                    </table>
+
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- ===== FOOTER ===== -->
+          <tr>
+            <td style="background-color: #1a1a18; border-radius: 0 0 16px 16px; padding: 24px 48px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <!-- Copyright -->
+                  <td style="vertical-align: middle; font-size: 12px; color: #666660; font-family: 'DM Sans', Arial, sans-serif; font-weight: 300;">
+                    &copy; {{year}} Algrith. All rights reserved.
+                  </td>
+                  <!-- Footer links -->
+                  <td align="right" style="vertical-align: middle;">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="padding-left: 20px;">
+                          <a href="{{privacy_url}}" class="footer-link">Privacy</a>
+                        </td>
+                        <td style="padding-left: 20px;">
+                          <a href="{{terms_url}}" class="footer-link">Terms</a>
+                        </td>
+                        <td style="padding-left: 20px;">
+                          <a href="mailto:{{support}}" class="footer-link">Support</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+        <!-- End Wrapper -->
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

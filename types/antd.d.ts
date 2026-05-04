@@ -27,6 +27,10 @@ declare module 'antd' {
 		type?: ButtonType | keyof Colors['theme'];
 		prefixIcon?: ReactNode;
 	}
+
+	interface UploadProps extends UploadProps, InputLabelProps {
+		onUpload?: (file: Array<UploadFile<File>>) => void;
+	};
 	
 	interface CustomInputProps extends InputLabelProps {
 		description?: ReactNode;
@@ -40,6 +44,10 @@ declare module 'antd' {
 		animationDuration?: string;
 		size?: SizeType;
 	}
+	
+	export interface AvatarProps extends AvatarProps {
+		canUploadProfilePhoto?: boolean;
+	};
 
 	interface CheckboxProps extends CheckboxProps {
 		label?: string;

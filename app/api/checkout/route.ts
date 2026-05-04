@@ -3,7 +3,8 @@ import { NextRequest } from 'next/server';
 import nodemailer from 'nodemailer';
 import path from 'path';
 
-import { ResponseData } from '@/types';
+import { OrderModel, ResponseData } from '@/types';
+import { client } from '@/utils/db';
 
 const response = (data: ResponseData, status: number) => Response.json(data, { status });
 
@@ -12,6 +13,7 @@ const POST = async (request: NextRequest) => {
     const { customer, addons, order, plan } = await request.json();
     const templatesDir = path.resolve('./templates');
     const origin = request.headers.get('origin');
+    saveOrder({ customer, addons, order, plan });
 
     const handlebarOptions: NodemailerExpressHandlebarsOptions = {
       viewEngine: {
@@ -76,6 +78,15 @@ const POST = async (request: NextRequest) => {
       data: {}
     }, 500);
   }
+};
+
+const saveOrder = async (order: OrderModel) => {
+  const database = client.db('algrith');
+  const orders = database.collection('orders');
+  const result = await orders.insertOne(order);
+  console.log(
+    `A document was inserted with the _id: ${result.insertedId}`,
+  );
 };
 
 export { POST };

@@ -3,12 +3,14 @@ import { combineReducers } from 'redux';
 
 import feedbackReducer from '@/components/shared/feedback/reducer';
 import themeReducer from '@/components/shared/theme/reducer';
+import authReducer from '@/components/auth/reducer';
 import { loggerMiddleware } from '@/utils/logger';
 import { inProduction } from '@/utils';
 
 const reducers = combineReducers({
   feedback: feedbackReducer,
-  theme: themeReducer
+  theme: themeReducer,
+  auth: authReducer
 });
 
 export const store = configureStore({

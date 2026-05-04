@@ -17,18 +17,18 @@ const useToggleNavbar = () => {
   
   const closeNavbar = () => {
     const { overlay, navbar } = getSelectors();
-    overlay.classList.remove('open');
-    overlay.classList.add('closed');
-    navbar.classList.remove('open');
-    navbar.classList.add('closed');
+    overlay?.classList?.remove('open');
+    overlay?.classList?.add('closed');
+    navbar?.classList?.remove('open');
+    navbar?.classList?.add('closed');
   };
 
   const openNavbar = () => {
     const { overlay, navbar } = getSelectors();
-    overlay.classList.remove('closed');
-    navbar.classList.remove('closed');
-    overlay.classList.add('open');
-    navbar.classList.add('open');
+    overlay?.classList?.remove('closed');
+    navbar?.classList?.remove('closed');
+    overlay?.classList?.add('open');
+    navbar?.classList?.add('open');
   };
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import { Suspense } from 'react';
 
 import { ContentWrapper, LayoutWrapper } from '@/components/shared/layout/styled';
 import AntDesignThemeProvider from '@/components/shared/theme/provider';
+import AuthProvider from '@/components/shared/auth-provider';
 import SchemaMarkup from '@/components/shared/schema/markup';
 import ThemeSwitch from '@/components/shared/theme/switch';
 import Alert from '@/components/shared/feedback/alert';
@@ -155,27 +156,29 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
   <Suspense>
     <ReduxProvider>
-      <html lang="en-US">
-        <body className={fontClassNames}>
-          <SchemaMarkup />
-          <GlobalStyles />
+      <AuthProvider>
+        <html lang="en-US">
+          <body className={fontClassNames}>
+            <SchemaMarkup />
+            <GlobalStyles />
 
-          <AntDesignThemeProvider>
-            <LayoutWrapper>
-              <Header />
-              <Navbar />
-              <ThemeSwitch />
+            <AntDesignThemeProvider>
+              <LayoutWrapper>
+                <Header />
+                <Navbar />
+                <ThemeSwitch />
 
-              <ContentWrapper>
-                {children}
-              </ContentWrapper>
+                <ContentWrapper>
+                  {children}
+                </ContentWrapper>
 
-              <Alert />
-              <Footer />
-            </LayoutWrapper>
-          </AntDesignThemeProvider>
-        </body>
-      </html>
+                <Alert />
+                <Footer />
+              </LayoutWrapper>
+            </AntDesignThemeProvider>
+          </body>
+        </html>
+      </AuthProvider>
     </ReduxProvider>
   </Suspense>
 );

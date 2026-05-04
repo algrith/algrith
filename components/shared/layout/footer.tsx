@@ -12,6 +12,7 @@ import {
 
 import { FooterWrapper } from './styled';
 import { FooterResource } from '@/types';
+import useRoute from '@/hooks/route';
 import Link from '../button/link';
 import NPM from '../icon/npm';
 
@@ -150,6 +151,10 @@ const email = {
 };
 
 const Footer = () => {
+  const { routes } = useRoute();
+  
+  if (routes.isAuth) return null;
+
 	return (
     <FooterWrapper>
 			<div className="top">

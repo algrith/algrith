@@ -1,13 +1,17 @@
 'use client';
 
-import { CloseOutlined, FacebookFilled, LinkedinFilled, XOutlined } from '@ant-design/icons';
-import { usePathname } from 'next/navigation';
-import { Avatar } from 'antd';
+import { CloseOutlined, FacebookFilled, LinkedinFilled, LoginOutlined, XOutlined } from '@ant-design/icons';
+import { signOut, useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+import { Avatar, Dropdown } from 'antd';
+import { MenuProps } from 'antd';
 
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
 import { NavbarWrapper } from './styled';
+import UserAvatar from '../avatar/user';
 import { assets } from '@/libs/assets';
+import useRoute from '@/hooks/route';
 import Button from '../button';
 
 const socials = [
@@ -34,13 +38,40 @@ const links = [
 ];
 
 const Navbar = () => {
+	const { data: session, status } = useSession();
   const { closeNavbar } = useToggleNavbar();
-	const pathname = usePathname();
+  const { pathname, routes } = useRoute();
+	const loading = status === 'loading';
+	const router = useRouter();
+	const user = session?.user;
+
+	const accountMenuItems: MenuProps['items'] = [
+    ...(user ? [
+			{
+				onClick: () => router.push('/dashboard'),
+				label: 'Dashboard',
+				key: 'dashboard'
+			},
+			{
+				onClick: () => signOut(),
+				label: 'Logout',
+				key: 'logout'
+			}
+		] : [
+			{
+				onClick: () => router.push('/auth'),
+				label: 'Login',
+				key: 'login'
+			}
+		])
+  ];
 
 	const getClassName = (path: string) => [
 		pathname === path ? 'active' : '',
 		'ripple-node',
 	].filter(Boolean).join(' ');
+  
+  if (routes.isAuth) return null;
 
 	return (
 		<NavbarWrapper className="navlinks" id="nav-menu">
@@ -64,6 +95,10 @@ const Navbar = () => {
 						{link.text}
 					</Link>
 				))}
+
+				<Dropdown menu={{items: accountMenuItems}} trigger={['hover']}>
+					{user ? <UserAvatar className="user-avatar" /> : <LoginOutlined />}
+				</Dropdown>
 			</div>
 			
 			<div className="bottom">
