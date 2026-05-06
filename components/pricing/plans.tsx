@@ -1,34 +1,58 @@
 'use client';
 
-import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
 import { Tag } from 'antd';
 
+import { showFeedback } from '../shared/feedback/reducer';
 import Link from '@/components/shared/button/link';
 import Button from '@/components/shared/button';
+import { useAppDispatch } from '@/store/hooks';
 import useClassName from '@/hooks/class-name';
 import PaymentModal from './modals/payment';
 import { useRouter } from 'next/navigation';
 import { formatCurrency } from '@/utils';
 import { PlansWrapper } from './styled';
 import { plans } from '@/libs/plans';
+import useRoute from '@/hooks/route';
 import { Plan } from '@/types';
 
 const Plans = ({ inHomePage = false }) => {
   const className = useClassName([inHomePage ? 'in-home-page' : '']);
   const [plan, setPlan] = useState<Plan | undefined>(undefined);
+  const { searchParams, pathname } = useRoute();
+  const planName = searchParams.get('planName');
+  const { data: session } = useSession();
+  const dispatch = useAppDispatch();
   const router = useRouter();
-
+  
   const handleClick = (plan: Plan) => () =>  {
-    if (plan.name === 'Enterprise') {
-      return router.push('/contact-us');
-    }
-
+    if (plan.name === 'Enterprise') return router.push('/contact-us');
+    if (!session?.user) redirectToAuth(plan);
     setPlan(plan);
+  };
+
+  const redirectToAuth = (plan: Plan) => {
+    localStorage.lastVisitedRoute = `${pathname}?planName=${plan.name}`;
+  
+    dispatch(showFeedback({
+      message: 'You must login first to continue!',
+      feedbackType: 'alert'
+    }));
+  
+    setTimeout(() => router.push('/auth'), 2000);
   };
 
   const handleClose = () => {
     setPlan(undefined);
-  }
+  };
+
+  useEffect(() => {
+    if (!planName) return;
+    const plan = plans.find(({ name }) => name === planName);
+    router.replace(pathname);
+    if (plan) setPlan(plan);
+  }, [planName]);
 
   return (
     <PlansWrapper className={className}>

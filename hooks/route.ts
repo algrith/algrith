@@ -5,7 +5,7 @@ import { inProtectedRoute } from '@/middleware';
 import { usePreviousState } from './prev-state';
 
 const initialRouteStates = {
-  isWorkspace: false,
+  isDashboard: false,
   isHomePage: false,
   isAccount: false,
   isAuth: false
@@ -32,7 +32,7 @@ const useRoute = () => {
 
   useEffect(() => {
     setRoutes({
-      isWorkspace: pathname.includes('/workspace'),
+      isDashboard: pathname.includes('/dashboard'),
       isAccount: pathname.includes('/account'),
       isAuth: pathname.includes('/auth'),
       isHomePage: pathname === '/'

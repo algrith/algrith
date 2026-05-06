@@ -1,6 +1,6 @@
 'use client';
 
-import { CloseOutlined, FacebookFilled, LinkedinFilled, LoginOutlined, XOutlined } from '@ant-design/icons';
+import { CloseOutlined, FacebookFilled, LinkedinFilled, XOutlined } from '@ant-design/icons';
 import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Avatar, Dropdown } from 'antd';
@@ -46,24 +46,16 @@ const Navbar = () => {
 	const user = session?.user;
 
 	const accountMenuItems: MenuProps['items'] = [
-    ...(user ? [
-			{
-				onClick: () => router.push('/dashboard'),
-				label: 'Dashboard',
-				key: 'dashboard'
-			},
-			{
-				onClick: () => signOut(),
-				label: 'Logout',
-				key: 'logout'
-			}
-		] : [
-			{
-				onClick: () => router.push('/auth'),
-				label: 'Login',
-				key: 'login'
-			}
-		])
+    {
+			onClick: () => router.push('/dashboard'),
+			label: 'Dashboard',
+			key: 'dashboard'
+		},
+		{
+			onClick: () => signOut(),
+			label: 'Logout',
+			key: 'logout'
+		}
   ];
 
 	const getClassName = (path: string) => [
@@ -96,9 +88,16 @@ const Navbar = () => {
 					</Link>
 				))}
 
-				<Dropdown menu={{items: accountMenuItems}} trigger={['hover']}>
-					{user ? <UserAvatar className="user-avatar" /> : <LoginOutlined />}
-				</Dropdown>
+				{!user ? (
+					<Link className="ripple-node" href="/auth">Login</Link>
+				) : (
+					<Dropdown menu={{items: accountMenuItems}} trigger={['hover']}>
+						<span className="account">
+							<UserAvatar className="user-avatar" />
+							<span className="name">{user.name}</span>
+						</span>
+					</Dropdown>
+				)}
 			</div>
 			
 			<div className="bottom">

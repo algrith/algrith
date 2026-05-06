@@ -1,12 +1,13 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { ModalProps } from 'antd';
 
 import FlutterWave from '@/components/shared/payments/flutterwave';
 import Paystack from '@/components/shared/payments/paystack';
-import { Addon, BaseObject, Plan } from '@/types';
 import { Input, Select } from '@/components/shared/input';
+import { Addon, BaseObject, Plan } from '@/types';
 import Button from '@/components/shared/button';
 import { PaymentModalWrapper } from './styled';
 import useClassName from '@/hooks/class-name';
@@ -35,6 +36,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   const [addons, setAddons] = useState<Array<Addon>>([]);
   const { sendCheckoutMail } = useMailer();
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   const discount = 0;
   const tax = 0;
 
@@ -81,6 +83,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     });
 
     handleReset();
+    router.push('/dashboard/orders');
   };
 
   const handleSubmit = (e: FormEvent) => {

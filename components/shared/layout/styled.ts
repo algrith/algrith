@@ -157,9 +157,9 @@ export const SectionCardWrapper = styled.div`
 `;
 
 export const LayoutWrapper = styled(Layout)`
-	${tw`relative w-full w-full bg-gray-50`};
-	${darkBgGradient.fourLayers};
+	${tw`relative w-full bg-gray-50`};
   ${squareWaves(true, '1400px')};
+	${darkBgGradient.fourLayers};
 `;
 
 export const HeaderWrapper = styled(Header)`
@@ -355,14 +355,18 @@ export const NavbarWrapper = styled.nav`
 	}
 
 	.top {
-		${tw`lg:hidden flex flex-grow-0 flex-shrink items-center justify-between content-center mb-2 text-left w-full text-2xl px-5 lg:px-8 py-1`};
+		${tw`lg:hidden flex flex-grow-0 flex-shrink items-center justify-between content-center mb-2 text-left w-full text-2xl lg:px-8 py-1`};
+
+		.ant-btn {
+			${tw`shadow-none`};
+		}
 
 		h1 {
 			${tw`w-64 flex justify-start items-center transform scale-65 origin-left transition-all ease-in-out duration-1000`};
 		}
 		
 		.ant-avatar {
-			${tw`w-full rounded-none`};
+			${tw`w-[200px] h-16 rounded-none pl-8`};
 			
 			&.light {
 				${tw`dark:hidden`};
@@ -389,8 +393,12 @@ export const NavbarWrapper = styled.nav`
 	#navbar-links {
 		${tw`flex flex-col lg:flex-row flex-grow flex-shrink-0 w-11/12 lg:w-full p-2 rounded-xl my-4 lg:my-0 mx-auto`};
 
-		.user-avatar {
-			${tw`my-2`};
+		.account {
+			${tw`flex gap-2 items-center my-2`};
+
+			.name {
+				${tw`lg:hidden dark:text-gray-300 text-gray-600 text-lg font-semibold`};
+			}
 		}
 
 		a {

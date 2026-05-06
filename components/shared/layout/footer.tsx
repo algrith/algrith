@@ -153,7 +153,7 @@ const email = {
 const Footer = () => {
   const { routes } = useRoute();
   
-  if (routes.isAuth) return null;
+  if (routes.isAuth || routes.isDashboard) return null;
 
 	return (
     <FooterWrapper>

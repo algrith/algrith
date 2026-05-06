@@ -12,5 +12,7 @@ export const inProtectedRoute = (pathname: string) => config.matcher.some((patte
 });
 
 export const config = {
-  matcher: []
+  matcher: [
+    '/dashboard'
+  ]
 };
