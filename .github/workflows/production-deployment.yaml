@@ -72,6 +72,17 @@ jobs:
           image: ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }}:${{ github.sha }}
           service: ${{ secrets.SERVICE }}
           region: ${{ secrets.REGION }}
+          env_vars: |
+            NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY }}
+            NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY }}
+            NEXT_PUBLIC_RECAPTCHA_SITE_KEY=${{ secrets.NEXT_PUBLIC_RECAPTCHA_SITE_KEY }}
+            NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}
+            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
+            MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}
+            MONGODB_USERNAME=${{ secrets.MONGODB_USERNAME }}
+            AUTH_SECRET=${{ secrets.AUTH_SECRET }}
+            JWT_SECRET=${{ secrets.JWT_SECRET }}
+            AUTH_URL=${{ secrets.AUTH_URL }}
       
       - name: Cleanup Old Images
         run: |
