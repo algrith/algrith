@@ -8,12 +8,12 @@ import { ModalProps } from 'antd';
 import FlutterWave from '@/components/shared/payments/flutterwave';
 import Paystack from '@/components/shared/payments/paystack';
 import { Input, Select } from '@/components/shared/input';
+import { formatCurrency, randomId } from '@/utils';
 import { Addon, BaseObject, Plan } from '@/types';
 import Button from '@/components/shared/button';
 import { useAppDispatch } from '@/store/hooks';
 import { PaymentModalWrapper } from './styled';
 import useClassName from '@/hooks/class-name';
-import { formatCurrency } from '@/utils';
 import { createOrder } from '../slices';
 import Addons from '../addons';
 
@@ -78,6 +78,8 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
       reference: data.tx_ref ?? data.reference,
       addon_total: addonsTotal,
       plan: plan as Plan,
+      status: 'pending',
+      _id: randomId(),
       customer,
       addons,
       total

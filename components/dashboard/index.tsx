@@ -43,11 +43,11 @@ const Dashboard = () => {
   const { orders } = useAppSelector((state) => state.dashboard);
   const dispatch = useAppDispatch();
 
-  const orderStatusCount = orders.items.reduce((acc, order) => {
+  const orderStatusCount = orders.list.reduce((acc, order) => {
     acc[order.status] = (acc[order.status] || 0) + 1;
     return acc;
   }, {
-    all: orders.items.length,
+    all: orders.list.length,
     cancelled: 0,
     delivered: 0,
     completed: 0,
