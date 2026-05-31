@@ -4,7 +4,8 @@ import crypto from 'crypto';
 import { z } from 'zod';
 
 import { verifyToken } from '@/utils/tokens';
-import { db } from '@/utils/db';
+import { dbConnect } from '@/utils/db';
+import { Token, User } from '@/libs/schema';
 
 const PasswordResetSchema = z.object({
   confirm_password: z.string().min(8).max(100),
@@ -40,11 +41,11 @@ const POST = async (request: NextRequest) => {
       data: null
     }, { status: 400 });
 
-    const hashedToken = crypto.createHash('sha256').update(data.token).digest('hex');
-    const tokens = db.collection('tokens');
-    const users = db.collection('users');
+    await dbConnect();
 
-    const userToken = await tokens.findOne({
+    const hashedToken = crypto.createHash('sha256').update(data.token).digest('hex');
+
+    const userToken = await Token.findOne({
       purpose: 'password-reset',
       token: hashedToken
     });
@@ -59,7 +60,7 @@ const POST = async (request: NextRequest) => {
 
     // If token has expired, delete from record.
     if (new Date() > new Date(userToken.expiresAt)) {
-      await tokens.deleteOne({ _id: userToken._id });
+      await Token.deleteOne({ _id: userToken._id });
 
       return Response.json({
         message: 'Password reset link has expired. Please request a new one.',
@@ -69,7 +70,7 @@ const POST = async (request: NextRequest) => {
       }, { status: 401 });
     }
     
-    const user = await users.findOne({ email: userToken.email });
+    const user = await User.findOne({ email: userToken.email });
     
     if (!user) return Response.json({
       message: 'Account not found.',
@@ -80,11 +81,11 @@ const POST = async (request: NextRequest) => {
 
     const hashedPassword = await bcrypt.hash(data.password as string, 12);
 
-    await users.updateOne({ email: userToken.email }, {
+    await User.updateOne({ email: userToken.email }, {
       $set: { password: hashedPassword }
     });
 
-    await tokens.deleteOne({ _id: userToken._id });
+    await Token.deleteOne({ _id: userToken._id });
 
     return Response.json({
       message: 'Password reset successful.',

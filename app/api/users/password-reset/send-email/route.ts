@@ -1,23 +1,22 @@
+import { User as AuthUser } from 'next-auth';
 import { NextRequest } from 'next/server';
 import crypto from 'crypto';
 import { z } from 'zod';
 
 import { sendPasswordResetEmail } from '@/utils/mailers';
 import { generateTokens } from '@/utils/tokens';
-import { User } from 'next-auth';
-import { db } from '@/utils/db';
+import { Token, User } from '@/libs/schema';
+import { dbConnect } from '@/utils/db';
 
 const PasswordResetEmailSchema = z.object({
   email: z.string().email()
 });
 
-const createPasswordResetToken = async (user: Partial<User>) => {
-  const tokens = db.collection('tokens');
-
+const createPasswordResetToken = async (user: Partial<AuthUser>) => {
   const { access_token } = await generateTokens({ email: user.email });
   const hashedToken = crypto.createHash('sha256').update(access_token).digest('hex');
   
-  await tokens.insertOne({
+  await Token.insertOne({
     expiresAt: new Date(Date.now() + 5 * 60 * 1000),
     purpose: 'password-reset',
     token: hashedToken,
@@ -41,10 +40,10 @@ const POST = async (request: NextRequest) => {
       data: error.flatten(),
       success: false
     }, { status: 400 });
+
+    await dbConnect();
     
-    const users = db.collection('users');
-    
-    const user = await users.findOne({
+    const user = await User.findOne({
       email: data.email
     });
     

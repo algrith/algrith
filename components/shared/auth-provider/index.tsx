@@ -14,7 +14,7 @@ const NextAuthProvider = ({ children }: { children: React.ReactNode }) => (
 );
 
 const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const { isProtectedRoute, routes: { isAuth } } = useRoute();
+  const { isProtectedRoute, routes: { auth } } = useRoute();
   const { data: session, status } = useSession();
   
   useEffect(() => {

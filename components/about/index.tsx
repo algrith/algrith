@@ -65,12 +65,12 @@ const intro: IntroProps = {
 
 const About = () => {
   return (
-    <>
+    <div>
       <Intro id="intro-about" {...intro} />
       <OurValues />
       <Section {...whatWeDoOutlines} />
       <GetStarted />
-    </>
+    </div>
   );
 };
 

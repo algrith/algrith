@@ -5,8 +5,9 @@ import { z } from 'zod';
 
 import { sendVerificationEmail } from '@/utils/mailers';
 import { generateTokens } from '@/utils/tokens';
+import { Token, User } from '@/libs/schema';
+import { dbConnect } from '@/utils/db';
 import { AuthState } from '@/types';
-import { client } from '@/utils/db';
 
 const RegisterSchema = z.object({
   password: z.string().min(8).max(100),
@@ -16,14 +17,10 @@ const RegisterSchema = z.object({
 
 const registerUser = async (user: Partial<AuthState['model']>) => {
   const hashedPassword = await bcrypt.hash(user.password as string, 12);
-  const database = client.db('algrith');
-  const tokens = database.collection('tokens');
-  const users = database.collection('users');
-
-  const existingUser = await users.findOne({ email: user.email });
+  const existingUser = await User.findOne({ email: user.email });
   if (existingUser) throw new Error('EMAIL_EXISTS');
   
-  const { insertedId } = await users.insertOne({
+  const { insertedId } = await User.create({
     ...user,
     password: hashedPassword,
     auth_method: 'email',
@@ -33,7 +30,7 @@ const registerUser = async (user: Partial<AuthState['model']>) => {
   const { access_token } = await generateTokens({ id: insertedId });
   const hashedToken = crypto.createHash('sha256').update(access_token).digest('hex');
   
-  await tokens.insertOne({
+  await Token.create({
     expiresAt: new Date(Date.now() + 5 * 60 * 1000),
     purpose: 'email-verification',
     token: hashedToken,
@@ -58,6 +55,8 @@ const POST = async (request: NextRequest) => {
       success: false
     }, { status: 400 });
 
+    await dbConnect();
+    
     const token = await registerUser(data);
     
     sendVerificationEmail(request, {

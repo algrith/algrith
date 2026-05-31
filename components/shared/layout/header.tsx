@@ -7,6 +7,7 @@ import useResizeHeaderOnScroll from '@/hooks/resize-header-on-scroll';
 import { HeaderWrapper } from '@/components/shared/layout/styled';
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
+import useClassName from '@/hooks/class-name';
 import { assets } from '@/libs/assets';
 import useRoute from '@/hooks/route';
 import Button from '../button';
@@ -15,9 +16,13 @@ const Header = () => {
   const { openNavbar } = useToggleNavbar();
   const { routes } = useRoute();
   useResizeHeaderOnScroll();
+
+  const className = useClassName([
+    (routes.isDashboard || routes.auth) ? 'wide' : ''
+  ]);
   
   return (
-    <HeaderWrapper id="header">
+    <HeaderWrapper id="header" className={className}>
       <div className="wrapper">
         <div id="brand">
           <Link id="brand-title" href="/">
@@ -26,7 +31,7 @@ const Header = () => {
           </Link>
         </div>
         
-        {!routes.isAuth && (
+        {!routes.auth && (
           <Button
             prependedIcon={<MenuOutlined />}
             onClick={openNavbar}

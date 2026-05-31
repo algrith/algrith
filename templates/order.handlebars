@@ -75,7 +75,7 @@
             {{else}}
               Custom engagement &middot; Quote-based
             {{/if}}
-            &middot; Ref: {{order.reference}}
+            &middot; Ref: {{reference}}
           </div>
 
           {{#each plan.features}}
@@ -120,21 +120,21 @@
           {{#if addons.length}}
             <tr>
               <td class="label">Add-ons</td>
-              <td class="value">${{order.addons_total}}</td>
+              <td class="value">${{addons_total}}</td>
             </tr>
           {{/if}}
           <tr>
             <td class="label">Reference</td>
-            <td class="value">{{order.reference}}</td>
+            <td class="value">{{reference}}</td>
           </tr>
           <tr>
             <td class="label">Date</td>
-            <td class="value">{{order.date}}</td>
+            <td class="value">{{paid_at}}</td>
           </tr>
           {{#if plan.one_time_payment}}
             <tr>
               <td class="total-label">Total paid</td>
-              <td class="total-value">${{order.total}}</td>
+              <td class="total-value">${{total}}</td>
             </tr>
           {{else}}
             <tr>

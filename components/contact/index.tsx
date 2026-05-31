@@ -25,10 +25,10 @@ const ContactUs = () => {
   useRecaptcha();
 
   return (
-    <>
+    <div>
       <Intro id="intro-contact" {...intro} />
       <Contact />
-    </>
+    </div>
   );
 };
 

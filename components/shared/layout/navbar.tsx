@@ -8,6 +8,7 @@ import { MenuProps } from 'antd';
 
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
+import useClassName from '@/hooks/class-name';
 import { NavbarWrapper } from './styled';
 import UserAvatar from '../avatar/user';
 import { assets } from '@/libs/assets';
@@ -62,11 +63,16 @@ const Navbar = () => {
 		pathname === path ? 'active' : '',
 		'ripple-node',
 	].filter(Boolean).join(' ');
+
+  const className = useClassName([
+    routes.isDashboard ? 'wide' : '',
+		'navlinks'
+  ]);
   
-  if (routes.isAuth) return null;
+  if (routes.auth) return null;
 
 	return (
-		<NavbarWrapper className="navlinks" id="nav-menu">
+		<NavbarWrapper className={className} id="nav-menu">
 			<div className="top">
 				<h1 id="navbar-title">
 					<Avatar src={assets.brand.logos.black} className="light" alt="algrith_logo" />

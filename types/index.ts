@@ -186,9 +186,9 @@ export interface FeedbackState {
 };
 
 export interface ResponseData {
+  data: object | null;
   success: boolean;
   message: string;
-  data: {};
 };
 
 export interface ContactModel {
@@ -201,6 +201,21 @@ export interface ContactModel {
 	email: string;
 	phone: string;
 	name: string;
+};
+
+export interface LayoutState {
+	sidebar: {
+		collapsedBeforeHover: boolean;
+		collapsed: boolean;
+	},
+	orders: {
+		list: Array<OrderModel>;
+		loading: boolean;
+	};
+	order: {
+		data?: OrderModel;
+		loading: boolean;
+	};
 };
 
 export interface UserProfile {
@@ -222,15 +237,15 @@ export interface AsyncAction {
 };
 
 export interface OrderModel {
+	status: 'pending' | 'completed' | 'delivered' | 'cancelled';
 	addons: 	Array<Addon>;
+	addon_total: number;
 	customer: Customer;
+	reference: string;
+	paid_at: string;
+	total: number;
+	_id: string;
 	plan: Plan;
-	order: {
-		addon_total: number;
-		reference: string;
-		total: number;
-		date: string;
-	}
 };
 
 export interface AddonsProps {
@@ -309,6 +324,18 @@ export type Colors = {
 		text: string;
 		link: string;
 	};
+};
+
+export enum Routes {
+  FORGOT_PASSWORD = 'forgotPassword',
+  PASSWORD_RESET = 'passwordReset',
+  VERIFY_EMAIL = 'verifyEmail',
+  DASHBOARD = 'dashboard',
+  HOMEPAGE = 'homePage',
+  ACCOUNT = 'account',
+  SIGN_UP = 'signUp',
+  SIGN_IN = 'signIn',
+  ORDERS = 'orders'
 };
 
 declare global {

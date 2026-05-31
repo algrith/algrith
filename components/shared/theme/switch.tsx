@@ -6,6 +6,7 @@ import { DarkThemeIconWrapper, LightThemeIconWrapper, SystemThemeIconWrapper, Th
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setTheme, setIsSystemTheme } from './reducer';
 import useClickAway from '@/hooks/click-away';
+import useClassName from '@/hooks/class-name';
 import useViewport from '@/hooks/viewport';
 import useRoute from '@/hooks/route';
 import { Themes } from '@/types';
@@ -70,6 +71,11 @@ const ThemeSwitch = () => {
     }
   };
 
+  const className = useClassName([
+    routes.auth ? 'in-auth-page wide' : '',
+    routes.isDashboard ? 'wide' : ''
+  ]);
+
   useEffect(() => {
     window.addEventListener('scroll', repositionThemeSwitch);
     applyTheme();
@@ -80,7 +86,7 @@ const ThemeSwitch = () => {
   }, [viewport, pathname]);
 
   return (
-    <ThemeWrapper ref={themeSwitchContainerRef} className={routes.isAuth ? 'in-auth-page' : ''}>
+    <ThemeWrapper ref={themeSwitchContainerRef} className={className}>
       <div ref={themeSwitchRef} onClick={() => setOpen(!open)} className="inner">
         <label className="sr-only">Theme</label>
         <button type="button" aria-haspopup="true" aria-expanded="false">

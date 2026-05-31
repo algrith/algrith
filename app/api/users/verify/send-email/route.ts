@@ -1,23 +1,22 @@
+import { User as AuthUser } from 'next-auth';
 import { NextRequest } from 'next/server';
 import crypto from 'crypto';
 import { z } from 'zod';
 
 import { sendVerificationEmail } from '@/utils/mailers';
 import { generateTokens } from '@/utils/tokens';
-import { User } from 'next-auth';
-import { db } from '@/utils/db';
+import { Token, User } from '@/libs/schema';
+import { dbConnect } from '@/utils/db';
 
 const EmailVerificationSchema = z.object({
   email: z.string().email()
 });
 
-const createEmailVerificationToken = async (user: Partial<User>) => {
-  const tokens = db.collection('tokens');
-
+const createEmailVerificationToken = async (user: Partial<AuthUser>) => {
   const { access_token } = await generateTokens({ email: user.email });
   const hashedToken = crypto.createHash('sha256').update(access_token).digest('hex');
   
-  await tokens.insertOne({
+  await Token.insertOne({
     expiresAt: new Date(Date.now() + 5 * 60 * 1000),
     purpose: 'email-verification',
     token: hashedToken,
@@ -42,9 +41,9 @@ const POST = async (request: NextRequest) => {
       success: false
     }, { status: 400 });
     
-    const users = db.collection('users');
+    await dbConnect();
     
-    const user = await users.findOne({
+    const user = await User.findOne({
       email: data.email
     });
     

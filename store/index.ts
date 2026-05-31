@@ -2,12 +2,14 @@ import { configureStore } from '@reduxjs/toolkit';
 import { combineReducers } from 'redux';
 
 import feedbackReducer from '@/components/shared/feedback/reducer';
+import dashboardReducer from '@/components/dashboard/reducer';
 import themeReducer from '@/components/shared/theme/reducer';
 import authReducer from '@/components/auth/reducer';
 import { loggerMiddleware } from '@/utils/logger';
 import { inProduction } from '@/utils';
 
 const reducers = combineReducers({
+  dashboard: dashboardReducer,
   feedback: feedbackReducer,
   theme: themeReducer,
   auth: authReducer

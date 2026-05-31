@@ -66,7 +66,7 @@ const howItWorks = [
 
 const HowItWorks = () => {
   return (
-    <>
+    <div>
       <Intro
         title="How it Works"
         description={{
@@ -125,7 +125,7 @@ const HowItWorks = () => {
           </div>
         </div>
       </HowItWorksWrapper>
-    </>
+    </div>
   );
 };
 

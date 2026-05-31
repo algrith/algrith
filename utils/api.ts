@@ -35,11 +35,10 @@ export const Fetch = async (props: FetchPayload) => {
     const success = response.ok;
 
     if (!success) {
-      const isExpiredTokenError = ['token_invalid', 'token_not_valid'].includes(data?.code);
+      const authRequired = ['user_not_found', 'invalid_token'].includes(data?.code);
       console.error(`API Client: ${response.status} --> `, data.message ?? data);
-      const isUserNotFoundError = data?.errors?.code === 'user_not_found';
       
-      if (accessToken && (isExpiredTokenError || isUserNotFoundError)) {
+      if (authRequired) {
         localStorage.lastVisitedRoute = location.pathname;
         signOut({ redirectTo: '/auth' });
       }

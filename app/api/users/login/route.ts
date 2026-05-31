@@ -5,7 +5,8 @@ import { z } from 'zod';
 
 import { sendWelcomeEmail } from '@/utils/mailers';
 import { generateTokens } from '@/utils/tokens';
-import { db } from '@/utils/db';
+import { dbConnect } from '@/utils/db';
+import { User } from '@/libs/schema';
 
 const RegisterSchema = z.object({
   password: z.string().min(8).max(100),
@@ -23,9 +24,8 @@ const googleLogin = async (request: NextRequest, token: string) => {
     success: false,
     data: null
   }, { status: 401 });
-  
-  const users = db.collection('users');
-  let user = await users.findOne({ email });
+
+  let user = await User.findOne({ email });
 
   if (user && user.auth_method !== 'google') return Response.json({
     message: 'An account with this email already exists. Please login with your password.',
@@ -35,7 +35,7 @@ const googleLogin = async (request: NextRequest, token: string) => {
   }, { status: 409 });
 
   if (!user) {
-    const result = await users.insertOne({
+    const result = await User.insertOne({
       auth_method: 'google',
       is_verified: true,
       google_id,
@@ -43,7 +43,7 @@ const googleLogin = async (request: NextRequest, token: string) => {
       name
     });
 
-    user = await users.findOne({ _id: result.insertedId });
+    user = await User.findOne({ _id: result.insertedId });
     
     sendWelcomeEmail(request, {
       email: user?.email,
@@ -79,10 +79,9 @@ const credentialsLogin = async (payload: object) => {
   }, { status: 400 });
   
   const { password, email } = parsed.data;
-  const users = db.collection('users');
 
-  const user = await users.findOne({ email });
-
+  const user = await User.findOne({ email });
+  
   const isPasswordValid = await bcrypt.compare(password, (user?.password ?? ''));
 
   if (!user || !isPasswordValid) return Response.json({
@@ -136,9 +135,10 @@ const decodeGoogleToken = (token: string) => {
 const POST = async (request: NextRequest) => {
   const payload = await request.json();
 
+  await dbConnect();
+  
   try {
-    if (payload.token) return await googleLogin(request, payload.token);
-    return await credentialsLogin(payload);
+    return await (payload.token ? googleLogin(request, payload.token) : credentialsLogin(payload));
   } catch (error) {
     console.error('Server Error', error);
     

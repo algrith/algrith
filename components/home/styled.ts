@@ -270,7 +270,7 @@ export const WelcomeIntroWrapper = styled.div`
     ${tw`relative h-full w-full flex flex-col justify-center items-center`};
     
     .typing-pad {
-      ${tw`w-full font-bold leading-tight dark:text-gray-200 text-gray-700 text-center text-[40px] lg:text-7xl xl:text-8xl`};
+      ${tw`font-bold dark:text-gray-200 text-gray-700 text-center text-[40px] lg:text-7xl xl:text-8xl !leading-normal tracking-wide`};
     }
 
     .description {

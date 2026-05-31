@@ -3,7 +3,8 @@ import crypto from 'crypto';
 
 import { sendWelcomeEmail } from '@/utils/mailers';
 import { verifyToken } from '@/utils/tokens';
-import { db } from '@/utils/db';
+import { Token, User } from '@/libs/schema';
+import { dbConnect } from '@/utils/db';
 
 const POST = async (request: NextRequest) => {
   const payload = await request.json();
@@ -26,10 +27,9 @@ const POST = async (request: NextRequest) => {
   
   try {
     const hashedToken = crypto.createHash('sha256').update(payload.token).digest('hex');
-    const tokens = db.collection('tokens');
-    const users = db.collection('users');
+    await dbConnect();
 
-    const userToken = await tokens.findOne({
+    const userToken = await Token.findOne({
       purpose: 'email-verification',
       token: hashedToken
     });
@@ -43,7 +43,7 @@ const POST = async (request: NextRequest) => {
 
     // If token has expired, delete from record.
     if (new Date() > new Date(userToken.expiresAt)) {
-      await tokens.deleteOne({ _id: userToken._id });
+      await Token.deleteOne({ _id: userToken._id });
 
       return Response.json({
         message: 'Verification link has expired. Please request a new one.',
@@ -53,9 +53,9 @@ const POST = async (request: NextRequest) => {
       }, { status: 401 });
     }
 
-    await tokens.deleteOne({ _id: userToken._id });
+    await Token.deleteOne({ _id: userToken._id });
 
-    await users.updateOne({ email: userToken.email }, {
+    await User.updateOne({ email: userToken.email }, {
       $set: {
         verified_at: new Date(),
         is_verified: true

@@ -6,7 +6,7 @@ import useViewport from './viewport';
 import useRoute from './route';
 
 const useToggleNavbar = () => {
-  const { dimension, viewport } = useViewport();
+  const { dimensions, viewport } = useViewport();
   const { isRouteChanged } = useRoute();
 
   const getSelectors = () => {
@@ -35,7 +35,7 @@ const useToggleNavbar = () => {
     if (['xl', '2xl'].includes(viewport) || isRouteChanged) {
       closeNavbar();
     }
-  }, [isRouteChanged, dimension]);
+  }, [isRouteChanged, dimensions]);
 
   return { closeNavbar, openNavbar };
 };

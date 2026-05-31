@@ -7,7 +7,7 @@ import Plans from './plans';
 
 const Pricing = ({ inHomePage = false }) => {
   return (
-    <>
+    <div>
       {!inHomePage && (
         <Intro
           title="Pricing"
@@ -25,7 +25,7 @@ const Pricing = ({ inHomePage = false }) => {
         <Plans inHomePage={inHomePage} />
         {!inHomePage && <Addons />}
       </PricingWrapper>
-    </>
+    </div>
   );
 };
 

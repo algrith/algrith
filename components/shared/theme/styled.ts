@@ -31,6 +31,10 @@ export const ThemeWrapper = styled.div`
     }
   }
   
+  &.wide {
+    ${tw`right-16 lg:right-5`};
+  }
+  
   &.scrolled {
     ${tw`top-[0.25rem]`};
   }

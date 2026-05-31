@@ -1,19 +1,30 @@
+
 import hbs, { NodemailerExpressHandlebarsOptions }  from 'nodemailer-express-handlebars';
-import { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import path from 'path';
 
-import { OrderModel, ResponseData } from '@/types';
-import { client } from '@/utils/db';
+import { authorization } from '@/middleware';
+import { ResponseData } from '@/types';
+import { dbConnect } from '@/utils/db';
+import { Order } from '@/libs/schema';
 
-const response = (data: ResponseData, status: number) => Response.json(data, { status });
+const response = (data: ResponseData, status: number) => NextResponse.json(data, { status });
 
-const POST = async (request: NextRequest) => {
+const POST = authorization(async (request, ctx, user) => {
   try {
-    const { customer, addons, order, plan } = await request.json();
     const templatesDir = path.resolve('./templates');
     const origin = request.headers.get('origin');
-    saveOrder({ customer, addons, order, plan });
+    const order = await request.json();
+    const userId = user.id as string;
+    await dbConnect();
+    
+    const result = await Order.create({
+      user: userId,
+      ...order
+    });
+    
+    console.log(`Order created --> : ${result.id}`);
 
     const handlebarOptions: NodemailerExpressHandlebarsOptions = {
       viewEngine: {
@@ -43,14 +54,11 @@ const POST = async (request: NextRequest) => {
     const mailOption = {
       from: process.env.CONTACT_MAIL_SENDER,
       to: process.env.CONTACT_MAIL_RECEIVER,
-      text: 'New checkout order received!',
+      text: 'New Order Received!',
       subject: 'Order Confirmed',
-      template: 'checkout',
+      template: 'order',
       context: {
-        customer,
-        addons,
-        order,
-        plan,
+        ...order,
         links: {
           support_email: 'algrithllc@gmail.com',
           billing: `${origin}/settings/billing`,
@@ -78,15 +86,32 @@ const POST = async (request: NextRequest) => {
       data: {}
     }, 500);
   }
+});
+
+const GET = authorization(async (request, ctx, user) => {
+  try {
+    const data = await fetchOrders(user.id as string);
+
+    return response({
+      message: 'Orders retrieved!',
+      success: true,
+      data
+    }, 200);
+  } catch (error) {
+    console.error('Server Error', error);
+    
+    return response({
+      message: 'Server Error',
+      success: false,
+      data: {}
+    }, 500);
+  }
+});
+
+const fetchOrders = async (userId: string) => {
+  await dbConnect();
+
+  return await Order.find({ user: userId });
 };
 
-const saveOrder = async (order: OrderModel) => {
-  const database = client.db('algrith');
-  const orders = database.collection('orders');
-  const result = await orders.insertOne(order);
-  console.log(
-    `A document was inserted with the _id: ${result.insertedId}`,
-  );
-};
-
-export { POST };
+export { POST, GET };

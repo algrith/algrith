@@ -3,7 +3,8 @@
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import tw, { css, styled } from 'twin.macro';
 import { keyframes } from '@emotion/react';
-import { Layout } from 'antd';
+import Sider from 'antd/es/layout/Sider';
+import { Layout, Table } from 'antd';
 
 export const squareWaves = (inverse: boolean = false, height = '') => css`
 	${tw`relative overflow-hidden`};
@@ -124,7 +125,7 @@ export const SectionWrapper = styled(SectionLayout)`
 `;
 
 export const ContentWrapper = styled(Content)`
-	${tw`relative bg-transparent text-theme-text`};
+	${tw`w-full bg-transparent text-theme-text h-full pt-[4.4rem]`};
 `;
 
 export const SectionCardWrapper = styled.div`
@@ -169,6 +170,10 @@ export const HeaderWrapper = styled(Header)`
 		${tw`scale-x-[1] scale-y-[0.7] origin-top shadow-lg backdrop-blur-lg`};
 	}
 	
+	&.wide .wrapper {
+		${tw`px-4`};
+	}
+
 	.wrapper {
 		${tw`h-full 2xl:w-8/12 mx-auto px-6 md:px-12 lg:px-14 xl:px-24 2xl:px-0 flex justify-between items-center`};
 	}
@@ -331,11 +336,134 @@ export const FooterWrapper = styled(Footer)`
 	}
 `;
 
+export const TableWrapper = styled(Table)`
+  .ant-table {
+    ${tw`rounded-xl bg-transparent`};
+
+    table {
+      ${tw`overflow-hidden`};
+    }
+    
+    &.ant-table-bordered {
+      .ant-table-container {
+        ${tw`rounded-bl-xl`}
+      }
+      
+      .ant-table-tbody tr:last-of-type {
+        td.ant-table-cell:first-of-type {
+          ${tw`rounded-bl-xl`};
+        }
+
+        td.ant-table-cell:last-of-type {
+          ${tw`rounded-br-xl`};
+        }
+      }
+    }
+    
+    .ant-table-thead .ant-table-cell {
+      ${tw`text-xm bg-theme-primary/30 border-theme-primary/30`};
+      border-radius: 0 !important;
+      font-weight: 600;
+      
+      :before {
+        ${tw`hidden`};
+      }
+    }
+
+    .ant-table-tbody {
+      // tr:nth-of-type(even) {
+      //   ${tw`bg-theme-primary`};
+      // }
+
+      tr:nth-of-type(odd) {
+        ${tw`bg-theme-primary/30 dark:bg-theme-primary/20`};
+      }
+      
+      td.ant-table-cell {
+        ${tw`text-xm bg-transparent cursor-pointer border-gray-300 dark:border-gray-500`};
+
+        &.ant-table-cell-row-hover {
+          ${tw`bg-theme-primary/10 dark:bg-theme-primary/5`};
+        }
+
+        p {
+          ${tw`text-theme-text/45 text-sm`};
+        }
+      }
+    }
+  }
+
+  .ant-pagination-item-active {
+    ${tw`border-[#ecd7b1]`};
+  }
+  
+  a {
+    ${tw`font-semibold`};
+  }
+`;
+
+export const SiderWrapper = styled(Sider)`
+  ${tw`relative min-h-full max-h-full overflow-y-auto duration-500`};
+  background: rgb(var(--colors-theme-secondary-bg))!important;
+  min-width: 20% !important;
+
+  &:not(.inner-sidebar) {
+    ${tw`min-h-full`};
+  }
+
+  @media (max-width: 768px) {
+    min-width: 50% !important;
+    ${tw`absolute z-10`};
+  }
+
+  @media (max-width: 540px) {
+    min-width: 80% !important;
+  }
+
+  .ant-layout-sider-children {
+    ${tw`flex flex-col w-full h-full overflow-y-auto`};
+    position: inherit;
+
+    .container {
+      ${tw`flex flex-col overflow-y-auto px-4 h-full`};
+    }
+  }
+
+  &.ant-layout-sider-collapsed {
+    min-width: 80px !important;
+    max-width: 80px !important;
+    ${tw`px-0`};
+
+    @media (max-width: 768px) {
+      min-width: 0 !important;
+      max-width: 0 !important;
+    }
+
+    .ant-layout-sider-children {
+      .container .ant-btn > span, .container a > span {
+        ${tw`text-xl`};
+
+        &:not(.ant-btn-icon) {
+          ${tw`hidden`};
+        }
+      }
+
+      .footer {
+        ${tw`items-center`};
+      }
+    }
+  }
+`;
+
 export const NavbarWrapper = styled.nav`
 	${tw`transition-all z-50 ease-in-out duration-500 shadow lg:shadow-none bg-white lg:bg-transparent dark:bg-transparent fixed top-0 -right-full lg:right-24 xl:right-32 2xl:right-166 lg:mr-3 flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center w-10/12 md:w-5/12 lg:w-auto h-[100dvh] lg:h-16 text-gray-600 lg:p-4`};
 
 	@media (min-width: 1024px) {
 		background-image: none !important;
+	}
+
+	&.wide.closed {
+		${tw`lg:right-20 mr-0`};
 	}
 
 	&.scrolled {

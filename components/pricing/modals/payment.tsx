@@ -1,6 +1,7 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ModalProps } from 'antd';
 
@@ -9,10 +10,11 @@ import Paystack from '@/components/shared/payments/paystack';
 import { Input, Select } from '@/components/shared/input';
 import { Addon, BaseObject, Plan } from '@/types';
 import Button from '@/components/shared/button';
+import { useAppDispatch } from '@/store/hooks';
 import { PaymentModalWrapper } from './styled';
 import useClassName from '@/hooks/class-name';
 import { formatCurrency } from '@/utils';
-import useMailer from '@/hooks/mailer';
+import { createOrder } from '../slices';
 import Addons from '../addons';
 
 const requirementsModel = {
@@ -34,8 +36,9 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   const [requirements, setRequirements] = useState(requirementsModel);
   const [customer, setCustomer] = useState(customerModel);
   const [addons, setAddons] = useState<Array<Addon>>([]);
-  const { sendCheckoutMail } = useMailer();
   const [open, setOpen] = useState(false);
+  const { data: session } = useSession();
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const discount = 0;
   const tax = 0;
@@ -43,7 +46,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   const description = `Payment for ${plan?.name}${addons.length ? ` and ${addons.length} add-ons` : ''}`;
   const addonsTotal = addons.reduce((acc, { price }) => acc + price, 0);
   const total = ((plan?.price || 0) + addonsTotal + tax - discount);
-  
+
   const className = useClassName([
     'content',
     view
@@ -70,17 +73,15 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   };
 
   const handleSuccess = (data: BaseObject) => {
-    sendCheckoutMail({
+    dispatch(createOrder({
+      paid_at: data.created_at ?? new Date().toISOString(),
+      reference: data.tx_ref ?? data.reference,
+      addon_total: addonsTotal,
       plan: plan as Plan,
       customer,
       addons,
-      order: {
-        date: data.created_at ?? new Date().toISOString(),
-        reference: data.tx_ref ?? data.reference,
-        addon_total: addonsTotal,
-        total
-      }
-    });
+      total
+    }));
 
     handleReset();
     router.push('/dashboard/orders');
@@ -121,6 +122,12 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
 
   useEffect(() => {
     setOpen(!!plan);
+
+    setCustomer({
+      email: session?.user.email || '',
+      name: session?.user.name || '',
+      phone: ''
+    });
   }, [plan]);
 
   return (

@@ -170,10 +170,10 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
 
                 <ContentWrapper>
                   {children}
+                  <Footer />
                 </ContentWrapper>
 
                 <Alert />
-                <Footer />
               </LayoutWrapper>
             </AntDesignThemeProvider>
           </body>
