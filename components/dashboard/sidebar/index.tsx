@@ -4,9 +4,9 @@ import { LogoutOutlined, HomeOutlined, AppstoreOutlined, BookOutlined } from '@a
 import { signOut as NextSignOut, useSession } from 'next-auth/react';
 
 import useSidebarController from '@/hooks/sidebar';
+import Link from '@/components/shared/button/link';
 import { DashboardSiderWrapper } from './styled';
 import Button from '@/components/shared/button';
-import Link from '../shared/button/link';
 import useRoute from '@/hooks/route';
 
 export const dashboardRoutes = [

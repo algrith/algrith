@@ -7,6 +7,7 @@ import useScrollToElement from '@/hooks/scroll-to-element';
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import '@algrith/scroll-to-top/dist/index.css';
 import { Global } from '@emotion/react';
+import useRoute from '@/hooks/route';
 import { useEffect } from 'react';
 import '../public/css/fonts.css';
 import '../public/css/icons.css';
@@ -42,8 +43,12 @@ const customStyles = css`
 
 const GlobalStyles = () => {
   const { closeNavbar } = useToggleNavbar();
+  const { routes } = useRoute();
 	useScrollToElement();
   
+  const restrictedScrollToTopControllerRoutes = [routes.isDashboard, routes.auth];
+  const showScrollToTopController = !restrictedScrollToTopControllerRoutes.some(Boolean);
+
   useEffect(() => { 
 		AOS.init({
       easing: 'ease-in-out-sine'
@@ -54,7 +59,7 @@ const GlobalStyles = () => {
     <>
       <BaseStyles />
       <Global styles={customStyles} />
-      <ScrollToTopController />
+      {showScrollToTopController && <ScrollToTopController />}
       <Overlay onClick={closeNavbar} id="overlay" />
     </>
   );

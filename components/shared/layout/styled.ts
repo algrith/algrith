@@ -5,6 +5,7 @@ import tw, { css, styled } from 'twin.macro';
 import { keyframes } from '@emotion/react';
 import Sider from 'antd/es/layout/Sider';
 import { Layout, Table } from 'antd';
+import Button from '../button';
 
 export const squareWaves = (inverse: boolean = false, height = '') => css`
 	${tw`relative overflow-hidden`};
@@ -154,6 +155,18 @@ export const SectionCardWrapper = styled.div`
 		h2 {
 			${tw`text-2xl text-gray-700 dark:text-white font-bold mb-4 mt-8`};
 		}
+  }
+`;
+
+export const TogglerWrapper = styled(Button)`
+  ${tw`md:hidden fixed bottom-8 right-12 z-10`};
+
+  &.offset {
+    ${tw`right-32`};
+  }
+  
+  .anticon {
+    ${tw`text-3xl`};
   }
 `;
 
@@ -413,7 +426,7 @@ export const SiderWrapper = styled(Sider)`
 
   @media (max-width: 768px) {
     min-width: 50% !important;
-    ${tw`absolute z-10`};
+    ${tw`absolute z-[22]`};
   }
 
   @media (max-width: 540px) {

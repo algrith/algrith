@@ -3,7 +3,7 @@ import tw, { styled } from 'twin.macro';
 import Button from '../shared/button';
 
 export const AuthWrapper = styled(SectionLayout)`
-  ${tw`flex flex-col justify-center items-center h-screen`};
+  ${tw`flex flex-col justify-center items-center h-[calc(100dvh - 4.4rem)]`};
 
   .content {
     ${tw`w-full md:w-[400px] flex flex-col gap-12 p-8 pb-12 text-gray-500 dark:text-gray-400 font-bold tracking-wide shadow backdrop-blur-lg border dark:border-gray-600 rounded-xl z-1`};

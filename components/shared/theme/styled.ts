@@ -24,15 +24,15 @@ export const DarkThemeIconWrapper = styled.svg`
 
 export const ThemeWrapper = styled.div`
   ${tw`z-20 md:bg-transparent fixed top-[1.0rem] right-16 md:right-24 lg:right-16 xl:right-24 2xl:right-144 mr-1 2xl:mr-4 flex items-center w-auto transition-all ease-in-out duration-500`};
-  
-  @media (max-width: 768px) {
-    &.in-auth-page {
-      ${tw`right-6`};
-    }
-  }
-  
+
   &.wide {
     ${tw`right-16 lg:right-5`};
+
+    @media (max-width: 768px) {
+      &.in-auth-page {
+        ${tw`right-4`};
+      }
+    }
   }
   
   &.scrolled {

@@ -31,16 +31,4 @@ export const TableOfContentWrapper = styled.div`
       }
     }
   }
-  
-  .ant-btn.toggler {
-    ${tw`md:hidden fixed bottom-8 right-12 z-10`};
-
-    &.offset {
-      ${tw`right-32`};
-    }
-    
-    .anticon {
-      ${tw`text-3xl`};
-    }
-  }
 `;

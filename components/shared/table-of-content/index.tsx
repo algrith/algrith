@@ -1,4 +1,3 @@
-import { OrderedListOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 
 import { TableOfContentWrapper } from './styled';
@@ -6,21 +5,15 @@ import useClassName from '@/hooks/class-name';
 import { TableOfContentProps } from '@/types';
 import { Overlay } from '../layout/styled';
 import useViewport from '@/hooks/viewport';
+import Toggler from '../layout/toggler';
 import Link from '../button/link';
-import Button from '../button';
 
 const TableOfContent = ({ targetRef, items }: TableOfContentProps) => {
-  const [togglerOffsetClass, setTogglerOffsetClass] = useState('');
   const [activeItemId, setActiveItemId] = useState(items[0]?.id);
   const [show, setShow] = useState(false);
   const { viewport } = useViewport();
 
   const showOverlay = ['md', 'sm'].includes(viewport) && show;
-  
-  const togglerClassName = useClassName([
-    togglerOffsetClass,
-    'toggler'
-  ]);
   
   const className = useClassName([
     show ? 'show' : '',
@@ -30,14 +23,7 @@ const TableOfContent = ({ targetRef, items }: TableOfContentProps) => {
   const updateActiveItemId = (itemId: string) => () => setActiveItemId(itemId);
   const toggleTableOfContent = () => setShow(!show);
 
-  const offsetToggler = () => {
-    const scrollPosition = document.body.scrollTop || document.documentElement.scrollTop;
-    setTogglerOffsetClass(scrollPosition > 200 ? 'offset' : '');
-  };
-
   useEffect(() => {
-    window.addEventListener('scroll', offsetToggler);
-
     const observer = new IntersectionObserver((entries) => {
 			const targetId = entries[0].target.id;
       if (entries[0].isIntersecting) {
@@ -50,13 +36,6 @@ const TableOfContent = ({ targetRef, items }: TableOfContentProps) => {
     );
 
     observed.forEach((element) => observer.observe(element));
-      
-    return () => {
-      window.removeEventListener(
-        'scroll',
-        offsetToggler
-      );
-    }
 	}, []);
 
   return (
@@ -81,14 +60,7 @@ const TableOfContent = ({ targetRef, items }: TableOfContentProps) => {
         </ul>
       </div>
       
-      <Button
-        icon={<OrderedListOutlined />}
-        onClick={toggleTableOfContent}
-        className={togglerClassName}
-        shape="circle"
-        type="primary"
-        size="large"
-      />
+      <Toggler onClick={toggleTableOfContent} />
     </TableOfContentWrapper>
   );
 };

@@ -2,31 +2,7 @@
 
 import tw, { styled } from 'twin.macro';
 
-import { SiderWrapper, squareWaves } from '../shared/layout/styled';
-
-export const DashboardSiderWrapper = styled(SiderWrapper)`
-  ${tw`z-1 py-8 pl-4 h-full`};
-
-  .container {
-    ${tw`py-6 flex flex-col gap-4 justify-between h-full backdrop-blur rounded-xl border border-gray-400/50 dark:border-gray-500/50`};
-
-    .body {
-      ${tw`flex flex-col overflow-y-auto flex-grow`};
-
-      .tab-button {
-        ${tw`text-[14px] mb-1 shadow-none rounded border-none`};
-        
-        span:not(.ant-btn-icon) {
-          ${tw`line-clamp-1 overflow-ellipsis text-xl`};
-        }
-      }
-    }
-    
-    .footer {
-      ${tw`flex flex-col gap-4`};
-    }
-  }
-`;
+import { squareWaves } from '@/components/shared/layout/styled';
 
 export const BillingCycleBadgeWrapper = styled.span`
   ${tw`text-sm font-semibold px-2 py-0.5 rounded-full w-[fit-content] capitalize`};
