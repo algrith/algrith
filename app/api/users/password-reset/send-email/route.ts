@@ -55,9 +55,9 @@ const POST = async (request: NextRequest) => {
     });
 
     const token = await createPasswordResetToken({
-      id: user._id.toString(),
       email: user.email,
-      name: user.name
+      name: user.name,
+      id: user.id
     });
     
     sendPasswordResetEmail(request, {

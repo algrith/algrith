@@ -79,7 +79,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
       addon_total: addonsTotal,
       plan: plan as Plan,
       status: 'pending',
-      _id: randomId(),
+      id: randomId(),
       customer,
       addons,
       total

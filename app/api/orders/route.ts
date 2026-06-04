@@ -110,7 +110,6 @@ const GET = authorization(async (request, ctx, user) => {
 
 const fetchOrders = async (userId: string) => {
   await dbConnect();
-
   return await Order.find({ user: userId });
 };
 

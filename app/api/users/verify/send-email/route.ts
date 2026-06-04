@@ -62,9 +62,9 @@ const POST = async (request: NextRequest) => {
     }, { status: 401 });
 
     const token = await createEmailVerificationToken({
-      id: user._id.toString(),
       email: user.email,
-      name: user.name
+      name: user.name,
+      id: user.id
     });
     
     sendVerificationEmail(request, {

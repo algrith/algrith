@@ -4,13 +4,14 @@ import { EllipsisOutlined } from '@ant-design/icons';
 import Dropdown from 'antd/es/dropdown/dropdown';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import { MenuProps } from 'antd';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { TableWrapper } from '../shared/layout/styled';
 import { Addon, OrderModel } from '@/types';
 import { ColumnsType } from 'antd/es/table';
+import { getDateFormat } from '@/utils';
 import { fetchOrders } from './slices';
-import { MenuProps } from 'antd';
 
 const Orders = () => {
   const { orders } = useAppSelector((state) => state.dashboard);
@@ -25,7 +26,7 @@ const Orders = () => {
       key: 'plan'
     },
     {
-      // render: (date) => (date ? getDateFormat(date).iso : '-'),
+      render: (date) => (date ? getDateFormat(date).full : '-'),
       dataIndex: 'paid_at',
       key: 'paid_at',
       title: 'Date'
@@ -34,7 +35,8 @@ const Orders = () => {
       render: (addons) => addons?.map((addon: Addon) => addon.text).join(', ') || '-',
       dataIndex: 'addons',
       title: 'Addons',
-      key: 'addons'
+      key: 'addons',
+      width: 300
     },
     {
       dataIndex: 'status',
@@ -46,7 +48,7 @@ const Orders = () => {
       render: (_, order) => {
         const items: MenuProps['items'] = [
           {
-            onClick: () => router.push(`/dashboard/orders/${order._id}`),
+            onClick: () => router.push(`/dashboard/orders/${order.id}`),
             label: 'View',
             key: 'view'
           },
@@ -70,6 +72,14 @@ const Orders = () => {
     }
   ];
 
+  const onRow = (record: unknown) => {
+    const order = record as OrderModel;
+    
+    return {
+      onDoubleClick: () => router.push(`/dashboard/orders/${order.id}`)
+    }
+  };
+
   useEffect(() => {
     dispatch(fetchOrders());
   }, []);
@@ -81,6 +91,7 @@ const Orders = () => {
       dataSource={orders.list}
       loading={orders.loading}
       pagination={false}
+      onRow={onRow}
       rowKey="id"
     />
   );

@@ -43,7 +43,7 @@ const POST = async (request: NextRequest) => {
 
     // If token has expired, delete from record.
     if (new Date() > new Date(userToken.expiresAt)) {
-      await Token.deleteOne({ _id: userToken._id });
+      await Token.deleteOne({ _id: userToken.id });
 
       return Response.json({
         message: 'Verification link has expired. Please request a new one.',
@@ -53,7 +53,7 @@ const POST = async (request: NextRequest) => {
       }, { status: 401 });
     }
 
-    await Token.deleteOne({ _id: userToken._id });
+    await Token.deleteOne({ _id: userToken.id });
 
     await User.updateOne({ email: userToken.email }, {
       $set: {

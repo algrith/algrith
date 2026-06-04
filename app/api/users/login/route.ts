@@ -51,7 +51,7 @@ const googleLogin = async (request: NextRequest, token: string) => {
     });
   }
 
-  const tokens = await generateTokens({ id: user?._id });
+  const tokens = await generateTokens({ id: user?.id });
 
   return Response.json({
     message: 'Authentication successful!',
@@ -62,7 +62,7 @@ const googleLogin = async (request: NextRequest, token: string) => {
       user: {
         email: user?.email,
         name: user?.name,
-        id: user?._id
+        id: user?.id
       }
     }
   });
@@ -98,7 +98,7 @@ const credentialsLogin = async (payload: object) => {
     data: null
   }, { status: 401 });
 
-  const tokens = await generateTokens({ id: user._id });
+  const tokens = await generateTokens({ id: user.id });
 
   return Response.json({
     message: 'Authentication successful!',
@@ -109,7 +109,7 @@ const credentialsLogin = async (payload: object) => {
       user: {
         email: user.email,
         name: user.name,
-        id: user._id
+        id: user.id
       }
     }
   });

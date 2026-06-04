@@ -338,7 +338,7 @@ export const FooterWrapper = styled(Footer)`
 
 export const TableWrapper = styled(Table)`
   .ant-table {
-    ${tw`rounded-xl bg-transparent`};
+    ${tw`w-full rounded-xl bg-transparent`};
 
     table {
       ${tw`overflow-hidden`};

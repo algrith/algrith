@@ -240,11 +240,12 @@ export interface OrderModel {
 	status: 'pending' | 'completed' | 'delivered' | 'cancelled';
 	addons: 	Array<Addon>;
 	addon_total: number;
+	createdAt?: string;
 	customer: Customer;
 	reference: string;
 	paid_at: string;
 	total: number;
-	_id: string;
+	id: string;
 	plan: Plan;
 };
 
