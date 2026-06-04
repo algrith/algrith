@@ -60,25 +60,25 @@ export const OrderWrapper = styled.div`
   }
   
   .content {
-    ${tw`w-full flex flex-col gap-8 py-4`};
+    ${tw`w-full h-full flex flex-col gap-8 py-4`};
     
     .metadata {
       ${tw`text-gray-600 dark:text-gray-400`};
     }
-  }
-  
-  .order {
-    ${tw`grid md:grid-cols-[1fr_320px] gap-6`};
-
-    .card {
-      ${tw`flex flex-col gap-6`};
-    }
     
-    .links {
-      ${tw`inline-flex justify-around gap-4`};
+    .order {
+      ${tw`grid md:grid-cols-[1fr_320px] gap-6`};
 
-      a {
-        ${tw`text-sm text-gray-600 dark:text-gray-300 font-semibold pb-0.5 border-b border-gray-600 dark:border-gray-300`};
+      .card {
+        ${tw`flex flex-col gap-6`};
+      }
+      
+      .links {
+        ${tw`inline-flex justify-around gap-4`};
+
+        a {
+          ${tw`text-sm text-gray-600 dark:text-gray-300 font-semibold pb-0.5 border-b border-gray-600 dark:border-gray-300`};
+        }
       }
     }
   }
