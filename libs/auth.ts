@@ -42,7 +42,7 @@ const providers: Provider[] = [
       if (!(credentials?.email && credentials?.password)) throw new CredentialsSignInError();
 
       const { success, code, data } = await Fetch({
-        path: `/users/login`,
+        path: `/auth/login`,
         body: credentials,
         isSecure: false,
         method: 'POST'
@@ -59,8 +59,7 @@ const providers: Provider[] = [
 
       return {
         ...(data?.token ?? {}),
-        ...(data?.user ?? {}),
-        auth_method: 'email',
+        ...(data?.user ?? {})
       } satisfies User;
     }
   }),
@@ -124,7 +123,7 @@ const callbacks: NextAuthConfig['callbacks'] = {
     if (account?.provider === 'google') {
       const { success, code, data } = await Fetch({
         body: { token: account.id_token },
-        path: `/users/login`,
+        path: `/auth/login`,
         isSecure: false,
         method: 'POST'
       });
@@ -140,9 +139,10 @@ const callbacks: NextAuthConfig['callbacks'] = {
       console.log('Google authentication successful --> ', data.user);
 
       user.refresh_token = data?.token?.refresh_token;
+      user.auth_provider = data?.user?.auth_provider;
       user.access_token = data?.token?.access_token;
       user.email = data?.user?.email;
-      user.auth_provider = 'google';
+      user.role = data?.user?.role;
       user.name = data?.user?.name;
       user.id = data?.user?.id;
     }

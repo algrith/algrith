@@ -1,15 +1,11 @@
 
 import hbs, { NodemailerExpressHandlebarsOptions }  from 'nodemailer-express-handlebars';
-import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import path from 'path';
 
 import { authorization } from '@/middleware';
-import { ResponseData } from '@/types';
 import { dbConnect } from '@/utils/db';
 import { Order } from '@/libs/schema';
-
-const response = (data: ResponseData, status: number) => NextResponse.json(data, { status });
 
 const POST = authorization(async (request, ctx, user) => {
   try {
@@ -72,19 +68,19 @@ const POST = authorization(async (request, ctx, user) => {
 
     const data = await transporter.sendMail(mailOption);
 
-    return response({
+    return Response.json({
       message: 'Mail sent!',
       success: true,
       data
-    }, 200);
+    });
   } catch (error) {
     console.error('Server Error', error);
     
-    return response({
+    return Response.json({
       message: 'Server Error',
       success: false,
       data: {}
-    }, 500);
+    }, { status: 500 });
   }
 });
 
@@ -92,19 +88,19 @@ const GET = authorization(async (request, ctx, user) => {
   try {
     const data = await fetchOrders(user.id as string);
 
-    return response({
+    return Response.json({
       message: 'Orders retrieved!',
       success: true,
       data
-    }, 200);
+    });
   } catch (error) {
     console.error('Server Error', error);
     
-    return response({
+    return Response.json({
       message: 'Server Error',
       success: false,
       data: {}
-    }, 500);
+    }, { status: 500 });
   }
 });
 

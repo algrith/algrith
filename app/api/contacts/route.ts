@@ -3,10 +3,6 @@ import { NextRequest } from 'next/server';
 import nodemailer from 'nodemailer';
 import path from 'path';
 
-import { ResponseData } from '@/types';
-
-const response = (data: ResponseData, status: number) => Response.json(data, { status });
-
 const POST = async (request: NextRequest) => {
   try {
     const templatesDir = path.resolve('./templates');
@@ -63,19 +59,19 @@ const POST = async (request: NextRequest) => {
 
     const data = await transporter.sendMail(mailOption);
 
-    return response({
+    return Response.json({
       message: 'Mail sent!',
       success: true,
       data
-    }, 200);
+    });
   } catch (error) {
     console.error('Server Error', error);
     
-    return response({
+    return Response.json({
       message: 'Server Error',
       success: false,
       data: {}
-    }, 500);
+    }, { status: 500 });
   }
 };
 

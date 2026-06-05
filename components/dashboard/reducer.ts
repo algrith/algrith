@@ -14,6 +14,10 @@ const initialState: LayoutState = {
   order: {
     data: undefined,
     loading: false
+  },
+  user: {
+    data: undefined,
+    loading: false
   }
 }
 
@@ -35,6 +39,12 @@ export const layoutSlice = createSlice({
         ...state.order,
         ...action.payload
       };
+    },
+    setUser: (state, action: PayloadAction<Partial<LayoutState['user']>>) => {
+      state.user = {
+        ...state.user,
+        ...action.payload
+      };
     }
   }
 })
@@ -44,7 +54,8 @@ const { reducer, actions } = layoutSlice;
 export const {
   updateSidebar,
   setOrders,
-  setOrder
+  setOrder,
+  setUser
 } = actions;
 
 export default reducer;

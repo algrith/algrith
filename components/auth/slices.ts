@@ -36,7 +36,7 @@ export const resetPassword = (token: string) => async (dispatch: AppDispatch) =>
   dispatch(setIsLoading(true));
 
   const { success, code } = await Fetch({
-    path: `/users/password-reset`,
+    path: `/auth/password-reset`,
     isSecure: false,
     method: 'POST',
     body: {
@@ -64,7 +64,7 @@ export const verifyEmail = (token: string) => async (dispatch: AppDispatch) => {
   dispatch(setIsVerifying(true));
 
   const { success, code } = await Fetch({
-    path: `/users/verify`,
+    path: `/auth/verify`,
     isSecure: false,
     body: { token },
     method: 'POST',
@@ -92,7 +92,7 @@ export const resendVerificationEmail = () => async (dispatch: AppDispatch) => {
   const { model } = store.getState().auth;
 
   const { success, code } = await Fetch({
-    path: `/users/verify/send-email`,
+    path: `/auth/verify/send-email`,
     body: { email: model.email },
     isSecure: false,
     method: 'POST'
@@ -116,7 +116,7 @@ export const sendPasswordResetEmail = () => async (dispatch: AppDispatch) => {
   dispatch(setIsLoading(true));
   
   const { success, code } = await Fetch({
-    path: `/users/password-reset/send-email`,
+    path: `/auth/password-reset/send-email`,
     body: { email: model.email },
     isSecure: false,
     method: 'POST'
@@ -141,7 +141,7 @@ export const signUp = () => async (dispatch: AppDispatch) => {
   dispatch(setIsLoading(true));
 
   const { success, code } = await Fetch({
-    path: '/users/register',
+    path: '/auth/register',
     isSecure: false,
     method: 'POST',
     body: {

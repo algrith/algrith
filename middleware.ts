@@ -6,12 +6,12 @@ import { verifyToken } from './utils/tokens';
 import { auth } from '@/libs/auth';
 import { User } from 'next-auth';
 
-export const authorization = (handler: (req: NextRequest, ctx: RouteContext<AppRouteHandlerRoutes>, user: User) => Promise<NextResponse>) => {
-  return async (req: NextRequest, ctx: RouteContext<AppRouteHandlerRoutes>): Promise<NextResponse> => {
+export const authorization = (handler: (req: NextRequest, ctx: RouteContext<AppRouteHandlerRoutes>, user: User) => Promise<Response>) => {
+  return async (req: NextRequest, ctx: RouteContext<AppRouteHandlerRoutes>): Promise<Response> => {
     try {
       const token = req.headers.get('authorization')?.split(' ')[1];
 
-      if (!token) return NextResponse.json({
+      if (!token) return Response.json({
         message: 'Unauthorized operation',
         code: 'invalid_token',
         success: false,
@@ -22,7 +22,7 @@ export const authorization = (handler: (req: NextRequest, ctx: RouteContext<AppR
       
       const { user } = await auth() || {};
 
-      if (!user) return NextResponse.json({
+      if (!user) return Response.json({
         message: 'Unauthorized operation',
         code: 'invalid_token',
         success: false,
@@ -33,7 +33,7 @@ export const authorization = (handler: (req: NextRequest, ctx: RouteContext<AppR
     } catch (error) {
       console.error('Unauthorized operation --> ', error);
       
-      return NextResponse.json({
+      return Response.json({
         message: 'Invalid or expired token',
         code: 'invalid_token',
         success: false,
@@ -59,6 +59,7 @@ export const middleware = async (request: NextRequest) => {
 export const config = {
   matcher: [
     '/dashboard/orders/:orderId',
+    '/dashboard/account',
     '/dashboard/orders',
     '/dashboard'
   ]

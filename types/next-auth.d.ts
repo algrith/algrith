@@ -16,9 +16,12 @@ declare module 'next-auth' {
 	}
 
 	interface User extends DefaultUser {
+		role: 'moderator' | 'customer' | 'admin';
 		auth_provider: 'google' | 'email';
 		refresh_token?: string;
 		access_token?: string;
+		is_verified: boolean;
+		createdAt?; string;
 		error?: BaseObject;
 		location?: string;
 		company?: string;

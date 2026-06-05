@@ -1,6 +1,6 @@
 'use client';
 
-import { LogoutOutlined, HomeOutlined, AppstoreOutlined, BookOutlined } from '@ant-design/icons';
+import { LogoutOutlined, HomeOutlined, AppstoreOutlined, BookOutlined, UserOutlined } from '@ant-design/icons';
 import { signOut as NextSignOut, useSession } from 'next-auth/react';
 
 import useSidebarController from '@/hooks/sidebar';
@@ -11,11 +11,13 @@ import useRoute from '@/hooks/route';
 
 export const dashboardRoutes = [
   { text: 'Overview', route: '/dashboard', key: 'dashboard' },
-  { text: 'Orders', route: '/dashboard/orders', key: 'orders' }
+  { text: 'Orders', route: '/dashboard/orders', key: 'orders' },
+  { text: 'Account', route: '/dashboard/account', key: 'account' }
 ];
 
 const routeIcons = {
   dashboard: <AppstoreOutlined />,
+  account: <UserOutlined />,
   orders: <BookOutlined />
 };
 

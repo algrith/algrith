@@ -20,14 +20,13 @@ const registerUser = async (user: Partial<AuthState['model']>) => {
   const existingUser = await User.findOne({ email: user.email });
   if (existingUser) throw new Error('EMAIL_EXISTS');
   
-  const { insertedId } = await User.create({
+  const newUser = await User.create({
     ...user,
     password: hashedPassword,
-    auth_method: 'email',
-    is_verified: false
+    auth_provider: 'email'
   });
 
-  const { access_token } = await generateTokens({ id: insertedId });
+  const { access_token } = await generateTokens({ id: newUser.id });
   const hashedToken = crypto.createHash('sha256').update(access_token).digest('hex');
   
   await Token.create({
@@ -38,7 +37,7 @@ const registerUser = async (user: Partial<AuthState['model']>) => {
     name: user.name
   });
 
-  console.log(`User registration successful --> ${insertedId}`);
+  console.log(`User registration successful --> ${newUser.id}`);
 
   return access_token;
 };

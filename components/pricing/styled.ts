@@ -29,7 +29,7 @@ export const AddonsWrapper = styled.div`
       }
 
       &:not(:first-of-type) > span:last-of-type {
-        ${tw`font-bold text-gray-600 dark:text-theme-secondary`};
+        ${tw`font-bold text-gray-600 dark:text-theme-secondary font-mono`};
       }
       
       &:first-of-type > span {
@@ -89,7 +89,7 @@ export const PlansWrapper = styled.div`
           ${tw`flex flex-col`};
           
           .amount {
-            ${tw`text-3xl text-gray-600 dark:text-white font-bold tracking-widest`};
+            ${tw`text-2xl text-gray-600 dark:text-white font-bold font-mono`};
           }
           
           .tag {

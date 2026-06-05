@@ -27,7 +27,7 @@ const googleLogin = async (request: NextRequest, token: string) => {
 
   let user = await User.findOne({ email });
 
-  if (user && user.auth_method !== 'google') return Response.json({
+  if (user && user.auth_provider !== 'google') return Response.json({
     message: 'An account with this email already exists. Please login with your password.',
     code: 'conflicting_provider',
     success: false,
@@ -35,15 +35,15 @@ const googleLogin = async (request: NextRequest, token: string) => {
   }, { status: 409 });
 
   if (!user) {
-    const result = await User.insertOne({
-      auth_method: 'google',
+    const newUser = await User.create({
+      auth_provider: 'google',
       is_verified: true,
       google_id,
       email,
       name
     });
 
-    user = await User.findOne({ _id: result.insertedId });
+    user = await User.findOne({ _id: newUser.id });
     
     sendWelcomeEmail(request, {
       email: user?.email,
@@ -60,9 +60,11 @@ const googleLogin = async (request: NextRequest, token: string) => {
     data: {
       token: tokens,
       user: {
-        email: user?.email,
-        name: user?.name,
-        id: user?.id
+        auth_provider: user.auth_provider,
+        email: user.email,
+        role: user.role,
+        name: user.name,
+        id: user.id
       }
     }
   });
@@ -80,7 +82,8 @@ const credentialsLogin = async (payload: object) => {
   
   const { password, email } = parsed.data;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select('+password');
+  ;
   
   const isPasswordValid = await bcrypt.compare(password, (user?.password ?? ''));
 
@@ -107,7 +110,9 @@ const credentialsLogin = async (payload: object) => {
     data: {
       token: tokens,
       user: {
+        auth_provider: user.auth_provider,
         email: user.email,
+        role: user.role,
         name: user.name,
         id: user.id
       }
@@ -134,10 +139,9 @@ const decodeGoogleToken = (token: string) => {
 
 const POST = async (request: NextRequest) => {
   const payload = await request.json();
-
-  await dbConnect();
   
   try {
+    await dbConnect();
     return await (payload.token ? googleLogin(request, payload.token) : credentialsLogin(payload));
   } catch (error) {
     console.error('Server Error', error);

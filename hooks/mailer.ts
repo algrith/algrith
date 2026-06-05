@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { ContactModel, ResponseData } from '@/types';
+import { ContactModel } from '@/types';
 import useRecaptcha from './recaptcha';
 import { isValidEmail } from '@/utils';
 import { Fetch } from '@/utils/api';
@@ -25,7 +25,7 @@ const useMailer = () => {
   const verifyReCaptchaToken = async (action: string = 'contact') => {
     const token = await executeRecaptcha(action);
 
-    const response: ResponseData = await Fetch({
+    const response = await Fetch({
       path: '/recaptcha',
       body: { token },
       method: 'POST'

@@ -16,7 +16,7 @@ const createEmailVerificationToken = async (user: Partial<AuthUser>) => {
   const { access_token } = await generateTokens({ email: user.email });
   const hashedToken = crypto.createHash('sha256').update(access_token).digest('hex');
   
-  await Token.insertOne({
+  await Token.create({
     expiresAt: new Date(Date.now() + 5 * 60 * 1000),
     purpose: 'email-verification',
     token: hashedToken,

@@ -185,12 +185,6 @@ export interface FeedbackState {
   show?: boolean;
 };
 
-export interface ResponseData {
-  data: object | null;
-  success: boolean;
-  message: string;
-};
-
 export interface ContactModel {
 	customTopic?: string;
 	template?: string;
@@ -215,6 +209,10 @@ export interface LayoutState {
 	order: {
 		data?: OrderModel;
 		loading: boolean;
+	};
+	user: {
+		loading: boolean;
+		data?: User;
 	};
 };
 

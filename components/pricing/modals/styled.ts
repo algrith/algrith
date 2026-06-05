@@ -45,7 +45,7 @@ export const PaymentModalWrapper = styled(Modal)`
           ${tw`flex justify-between`};
 
           span:last-of-type {
-            ${tw`tracking-widest`};
+            ${tw`tracking-wide font-mono`};
           }
         }
       }
@@ -68,6 +68,10 @@ export const PaymentModalWrapper = styled(Modal)`
       
       &.total, &.addons {
         ${tw`flex justify-between items-center gap-2 border-t border-b border-gray-300 dark:border-gray-500 py-3 tracking-widest`};
+        
+        span:last-of-type {
+          ${tw`tracking-wide font-mono`};
+        }
       }
       
       &.addons {

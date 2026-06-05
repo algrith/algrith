@@ -1,19 +1,15 @@
 import { NextRequest } from 'next/server';
 
-import { ResponseData } from '@/types';
-
-const NextResponse = (data: ResponseData, status: number) => Response.json(data, { status });
-
 const POST = async (req: NextRequest) => {
   const secretKey = process.env.RECAPTCHA_SECRET_KEY;
   const data = await req.json();
   const { token } = data;
   
-  if (!token) return NextResponse({
+  if (!token) return Response.json({
     message: 'Token Not Found',
     success: false,
     data
-  }, 405);
+  }, { status: 405 });
 
   try {
     const response = await fetch(
@@ -24,28 +20,28 @@ const POST = async (req: NextRequest) => {
     const data = await response.json();
     const success = data.score > 0.7;
 
-    if (!data.success) return NextResponse({
+    if (!data.success) return Response.json({
       message: 'Token Verification Failed',
       success: false,
       data
-    }, 405);
+    }, { status: 405 });
     
     const message = success ? 'Token Verified' : 'Verification Failed';
     const code = success ? 200 : 405;
 
-    return NextResponse({
+    return Response.json({
       message,
       success,
       data
-    }, code);
+    }, { status: code });
   } catch (error) {
     console.error('Server Error', error);
 
-    return NextResponse({
+    return Response.json({
       message: 'Internal Server Error',
       success: false,
       data
-    }, 500);
+    }, { status: 500 });
   }
 };
 

@@ -2,12 +2,13 @@
 
 import { EllipsisOutlined } from '@ant-design/icons';
 import Dropdown from 'antd/es/dropdown/dropdown';
+import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { MenuProps } from 'antd';
 
+import { StatusBadgeWrapper, TableWrapper } from '../shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { TableWrapper } from '../shared/layout/styled';
 import { Addon, OrderModel } from '@/types';
 import { ColumnsType } from 'antd/es/table';
 import { getDateFormat } from '@/utils';
@@ -15,9 +16,11 @@ import { fetchOrders } from './slices';
 
 const Orders = () => {
   const { orders } = useAppSelector((state) => state.dashboard);
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const router = useRouter();
-
+  
+  const isAdmin = session?.user.role === 'admin';
   const columns: ColumnsType<OrderModel> = [
     {
       render: (plan) => plan?.name || '-',
@@ -39,6 +42,7 @@ const Orders = () => {
       width: 300
     },
     {
+      render: (status) => <StatusBadgeWrapper className={status}>{status}</StatusBadgeWrapper>,
       dataIndex: 'status',
       align: 'center',
       title: 'Status',
@@ -52,12 +56,12 @@ const Orders = () => {
             label: 'View',
             key: 'view'
           },
-          {
+          ...(isAdmin ? [{
             onClick: () => {},
             label: 'Delete',
             danger: true,
             key: 'delete'
-          }
+          }] : [])
         ];
 
         return (

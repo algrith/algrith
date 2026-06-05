@@ -129,6 +129,26 @@ export const ContentWrapper = styled(Content)`
 	${tw`w-full bg-transparent text-theme-text h-full pt-[4.4rem]`};
 `;
 
+export const StatusBadgeWrapper = styled.span`
+  ${tw`text-sm font-bold px-3 py-1 rounded-full capitalize text-gray-100`};
+	
+	&.cancelled, &.unverified {
+    ${tw`bg-red-500`};
+  }
+	
+  &.delivered, &.verified {
+    ${tw`bg-green-600`};
+  }
+	
+  &.completed {
+    ${tw`bg-orange-500`};
+  }
+  
+  &.pending {
+    ${tw`bg-gray-500`};
+  }
+`;
+
 export const SectionCardWrapper = styled.div`
   ${tw`w-full`};
 
@@ -374,7 +394,7 @@ export const TableWrapper = styled(Table)`
     }
     
     .ant-table-thead .ant-table-cell {
-      ${tw`text-xm bg-theme-primary/30 border-theme-primary/30`};
+      ${tw`text-lg bg-theme-primary/30 border-theme-primary/30`};
       border-radius: 0 !important;
       font-weight: 600;
       
@@ -393,11 +413,15 @@ export const TableWrapper = styled(Table)`
       }
       
       td.ant-table-cell {
-        ${tw`text-xm bg-transparent cursor-pointer border-gray-300 dark:border-gray-500`};
+        ${tw`bg-transparent cursor-pointer border-gray-300 dark:border-gray-500`};
 
         &.ant-table-cell-row-hover {
           ${tw`bg-theme-primary/10 dark:bg-theme-primary/5`};
         }
+				
+				.anticon {
+					${tw`text-4xl`};
+				}
 
         p {
           ${tw`text-theme-text/45 text-sm`};

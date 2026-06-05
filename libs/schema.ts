@@ -86,17 +86,27 @@ const orderSchema = new mongoose.Schema({
 }, schemaOptions);
 
 const userSchema = new mongoose.Schema({
+  is_verified: { type: Boolean, default: false },
+  password: { type: String, select: false },
   email: { type: String, unique: true },
-  is_verified: Boolean,
+  google_id: String,
   verified_at: Date,
-  password: String,
   name: String,
-  auth_method: {
+  auth_provider: {
     enum: ['email', 'google'],
     default: 'email',
     type: String
+  },
+  role: {
+    enum: ['moderator', 'customer', 'admin'],
+    default: 'customer',
+    type: String,
   }
 }, schemaOptions);
+
+userSchema.pre('deleteOne', { document: true, query: false }, async function () {
+  await Order.deleteMany({ user: this._id });
+});
 
 export const Order = mongoose.models.Order || mongoose.model('Order', applyVirtuals(orderSchema));
 export const Token = mongoose.models.Token || mongoose.model('Token', applyVirtuals(tokenSchema));

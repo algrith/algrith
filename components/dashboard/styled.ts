@@ -16,26 +16,6 @@ export const BillingCycleBadgeWrapper = styled.span`
   }
 `;
 
-export const StatusBadgeWrapper = styled.span`
-  ${tw`text-sm font-bold px-3 py-1 rounded-full capitalize text-gray-100`};
-  
-  &.completed {
-    ${tw`bg-orange-500`};
-  }
-  
-  &.delivered {
-    ${tw`bg-green-600`};
-  }
-  
-  &.cancelled {
-    ${tw`bg-red-500`};
-  }
-  
-  &.pending {
-    ${tw`bg-gray-500`};
-  }
-`;
-
 export const DashboardWrapper = styled.div`
   ${tw`flex w-full relative h-[calc(100dvh - 4.4rem)] z-1`};
 
@@ -44,8 +24,12 @@ export const DashboardWrapper = styled.div`
   }
 `;
 
-export const OrderWrapper = styled.div`
-  ${tw`h-full overflow-y-auto`};
+export const MainViewWrapper = styled.div`
+  ${tw`h-full w-full overflow-y-auto`};
+
+  &.loading {
+    ${tw`flex justify-center items-center bg-black/20 rounded-xl`};
+  }
 
   header {
     ${tw`sticky top-0 z-1 flex items-center justify-between pb-4 border-b backdrop-blur border-gray-400/50 dark:border-gray-500/50`};
@@ -63,20 +47,20 @@ export const OrderWrapper = styled.div`
     ${tw`w-full h-full flex flex-col gap-8 py-4`};
     
     .metadata {
-      ${tw`text-gray-600 dark:text-gray-400`};
+      ${tw`flex flex-col gap-2 text-gray-600 dark:text-gray-400 font-mono text-sm`};
     }
     
-    .order {
+    .columns {
       ${tw`grid md:grid-cols-[1fr_320px] gap-6`};
 
-      .card {
+      .column {
         ${tw`flex flex-col gap-6`};
       }
       
       .links {
         ${tw`inline-flex justify-around gap-4`};
 
-        a {
+        a:not(.button) {
           ${tw`text-sm text-gray-600 dark:text-gray-300 font-semibold pb-0.5 border-b border-gray-600 dark:border-gray-300`};
         }
       }
@@ -89,6 +73,10 @@ export const CardWrapper = styled.div`
 
   h3 {
     ${tw`text-gray-600 dark:text-gray-300 text-lg tracking-widest font-bold mb-4`};
+  }
+  
+  &.loading {
+    ${tw`w-full min-h-96 flex justify-center items-center bg-black/20`};
   }
 `;
 
@@ -117,25 +105,7 @@ export const Cards = styled.div`
   }
 `;
 
-export const CustomerWrapper = styled(CardWrapper)`
-  .info {
-    ${tw`flex flex-col gap-5`};
-
-    .item {
-      ${tw`flex justify-between gap-2 text-xm`};
-      
-      .label {
-        ${tw`text-gray-500 dark:text-gray-400 tracking-widest`};
-      }
-      
-      .value {
-        ${tw`dark:text-gray-200 font-mono`};
-      }
-    }
-  }
-`;
-
-export const PaymentWrapper = styled(CardWrapper)`
+export const SummaryWrapper = styled(CardWrapper)`
   .summary {
     ${tw`flex flex-col gap-3`};
 
@@ -186,6 +156,28 @@ export const AddonWrapper = styled(CardWrapper)`
       
       .text {
         ${tw`flex flex-col gap-0.5 tracking-wide dark:text-gray-400`};
+      }
+    }
+  }
+`;
+
+export const InfoWrapper = styled(CardWrapper)`
+  .info {
+    ${tw`flex flex-col gap-5`};
+
+    .item {
+      ${tw`flex justify-between gap-2 text-xm`};
+      
+      .label {
+        ${tw`text-gray-500 dark:text-gray-400 tracking-widest`};
+      }
+      
+      .value {
+        ${tw`dark:text-gray-200 font-mono`};
+
+        &.capitalize {
+          ${tw`capitalize`};
+        }
       }
     }
   }
