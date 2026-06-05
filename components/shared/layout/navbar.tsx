@@ -55,7 +55,8 @@ const Navbar = () => {
 		{
 			onClick: () => signOut(),
 			label: 'Logout',
-			key: 'logout'
+			key: 'logout',
+			danger: true
 		}
   ];
 

@@ -6,6 +6,7 @@ import path from 'path';
 import { authorization } from '@/middleware';
 import { dbConnect } from '@/utils/db';
 import { Order } from '@/libs/schema';
+import { User } from 'next-auth';
 
 const POST = authorization(async (request, ctx, user) => {
   try {
@@ -86,27 +87,30 @@ const POST = authorization(async (request, ctx, user) => {
 
 const GET = authorization(async (request, ctx, user) => {
   try {
-    const data = await fetchOrders(user.id as string);
+    const orders = await fetchOrders(user);
 
     return Response.json({
       message: 'Orders retrieved!',
+      code: 'orders_retrieved',
       success: true,
-      data
+      data: orders
     });
   } catch (error) {
     console.error('Server Error', error);
     
     return Response.json({
       message: 'Server Error',
+      code: 'server_error',
       success: false,
-      data: {}
+      data: null
     }, { status: 500 });
   }
 });
 
-const fetchOrders = async (userId: string) => {
+const fetchOrders = async (user: User) => {
   await dbConnect();
-  return await Order.find({ user: userId });
+  const options = user.role !== 'admin' ? { user: user.id } : {};
+  return await Order.find(options);
 };
 
 export { POST, GET };

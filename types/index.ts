@@ -206,6 +206,10 @@ export interface LayoutState {
 		list: Array<OrderModel>;
 		loading: boolean;
 	};
+	users: {
+		list: Array<OrderModel>;
+		loading: boolean;
+	};
 	order: {
 		data?: OrderModel;
 		loading: boolean;
@@ -237,6 +241,7 @@ export interface AsyncAction {
 export interface OrderModel {
 	status: 'pending' | 'completed' | 'delivered' | 'cancelled';
 	addons: 	Array<Addon>;
+	user?: User | string;
 	addon_total: number;
 	createdAt?: string;
 	customer: Customer;

@@ -4,12 +4,15 @@ import { User } from '@/libs/schema';
 
 const DELETE = authorization(async (request, ctx, user) => {
   try {
+    const params = (await ctx.params) as { userId: string };
+    const { userId } = params;
+
     await dbConnect();
-    await User.deleteOne({ _id: user.id });
+    await User.deleteOne({ _id: userId });
 
     return Response.json({
-      message: 'Account deleted successfully',
-      code: 'account_deleted_successfully',
+      message: 'User deleted successfully',
+      code: 'deleted_successfully',
       success: true,
       data: null
     });
@@ -26,22 +29,18 @@ const DELETE = authorization(async (request, ctx, user) => {
 });
 
 const GET = authorization(async (request, ctx, user) => {
-  if (user.role !== 'admin') return Response.json({
-    message: 'Permission denied',
-    code: 'permission_denied',
-    success: true,
-    data: null
-  });
-
   try {
+    const params = (await ctx.params) as { userId: string };
+    const { userId } = params;
+
     await dbConnect();
-    const users = await User.find({ });
+    const account = await User.findOne({ _id: userId });
     
     return Response.json({
-      message: 'Users retrieved successfully',
-      code: 'users_retrieved_successfully',
+      message: 'User retrieved successfully',
+      code: 'retrieved_successfully',
       success: true,
-      data: users
+      data: account
     });
   } catch (error) {
     console.error('Server Error', error);

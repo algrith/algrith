@@ -11,6 +11,10 @@ const initialState: LayoutState = {
     loading: false,
     list: []
   },
+  users: {
+    loading: false,
+    list: []
+  },
   order: {
     data: undefined,
     loading: false
@@ -34,6 +38,12 @@ export const layoutSlice = createSlice({
         ...action.payload
       };
     },
+    setUsers: (state, action: PayloadAction<Partial<LayoutState['users']>>) => {
+      state.users = {
+        ...state.users,
+        ...action.payload
+      };
+    },
     setOrder: (state, action: PayloadAction<Partial<LayoutState['order']>>) => {
       state.order = {
         ...state.order,
@@ -54,6 +64,7 @@ const { reducer, actions } = layoutSlice;
 export const {
   updateSidebar,
   setOrders,
+  setUsers,
   setOrder,
   setUser
 } = actions;

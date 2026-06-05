@@ -3,29 +3,27 @@ import { dbConnect } from '@/utils/db';
 import { Order } from '@/libs/schema';
 
 const GET = authorization(async (request, ctx, user) => {
-  const { orderId } = await ctx.params as { orderId?: string };
+  const { userId } = await ctx.params as { userId?: string };
+  const { role, id } = user;
   
-  if (!orderId) return Response.json({
-    message: 'Order ID is required',
-    code: 'order_id_required',
+  const isAdmin = role === 'admin';
+
+  if (!isAdmin && userId !== id) return Response.json({
+    message: 'Permission denied',
+    code: 'permission_denied',
     success: false,
     data: null
-  }, { status: 400 });
-
-  const { role, id } = user;
+  }, { status: 401 });
 
   try {
     await dbConnect();
-    const order = await Order.findOne({
-      ...(role !== 'admin' ? { user: id } : {}),
-      _id: orderId,
-    });
+    const orders = await Order.find({ user: userId });
 
     return Response.json({
-      message: 'Order retrieved!',
-      code: 'order_retrieved',
+      message: 'User orders retrieved!',
+      code: 'user_order_retrieved',
       success: true,
-      data: order
+      data: orders
     });
   } catch (error) {
     console.error('Server Error', error);

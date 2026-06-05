@@ -1,6 +1,6 @@
 'use client';
 
-import { LogoutOutlined, HomeOutlined, AppstoreOutlined, BookOutlined, UserOutlined } from '@ant-design/icons';
+import { LogoutOutlined, HomeOutlined, AppstoreOutlined, BookOutlined, UserOutlined, ContactsOutlined } from '@ant-design/icons';
 import { signOut as NextSignOut, useSession } from 'next-auth/react';
 
 import useSidebarController from '@/hooks/sidebar';
@@ -9,23 +9,25 @@ import { DashboardSiderWrapper } from './styled';
 import Button from '@/components/shared/button';
 import useRoute from '@/hooks/route';
 
-export const dashboardRoutes = [
-  { text: 'Overview', route: '/dashboard', key: 'dashboard' },
-  { text: 'Orders', route: '/dashboard/orders', key: 'orders' },
-  { text: 'Account', route: '/dashboard/account', key: 'account' }
+const dashboardRoutes = [
+  { text: 'Overview', route: '/dashboard', key: 'dashboard', permissionRoles: '*' },
+  { text: 'Orders', route: '/dashboard/orders', key: 'orders', permissionRoles: '*' },
+  { text: 'Users', route: `/dashboard/users`, key: 'users', permissionRoles: ['admin'] },
+  { text: 'Account', route: `/dashboard/account`, key: 'account', permissionRoles: '*' }
 ];
 
 const routeIcons = {
   dashboard: <AppstoreOutlined />,
+  users: <ContactsOutlined />,
   account: <UserOutlined />,
   orders: <BookOutlined />
 };
 
 const DashboardSidebar = () => {
   const { closeMobileSidebar, handleMouseEnter, handleMouseLeave, sidebar } = useSidebarController();
+  const { data: session, status } = useSession();
   const { activeRoute, routes } = useRoute();
   const isCollapsed = sidebar.collapsed;
-  const { status } = useSession();
 
   const getButtonType = (route: typeof dashboardRoutes[0]) => {
     const { key } = route;
@@ -35,14 +37,14 @@ const DashboardSidebar = () => {
     return isActive ? 'primary' : 'default'
   };
 
-  // const canAccessRoute = (route: string) => {
-  //   const allowedRoutes = routes[role];
+  const canAccessRoute = (route: typeof dashboardRoutes[0]) => {
+    const role = session?.user.role;
 
-  //   return (
-  //     allowedRoutes.includes(route) ||
-  //     allowedRoutes === '*'
-  //   );
-  // };
+    return (
+      (role && route.permissionRoles.includes(role)) ||
+      route.permissionRoles === '*'
+    );
+  };
 
   const signOut = async () => {
     NextSignOut({ callbackUrl: '/auth' });
@@ -66,18 +68,20 @@ const DashboardSidebar = () => {
       <div className="container">
         <div className="body">
           {dashboardRoutes.map((route) => (
-            <Link
-              type={getButtonType(route)}
-              className="tab-button"
-              onClick={closeSidebar}
-              href={route.route}
-              key={route.key}
-              size="small"
-              asButton
-            >
-              {routeIcons[route.key as keyof typeof routeIcons] || <HomeOutlined />}
-              {route.text}
-            </Link>
+            canAccessRoute(route) ? (
+              <Link
+                type={getButtonType(route)}
+                className="tab-button"
+                onClick={closeSidebar}
+                href={route.route}
+                key={route.key}
+                size="small"
+                asButton
+              >
+                {routeIcons[route.key as keyof typeof routeIcons] || <HomeOutlined />}
+                {route.text}
+              </Link>
+            ) : null
           ))}
         </div>
 

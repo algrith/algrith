@@ -59,8 +59,10 @@ export const middleware = async (request: NextRequest) => {
 export const config = {
   matcher: [
     '/dashboard/orders/:orderId',
+    '/dashboard/users/:userId',
     '/dashboard/account',
     '/dashboard/orders',
+    '/dashboard/users',
     '/dashboard'
   ]
 };

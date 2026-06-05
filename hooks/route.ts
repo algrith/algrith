@@ -16,7 +16,9 @@ const initialRouteStates = {
   orders: false,
   signIn: false,
   signUp: false,
+  users: false,
   order: false,
+  user: false,
   auth: false
 };
 
@@ -40,12 +42,14 @@ export const getRouteStatuses = (route?: string) => {
 
   return {
     order: new RegExp(`^/dashboard/orders/(?!${orderPaths}$)[^/]+$`).test(pathname),
+    user: new RegExp(`^/dashboard/users/(?!${orderPaths}$)[^/]+$`).test(pathname),
     forgotPassword: isAuthPath && pathname.includes('/forgot-password'),
     passwordReset: isAuthPath && pathname.includes('/password-reset'),
     verifyEmail: isAuthPath && pathname.includes('/verify-email'),
     signUp: isAuthPath && pathname.includes('/sign-up'),
     account: pathname === '/dashboard/account',
     orders: pathname === '/dashboard/orders',
+    users: pathname === '/dashboard/users',
     dashboard: pathname === '/dashboard',
     isDashboard: isDashboardPath,
     homePage: pathname === '/',

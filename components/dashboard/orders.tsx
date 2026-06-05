@@ -29,6 +29,12 @@ const Orders = () => {
       key: 'plan'
     },
     {
+      render: (customer) => customer?.name,
+      dataIndex: 'customer',
+      title: 'Owner',
+      key: 'owner'
+    },
+    {
       render: (date) => (date ? getDateFormat(date).full : '-'),
       dataIndex: 'paid_at',
       key: 'paid_at',
@@ -56,12 +62,19 @@ const Orders = () => {
             label: 'View',
             key: 'view'
           },
-          ...(isAdmin ? [{
-            onClick: () => {},
-            label: 'Delete',
-            danger: true,
-            key: 'delete'
-          }] : [])
+          ...(isAdmin ? [
+            {
+              onClick: () => router.push(`/dashboard/users/${order.user}`),
+              label: 'Owner',
+              key: 'owner'
+            },
+            {
+              onClick: () => {},
+              label: 'Delete',
+              danger: true,
+              key: 'delete'
+            }
+          ] : [])
         ];
 
         return (
