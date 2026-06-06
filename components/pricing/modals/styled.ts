@@ -20,7 +20,7 @@ export const PaymentModalWrapper = styled(Modal)`
     ${tw`min-h-96 max-h-[80dvh] overflow-y-auto`};
     
     .content {
-      ${tw`flex flex-col gap-8 pt-4 text-gray-500 dark:text-gray-400 font-bold tracking-wide`};
+      ${tw`flex flex-col gap-12 pt-4 text-gray-500 dark:text-gray-400 font-bold tracking-wide`};
       
       &.requirements h2 {
         ${tw`mb-3`};

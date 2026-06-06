@@ -5,24 +5,32 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ModalProps } from 'antd';
 
+import { Addon, BaseObject, OrderRequirements, Plan } from '@/types';
 import FlutterWave from '@/components/shared/payments/flutterwave';
 import Paystack from '@/components/shared/payments/paystack';
-import { Input, Select } from '@/components/shared/input';
+import ColorPalettes from '@/components/shared/input/color';
+import FontSelector from '@/components/shared/input/fonts';
+import FileUpload from '@/components/shared/input/file';
 import { formatCurrency, randomId } from '@/utils';
-import { Addon, BaseObject, Plan } from '@/types';
+import { Input } from '@/components/shared/input';
 import Button from '@/components/shared/button';
 import { useAppDispatch } from '@/store/hooks';
 import { PaymentModalWrapper } from './styled';
 import useClassName from '@/hooks/class-name';
+import { UploadProps } from 'antd/es/upload';
 import { createOrder } from '../slices';
 import Addons from '../addons';
 
-const requirementsModel = {
-  social_media_handles: [],
+const requirementsModel: OrderRequirements = {
   business_name: '',
+  social_media: [],
   domain_name: '',
+  hosting: false,
+  logo_path: '',
+  logo_url: '',
+  images: [],
   colors: [],
-  fonts: [],
+  fonts: []
 };
 
 const customerModel = {
@@ -58,9 +66,24 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     payment: 'Checkout'
   }[view];
 
+  const handleFiles: UploadProps['onUpload'] = (event) => {
+    const { value, id } = event.target;
+    console.log(value);
+    
+    // if (id === 'logo')
+
+    if (!id) return;
+    
+    // setRequirements((prev) => ({
+    //   ...prev,
+    //   [id]: value
+    // }));
+  };
+
   const handleRequirementsChange = (e: ChangeEvent) => {
     const { id, value } = e.target as HTMLInputElement;
-    setRequirements((prev) => ({ ...prev, [id]: value }));
+    const newValue = id === 'social_media' ? value.replaceAll(' ', '') : value;
+    setRequirements((prev) => ({ ...prev, [id]: newValue }));
   };
 
   const handleCustomerChange = (e: ChangeEvent) => {
@@ -80,6 +103,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
       plan: plan as Plan,
       status: 'pending',
       id: randomId(),
+      requirements,
       customer,
       addons,
       total
@@ -141,39 +165,39 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
               <h2>Brand & Identity</h2>
 
               <div className="items">
-                <div className="items row">
+                <div className="items">
                   <Input
                     onChange={handleRequirementsChange}
                     value={requirements.business_name}
-                    placeholder="E.g. mycompany name"
                     label="Business/website name"
+                    placeholder="E.g. Microsoft"
                     id="business_name"
                     tabIndex={0}
                     autoFocus
                     required
                   />
-                  
-                  <Input
+                
+                  <ColorPalettes
                     onChange={handleRequirementsChange}
-                    placeholder="E.g. red, green"
                     value={requirements.colors}
                     label="Brand/theme color"
                     id="colors"
                   />
                 </div>
 
-                <div className="items row">
-                  <Select
+                <div className="items">
+                  <FontSelector
                     onChange={handleRequirementsChange}
                     value={requirements.fonts}
                     placeholder="E.g. Roboto"
                     label="Preferred Fonts"
-                    options={[]}
                     id="fonts"
                   />
-                  
-                  <Input
+
+                  <FileUpload
+                    onUpload={handleFiles}
                     label="Logo"
+                    id="logo"
                   />
                 </div>
               </div>
@@ -182,20 +206,19 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
             <div>
               <h2>Content</h2>
 
-              <div className="items row">
+              <div className="items">
                 <Input
+                  placeholder="E.g. https://facebook.com/mycompany,https://instagram.com/mycompany,https://x.com/mycompany"
                   onChange={handleRequirementsChange}
-                  value={requirements.domain_name}
-                  placeholder="E.g. domain.com"
-                  label="Images"
+                  value={requirements.social_media}
+                  label="Social Media Handles"
+                  id="social_media"
                 />
                 
-                <Input
-                  placeholder="E.g. https://facebook.com/mycompany, https://instagram.com/mycompany"
-                  value={requirements.social_media_handles}
-                  onChange={handleRequirementsChange}
-                  label="Social Media Handles"
-                  id="social_media_handles"
+                <FileUpload
+                  onUpload={handleFiles}
+                  label="Images"
+                  id="images"
                 />
               </div>
             </div>

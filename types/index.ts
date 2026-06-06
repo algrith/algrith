@@ -114,6 +114,18 @@ export interface TableOfContentProps {
 	}>;
 };
 
+export interface OrderRequirements {
+	images: Array<{ path?: string; url?: string; }>,
+	social_media: Array<string>;
+	colors?: Array<string>;
+	business_name: string;
+	fonts?: Array<string>;
+	domain_name?: string;
+	logo_path?: string;
+	hosting?: boolean;
+	logo_url?: string;
+};
+
 export interface AlertFeedbackAPIs {
 	warning: TypeOpen;
 	success: TypeOpen;
@@ -240,6 +252,7 @@ export interface AsyncAction {
 
 export interface OrderModel {
 	status: 'pending' | 'completed' | 'delivered' | 'cancelled';
+	requirements: OrderRequirements;
 	addons: 	Array<Addon>;
 	user?: User | string;
 	addon_total: number;

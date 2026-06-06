@@ -45,6 +45,17 @@ const orderSchema = new mongoose.Schema({
   reference: String,
   total: Number,
   paid_at: Date,
+  requirements: {
+    images: [{ path: String, url: String }],
+    social_media: [String],
+    business_name: String,
+    domain_name: String,
+    logo_path: String,
+    hosting: Boolean,
+    logo_url: String,
+    color: String,
+    font: String
+  },
   customer: {
     phone: String,
     email: String,

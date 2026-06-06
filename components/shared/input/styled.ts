@@ -1,7 +1,7 @@
 'use client';
 
 import { PasswordProps, TextAreaProps } from 'antd/es/input';
-import { darkBgGradient } from '../layout/styled';
+import { borderCss, darkBgGradient } from '../layout/styled';
 import { Checkbox, InputProps } from 'antd';
 import tw, { styled } from 'twin.macro';
 import { Group } from 'antd/es/radio';
@@ -104,6 +104,7 @@ export const FileUploadWrapper = styled.div`
 
   .ant-upload-wrapper {
     ${tw`rounded-lg border-dashed border-2 hover:border-gray-400 dark:hover:border-gray-300`};
+    ${borderCss};
     
     .ant-upload {
       ${tw`border-none`};

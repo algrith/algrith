@@ -731,3 +731,7 @@ export const Overlay = styled.div`
 		${tw`block`};
 	}
 `;
+
+export const borderCss = css`
+  ${tw`border dark:border-dark-mode-quaternary border-gray-300`};
+`;

@@ -5,8 +5,8 @@ import { CloudUploadOutlined } from '@ant-design/icons';
 import Dragger from 'antd/es/upload/Dragger';
 import { useRef, useState } from 'react';
 
+import { FileUploadWrapper, LabelWrapper } from './styled';
 import { FileUploadButtonProps } from '@/types';
-import { FileUploadWrapper } from './styled';
 import Button from '../button';
 
 const FileUpload = (props: UploadProps & { multiple?: boolean }) => {
@@ -19,29 +19,38 @@ const FileUpload = (props: UploadProps & { multiple?: boolean }) => {
   
   const handleChange: UploadProps['onChange'] = (info) => {
     const data = props.multiple ? info.fileList : info.fileList.slice(0, 1);
-    if (onUpload) onUpload(data);
     setFileList(data);
+    onUpload?.({
+      target: {
+        id: props.id,
+        value: data
+      }
+    });
   };
 
   const handleRemove = (file: UploadFile) => {
     const files = fileList.filter(({ uid }) => uid !== file.uid);
     const data = props.multiple ? files : files.slice(0, 1);
-    if (onUpload) onUpload(data);
     if (onRemove) onRemove(file);
     setFileList(data);
+    onUpload?.({
+      target: {
+        id: props.id,
+        value: data
+      }
+    });
   };
 
   return (
     <FileUploadWrapper>
-      {/* {label && (
-        <label
-          floatLabel={floatLabel}
-          required={required}
-          label={label}
+      {label && (
+        <LabelWrapper
+          className={required ? 'required' : ''}
           id={rest.id}
-          size={size}
-        />
-      )} */}
+        >
+          {label}
+        </LabelWrapper>
+      )}
 
       {isFiles ? (
         <Upload defaultFileList={fileList} onRemove={handleRemove} listType="picture" />
