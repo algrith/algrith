@@ -6,6 +6,7 @@ export const Fetch = async (props: FetchPayload) => {
 	if (!url && !path) throw new Error('One of url or path parameter must be provided');
   const accessToken = isSecure ? (await getSession() || props)?.access_token : null;
 	const apiUrl = `${process.env.NEXT_PUBLIC_API_URL}${path}`;
+  const isFormData = body instanceof FormData;
   
   let json: FetchResponse = {
     message: 'An error occurred',
@@ -16,8 +17,8 @@ export const Fetch = async (props: FetchPayload) => {
 
   const config = {
     headers: {
-      ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
-      'Content-Type': contentType ?? 'application/json'
+      ...(isFormData ? {} : { 'Content-Type': contentType ?? 'application/json' }),
+      ...(accessToken && { Authorization: `Bearer ${accessToken}` })
     },
     redirect: 'follow',
     cache: 'no-cache',
@@ -26,7 +27,7 @@ export const Fetch = async (props: FetchPayload) => {
   } as RequestInit;
 
   if (!['DELETE', 'GET'].includes(method)) {
-    config.body = JSON.stringify(body);
+    config.body = isFormData ? body : JSON.stringify(body);
   }
 
   try {

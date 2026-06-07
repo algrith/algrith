@@ -29,7 +29,7 @@ declare module 'antd' {
 	}
 
 	interface UploadProps extends UploadProps, InputLabelProps {
-		onUpload?: ({ target }: { target: { value: Array<UploadFile<File>>; id?: string; } }) => void;
+		onUpload?: ({ target }: { target: { value: Array<UploadFile>; id?: string; } }) => void;
 	};
 	
 	interface CustomInputProps extends InputLabelProps {

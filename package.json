@@ -15,6 +15,7 @@
     "@daveyplate/next-rate-limit": "^2.0.1",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@google-cloud/storage": "^7.19.0",
     "@paystack/inline-js": "^2.22.8",
     "@reduxjs/toolkit": "^2.5.0",
     "@types/mongoose": "^5.11.96",

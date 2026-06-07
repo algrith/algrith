@@ -24,6 +24,27 @@ export const formatCurrency = (value?: number | string, currency = 'USD') => {
 	}).format(value || 0);
 };
 
+export const getFileFormData = async (fileObject: File, dirName: string) => {
+  let file: File | Blob = fileObject;
+  
+  if (!('uid' in fileObject)) {
+    const url = URL.createObjectURL(fileObject);
+    file = await getBlobFromUrl(url);
+    URL.revokeObjectURL(url);
+  }
+
+  const formData = new FormData();
+  formData.append('fileName', fileObject.name);
+  formData.append('dirName', dirName);
+  formData.append('file', file);
+  return formData;
+};
+
+export const getBlobFromUrl = async (blobUrl: string) => {
+  const response = await fetch(blobUrl);
+  return await response.blob();
+};
+
 export const isValidEmail = (email: string): boolean => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	return emailRegex.test(email);

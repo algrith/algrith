@@ -44,10 +44,7 @@ const FileUpload = (props: UploadProps & { multiple?: boolean }) => {
   return (
     <FileUploadWrapper>
       {label && (
-        <LabelWrapper
-          className={required ? 'required' : ''}
-          id={rest.id}
-        >
+        <LabelWrapper className={required ? 'required' : ''} id={rest.id}>
           {label}
         </LabelWrapper>
       )}

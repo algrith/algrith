@@ -6,22 +6,22 @@ import { FontListWrapper, FontPreviewWrapper, PairingsWrapper, Wrapper } from '.
 import { SelectProps } from 'antd/es/select';
 import { LabelWrapper } from '../styled';
 
-interface FontPairing {
+type FontRole = 'heading' | 'body';
+
+export interface FontPairing {
   description: string;
   heading: FontOption;
   body: FontOption;
   name: string;
 }
 
-interface FontOption {
+export interface FontOption {
   googleFont: string;
   category: string;
   family: string;
   name: string;
   tags: string;
 }
-
-type FontRole = 'heading' | 'body';
 
 const FONTS: FontOption[] = [
   { name: 'Playfair Display',  family: "'Playfair Display', serif",     category: 'serif',      tags: 'editorial · luxury',     googleFont: 'Playfair+Display:wght@400;600;700' },

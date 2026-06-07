@@ -62,16 +62,16 @@ jobs:
       - name: Build and Push Container
         run: |-
           gcloud auth configure-docker ${{ secrets.GAR_LOCATION }}-docker.pkg.dev --quiet
-          docker build -t "${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }}:${{ github.sha }}" ./
-          docker push "${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }}:${{ github.sha }}"
+          docker build -t "${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCS_PROJECT_ID }}/${{ secrets.GCS_REPOSITORY }}/${{ secrets.GCS_SERVICE }}:${{ github.sha }}" ./
+          docker push "${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCS_PROJECT_ID }}/${{ secrets.GCS_REPOSITORY }}/${{ secrets.GCS_SERVICE }}:${{ github.sha }}"
         
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v3
         with:
-          image: ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }}:${{ github.sha }}
-          service: ${{ secrets.SERVICE }}
-          region: ${{ secrets.REGION }}
+          image: ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCS_PROJECT_ID }}/${{ secrets.GCS_REPOSITORY }}/${{ secrets.GCS_SERVICE }}:${{ github.sha }}
+          service: ${{ secrets.GCS_SERVICE }}
+          region: ${{ secrets.GCS_REGION }}
           env_vars: |
             NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY }}
             NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY }}
@@ -87,26 +87,26 @@ jobs:
       - name: Cleanup Old Images
         run: |
           gcloud artifacts docker images list \
-            ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }} \
+            ${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCS_PROJECT_ID }}/${{ secrets.GCS_REPOSITORY }}/${{ secrets.GCS_SERVICE }} \
             --format="value(version)" \
             --sort-by="~createTime" \
             | tail -n +2 \
             | xargs -I {} gcloud artifacts docker images delete \
-            "${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.REPOSITORY }}/${{ secrets.SERVICE }}@{}" \
+            "${{ secrets.GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCS_PROJECT_ID }}/${{ secrets.GCS_REPOSITORY }}/${{ secrets.GCS_SERVICE }}@{}" \
             --delete-tags \
             --quiet --async
       
       - name: Cleanup Old Revisions
         run: |
           gcloud run revisions list \
-            --service=${{ secrets.SERVICE }} \
-            --region=${{ secrets.REGION }} \
+            --service=${{ secrets.GCS_SERVICE }} \
+            --region=${{ secrets.GCS_REGION }} \
             --sort-by="~createTime" \
             --format="value(name)" \
             --project=algrith \
             | tail -n +2 \
             | xargs -I {} gcloud run revisions delete {} \
-            --region=${{ secrets.REGION }} \
+            --region=${{ secrets.GCS_REGION }} \
             --project=algrith \
             --quiet --async
 

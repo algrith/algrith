@@ -5,6 +5,7 @@ import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { LinkProps as NextLinkProps } from 'next/link';
 import { TypeOpen } from 'antd/es/message/interface';
 import { User } from 'next-auth';
+import { FontOption } from '@/components/shared/input/fonts';
 
 export type AuthTypes = 'signIn' | 'signUp' | 'forgotPassword' | 'passwordReset' | 'emailVerification' | 'resendVerification';
 export type InlineFeedbackWrapperProps = Omit<InlineFeedbackProps, 'target'> & Pick<FeedbackState, 'type'>;
@@ -115,15 +116,29 @@ export interface TableOfContentProps {
 };
 
 export interface OrderRequirements {
-	images: Array<{ path?: string; url?: string; }>,
 	social_media: Array<string>;
 	colors?: Array<string>;
 	business_name: string;
-	fonts?: Array<string>;
 	domain_name?: string;
-	logo_path?: string;
 	hosting?: boolean;
-	logo_url?: string;
+	images: Array<{
+		created_at: string,
+		mime_type: string,
+		name: string,
+		size: number,
+		url: string
+	}>;
+	logo?: {
+		created_at: string,
+		mime_type: string,
+		name: string,
+		size: number,
+		url: string
+	};
+	fonts?: {
+		heading: FontOption;
+		body: FontOption;
+	};
 };
 
 export interface AlertFeedbackAPIs {

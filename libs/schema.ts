@@ -46,15 +46,45 @@ const orderSchema = new mongoose.Schema({
   total: Number,
   paid_at: Date,
   requirements: {
-    images: [{ path: String, url: String }],
     social_media: [String],
     business_name: String,
     domain_name: String,
-    logo_path: String,
     hosting: Boolean,
     logo_url: String,
-    color: String,
-    font: String
+    colors: [String],
+    images: [
+      {
+        created_at: String,
+        mime_type: String,
+        name: String,
+        size: Number,
+        url: String,
+        _id: false
+      }
+    ],
+    fonts: {
+      heading: {
+        googleFont: String,
+        category: String,
+        family: String,
+        name: String,
+        tags: String
+      },
+      body: {
+        googleFont: String,
+        category: String,
+        family: String,
+        name: String,
+        tags: String
+      }
+    },
+    logo: {
+      created_at: String,
+      mime_type: String,
+      name: String,
+      size: Number,
+      url: String
+    }
   },
   customer: {
     phone: String,

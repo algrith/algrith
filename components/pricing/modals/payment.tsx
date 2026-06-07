@@ -6,31 +6,31 @@ import { useRouter } from 'next/navigation';
 import { ModalProps } from 'antd';
 
 import { Addon, BaseObject, OrderRequirements, Plan } from '@/types';
+import { formatCurrency, getFileFormData, randomId } from '@/utils';
 import FlutterWave from '@/components/shared/payments/flutterwave';
 import Paystack from '@/components/shared/payments/paystack';
 import ColorPalettes from '@/components/shared/input/color';
 import FontSelector from '@/components/shared/input/fonts';
+import { UploadFile, UploadProps } from 'antd/es/upload';
 import FileUpload from '@/components/shared/input/file';
-import { formatCurrency, randomId } from '@/utils';
 import { Input } from '@/components/shared/input';
 import Button from '@/components/shared/button';
 import { useAppDispatch } from '@/store/hooks';
 import { PaymentModalWrapper } from './styled';
 import useClassName from '@/hooks/class-name';
-import { UploadProps } from 'antd/es/upload';
 import { createOrder } from '../slices';
+import { Fetch } from '@/utils/api';
 import Addons from '../addons';
 
 const requirementsModel: OrderRequirements = {
   business_name: '',
   social_media: [],
+  fonts: undefined,
   domain_name: '',
+  logo: undefined,
   hosting: false,
-  logo_path: '',
-  logo_url: '',
   images: [],
-  colors: [],
-  fonts: []
+  colors: []
 };
 
 const customerModel = {
@@ -42,6 +42,7 @@ const customerModel = {
 const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   const [view, setView] = useState<'requirements' | 'payment' | 'addons'>('addons');
   const [requirements, setRequirements] = useState(requirementsModel);
+  const [uploadingFiles, setUploadingFiles] = useState(false);
   const [customer, setCustomer] = useState(customerModel);
   const [addons, setAddons] = useState<Array<Addon>>([]);
   const [open, setOpen] = useState(false);
@@ -66,23 +67,41 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     payment: 'Checkout'
   }[view];
 
-  const handleFiles: UploadProps['onUpload'] = (event) => {
-    const { value, id } = event.target;
-    console.log(value);
-    
-    // if (id === 'logo')
-
+  const handleFiles: UploadProps['onUpload'] = async (event) => {
+    const uploadedFiles: OrderRequirements['images'] = [];
+    const { value: files, id } = event.target;
     if (!id) return;
+
+    setUploadingFiles(true);
+
+    for (const file of files as Array<UploadFile>) {
+      const formData = await getFileFormData(file.originFileObj as File, `orders`);
+      
+      const { data } = await Fetch({
+        method: 'POST',
+        path: '/files',
+        body: formData
+      });
+
+      uploadedFiles.push({
+        created_at: new Date().toISOString(),
+        mime_type: file.type as string,
+        size: file.size as number,
+        name: file.name,
+        url: data.url
+      });
+    }
     
-    // setRequirements((prev) => ({
-    //   ...prev,
-    //   [id]: value
-    // }));
+    setUploadingFiles(false);
+    setRequirements((prev) => ({
+      ...prev,
+      [id]: uploadedFiles
+    }));
   };
 
   const handleRequirementsChange = (e: ChangeEvent) => {
     const { id, value } = e.target as HTMLInputElement;
-    const newValue = id === 'social_media' ? value.replaceAll(' ', '') : value;
+    const newValue = id === 'social_media' ? value.replaceAll(' ', '').split(',') : value;
     setRequirements((prev) => ({ ...prev, [id]: newValue }));
   };
 
@@ -219,6 +238,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
                   onUpload={handleFiles}
                   label="Images"
                   id="images"
+                  multiple
                 />
               </div>
             </div>
@@ -346,11 +366,8 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
           )}
 
           {view !== 'payment' ? (
-            <Button
-              htmlType="submit"
-              type="primary"
-            >
-              Continue
+            <Button htmlType="submit" type="primary">
+              {uploadingFiles ? 'Uploading files...' : 'Continue'}
             </Button>
           ) : (
             <>
