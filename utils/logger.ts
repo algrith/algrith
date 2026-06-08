@@ -1,5 +1,5 @@
 import { Middleware, isAction } from '@reduxjs/toolkit';
-import { inProduction } from '.';
+import { inProduction } from './server';
 
 export const loggerMiddleware: Middleware = api => next => action => {
 	if (!inProduction && isAction(action)) {

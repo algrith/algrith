@@ -6,7 +6,21 @@ import { FontListWrapper, FontPreviewWrapper, PairingsWrapper, Wrapper } from '.
 import { SelectProps } from 'antd/es/select';
 import { LabelWrapper } from '../styled';
 
-type FontRole = 'heading' | 'body';
+export type FontRole = 'heading' | 'body';
+
+export interface FontListProps {
+  onActiveCategory?: (category: string) => void;
+  onSelectFont?: (font: FontOption) => void;
+  onActiveRole?: (role: FontRole) => void;
+  selectedFont?: FontOption | null;
+  heading?: FontOption | null;
+  fonts: Array<FontOption>;
+  body?: FontOption | null;
+  showCategories?: boolean;
+  activeCategory?: string;
+  activeRole?: FontRole;
+  label?: string;
+}
 
 export interface FontPairing {
   description: string;
@@ -50,6 +64,74 @@ const PAIRINGS: FontPairing[] = [
 ];
 
 const CATEGORIES = ['all', 'serif', 'sans-serif', 'display', 'monospace'];
+
+export const FontsList = (props: FontListProps) => {
+  const {
+    onActiveCategory,
+    showCategories,
+    activeCategory,
+    selectedFont,
+    onActiveRole,
+    onSelectFont,
+    activeRole,
+    heading,
+    label,
+    fonts,
+    body
+  } = props;
+
+  return (
+    <FontListWrapper>
+      {label && <label>{label}</label>}
+      
+      <div className="role-tabs">
+        {(['heading', 'body'] as Array<FontRole>).map((role) => (
+          <button
+            className={activeRole === role ? 'tab active' : 'tab'}
+            onClick={() => onActiveRole?.(role)}
+            type="button"
+            key={role}
+          >
+            {role.charAt(0).toUpperCase() + role.slice(1)}
+            {role === 'heading' && heading && <span className="selected">{heading.name}</span>}
+            {role === 'body' && body && <span className="selected">{body.name}</span>}
+          </button>
+        ))}
+      </div>
+      
+      {showCategories && (
+        <div className="categories">
+          {CATEGORIES.map((category) => (
+            <button
+              className={activeCategory === category ? 'category active' : 'category'}
+              onClick={() => onActiveCategory?.(category)}
+              key={category}
+              type="button"
+            >
+              {category}
+            </button>
+          ))}
+        </div>
+      )}
+      
+      <div className="font-list">
+        {fonts.map((font) => (
+          <div
+            className={selectedFont?.name === font.name ? 'font-row selected' : 'font-row'}
+            onClick={() => onSelectFont?.(font)}
+            key={font.name}
+          >
+            <span className="preview" style={{ fontFamily: font.family }}>{font.name}</span>
+            <div className="meta">
+              <p className="name">{font.name}</p>
+              <p className="tags">{font.tags}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </FontListWrapper>
+  );
+};
 
 const FontSelector = ({ onChange, label, ...props }: SelectProps) => {
   const [loadedFonts, setLoadedFonts] = useState<Set<string>>(new Set());
@@ -146,53 +228,19 @@ const FontSelector = ({ onChange, label, ...props }: SelectProps) => {
           </div>
         </PairingsWrapper>
         
-        <FontListWrapper>
-          <label>Custom Selection</label>
-
-          <div className="role-tabs">
-            {(['heading', 'body'] as FontRole[]).map(role => (
-              <button
-                className={activeRole === role ? 'tab active' : 'tab'}
-                onClick={() => setActiveRole(role)}
-                type="button"
-                key={role}
-              >
-                {role.charAt(0).toUpperCase() + role.slice(1)}
-                {role === 'heading' && heading && <span className="selected">{heading.name}</span>}
-                {role === 'body' && body && <span className="selected">{body.name}</span>}
-              </button>
-            ))}
-          </div>
-          
-          <div className="categories">
-            {CATEGORIES.map(cat => (
-              <button
-                className={activeCategory === cat ? 'category active' : 'category'}
-                onClick={() => setActiveCategory(cat)}
-                type="button"
-                key={cat}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-          
-          <div className="font-list">
-            {filteredFonts.map((font) => (
-              <div
-                className={currentSelected?.name === font.name ? 'font-row selected' : 'font-row'}
-                onClick={() => handleSelectFont(font)}
-                key={font.name}
-              >
-                <span className="preview" style={{ fontFamily: font.family }}>{font.name}</span>
-                <div className="meta">
-                  <p className="name">{font.name}</p>
-                  <p className="tags">{font.tags}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </FontListWrapper>
+        <FontsList
+          onActiveCategory={(category) => setActiveCategory(category)}
+          onActiveRole={(role) => setActiveRole(role)}
+          onSelectFont={handleSelectFont}
+          activeCategory={activeCategory}
+          selectedFont={currentSelected}
+          label="Custom Selection"
+          activeRole={activeRole}
+          fonts={filteredFonts}
+          heading={heading}
+          showCategories
+          body={body}
+        />
         
         {(heading || body) && (
           <FontPreviewWrapper>

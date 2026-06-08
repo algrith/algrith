@@ -1,7 +1,6 @@
+import { getSignedFileUrl } from '@/libs/gcs';
 import { FilterObjectProps } from '@/types';
 import { nanoid } from '@reduxjs/toolkit';
-
-export const inProduction = process.env.NODE_ENV === 'production';
 
 export const months = {
   long: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
@@ -84,6 +83,32 @@ export const getDateFormat = (dateString?: string) => {
   return formats;
 };
 
+export const getSrc = async (src: string = '') => {
+  const hasPlaceholder = src.includes('?original=');
+  if (!isUrl(src) && !hasPlaceholder) return src;
+  let url = src;
+
+  if (hasPlaceholder) {
+    const originalSrc = src.split('?original=')[1];
+    if (!isUrl(originalSrc)) return originalSrc;
+    else url = originalSrc;
+  }
+
+  const { searchParams, hostname } = new URL(url);
+
+  const isGoogleCloudBucketUrl = hostname.includes('storage.googleapis.com');
+  if (!isGoogleCloudBucketUrl) return url;
+
+  const signedGoogleCloudBucketUrlParams = [
+    'GoogleAccessId',
+    'Signature',
+    'Expires',
+  ];
+
+  const isUnsignedGoogleCloudBucketUrl = !signedGoogleCloudBucketUrlParams.some((param) => searchParams.has(param));
+  return isUnsignedGoogleCloudBucketUrl ? await getSignedFileUrl(url) : url;
+};
+
 export const kebabToCamelCase = (str: string) => {
   return str.replace(/-(\w)/g, (match, letter) => letter.toUpperCase());
 };
@@ -95,4 +120,62 @@ export const toSnakeCase = (str: string) => {
   .toLowerCase();
 };
 
+export const isUrl = (str: string) => {
+  try {
+    const { protocol } = new URL(str);
+    return protocol === 'http:' || protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
 export const randomId = () => nanoid();
+
+export const lazyLoader = () => {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(async (entry) => {
+      if (entry.isIntersecting) {
+        const target = entry.target as HTMLImageElement | HTMLIFrameElement;
+        const src = await getSrc(target.src);
+        
+        if (src !== target.src) {
+          target.src = src;
+        }
+
+        observer.unobserve(target);
+      }
+    });
+  }, { rootMargin: '100px' });
+
+  const observe = (node?: Element) => {
+    const children = (node ?? document).querySelectorAll<HTMLImageElement | HTMLIFrameElement>('img, iframe');
+    const isObservableParentNode = node instanceof HTMLImageElement || node instanceof HTMLIFrameElement;
+    children.forEach((node) => observer.observe(node));
+    if (isObservableParentNode) observer.observe(node);
+  };
+
+  // Observe elements already in the DOM.
+  observe();
+
+  // Watch for elements added later.
+  const mutationObserver = new MutationObserver((mutations) => {
+    mutations.forEach(({ addedNodes }) => {
+      if (addedNodes.length === 0) return;
+      
+      addedNodes.forEach((node) => {
+        const isElement = node instanceof Element;
+        if (isElement) observe(node);
+      });
+    });
+  });
+
+  mutationObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+
+  return () => {
+    mutationObserver.disconnect();
+    observer.disconnect();
+  };
+};

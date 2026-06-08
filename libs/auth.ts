@@ -6,7 +6,7 @@ import { Provider } from 'next-auth/providers';
 import { decodeJwt } from 'jose';
 
 import { BaseObject, OAuthProvider } from '@/types';
-import { inProduction } from '@/utils';
+import { inProduction } from '@/utils/server';
 import { Fetch } from '@/utils/api';
 
 class ConflictingProviderError extends CredentialsSignin {

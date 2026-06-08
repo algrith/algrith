@@ -6,7 +6,7 @@ import dashboardReducer from '@/components/dashboard/reducer';
 import themeReducer from '@/components/shared/theme/reducer';
 import authReducer from '@/components/auth/reducer';
 import { loggerMiddleware } from '@/utils/logger';
-import { inProduction } from '@/utils';
+import { inProduction } from '@/utils/server';
 
 const reducers = combineReducers({
   dashboard: dashboardReducer,

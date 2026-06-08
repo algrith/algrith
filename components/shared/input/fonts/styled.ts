@@ -5,7 +5,7 @@ export const FontPreviewWrapper = styled.div`
   ${tw`flex flex-col gap-2`};
 
   > label {
-    ${tw`text-xs uppercase tracking-widest text-orange-100`};
+    ${tw`text-xs uppercase tracking-widest text-orange-300`};
   }
 
   .preview {
@@ -27,11 +27,11 @@ export const FontPreviewWrapper = styled.div`
         ${tw`flex flex-col gap-0.5`};
 
         .role {
-          ${tw`text-xs uppercase tracking-widest text-orange-100`};
+          ${tw`text-xs uppercase tracking-widest text-orange-300 dark:text-orange-100`};
         }
 
         .name {
-          ${tw`text-xs font-medium text-gray-500`}
+          ${tw`text-xs font-medium text-gray-500 dark:text-gray-300`};
         }
       }
     }
@@ -42,7 +42,7 @@ export const PairingsWrapper = styled.div`
   ${tw`flex flex-col gap-2`};
 
   > label {
-    ${tw`text-xs uppercase tracking-widest text-orange-100`};
+    ${tw`text-xs uppercase tracking-widest text-orange-300`};
   }
 
   .pairings {
@@ -55,26 +55,26 @@ export const PairingsWrapper = styled.div`
   }
 
   .pairing {
-    ${tw`w-48 relative flex-shrink-0 flex flex-col rounded-xl border p-3 cursor-pointer transition-all hover:bg-black/20`};
+    ${tw`w-48 relative flex-shrink-0 flex flex-col rounded-xl border p-3 cursor-pointer transition-all hover:bg-black/5 hover:dark:bg-black/20`};
     ${borderCss};
 
     &.selected {
       ${tw`bg-black/50`};
 
       .heading-preview {
-        ${tw`text-white`};
+        ${tw`text-gray-100 font-semibold`};
       }
       
       .body-preview {
-        ${tw`text-[rgba(255, 255, 255, 0.45)]`};
-      }
-      
-      .name {
-        ${tw`text-[#6ee09a]`};
+        ${tw`text-orange-100`};
       }
       
       .description {
-        ${tw`text-[rgba(255, 255, 255, 0.35)]`};
+        ${tw`text-orange-100`};
+      }
+      
+      .name {
+        ${tw`text-orange-300`};
       }
       
       .check {
@@ -84,7 +84,7 @@ export const PairingsWrapper = styled.div`
   }
 
   .heading-preview {
-    ${tw`text-base font-semibold m-0 mb-0.5 leading-tight text-gray-300`};
+    ${tw`text-base font-semibold m-0 mb-0.5 leading-tight dark:text-gray-300`};
   }
 
   .body-preview {
@@ -92,11 +92,11 @@ export const PairingsWrapper = styled.div`
   }
 
   .name {
-    ${tw`text-[10px] font-semibold uppercase tracking-wider m-0 text-[#b5b2a8]`};
+    ${tw`text-xs font-semibold uppercase tracking-wider m-0 text-orange-300`};
   }
 
   .description {
-    ${tw`text-[10px] m-0 text-[#b5b2a8]`};
+    ${tw`text-xs m-0 dark:text-orange-200`};
   }
   
   .check {
@@ -105,10 +105,10 @@ export const PairingsWrapper = styled.div`
 `;
 
 export const FontListWrapper = styled.div`
-  ${tw`flex flex-col gap-2`};
+  ${tw`flex flex-col gap-2 w-full`};
 
   > label {
-    ${tw`text-xs uppercase tracking-widest text-orange-100`};
+    ${tw`text-xs uppercase tracking-widest text-orange-300`};
   }
   
   .role-tabs {
@@ -116,7 +116,7 @@ export const FontListWrapper = styled.div`
     ${borderCss};
 
     .tab {
-      ${tw`flex-1 flex items-center justify-center gap-1.5 text-xs py-2 rounded-lg transition-all text-orange-100 hover:text-orange-200`};
+      ${tw`flex-1 font-semibold flex items-center justify-center gap-1.5 text-xs py-2 rounded-lg transition-all text-gray-600 dark:text-orange-100 hover:text-gray-500 hover:dark:text-orange-200`};
       
       .selected {
         ${tw`text-xs text-gray-400 truncate max-w-[80px]`};
@@ -124,6 +124,10 @@ export const FontListWrapper = styled.div`
       
       &.active {
         ${tw`bg-black/50 text-orange-300`};
+
+        .selected {
+          ${tw`text-gray-300 dark:text-gray-400`};
+        }
       }
     }
   }
@@ -132,51 +136,55 @@ export const FontListWrapper = styled.div`
     ${tw`flex gap-1 flex-wrap`};
 
     .category {
-      ${tw`text-xs px-3 py-1.5 rounded-lg capitalize transition-all text-orange-100 hover:text-orange-200`};
+      ${tw`text-xs px-3 py-1.5 rounded-lg capitalize transition-all dark:text-orange-100 hover:text-orange-400 hover:dark:text-orange-200`};
       border: 0.5px solid transparent;
 
       &.active {
-        ${tw`bg-black/50 text-orange-300`};
+        ${tw`bg-black/50 text-orange-200 dark:text-orange-300`};
       }
     }
   }
 
   .font-list {
-    ${tw`flex flex-col gap-1.5 overflow-y-auto min-h-[220px] pr-1`};
+    ${tw`flex flex-col gap-1.5 overflow-y-auto min-h-32 pr-1`};
     scrollbar-width: thin;
   }
 
   .font-row {
-    ${tw`flex items-center justify-between px-3 py-2.5 rounded-xl border cursor-pointer transition-all hover:bg-black/20`};
+    ${tw`flex items-center justify-between px-3 py-2.5 rounded-xl border cursor-pointer transition-all hover:bg-black/5 hover:dark:bg-black/10`};
     ${borderCss};
+    
+    .preview {
+      ${tw`text-base dark:text-gray-300`};
+    }
+    
+    .meta {
+      ${tw`text-right`};
+    }
 
+    .name {
+      ${tw`text-xs font-medium m-0 text-orange-400 dark:text-orange-100`};
+    }
+
+    .tags {
+      ${tw`text-xs m-0 text-gray-500 dark:text-gray-400`};
+    }
+    
     &.selected {
       ${tw`bg-black/50`};
 
       .preview {
-        ${tw`text-white`};
+        ${tw`font-semibold text-gray-100`};
       }
       
       .name {
-        ${tw`text-orange-300`};
+        ${tw`font-semibold text-orange-300`};
+      }
+      
+      .tags {
+        ${tw`text-gray-200 dark:text-gray-400`};
       }
     }
-  }
-
-  .preview {
-    ${tw`text-base text-gray-300`};
-  }
-  
-  .meta {
-    ${tw`text-right`};
-  }
-
-  .name {
-    ${tw`text-xs font-medium m-0 text-orange-100`};
-  }
-
-  .tags {
-    ${tw`text-[10px] m-0 text-gray-400`};
   }
 `;
 

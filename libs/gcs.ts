@@ -30,9 +30,10 @@ export const getSignedFileUrl = async (fileUrl: string): Promise<string> => {
 
   try {
     const [url] = await storage.bucket(bucket).file(key).getSignedUrl({
-      action: 'read',
-      expires: Date.now() + 60 * 60 * 1000, // 1 hour
+      expires: Date.now() + 60 * 60 * 1000,
+      action: 'read'
     });
+    
     return url;
   } catch (error) {
     console.error('Error getting signed URL:', error);

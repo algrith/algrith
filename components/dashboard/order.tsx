@@ -1,20 +1,29 @@
 'use client';
 
+import { Divider, Image, Spin } from 'antd';
 import { useParams } from 'next/navigation';
-import { Divider, Spin } from 'antd';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { BillingCycleBadgeWrapper, MainViewWrapper, SummaryWrapper, AddonWrapper, InfoWrapper, PlanWrapper } from './styled';
 import { StatusBadgeWrapper } from '@/components/shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { FontRole, FontsList } from '../shared/input/fonts';
+import { Swatches } from '../shared/input/color/palette';
 import { formatCurrency, getDateFormat } from '@/utils';
+import useLazyLoader from '@/hooks/lazy-loader';
 import Link from '../shared/button/link';
 import { fetchOrder } from './slices';
 
 const Order = () => {
   const { order: { data: order, loading } } = useAppSelector((state) => state.dashboard);
+  const [activeFontRole, setActiveFontRole] = useState<FontRole>('heading');
   const dispatch = useAppDispatch();
   const { orderId } = useParams();
+  useLazyLoader();
+
+  const handleActiveFontRole = (role: FontRole) => {
+    setActiveFontRole(role);
+  };
 
   useEffect(() => {
     if (!orderId || typeof orderId !== 'string') return;
@@ -107,6 +116,100 @@ const Order = () => {
                     </div>
                   ))}
                 </AddonWrapper>
+
+                {order.requirements && (
+                  <InfoWrapper>
+                    <h3>Requirements</h3>
+
+                    <div className="info">
+                      <div className="item">
+                        <p className="label">Business/Website Name</p>
+                        <p className="value">{order.requirements.business_name}</p>
+                      </div>
+
+                      <div className="item">
+                        <p className="label">Domain Name</p>
+                        <p className="value">
+                          {order.requirements.domain_name || 'N/A'}
+                        </p>
+                      </div>
+                      
+                      <div className="item">
+                        <p className="label">Theme Colors</p>
+                        <p className="value">
+                          {order.requirements.colors ? (
+                            <Swatches palette={order.requirements.colors} />
+                          ) : (
+                            'N/A'
+                          )}
+                        </p>
+                      </div>
+
+                      <div className="item">
+                        <p className="label">Logo</p>
+                        <p className="value">
+                          {order.requirements.logo ? (
+                            <Image
+                              src={`/images/placeholder-white.webp?original=${order.requirements.logo?.url}`}
+                              height={100}
+                              width={120}
+                            />
+                          ) : (
+                            'N/A'
+                          )}
+                        </p>
+                      </div>
+
+                      <div className="item">
+                        <p className="label">Social Media Handles</p>
+                        <p className="value col">
+                          {Boolean(order.requirements.social_media.length) ? (
+                            order.requirements.social_media.map((link) => (
+                              <span key={link}>{link}</span>
+                            ))
+                          ) : (
+                            'N/A'
+                          )}
+                        </p>
+                      </div>
+                      
+                      <div className="item">
+                        <p className="label">Fonts</p>
+                        <p className="value">
+                          {order.requirements.fonts ? (
+                            <FontsList
+                              selectedFont={order.requirements.fonts[activeFontRole]}
+                              fonts={Object.values(order.requirements.fonts)}
+                              onActiveRole={handleActiveFontRole}
+                              {...order.requirements.fonts}
+                              activeRole={activeFontRole}
+                            />
+                          ) : (
+                            'N/A'
+                          )}
+                        </p>
+                      </div>
+
+                      <div className="item">
+                        <p className="label">Images</p>
+                        <p className="value">
+                          {Boolean(order.requirements.images.length) ? (
+                            order.requirements.images.map((image) => (
+                              <Image
+                                src={`/images/placeholder-white.webp?original=${image.url}`}
+                                key={image.url}
+                                height={100}
+                                width={120}
+                              />
+                            ))
+                          ) : (
+                            'N/A'
+                          )}
+                        </p>
+                      </div>
+                    </div>
+                  </InfoWrapper>
+                )}
               </div>
               
               <div className="column">
@@ -160,7 +263,7 @@ const Order = () => {
                   </div>
                 </SummaryWrapper>
 
-                <div className="links">
+                {/* <div className="links">
                   <Link href="">
                     Update Status
                   </Link>
@@ -168,7 +271,7 @@ const Order = () => {
                   <Link href="">
                     Download Invoice
                   </Link>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

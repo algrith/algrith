@@ -2,7 +2,7 @@
 
 import tw, { styled } from 'twin.macro';
 
-import { squareWaves } from '@/components/shared/layout/styled';
+import { borderCss, squareWaves } from '@/components/shared/layout/styled';
 
 export const BillingCycleBadgeWrapper = styled.span`
   ${tw`text-sm font-semibold px-2 py-0.5 rounded-full w-[fit-content] capitalize`};
@@ -166,17 +166,26 @@ export const InfoWrapper = styled(CardWrapper)`
     ${tw`flex flex-col gap-5`};
 
     .item {
-      ${tw`flex justify-between gap-2 text-xm`};
+      ${tw`flex justify-between gap-4 text-xm`};
       
       .label {
         ${tw`text-gray-500 dark:text-gray-400 tracking-widest`};
       }
       
       .value {
-        ${tw`dark:text-gray-200 font-mono`};
+        ${tw`max-w-[60%] flex gap-3 dark:text-gray-200 font-mono flex-grow justify-end`};
 
+        img, .ant-image-mask {
+          ${tw`rounded-xl`};
+          ${borderCss};
+        }
+        
         &.capitalize {
           ${tw`capitalize`};
+        }
+        
+        &.col {
+          ${tw`flex-col items-end`};
         }
       }
     }

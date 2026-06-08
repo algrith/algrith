@@ -2,11 +2,12 @@
 
 import { useEffect, useState } from 'react';
 
-import { ColorPickerWrapper, PaletteWrapper, PresetPalettesWrapper, Wrapper } from './styled';
+import { ColorPickerWrapper, Wrapper } from './styled';
 import { SelectProps } from 'antd/es/select';
 import { LabelWrapper } from '../styled';
+import Palette from './palette';
 
-interface Preset {
+export interface Preset {
   colors: string[];
   name: string;
   tags: string;
@@ -87,48 +88,19 @@ const ColorPalettes = ({ placeholder = '#000000', onChange, label, ...props }: S
       {label && <LabelWrapper>{label}</LabelWrapper>}
 
       <Wrapper>
-        <PresetPalettesWrapper>
-          <label>Preset Palettes</label>
-
-          <div className="palettes">
-            {PRESET_PALETTES.map((preset, index) => (
-              <div
-                className={selectedPreset === index ? 'palette selected' : 'palette'}
-                onClick={() => handleSelectPreset(index)}
-                key={preset.name}
-              >
-                <div className="metadata">
-                  <p className="name">{preset.name}</p>
-                  <p className="tag">{preset.tags}</p>
-                  <span className="check">✓</span>
-                </div>
-
-                <div className="swatch-wrapper">
-                  {preset.colors.map((color) => (
-                    <span
-                      style={{ backgroundColor: color }}
-                      className="swatch"
-                      key={color}
-                    />
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </PresetPalettesWrapper>
-
+        <Palette
+          onSelectPreset={handleSelectPreset}
+          presetPalettes={PRESET_PALETTES}
+          selectedPreset={selectedPreset}
+          label="Preset Palettes"
+        />
+        
         {Boolean(palette.length) && (
-          <PaletteWrapper>
-            <label>Your Palette</label>
-            
-            <div className="palette">
-              {palette.map((color, index) => (
-                <div style={{ backgroundColor: color }} className="swatch" key={`${color}-${index}`} title={color}>
-                  <button onClick={() => handleRemoveSwatch(index)} aria-label="Remove color">×</button>
-                </div>
-              ))}
-            </div>
-          </PaletteWrapper>
+          <Palette
+            onRemoveSwatch={handleRemoveSwatch}
+            label="Your Palette"
+            palette={palette}
+          />
         )}
 
         <ColorPickerWrapper>
