@@ -173,15 +173,19 @@ export const InfoWrapper = styled(CardWrapper)`
       }
       
       .value {
-        ${tw`md:max-w-[60%] flex gap-3 dark:text-gray-200 font-mono flex-grow justify-end`};
-
-        img, .ant-image-mask {
-          ${tw`rounded-xl`};
-          ${borderCss};
-        }
+        ${tw`flex-wrap max-w-full lg:max-w-[70%] xl:max-w-[60%] flex gap-3 dark:text-gray-200 font-mono flex-grow justify-end`};
         
         &.capitalize {
           ${tw`capitalize`};
+        }
+
+        .ant-image {
+          ${tw`rounded-xl overflow-hidden h-20 p-1.5`};
+          ${borderCss};
+          
+          img {
+            ${tw`h-full`};
+          }
         }
         
         &.col {

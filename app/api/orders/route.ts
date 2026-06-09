@@ -110,7 +110,7 @@ const GET = authorization(async (request, ctx, user) => {
 const fetchOrders = async (user: User) => {
   await dbConnect();
   const options = user.role !== 'admin' ? { user: user.id } : {};
-  return await Order.find(options);
+  return await Order.find(options).sort({ createdAt: -1 });
 };
 
 export { POST, GET };

@@ -11,6 +11,7 @@ import { StatusBadgeWrapper, TableWrapper } from '../shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { Addon, OrderModel } from '@/types';
 import { ColumnsType } from 'antd/es/table';
+import { MainViewWrapper } from './styled';
 import { getDateFormat } from '@/utils';
 import { fetchOrders } from './slices';
 
@@ -102,15 +103,23 @@ const Orders = () => {
   }, []);
 
   return (
-    <TableWrapper
-      columns={columns as ColumnsType<unknown>}
-      scroll={{ x: 'max-content' }}
-      dataSource={orders.list}
-      loading={orders.loading}
-      pagination={false}
-      onRow={onRow}
-      rowKey="id"
-    />
+    <MainViewWrapper>
+      <header>
+        <h1>Orders</h1>
+      </header>
+
+      <div className="content">
+        <TableWrapper
+          columns={columns as ColumnsType<unknown>}
+          scroll={{ x: 'max-content' }}
+          dataSource={orders.list}
+          loading={orders.loading}
+          pagination={false}
+          onRow={onRow}
+          rowKey="id"
+        />
+      </div>
+    </MainViewWrapper>
   );
 };
 

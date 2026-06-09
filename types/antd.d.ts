@@ -28,10 +28,6 @@ declare module 'antd' {
 		prefixIcon?: ReactNode;
 	}
 
-	interface UploadProps extends UploadProps, InputLabelProps {
-		onUpload?: ({ target }: { target: { value: Array<UploadFile>; id?: string; } }) => void;
-	};
-	
 	interface CustomInputProps extends InputLabelProps {
 		description?: ReactNode;
 		actionText?: ReactNode;
@@ -47,7 +43,7 @@ declare module 'antd' {
 	
 	export interface AvatarProps extends AvatarProps {
 		canUploadProfilePhoto?: boolean;
-	};
+	}
 
 	interface CheckboxProps extends CheckboxProps {
 		label?: string;

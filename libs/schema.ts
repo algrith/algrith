@@ -27,6 +27,15 @@ const applyVirtuals = (schema: Schema) => {
   return schema;
 };
 
+const FileSchema = {
+  created_at: String,
+  mime_type: String,
+  name: String,
+  size: Number,
+  url: String,
+  _id: false
+};
+
 const schemaOptions = { timestamps: true };
 
 const tokenSchema = new mongoose.Schema({
@@ -48,20 +57,11 @@ const orderSchema = new mongoose.Schema({
   requirements: {
     social_media: [String],
     business_name: String,
+    images: [FileSchema],
     domain_name: String,
+    logo: FileSchema,
     hosting: Boolean,
-    logo_url: String,
     colors: [String],
-    images: [
-      {
-        created_at: String,
-        mime_type: String,
-        name: String,
-        size: Number,
-        url: String,
-        _id: false
-      }
-    ],
     fonts: {
       heading: {
         googleFont: String,
@@ -77,13 +77,6 @@ const orderSchema = new mongoose.Schema({
         name: String,
         tags: String
       }
-    },
-    logo: {
-      created_at: String,
-      mime_type: String,
-      name: String,
-      size: Number,
-      url: String
     }
   },
   customer: {

@@ -11,6 +11,7 @@ import { User } from 'next-auth';
 import { StatusBadgeWrapper, TableWrapper } from '../shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { ColumnsType } from 'antd/es/table';
+import { MainViewWrapper } from './styled';
 import { getDateFormat } from '@/utils';
 import { fetchUsers } from './slices';
 
@@ -102,15 +103,23 @@ const Users = () => {
   }, []);
 
   return (
-    <TableWrapper
-      columns={columns as ColumnsType<unknown>}
-      scroll={{ x: 'max-content' }}
-      dataSource={users.list}
-      loading={users.loading}
-      pagination={false}
-      onRow={onRow}
-      rowKey="id"
-    />
+    <MainViewWrapper>
+      <header>
+        <h1>Users</h1>
+      </header>
+
+      <div className="content">
+        <TableWrapper
+          columns={columns as ColumnsType<unknown>}
+          scroll={{ x: 'max-content' }}
+          dataSource={users.list}
+          loading={users.loading}
+          pagination={false}
+          onRow={onRow}
+          rowKey="id"
+        />
+      </div>
+    </MainViewWrapper>
   );
 };
 

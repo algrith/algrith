@@ -11,14 +11,12 @@ import FlutterWave from '@/components/shared/payments/flutterwave';
 import Paystack from '@/components/shared/payments/paystack';
 import ColorPalettes from '@/components/shared/input/color';
 import FontSelector from '@/components/shared/input/fonts';
-import { UploadFile, UploadProps } from 'antd/es/upload';
 import FileUpload from '@/components/shared/input/file';
 import { Input } from '@/components/shared/input';
 import Button from '@/components/shared/button';
-import { useAppDispatch } from '@/store/hooks';
 import { PaymentModalWrapper } from './styled';
 import useClassName from '@/hooks/class-name';
-import { createOrder } from '../slices';
+import { UploadFile } from 'antd/es/upload';
 import { Fetch } from '@/utils/api';
 import Addons from '../addons';
 
@@ -41,17 +39,18 @@ const customerModel = {
 
 const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   const [view, setView] = useState<'requirements' | 'payment' | 'addons'>('addons');
+  const [loading, setLoading] = useState({ files: false, order: false });
   const [requirements, setRequirements] = useState(requirementsModel);
-  const [uploadingFiles, setUploadingFiles] = useState(false);
   const [customer, setCustomer] = useState(customerModel);
   const [addons, setAddons] = useState<Array<Addon>>([]);
+  const isLoading = Object.values(loading).some(Boolean);
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
-  const dispatch = useAppDispatch();
   const router = useRouter();
   const discount = 0;
   const tax = 0;
 
+  const buttonText = loading.files ? 'Uploading files...' : loading.order ? 'Creating order' : 'Proceed to Payment';
   const description = `Payment for ${plan?.name}${addons.length ? ` and ${addons.length} add-ons` : ''}`;
   const addonsTotal = addons.reduce((acc, { price }) => acc + price, 0);
   const total = ((plan?.price || 0) + addonsTotal + tax - discount);
@@ -67,41 +66,13 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     payment: 'Checkout'
   }[view];
 
-  const handleFiles: UploadProps['onUpload'] = async (event) => {
-    const uploadedFiles: OrderRequirements['images'] = [];
-    const { value: files, id } = event.target;
-    if (!id) return;
-
-    setUploadingFiles(true);
-
-    for (const file of files as Array<UploadFile>) {
-      const formData = await getFileFormData(file.originFileObj as File, `orders`);
-      
-      const { data } = await Fetch({
-        method: 'POST',
-        path: '/files',
-        body: formData
-      });
-
-      uploadedFiles.push({
-        created_at: new Date().toISOString(),
-        mime_type: file.type as string,
-        size: file.size as number,
-        name: file.name,
-        url: data.url
-      });
-    }
-    
-    setUploadingFiles(false);
-    setRequirements((prev) => ({
-      ...prev,
-      [id]: uploadedFiles
-    }));
-  };
-
   const handleRequirementsChange = (e: ChangeEvent) => {
     const { id, value } = e.target as HTMLInputElement;
-    const newValue = id === 'social_media' ? value.replaceAll(' ', '').split(',') : value;
+    let newValue: Array<string> | string = value;
+    
+    if (id === 'social_media') newValue = value.replaceAll(' ', '').split(',');
+    if (id === 'logo' && Array.isArray(value)) newValue = value[0];
+    if (id === 'domain_name') newValue = value.toLowerCase();
     setRequirements((prev) => ({ ...prev, [id]: newValue }));
   };
 
@@ -114,22 +85,31 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     setAddons(addons);
   };
 
-  const handleSuccess = (data: BaseObject) => {
-    dispatch(createOrder({
-      paid_at: data.created_at ?? new Date().toISOString(),
-      reference: data.tx_ref ?? data.reference,
-      addon_total: addonsTotal,
-      plan: plan as Plan,
-      status: 'pending',
-      id: randomId(),
-      requirements,
-      customer,
-      addons,
-      total
-    }));
+  const handleSuccess = async (data: BaseObject) => {
+    const requirements = await uploadOrderFiles();
+    
+    setLoading((prev) => ({ ...prev, order: true }));
+    
+    const { success } = await Fetch({
+      path: '/orders',
+      method: 'POST',
+      body: {
+        paid_at: data.created_at ?? new Date().toISOString(),
+        reference: data.tx_ref ?? data.reference,
+        addon_total: addonsTotal,
+        plan: plan as Plan,
+        status: 'pending',
+        id: randomId(),
+        requirements,
+        customer,
+        addons,
+        total
+      }
+    });
 
+    setLoading((prev) => ({ ...prev, order: false }));
+    if (success) router.push('/dashboard/orders');
     handleReset();
-    router.push('/dashboard/orders');
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -142,6 +122,45 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     if (view === 'addons') {
       setView('requirements');
     }
+  };
+
+  const uploadOrderFiles = async () => {
+    let newRequirements: OrderRequirements = { ...requirements };
+    setLoading((prev) => ({ ...prev, files: true }));
+
+    for (const [field, value] of Object.entries(requirements)) {
+      if (!['images', 'logo'].includes(field) || !value) continue;
+      const isObject = !Array.isArray(value);
+
+      const files: Array<UploadFile> | OrderRequirements['images'] = isObject ? [value] : value;
+      
+      for (const [index, file] of (files as Array<UploadFile>).entries()) {
+        const formData = await getFileFormData(file.originFileObj as File, `orders`);
+        
+        const { data } = await Fetch({
+          method: 'POST',
+          path: '/files',
+          body: formData
+        });
+
+        files[index] = {
+          created_at: new Date().toISOString(),
+          mime_type: file.type as string,
+          size: file.size as number,
+          name: file.name,
+          url: data.url
+        };
+      }
+
+      newRequirements = {
+        ...newRequirements,
+        [field]: isObject ? files[0] : files
+      };
+    }
+    
+    setLoading((prev) => ({ ...prev, files: false }));
+    setRequirements(newRequirements);
+    return newRequirements;
   };
 
   const handleRequirements = () => {
@@ -214,7 +233,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
                   />
 
                   <FileUpload
-                    onUpload={handleFiles}
+                    onChange={handleRequirementsChange}
                     label="Logo"
                     id="logo"
                   />
@@ -235,7 +254,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
                 />
                 
                 <FileUpload
-                  onUpload={handleFiles}
+                  onChange={handleRequirementsChange}
                   label="Images"
                   id="images"
                   multiple
@@ -360,35 +379,45 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
 
         <div className="footer">
           {view !== 'addons' && (
-            <Button onClick={handleBack} type="secondary">
+            <Button onClick={handleBack} disabled={isLoading} type="secondary" size="small">
               Back
             </Button>
           )}
 
           {view !== 'payment' ? (
-            <Button htmlType="submit" type="primary">
-              {uploadingFiles ? 'Uploading files...' : 'Continue'}
+            <Button disabled={isLoading} htmlType="submit" type="primary" size="small">
+              Continue
             </Button>
           ) : (
             <>
               <FlutterWave
                 onSuccess={handleSuccess}
                 description={description}
+                disabled={isLoading}
+                loading={isLoading}
                 htmlType="submit"
                 amount={total}
                 block={false}
                 {...customer}
-              />
+                size="small"
+              >
+                {buttonText}
+              </FlutterWave>
 
               {/* <Paystack
                 onSuccess={handleSuccess}
                 description={description}
+                disabled={isLoading}
+                loading={isLoading}
                 title={plan?.name}
                 htmlType="submit"
                 amount={total}
                 block={false}
                 {...customer}
-              /> */}
+                size="small"
+              >
+                {buttonText}
+              </Paystack> */}
             </>
           )}
         </div>

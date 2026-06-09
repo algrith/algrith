@@ -1,31 +1,37 @@
 'use client';
 
-import { UploadProps, UploadFile, Upload } from 'antd';
+import { UploadProps as AntUploadProps, UploadFile, Upload, InputLabelProps } from 'antd';
+import Dragger, { DraggerProps } from 'antd/es/upload/Dragger';
 import { CloudUploadOutlined } from '@ant-design/icons';
-import Dragger from 'antd/es/upload/Dragger';
-import { useRef, useState } from 'react';
+import { ChangeEvent, useRef, useState } from 'react';
 
 import { FileUploadWrapper, LabelWrapper } from './styled';
 import { FileUploadButtonProps } from '@/types';
 import Button from '../button';
 
-const FileUpload = (props: UploadProps & { multiple?: boolean }) => {
-  const { accept = '*', onUpload, onRemove, multiple = false, required, label, size, ...rest } = props;
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const isFiles = Boolean(fileList.length);
+interface UploadProps extends Omit<AntUploadProps, 'onChange' | 'onRemove'>, InputLabelProps {
+  onChange?: (e: ChangeEvent<Element>) => void;
+  onRemove?: (file: UploadFile) => void;
+  multiple?: boolean;
+}
 
+const FileUpload = (props: UploadProps) => {
+  const { accept = '*', onChange, onRemove, multiple = false, required, label, size, ...rest } = props;
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
   const format = accept.replaceAll('.', '').toUpperCase();
   const showFormat = format && format !== '*';
+  const isFiles = Boolean(fileList.length);
+  const id = props.id ?? '';
   
-  const handleChange: UploadProps['onChange'] = (info) => {
+  const handleChange: DraggerProps['onChange'] = (info) => {
     const data = props.multiple ? info.fileList : info.fileList.slice(0, 1);
     setFileList(data);
-    onUpload?.({
+    onChange?.({
       target: {
-        id: props.id,
-        value: data
+        value: data,
+        id
       }
-    });
+    } as unknown as ChangeEvent<Element>);
   };
 
   const handleRemove = (file: UploadFile) => {
@@ -33,12 +39,12 @@ const FileUpload = (props: UploadProps & { multiple?: boolean }) => {
     const data = props.multiple ? files : files.slice(0, 1);
     if (onRemove) onRemove(file);
     setFileList(data);
-    onUpload?.({
+    onChange?.({
       target: {
-        id: props.id,
-        value: data
+        value: data,
+        id
       }
-    });
+    } as unknown as ChangeEvent<Element>);
   };
 
   return (

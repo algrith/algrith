@@ -17,7 +17,7 @@ const GET = authorization(async (request, ctx, user) => {
 
   try {
     await dbConnect();
-    const orders = await Order.find({ user: userId });
+    const orders = await Order.find({ user: userId }).sort({ createdAt: -1 });
 
     return Response.json({
       message: 'User orders retrieved!',

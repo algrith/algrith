@@ -45,13 +45,13 @@ const Order = () => {
 
           <div className="content">
             <div className="metadata">
-              <p>Date: {getDateFormat(order?.paid_at).full}</p>
+              <div>Date: {getDateFormat(order?.paid_at).full}</div>
 
-              <p>
+              <div>
                 Status: <StatusBadgeWrapper className={order.status}>
                   {order.status}
                 </StatusBadgeWrapper>
-              </p>
+              </div>
             </div>
 
             <div className="columns">
@@ -71,14 +71,14 @@ const Order = () => {
                         )}
                       </h4>
 
-                      <p>{order.plan.description}</p>
+                      <div>{order.plan.description}</div>
                     </div>
 
                     <div className="right">
-                      <p className="price">{formatCurrency(order.plan.price)}</p>
-                      <p className="billing-cycle">
+                      <div className="price">{formatCurrency(order.plan.price)}</div>
+                      <div className="billing-cycle">
                         {order.plan.one_time_payment ? 'One-time payment' : 'Recurring'}
-                      </p>
+                      </div>
                     </div>
                   </div>
 
@@ -104,7 +104,7 @@ const Order = () => {
                         </div>
 
                         <div className="text">
-                          <p>{addon.text}</p>
+                          <div>{addon.text}</div>
                           
                           <BillingCycleBadgeWrapper className={addon.billing_cycle}>
                             {addon.billing_cycle}
@@ -112,7 +112,7 @@ const Order = () => {
                         </div>
                       </div>
 
-                      <p className="price">{formatCurrency(addon.price)}</p>
+                      <div className="price">{formatCurrency(addon.price)}</div>
                     </div>
                   ))}
                 </AddonWrapper>
@@ -123,46 +123,42 @@ const Order = () => {
 
                     <div className="info">
                       <div className="item">
-                        <p className="label">Business/Website Name</p>
-                        <p className="value">{order.requirements.business_name}</p>
+                        <div className="label">Business/Website Name</div>
+                        <div className="value">{order.requirements.business_name}</div>
                       </div>
 
                       <div className="item">
-                        <p className="label">Domain Name</p>
-                        <p className="value">
+                        <div className="label">Domain Name</div>
+                        <div className="value">
                           {order.requirements.domain_name || 'N/A'}
-                        </p>
+                        </div>
                       </div>
                       
                       <div className="item">
-                        <p className="label">Theme Colors</p>
-                        <p className="value">
+                        <div className="label">Theme Colors</div>
+                        <div className="value">
                           {order.requirements.colors ? (
                             <Swatches palette={order.requirements.colors} />
                           ) : (
                             'N/A'
                           )}
-                        </p>
+                        </div>
                       </div>
 
                       <div className="item">
-                        <p className="label">Logo</p>
-                        <p className="value">
+                        <div className="label">Logo</div>
+                        <div className="value">
                           {order.requirements.logo ? (
-                            <Image
-                              src={`/images/placeholder-white.webp?original=${order.requirements.logo?.url}`}
-                              height={100}
-                              width={120}
-                            />
+                            <Image src={`/images/placeholder-white.webp?original=${order.requirements.logo?.url}`} />
                           ) : (
                             'N/A'
                           )}
-                        </p>
+                        </div>
                       </div>
 
                       <div className="item">
-                        <p className="label">Social Media Handles</p>
-                        <p className="value col">
+                        <div className="label">Social Media Handles</div>
+                        <div className="value col">
                           {Boolean(order.requirements.social_media.length) ? (
                             order.requirements.social_media.map((link) => (
                               <span key={link}>{link}</span>
@@ -170,12 +166,12 @@ const Order = () => {
                           ) : (
                             'N/A'
                           )}
-                        </p>
+                        </div>
                       </div>
                       
                       <div className="item">
-                        <p className="label">Fonts</p>
-                        <p className="value">
+                        <div className="label">Fonts</div>
+                        <div className="value">
                           {order.requirements.fonts ? (
                             <FontsList
                               selectedFont={order.requirements.fonts[activeFontRole]}
@@ -187,25 +183,23 @@ const Order = () => {
                           ) : (
                             'N/A'
                           )}
-                        </p>
+                        </div>
                       </div>
 
                       <div className="item">
-                        <p className="label">Images</p>
-                        <p className="value">
+                        <div className="label">Images</div>
+                        <div className="value">
                           {Boolean(order.requirements.images.length) ? (
                             order.requirements.images.map((image) => (
                               <Image
                                 src={`/images/placeholder-white.webp?original=${image.url}`}
                                 key={image.url}
-                                height={100}
-                                width={120}
                               />
                             ))
                           ) : (
                             'N/A'
                           )}
-                        </p>
+                        </div>
                       </div>
                     </div>
                   </InfoWrapper>
@@ -218,16 +212,16 @@ const Order = () => {
 
                   <div className="info">
                     <div className="item">
-                      <p className="label">Name</p>
-                      <p className="value">{order.customer.name}</p>
+                      <div className="label">Name</div>
+                      <div className="value">{order.customer.name}</div>
                     </div>
                     <div className="item">
-                      <p className="label">Email</p>
-                      <p className="value">{order.customer.email}</p>
+                      <div className="label">Email</div>
+                      <div className="value">{order.customer.email}</div>
                     </div>
                     <div className="item">
-                      <p className="label">Phone</p>
-                      <p className="value">{order.customer.phone}</p>
+                      <div className="label">Phone</div>
+                      <div className="value">{order.customer.phone}</div>
                     </div>
                   </div>
                 </InfoWrapper>
@@ -236,29 +230,29 @@ const Order = () => {
                   <h3>Payment Summary</h3>
 
                   <div className="summary">
-                    <p className="item">
+                    <div className="item">
                       <span>Plan ({order.plan.name})</span>
                       <span>{formatCurrency(order.plan.price)}</span>
-                    </p>
-
-                    <p className="item">
-                      <span>Add-ons ({order.addons.length})</span>
-                      <span>{formatCurrency(order.addon_total)}</span>
-                    </p>
-
-                    <p className="item total">
-                      <span>Total</span>
-                      <span>{formatCurrency(order.total)}</span>
-                    </p>
-                    
-                    <div className="item">
-                      <p className="label">Paid At</p>
-                      <p className="value">{getDateFormat(order.paid_at).full}</p>
                     </div>
 
                     <div className="item">
-                      <p className="label">Order ID</p>
-                      <p className="value">{order.id}</p>
+                      <span>Add-ons ({order.addons.length})</span>
+                      <span>{formatCurrency(order.addon_total)}</span>
+                    </div>
+
+                    <div className="item total">
+                      <span>Total</span>
+                      <span>{formatCurrency(order.total)}</span>
+                    </div>
+                    
+                    <div className="item">
+                      <div className="label">Paid At</div>
+                      <div className="value">{getDateFormat(order.paid_at).full}</div>
+                    </div>
+
+                    <div className="item">
+                      <div className="label">Order ID</div>
+                      <div className="value">{order.id}</div>
                     </div>
                   </div>
                 </SummaryWrapper>

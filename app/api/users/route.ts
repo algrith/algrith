@@ -35,7 +35,7 @@ const GET = authorization(async (request, ctx, user) => {
 
   try {
     await dbConnect();
-    const users = await User.find({ });
+    const users = await User.find({ }).sort({ createdAt: -1 });
     
     return Response.json({
       message: 'Users retrieved successfully',
