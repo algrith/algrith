@@ -180,7 +180,7 @@ export const InfoWrapper = styled(CardWrapper)`
         }
 
         .ant-image {
-          ${tw`rounded-xl overflow-hidden h-auto lg:h-20 p-1.5`};
+          ${tw`rounded-xl overflow-hidden w-auto lg:h-20 p-1.5`};
           ${borderCss};
           
           img {
