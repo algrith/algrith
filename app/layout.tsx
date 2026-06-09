@@ -80,12 +80,10 @@ export const metadata: Metadata = {
       },
     ]
   },
-  // facebook: {
-  //   appId: '123456789012345',
-  // },
   twitter: {
     description: 'Turning ideas into impactful digital products, designs, and experiences.',
     title: 'Algrith: Strategic Digital Solutions for Modern Businesses.',
+    card: 'summary_large_image',
     images: [
       {
         alt: 'Algrith - Strategic Digital Solutions',
@@ -111,6 +109,7 @@ export const metadata: Metadata = {
     index: inProduction,
     googleBot: {
       noimageindex: !inProduction,
+      nocache: !inProduction,
       follow: inProduction,
       index: inProduction,
     }
