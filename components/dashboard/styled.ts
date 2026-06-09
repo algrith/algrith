@@ -166,14 +166,14 @@ export const InfoWrapper = styled(CardWrapper)`
     ${tw`flex flex-col gap-5`};
 
     .item {
-      ${tw`flex justify-between gap-4 text-xm`};
+      ${tw`flex justify-between gap-4 text-xm flex-wrap`};
       
       .label {
         ${tw`text-gray-500 dark:text-gray-400 tracking-widest`};
       }
       
       .value {
-        ${tw`max-w-[60%] flex gap-3 dark:text-gray-200 font-mono flex-grow justify-end`};
+        ${tw`md:max-w-[60%] flex gap-3 dark:text-gray-200 font-mono flex-grow justify-end`};
 
         img, .ant-image-mask {
           ${tw`rounded-xl`};
