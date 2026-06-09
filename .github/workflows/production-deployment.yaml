@@ -55,6 +55,10 @@ jobs:
           echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env
           echo "MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}" >> .env
           echo "MONGODB_USERNAME=${{ secrets.MONGODB_USERNAME }}" >> .env
+          echo "GCS_CLIENT_EMAIL=${{ secrets.GCS_CLIENT_EMAIL }}" >> .env
+          echo "GCS_BUCKET_NAME=${{ secrets.GCS_BUCKET_NAME }}" >> .env
+          echo "GCS_PRIVATE_KEY=${{ secrets.GCS_PRIVATE_KEY }}" >> .env
+          echo "GCS_PROJECT_ID=${{ secrets.GCS_PROJECT_ID }}" >> .env
           echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
           echo "AUTH_URL=${{ secrets.AUTH_URL }}" >> .env
