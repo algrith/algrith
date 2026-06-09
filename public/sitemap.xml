@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+		<!--	created with www.mysitemapgenerator.com	-->
+		<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+	<loc>https://algrith.com/</loc>
+	<lastmod>2026-06-09T20:27:40+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://algrith.com/how-it-works</loc>
+	<lastmod>2026-06-09T20:27:40+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://algrith.com/contact-us</loc>
+	<lastmod>2026-06-09T20:27:40+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://algrith.com/about-us</loc>
+	<lastmod>2026-06-09T20:27:40+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://algrith.com/pricing</loc>
+	<lastmod>2026-06-09T20:27:40+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://algrith.com/terms-of-service</loc>
+	<lastmod>2026-06-09T20:27:40+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://algrith.com/privacy-policy</loc>
+	<lastmod>2026-06-09T20:27:40+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://algrith.com/refund-policy</loc>
+	<lastmod>2026-06-09T20:27:40+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://algrith.com/auth</loc>
+	<lastmod>2026-06-09T20:27:40+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>https://algrith.com/auth/verify</loc>
+	<lastmod>2026-06-09T20:27:43+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://algrith.com/auth/resend-verification</loc>
+	<lastmod>2026-06-09T20:27:43+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://algrith.com/auth/password-reset</loc>
+	<lastmod>2026-06-09T20:27:43+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://algrith.com/auth/forgot-password</loc>
+	<lastmod>2026-06-09T20:27:43+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>https://algrith.com/auth/sign-up</loc>
+	<lastmod>2026-06-09T20:27:43+01:00</lastmod>
+	<changefreq>yearly</changefreq>
+	<priority>0.8</priority>
+</url>
+</urlset>
