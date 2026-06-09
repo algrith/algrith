@@ -148,7 +148,7 @@ const Order = () => {
                       <div className="item">
                         <div className="label">Logo</div>
                         <div className="value">
-                          {order.requirements.logo ? (
+                          {order.requirements.logo?.url ? (
                             <Image src={`/images/placeholder-white.webp?original=${order.requirements.logo?.url}`} />
                           ) : (
                             'N/A'

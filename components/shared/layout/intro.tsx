@@ -48,19 +48,18 @@ const Intro = (props: IntroProps) => {
 
 	return (
 		<IntroWrapper {...rest}>
-			<div className="inner">
-        {title && <h1 data-aos="fade-down" className={titleClassName}></h1>}
+			<div className="inner" data-aos="fade">
+        {title && <h1 className={titleClassName}></h1>}
         
         {description.text && (
           <p
             dangerouslySetInnerHTML={{ __html: description.text }}
             className={descriptionClassName}
-            data-aos="fade-up"
           />
         )}
         
         {subtitle && (
-          <aside data-aos="fade-right" className={subtitleClassName}>
+          <aside className={subtitleClassName}>
             {subtitle}
           </aside>
         )}
