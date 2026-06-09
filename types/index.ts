@@ -65,6 +65,7 @@ export interface LinkProps extends NextLinkProps {
 export interface Assets extends BaseObject {
 	brand: {
 		logos: {
+			default: string;
 			white: string;
 			black: string;
 		};

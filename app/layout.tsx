@@ -87,13 +87,13 @@ export const metadata: Metadata = {
     images: [
       {
         alt: 'Algrith - Strategic Digital Solutions',
-        url: assets.brand.logos.white,
+        url: assets.brand.logos.default,
         height: 600,
         width: 800,
       },
       {
         alt: 'Algrith - Strategic Digital Solutions',
-        url: assets.brand.logos.white,
+        url: assets.brand.logos.default,
         height: 1600,
         width: 1800,
       },

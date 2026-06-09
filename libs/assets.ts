@@ -22,7 +22,8 @@ export const assets: Assets = {
 	brand: {
 		logos: {
 			white: '/images/logo/algrith-logo-light.png',
-			black: '/images/logo/algrith-logo-dark.png'
+			black: '/images/logo/algrith-logo-dark.png',
+			default: '/images/logo/algrith-logo.png'
 		},
 		icons: {
 			white: '/images/logos/example-icon-white.svg',
