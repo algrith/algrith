@@ -156,7 +156,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
   <Suspense>
     <ReduxProvider>
       <AuthProvider>
-        <html lang="en-US">
+        <html lang="en-US" datatype="html">
           <body className={fontClassNames}>
             <SchemaMarkup />
             <GlobalStyles />
