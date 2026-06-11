@@ -11,6 +11,7 @@ import { FontRole, FontsList } from '../shared/input/fonts';
 import { Swatches } from '../shared/input/color/palette';
 import { formatCurrency, getDateFormat } from '@/utils';
 import useLazyLoader from '@/hooks/lazy-loader';
+import Conversations from '../shared/chats';
 import Link from '../shared/button/link';
 import { fetchOrder } from './slices';
 
@@ -266,6 +267,8 @@ const Order = () => {
                     Download Invoice
                   </Link>
                 </div> */}
+
+                <Conversations />
               </div>
             </div>
           </div>

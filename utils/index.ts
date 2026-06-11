@@ -75,9 +75,9 @@ export const getDateFormat = (dateString?: string) => {
   const formats = {
     suffixedDayShortMonthFullYear: `${getDayWithSuffix(day)} ${months.short[month]}, ${fullYear}`,
     full: `${getDayWithSuffix(day)} ${months.long[month]}, ${fullYear} ${hour}:${minute}${amPm}`,
-    iso: `${fullYear}-${paddedMonth}-${paddedDay}, ${hour}:${minute} ${AMPM}`,
+    iso: `${fullYear}-${paddedMonth}-${paddedDay}, ${hour}:${minute}${AMPM}`,
     shortMonthDayFullYear: `${months.short[month]} ${paddedDay} ${fullYear}`,
-    time: `${hour}:${minute} ${amPm}`
+    time: `${hour}:${minute}${amPm}`
   };
 
   return formats;

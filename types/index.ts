@@ -2,10 +2,10 @@ import { HTMLAttributes, InputHTMLAttributes, ReactNode, RefObject } from 'react
 import { ProviderType, Provider, OAuthProviderId } from 'next-auth/providers';
 import { NotificationArgsProps, ButtonProps, ThemeConfig } from 'antd';
 import { SizeType } from 'antd/es/config-provider/SizeContext';
+import { FontOption } from '@/components/shared/input/fonts';
 import { LinkProps as NextLinkProps } from 'next/link';
 import { TypeOpen } from 'antd/es/message/interface';
 import { User } from 'next-auth';
-import { FontOption } from '@/components/shared/input/fonts';
 
 export type AuthTypes = 'signIn' | 'signUp' | 'forgotPassword' | 'passwordReset' | 'emailVerification' | 'resendVerification';
 export type InlineFeedbackWrapperProps = Omit<InlineFeedbackProps, 'target'> & Pick<FeedbackState, 'type'>;
@@ -118,24 +118,12 @@ export interface TableOfContentProps {
 
 export interface OrderRequirements {
 	social_media: Array<string>;
+	images: Array<Attachment>;
 	colors?: Array<string>;
 	business_name: string;
 	domain_name?: string;
 	hosting?: boolean;
-	images: Array<{
-		created_at: string,
-		mime_type: string,
-		name: string,
-		size: number,
-		url: string
-	}>;
-	logo?: {
-		created_at: string,
-		mime_type: string,
-		name: string,
-		size: number,
-		url: string
-	};
+	logo?: Attachment;
 	fonts?: {
 		heading: FontOption;
 		body: FontOption;
@@ -225,6 +213,22 @@ export interface ContactModel {
 	name: string;
 };
 
+export interface Conversation {
+	order: OrderModel | string;
+	type: 'order' | 'support';
+	temp_id?: string;
+	active?: boolean;
+	id: string;
+	participants: Array<{
+		role: 'customer' | 'moderator' | 'admin' | 'system';
+		user: User | string;
+		last_read?: string;
+	}>;
+	last_message?: Pick<Message, 'sender' | 'text'> & {
+		createdAt: string
+	};
+};
+
 export interface LayoutState {
 	sidebar: {
 		collapsedBeforeHover: boolean;
@@ -287,6 +291,30 @@ export interface AddonsProps {
 	selected?: Array<Addon>;
 };
 
+export interface Attachment {
+	created_at: string,
+	mime_type: string,
+	name: string,
+	size: number,
+	url: string
+};
+
+export interface ChatState {
+	showConversations: boolean;
+	conversations: {
+		list: Array<Conversation>;
+		loading: boolean;
+	},
+	conversation: {
+		data?: Conversation;
+		loading: boolean;
+	};
+	messages: {
+		list: Array<Message>;
+		loading: boolean;
+	};
+};
+
 export interface AuthState {
 	isVerifying: boolean;
 	isLoading: boolean;
@@ -298,7 +326,7 @@ export interface AuthState {
 		email: string;
 		name: string;
 	}
-}
+};
 
 export type SectionProps = {
 	items: Array<SectionItemProps>;
@@ -318,6 +346,26 @@ export interface Customer {
 	phone?: string;
 	email: string;
 	name: string;
+};
+
+export interface Message {
+	status: 'delivered' | 'pending' | 'failed' | 'read' | 'sent';
+	attachments: Array<Attachment>;
+	conversation: Conversation;
+	type: 'message' | 'order';
+	is_deleted: boolean;
+	createdAt?: string;
+	temp_id?: string;
+	text: string;
+	id: string;
+	read_by: Array<{
+		user: User | string;
+		read_at: string;
+	}>;
+	sender: {
+		role: 'customer' | 'moderator' | 'admin' | 'system';
+		user: User | string;
+	}
 };
 
 export interface Addon {

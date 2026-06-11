@@ -27,6 +27,8 @@ const applyVirtuals = (schema: Schema) => {
   return schema;
 };
 
+const schemaOptions = { timestamps: true };
+
 const FileSchema = {
   created_at: String,
   mime_type: String,
@@ -36,7 +38,75 @@ const FileSchema = {
   _id: false
 };
 
-const schemaOptions = { timestamps: true };
+const ConversationSchema = new mongoose.Schema({
+  active: { type: Boolean, default: true, index: true },
+  participants: [
+    {
+      role: { type: String, enum: ['customer', 'moderator', 'admin'], required: true },
+      user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+      last_read: { type: Date, default: null },
+      _id: false
+    },
+  ],
+  last_message: {
+    sender: { type: mongoose.Schema.Types.ObjectId },
+    _id: { type: mongoose.Schema.Types.ObjectId },
+    createdAt: { type: Date },
+    text: { type: String }
+  },
+  order: {
+    type: mongoose.Schema.Types.ObjectId,
+    sparse: true,
+    ref: 'Order',
+    index: true
+  },
+  type: {
+    enum: ['order', 'support'],
+    required: true,
+    type: String,
+    index: true
+  },
+}, schemaOptions);
+
+const MetadataSchema = new mongoose.Schema({
+  order_status: {
+    enum: ['pending', 'completed', 'delivered', 'cancelled'],
+    type: String
+  }
+}, { _id: false });
+
+const MessageSchema = new mongoose.Schema({
+  metadata: { type: MetadataSchema, default: null },
+  attachments: { type: [FileSchema], default: [] },
+  is_deleted: { type: Boolean, default: false },
+  text: { type: String, trim: true },
+  conversation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Conversation',
+    required: true,
+    index: true
+  },
+  read_by: [{
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    read_at: { type: Date },
+    _id: false
+  }],
+  sender: {
+    role: { type: String, enum: ['customer', 'moderator', 'admin', 'system'], required: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+  },
+  status: {
+    enum: ['delivered', 'pending', 'failed', 'read', 'sent'],
+    default: 'sent',
+    type: String
+  },
+  type: {
+    enum: ['message', 'order'],
+    default: 'message',
+    type: String,
+    index: true
+  },
+}, schemaOptions);
 
 const tokenSchema = new mongoose.Schema({
   expiresAt: { type: Date, expires: 0 },
@@ -142,6 +212,12 @@ userSchema.pre('deleteOne', { document: true, query: false }, async function () 
   await Order.deleteMany({ user: this._id });
 });
 
+ConversationSchema.index({ order: 1 }, { unique: true, sparse: true });
+ConversationSchema.index({ 'participants.user': 1, updatedAt: -1 });
+MessageSchema.index({ conversation: 1, createdAt: 1 });
+
+export const Conversation = mongoose.models.Conversation || mongoose.model('Conversation', applyVirtuals(ConversationSchema));
+export const Message = mongoose.models.Message || mongoose.model('Message', applyVirtuals(MessageSchema));
 export const Order = mongoose.models.Order || mongoose.model('Order', applyVirtuals(orderSchema));
 export const Token = mongoose.models.Token || mongoose.model('Token', applyVirtuals(tokenSchema));
 export const User = mongoose.models.User || mongoose.model('User', applyVirtuals(userSchema));

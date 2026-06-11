@@ -89,7 +89,7 @@ const ThemeSwitch = () => {
     <ThemeWrapper ref={themeSwitchContainerRef} className={className}>
       <div ref={themeSwitchRef} onClick={() => setOpen(!open)} className="inner">
         <label className="sr-only">Theme</label>
-        <button type="button" aria-haspopup="true" aria-expanded="false" name="active-theme">
+        <button type="button" aria-haspopup="true" aria-expanded="false" name="theme_switch">
           <span className="light">
             <LightThemeIcon /> 
           </span>
