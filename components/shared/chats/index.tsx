@@ -1,12 +1,13 @@
 'use client';
 
-import { CaretLeftOutlined, CheckOutlined, ExclamationCircleOutlined, PaperClipOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
-import { ChangeEvent, MouseEvent, FormEvent, useEffect, useState, useRef } from 'react';
+import { ArrowsAltOutlined, CaretLeftOutlined, CheckOutlined, CloseOutlined, ExclamationCircleOutlined, MinusOutlined, PaperClipOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
+import { ChangeEvent, FormEvent, useEffect, useState, useRef } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { Avatar, Badge, Spin } from 'antd';
 import { User } from 'next-auth';
 
-import { ChatsWrapper, ChatWrapper, EmptyWrapper, ConversationWrapper, MessageWrapper } from './styled';
+import { ChatsWrapper, ChatWrapper, EmptyWrapper, MessageWrapper, ConversationWrapper } from './styled';
 import { createOrderConversation, fetchMessages, fetchConversations, sendMessage } from './slices';
 import { Conversation as ConversationModel, Message as MessageModel, OrderModel } from '@/types';
 import { setConversation, setMessages, setShowConversations } from './reducer';
@@ -23,40 +24,41 @@ const defaultMessage: Partial<MessageModel> = {
   text: ''
 };
 
-const ConversationHeader = ({ conversation }: { conversation: ConversationModel }) => {
+const Conversation = (props: { conversation: ConversationModel; inChatHeader?: boolean }) => {
+  const { conversation, inChatHeader = false } = props;
   const order = conversation.order as OrderModel;
-
-  return (
-    <h3>
-      {conversation.type === 'order' ? (
-        <>
-          {order.plan.name} • #{order.reference}
-        </>
-      ) : (
-        <>
-          Support • #{order.reference}
-        </>
-      )}
-    </h3>
-  );
-};
-
-const Conversation = ({ conversation }: { conversation: ConversationModel }) => {
   const dispatch = useAppDispatch();
+  const router = useRouter();
 
+  const handleBackToConversations = () => {
+    dispatch(setConversation({ data: undefined }));
+  };
+  
   const selectConversation = () => {
-    dispatch(setConversation({
-      data: conversation
-    }));
+    if (inChatHeader) return;
+    dispatch(setConversation({ data: conversation }));
+  };
+  
+  const openOrder = () => {
+    if (!inChatHeader || !order || conversation.type !== 'order') return;
+    router.push(`/dashboard/orders/${order.id}`);
   };
 
   return (
-    <ConversationWrapper onClick={selectConversation}>
-      <span><Avatar icon={<UserOutlined />} /></span>
+    <ConversationWrapper className={inChatHeader ? 'in-chat-header' : ''} onClick={selectConversation}>
+      {inChatHeader && <Button icon={<CaretLeftOutlined onClick={handleBackToConversations} />} />}
+      <span><Avatar icon={<UserOutlined />} size="small" /></span>
       
-      <div className="details">
-        <ConversationHeader conversation={conversation} />
-        {conversation.last_message && (
+      <span className="text" onClick={openOrder}>
+        <span className="title">
+          {conversation.type === 'order' ? (
+            `${order.plan.name} • #${order.reference}`
+          ) : (
+            `Support • #${order.reference}`
+          )}
+        </span>
+
+        {(!inChatHeader && conversation.last_message) && (
           <span className="message">
             {conversation.last_message.text}
             {' '}•{' '}
@@ -65,7 +67,7 @@ const Conversation = ({ conversation }: { conversation: ConversationModel }) => 
             </small>
           </span>
         )}
-      </div>
+      </span>
     </ConversationWrapper>
   );
 };
@@ -113,20 +115,14 @@ const Message = ({ message }: { message: MessageModel }) => {
 const Chats = () => {
   const { order: { data: order } } = useAppSelector((state) => state.dashboard);
   const { showConversations, ...rest } = useAppSelector((state) => state.chat);
-  const { list: conversations } = rest.conversations;
+  const { list: conversations, total_unread } = rest.conversations;
   const { data: conversation } = rest.conversation;
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { routes } = useRoute();
-
-  const handleBackToConversations = (e: MouseEvent) => {
-    e.stopPropagation();
-    
-    dispatch(setConversation({
-      data: undefined
-    }));
-  };
-
+  
+  const isMinimized = conversation && !showConversations;
+  
   const handleSetupOrderChat = () => {
     if (!order || !session?.user) return;
     const { user } = session;
@@ -141,8 +137,18 @@ const Chats = () => {
     }));
   };
 
+  const toggleChatsWidget = () => {
+    if (conversation) return;
+    dispatch(setShowConversations(!showConversations));
+  };
+
   const toggleChatWidget = () => {
     dispatch(setShowConversations(!showConversations));
+  };
+
+  const closeChatWidget = () => {
+    dispatch(setShowConversations(!showConversations));
+    dispatch(setConversation({ data: undefined }));
   };
 
   useEffect(() => {
@@ -151,18 +157,27 @@ const Chats = () => {
 
   return (
     <ChatsWrapper className={showConversations ? 'show' : ''}>
-      <div className="header" onClick={toggleChatWidget}>
+      <div className="header" onClick={toggleChatsWidget}>
         {conversation ? (
           <>
-            <Button onClick={handleBackToConversations} icon={<CaretLeftOutlined />}>
-              <Avatar icon={<UserOutlined />} size="small" />
-              <ConversationHeader conversation={conversation} />
-            </Button>
+            <Conversation conversation={conversation} inChatHeader />
+
+            <div className="controls">
+              <Button
+                icon={isMinimized ? <ArrowsAltOutlined /> : <MinusOutlined />}
+                onClick={toggleChatWidget}
+              />
+              
+              <Button
+                onClick={closeChatWidget}
+                icon={<CloseOutlined />}
+              />
+            </div>
           </>
         ) : (
           <>
             Chats
-            <Badge count={40} />
+            {Boolean(total_unread) && <Badge count={total_unread} />}
           </>
         )}
       </div>

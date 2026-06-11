@@ -5,6 +5,7 @@ import { ChatState } from '@/types';
 const initialState: ChatState = {
   showConversations: false,
   conversations: {
+    total_unread: 0,
     loading: false,
     list: []
   },

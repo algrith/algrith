@@ -75,12 +75,13 @@ export const sendMessage = (message: Message) => async (dispatch: AppDispatch) =
 export const fetchConversations = () => async (dispatch: AppDispatch) => {
   dispatch(setConversations({ loading: true }));
 
-  const { data: conversations } = await Fetch({
+  const { data } = await Fetch({
     path: `/conversations`
   });
   
   dispatch(setConversations({
-    list: conversations || [],
+    total_unread: data?.total_unread || 0,
+    list: data?.conversations || [],
     loading: false
   }));
 };

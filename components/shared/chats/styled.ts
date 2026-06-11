@@ -1,29 +1,29 @@
 import tw, { styled } from 'twin.macro';
 
-export const ConversationWrapper = styled.div`
-  ${tw`flex gap-3 p-4 text-gray-700 dark:text-gray-300 dark:bg-gray-900 cursor-pointer`};
+export const ConversationWrapper = styled.h3`
+  ${tw`flex items-center gap-2 text-xm font-semibold tracking-wide overflow-hidden`};
 
-  &:not(:last-of-type) {
-    ${tw`border-b border-b-gray-100 dark:border-b-gray-700`};
-  }
+  &:not(.in-chat-header) {
+    ${tw`gap-3 p-4 text-gray-700 dark:text-gray-300 dark:bg-gray-900 cursor-pointer`};
 
-  .ant-avatar {
-    ${tw`shadow mt-1`};
-
-    .anticon {
-      ${tw`font-semibold text-2xl`};
+    &:not(:last-of-type) {
+      ${tw`border-b border-b-gray-100 dark:border-b-gray-700`};
     }
   }
   
-  .details {
-    ${tw`flex flex-col w-full`};
-
+  .ant-btn {
+    ${tw`!p-0 h-auto !bg-transparent shadow-none text-gray-100 hover:text-white text-xm`};
+  }
+  
+  .text {
+    ${tw`flex flex-col overflow-hidden`};
+    
     .message {
-      ${tw`w-full whitespace-nowrap overflow-ellipsis`};
+      ${tw`text-md w-full whitespace-nowrap overflow-ellipsis overflow-hidden`};
     }
     
-    h3 {
-      ${tw`text-xm font-semibold tracking-wide flex-grow whitespace-nowrap overflow-ellipsis`};
+    .title {
+      ${tw`w-full whitespace-nowrap overflow-ellipsis overflow-hidden`};
     }
   }
 `;
@@ -77,7 +77,7 @@ export const MessageWrapper = styled.div`
 `;
 
 export const ChatsWrapper = styled.div`
-  ${tw`fixed w-20 -bottom-112 md:right-8 md:w-96 transition-all bg-transparent shadow-lg`};
+  ${tw`fixed w-[70.94px] md:w-96 -bottom-112 md:right-8 bg-transparent shadow-lg transition-all duration-500`};
   
   &.show {
     ${tw`w-[calc(100% - 4rem)] md:w-96 bottom-0`};
@@ -86,21 +86,29 @@ export const ChatsWrapper = styled.div`
       ${tw`relative top-0 right-0`};
     }
   }
-
+  
   .header {
-    ${tw`relative flex gap-4 justify-between items-center px-5 py-3 rounded-t-xl text-white bg-theme-primary font-semibold cursor-pointer`};
-
+    ${tw`w-full h-[43.5px] relative flex gap-0 md:gap-4 justify-between items-center px-5 py-3 rounded-t-xl text-white bg-theme-primary font-semibold cursor-pointer`};
+    
     .ant-badge .ant-badge-count {
-      ${tw`absolute -top-8 -right-3 md:relative md:top-0 md:right-0 shadow-none`};
+      ${tw`absolute -top-8 -right-9 md:relative md:top-0 md:right-0 shadow-none duration-300`};
     }
     
-    .ant-btn {
-      ${tw`!p-0 h-auto !bg-transparent shadow-none text-gray-100 hover:text-white text-xm`};
+    .controls {
+      ${tw`flex gap-3 items-center`};
+      
+      .ant-btn {
+        ${tw`flex-grow !p-0 h-auto !bg-transparent shadow-none text-gray-100 hover:text-white text-xm`};
+        
+        &:first-of-type .anticon {
+          ${tw`text-xl flex items-center`};
+        }
+      }
     }
   }
   
   .conversations {
-    ${tw`flex flex-col h-112 bg-white dark:bg-black`};
+    ${tw`w-full h-112 flex flex-col bg-white dark:bg-black overflow-hidden`};
   }
 `;
 

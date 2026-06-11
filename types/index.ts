@@ -303,6 +303,7 @@ export interface ChatState {
 	showConversations: boolean;
 	conversations: {
 		list: Array<Conversation>;
+		total_unread: number;
 		loading: boolean;
 	},
 	conversation: {
