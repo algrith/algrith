@@ -77,10 +77,10 @@ export const MessageWrapper = styled.div`
 `;
 
 export const ChatsWrapper = styled.div`
-  ${tw`fixed w-[70.94px] md:w-96 -bottom-112 md:right-8 bg-transparent shadow-lg transition-all duration-500`};
+  ${tw`fixed w-[70.94px] md:w-96 -bottom-112 left-0 md:left-auto md:right-8 bg-transparent shadow-lg transition-all duration-500`};
   
   &.show {
-    ${tw`w-[calc(100% - 4rem)] md:w-96 bottom-0`};
+    ${tw`w-full md:w-96 bottom-0`};
 
     .header .ant-badge .ant-badge-count {
       ${tw`relative top-0 right-0`};

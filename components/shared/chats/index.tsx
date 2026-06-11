@@ -264,8 +264,8 @@ const Chat = () => {
   };
 
   useScrollToLastChild({
-		targetSelector: '.message-wrapper',
 		parentRef: messagesContainerRef,
+		targetSelector: '.message',
 		dependencies: [messages]
 	});
 
@@ -305,6 +305,7 @@ const Chat = () => {
         <Input
           placeholder="Type your message..."
           onChange={handleTextChange}
+          value={message.text}
           size="small"
           autoFocus
         />
