@@ -1,22 +1,25 @@
 'use client';
 
-import { ArrowsAltOutlined, CaretLeftOutlined, CheckOutlined, CloseOutlined, ExclamationCircleOutlined, MinusOutlined, PaperClipOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
+import { ArrowsAltOutlined, CaretLeftOutlined, CheckOutlined, CloseOutlined, ExclamationCircleOutlined, MinusOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
 import { ChangeEvent, FormEvent, useEffect, useState, useRef } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Avatar, Badge, Spin } from 'antd';
 import { User } from 'next-auth';
 
+import { Attachment, Conversation as ConversationModel, Message as MessageModel, OrderModel } from '@/types';
 import { ChatsWrapper, ChatWrapper, EmptyWrapper, MessageWrapper, ConversationWrapper } from './styled';
 import { createOrderConversation, fetchMessages, fetchConversations, sendMessage } from './slices';
-import { Conversation as ConversationModel, Message as MessageModel, OrderModel } from '@/types';
 import { setConversation, setMessages, setShowConversations } from './reducer';
+import { getDateFormat, getFileFormData, randomId } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import useScrollToLastChild from '@/hooks/scroll-to-view';
 import { Input } from '@/components/shared/input';
-import { getDateFormat, randomId } from '@/utils';
+import { FileUploadButton } from '../input/file';
 import Button from '@/components/shared/button';
 import useRoute from '@/hooks/route';
+import { Fetch } from '@/utils/api';
+import Files from './files';
 
 const defaultMessage: Partial<MessageModel> = {
   temp_id: randomId(),
@@ -94,9 +97,16 @@ const Message = ({ message }: { message: MessageModel }) => {
         <div className="details">
           {!isSender && <h3>{sender.name}</h3>}
 
-          <span className="text">
-            {message.text}
-          </span>
+          <div className="container">
+            <Files message={message} inMessage />
+            
+            {message.text && (
+              <div
+                dangerouslySetInnerHTML={{ __html: message.text }}
+                className="text"
+              />
+            )}
+          </div>
 
           <small className="metadata">
             <span>{getDateFormat(message.createdAt).time}</span>
@@ -225,12 +235,54 @@ const Chat = () => {
 
   const role = user?.role || 'customer';
 
-  const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { files, value, id } = e.target;
+    let newValue = value as string | Array<Attachment>;
 
+    if (id === 'attachments' && files) {
+      const attachments = [...(message?.attachments || [])];
+
+      for (const file of files) {
+        const url = URL.createObjectURL(file);
+
+        attachments.push({
+          created_at: new Date().toISOString(),
+          name: file.name.replaceAll(' ', '-'),
+          mime_type: file.type,
+          size: file.size,
+          url
+        });
+      }
+
+      newValue = attachments;
+    }
+    
     setMessage((prev) => ({
-      ...prev, text: value
+      ...prev,
+      [id]: newValue
     }));
+  };
+
+  const uploadAttachments = async (message: MessageModel) => {
+    if (!message.attachments.length) return message;
+    const attachments = [...message.attachments];
+    
+    for (const [index, file] of message.attachments.entries()) {
+      const formData = await getFileFormData(file, `orders/chat`);
+      
+      const { success, data } = await Fetch({
+        method: 'POST',
+        path: '/files',
+        body: formData
+      });
+      
+      attachments[index] = {
+        ...file,
+        url: success ? data.url : file.url
+      };
+    }
+
+    return { ...message, attachments };
   };
 
   const handleSendOrderMessage = async (e: FormEvent) => {
@@ -238,8 +290,11 @@ const Chat = () => {
     
     if (!user) return;
 
-    const newMessage = { sender: { role, user }, ...message } as MessageModel;
-
+    let newMessage = {
+      sender: { role, user },
+      ...message
+    } as MessageModel;
+    
     setMessage(defaultMessage);
     setSendingMessage(true);
 
@@ -258,7 +313,8 @@ const Chat = () => {
         customerId
       ));
     }
-    
+
+    newMessage = await uploadAttachments(newMessage);
     dispatch(sendMessage(newMessage));
     setSendingMessage(false);
   };
@@ -294,29 +350,33 @@ const Chat = () => {
       </div>
 
       <form onSubmit={handleSendOrderMessage} className="input">
-        <Button
-          icon={<PaperClipOutlined />}
-          disabled={loading}
-          htmlType="button"
-          size="small"
-          rounded
-        />
+        <Files message={message as MessageModel} />
 
-        <Input
-          placeholder="Type your message..."
-          onChange={handleTextChange}
-          value={message.text}
-          size="small"
-          autoFocus
-        />
-        
-        <Button
-          icon={<SendOutlined />}
-          disabled={loading}
-          htmlType="submit"
-          size="small"
-          rounded
-        />
+        <div className="controls">
+          <FileUploadButton
+            onChange={handleChange}
+            disabled={loading}
+            id="attachments"
+            multiple
+          />
+
+          <Input
+            placeholder="Type your message..."
+            onChange={handleChange}
+            value={message.text}
+            size="small"
+            autoFocus
+            id="text"
+          />
+          
+          <Button
+            icon={<SendOutlined />}
+            disabled={loading}
+            htmlType="submit"
+            size="small"
+            rounded
+          />
+        </div>
       </form>
     </ChatWrapper>
   );

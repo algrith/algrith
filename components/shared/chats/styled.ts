@@ -65,8 +65,12 @@ export const MessageWrapper = styled.div`
         }
       }
       
-      .text {
-        ${tw`w-full whitespace-pre`};
+      .container {
+        ${tw`w-full`};
+
+        .text {
+          ${tw`whitespace-pre`};
+        }
       }
       
       h3 {
@@ -132,17 +136,21 @@ export const ChatWrapper = styled.div`
   }
   
   .input {
-    ${tw`flex items-center gap-2 w-full p-3`};
+    ${tw`relative flex flex-col gap-2 w-full p-3`};
 
-    .ant-btn {
-      ${tw`flex items-center justify-center w-10 h-10 bg-theme-primary/20 hover:bg-theme-primary/30`};
+    .controls {
+      ${tw`flex items-center gap-2 w-full`};
 
-      .ant-btn-icon {
-        ${tw`flex items-center justify-center w-full h-full`};
-      }
-      
-      .anticon {
-        ${tw`text-2xl text-theme-primary`};
+      .ant-btn {
+        ${tw`flex items-center justify-center w-10 h-10 bg-theme-primary/20 hover:bg-theme-primary/30`};
+
+        .ant-btn-icon {
+          ${tw`flex items-center justify-center w-full h-full`};
+        }
+        
+        .anticon {
+          ${tw`text-2xl text-theme-primary`};
+        }
       }
     }
   }

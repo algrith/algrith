@@ -1,5 +1,5 @@
-import { getSignedFileUrl } from '@/libs/gcs';
-import { FilterObjectProps } from '@/types';
+import { Attachment, FilterObjectProps } from '@/types';
+import { getSignedFileUrl } from '@/utils/gcs';
 import { nanoid } from '@reduxjs/toolkit';
 
 export const months = {
@@ -15,28 +15,28 @@ export const filterObject = ({ target, filters, include = false }: FilterObjectP
 	);
 };
 
-export const formatCurrency = (value?: number | string, currency = 'USD') => {
-	if (typeof value === 'string') return value;
-	return new Intl.NumberFormat('en-US', {
-		style: 'currency',
-		currency,
-	}).format(value || 0);
-};
-
-export const getFileFormData = async (fileObject: File, dirName: string) => {
-  let file: File | Blob = fileObject;
+export const getFileFormData = async (fileObject: Attachment | File, dirName: string) => {
+  let file: Attachment | File | Blob = fileObject;
   
   if (!('uid' in fileObject)) {
-    const url = URL.createObjectURL(fileObject);
+    const url = (fileObject as Attachment)?.url ?? URL.createObjectURL(fileObject as File);
     file = await getBlobFromUrl(url);
     URL.revokeObjectURL(url);
   }
 
   const formData = new FormData();
   formData.append('fileName', fileObject.name);
+  formData.append('file', file as File);
   formData.append('dirName', dirName);
-  formData.append('file', file);
   return formData;
+};
+
+export const formatCurrency = (value?: number | string, currency = 'USD') => {
+	if (typeof value === 'string') return value;
+	return new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency,
+	}).format(value || 0);
 };
 
 export const getBlobFromUrl = async (blobUrl: string) => {
@@ -47,6 +47,17 @@ export const getBlobFromUrl = async (blobUrl: string) => {
 export const isValidEmail = (email: string): boolean => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	return emailRegex.test(email);
+};
+
+export const formatFileSize = (size: number): string => {
+  const KB = 1000;
+  const MB = KB * 1000;
+  const GB = MB * 1000;
+
+  if (size < KB) return `${size} bytes`;
+  if (size < MB) return `${(size / KB).toFixed(2)} KB`;
+  if (size < GB) return `${(size / MB).toFixed(2)} MB`;
+  return `${(size / GB).toFixed(2)} GB`;
 };
 
 export const getDateFormat = (dateString?: string) => {

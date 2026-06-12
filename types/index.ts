@@ -91,6 +91,12 @@ export interface CustomNotificationProps {
 	type: string;
 };
 
+export interface FilesGroupHeaderProps {
+  groupType: keyof GroupedFiles;
+  hasMultipleGroups: boolean;
+  pluralize: boolean;
+}
+
 export interface AuthFormWrapperProps {
 	isSignUpSuccessful?: boolean;
 	authType: AuthTypes;
@@ -200,6 +206,12 @@ export interface FeedbackState {
   target?: string;
   show?: boolean;
 };
+
+export interface GroupedFiles {
+  document?: Array<Attachment>;
+  video?: Array<Attachment>;
+  image?: Array<Attachment>;
+}
 
 export interface ContactModel {
 	customTopic?: string;
