@@ -35,7 +35,13 @@ const FileSchema = {
   name: String,
   size: Number,
   url: String,
-  _id: false
+  id: String,
+  _id: false,
+  status: {
+    enum: ['uploading', 'uploaded', 'pending', 'failed'],
+    default: 'pending',
+    type: String
+  }
 };
 
 const ConversationSchema = new mongoose.Schema({
@@ -69,10 +75,7 @@ const ConversationSchema = new mongoose.Schema({
 }, schemaOptions);
 
 const MetadataSchema = new mongoose.Schema({
-  order_status: {
-    enum: ['pending', 'completed', 'delivered', 'cancelled'],
-    type: String
-  }
+  order_status_info: String
 }, { _id: false });
 
 const MessageSchema = new mongoose.Schema({

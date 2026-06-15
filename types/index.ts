@@ -304,11 +304,13 @@ export interface AddonsProps {
 };
 
 export interface Attachment {
-	created_at: string,
-	mime_type: string,
-	name: string,
-	size: number,
-	url: string
+	status: 'uploading' | 'uploaded' | 'pending' | 'failed';
+	created_at: string;
+	mime_type: string;
+	name: string;
+	size: number;
+	url: string;
+	id: string;
 };
 
 export interface ChatState {
@@ -321,6 +323,7 @@ export interface ChatState {
 	conversation: {
 		data?: Conversation;
 		loading: boolean;
+		index?: number;
 	};
 	messages: {
 		list: Array<Message>;
@@ -365,12 +368,15 @@ export interface Message {
 	status: 'delivered' | 'pending' | 'failed' | 'read' | 'sent';
 	attachments: Array<Attachment>;
 	conversation: Conversation;
-	type: 'message' | 'order';
+	type: 'support' | 'order';
 	is_deleted: boolean;
 	createdAt?: string;
 	temp_id?: string;
 	text: string;
 	id: string;
+	metadata?: {
+		order_status_info: string;
+	};
 	read_by: Array<{
 		user: User | string;
 		read_at: string;

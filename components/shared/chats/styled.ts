@@ -1,4 +1,5 @@
 import tw, { styled } from 'twin.macro';
+import { borderCss } from '../layout/styled';
 
 export const ConversationWrapper = styled.h3`
   ${tw`flex items-center gap-2 text-xm font-semibold tracking-wide overflow-hidden`};
@@ -30,6 +31,10 @@ export const ConversationWrapper = styled.h3`
 
 export const MessageWrapper = styled.div`
   ${tw`flex w-full`};
+
+  &:last-of-type {
+    ${tw`mb-10`};
+  }
   
   &.sender {
     ${tw`justify-end`};
@@ -83,6 +88,10 @@ export const MessageWrapper = styled.div`
 export const ChatsWrapper = styled.div`
   ${tw`fixed w-[70.94px] md:w-96 -bottom-112 left-0 md:left-auto md:right-8 bg-transparent shadow-lg transition-all duration-500`};
   
+  &.loading .conversations {
+    ${tw`justify-center items-center`};
+  }
+
   &.show {
     ${tw`w-full md:w-96 bottom-0`};
 
@@ -138,8 +147,21 @@ export const ChatWrapper = styled.div`
   .input {
     ${tw`relative flex flex-col gap-2 w-full p-3`};
 
+    .order-delivery {
+      ${tw`flex gap-3 items-center px-3 py-1.5 absolute right-0 bottom-[calc(100% - 4px)] rounded-t-xl rounded-tl-3xl w-auto bg-white dark:bg-black`};
+    }
+
+    &.has-files, &.has-files .order-delivery {
+      ${tw`!border-0 !border-t rounded-t-xl`};
+      ${borderCss};
+    }
+
     .controls {
-      ${tw`flex items-center gap-2 w-full`};
+      ${tw`flex items-end gap-2 w-full`};
+
+      textarea {
+        ${tw`max-h-[150px] pt-1`};
+      }
 
       .ant-btn {
         ${tw`flex items-center justify-center w-10 h-10 bg-theme-primary/20 hover:bg-theme-primary/30`};

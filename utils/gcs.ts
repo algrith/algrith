@@ -3,8 +3,8 @@
 import { Storage } from '@google-cloud/storage';
 
 interface GCSFilePayload {
+  buffer: Buffer<ArrayBufferLike> | null;
   byteArray: Uint8Array | null;
-  url: string | null;
   blob: Blob | null;
 }
 
@@ -36,7 +36,7 @@ export const getSignedFileUrl = async (fileUrl: string): Promise<string> => {
     
     return url;
   } catch (error) {
-    console.error('Error getting signed URL:', error);
+    console.error('Error getting signed URL --> ', error);
     return '';
   }
 };
@@ -44,16 +44,17 @@ export const getSignedFileUrl = async (fileUrl: string): Promise<string> => {
 export const getFile = async (fileUrl: string): Promise<GCSFilePayload> => {
   const key = await getFileKeyFromUrl(fileUrl);
 
-  let payload: GCSFilePayload = { byteArray: null, blob: null, url: null };
+  let payload: GCSFilePayload = { byteArray: null, buffer: null, blob: null };
 
   try {
     const [buffer] = await storage.bucket(bucket).file(key).download();
     const byteArray = new Uint8Array(buffer);
-    const blob = new Blob([byteArray], { type: 'application/octet-stream' });
-    const url = URL.createObjectURL(blob);
-    payload = { byteArray, blob, url };
+    const blob = new Blob([byteArray], {
+      type: 'application/octet-stream'
+    });
+    payload = { byteArray, buffer, blob };
   } catch (error) {
-    console.error('Error fetching file:', error);
+    console.error('Error fetching file --> ', error);
   }
 
   return payload;
@@ -96,7 +97,7 @@ export const deleteFile = async (key: string): Promise<boolean> => {
     await storage.bucket(bucket).file(key).delete();
     return true;
   } catch (error) {
-    console.error('Error deleting file:', error);
+    console.error('Error deleting file --> ', error);
     return false;
   }
 };
@@ -106,7 +107,7 @@ export const fileExists = async (key: string): Promise<boolean> => {
     const [exists] = await storage.bucket(bucket).file(key).exists();
     return exists;
   } catch (error) {
-    console.error('Error checking file existence:', error);
+    console.error('Error checking file existence --> ', error);
     return false;
   }
 };

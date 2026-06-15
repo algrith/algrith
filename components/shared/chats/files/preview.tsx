@@ -13,20 +13,20 @@ interface Info {
   image: ImgInfo;
 }
 
-const getGroupPreview = (message: Message, isVideo = false) => {
+const getGroupPreview = (attachments: Array<Attachment>, isVideo = false) => {
   const toolbarRender = (toolbarRender: ReactNode) => isVideo ? null : toolbarRender;
 
-  const groupPreview = {
+  return {
     destroyOnClose: true,
     toolbarRender,
     imageRender: (previewImage: ReactElement, info: Info) => {
-      const file = message?.attachments?.[info.current] as Attachment;
+      const file = attachments[info.current] as Attachment;
       if (!file) return null;
-  
+
       return (
         <ImagePreviewWrapper>
           {isVideo ? (
-            <video src={file.url} controls muted />
+            <video src={`/images/placeholder-white.webp?original=${file.url}`} controls muted />
           ) : (
             previewImage
           )}
@@ -38,8 +38,6 @@ const getGroupPreview = (message: Message, isVideo = false) => {
       );
     }
   };
-
-  return groupPreview;
 };
 
 const getPreview = (file: Attachment, message: Message) => {

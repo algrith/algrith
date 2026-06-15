@@ -5,6 +5,10 @@ import { Flex } from 'antd';
 
 import colors from '@/libs/colors';
 
+export const PromptDescriptionWrapper = styled.div`
+  ${tw`max-w-64 text-theme-text`};
+`;
+
 export const InlineFeedbackWrapper = styled.div`
   line-height: 18px;
 	font-size: 12px;

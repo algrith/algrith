@@ -39,6 +39,11 @@ export const formatCurrency = (value?: number | string, currency = 'USD') => {
 	}).format(value || 0);
 };
 
+export const moveToFront = <T>(array: T[], index?: number) => {
+  if (typeof index === 'undefined' || index <= 0 || index >= array.length) return array;
+  return [array[index], ...array.slice(0, index), ...array.slice(index + 1)];
+};
+
 export const getBlobFromUrl = async (blobUrl: string) => {
   const response = await fetch(blobUrl);
   return await response.blob();
@@ -159,7 +164,7 @@ export const lazyLoader = () => {
   }, { rootMargin: '100px' });
 
   const observe = (node?: Element) => {
-    const children = (node ?? document).querySelectorAll<HTMLImageElement | HTMLIFrameElement>('img, iframe');
+    const children = (node ?? document).querySelectorAll<HTMLImageElement | HTMLIFrameElement>('img, iframe, video');
     const isObservableParentNode = node instanceof HTMLImageElement || node instanceof HTMLIFrameElement;
     children.forEach((node) => observer.observe(node));
     if (isObservableParentNode) observer.observe(node);

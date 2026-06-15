@@ -137,17 +137,19 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
       for (const [index, file] of (files as Array<UploadFile>).entries()) {
         const formData = await getFileFormData(file.originFileObj as File, `orders`);
         
-        const { data } = await Fetch({
+        const { success, data } = await Fetch({
           method: 'POST',
           path: '/files',
           body: formData
         });
 
         files[index] = {
+          status: success ? 'uploaded' : 'failed',
           created_at: new Date().toISOString(),
           mime_type: file.type as string,
           size: file.size as number,
           name: file.name,
+          id: randomId(),
           url: data.url
         };
       }

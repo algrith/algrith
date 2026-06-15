@@ -1,19 +1,19 @@
-import { useEffect, useState } from 'react';
+'use client';
 
-import { assets } from '@/libs/assets';
+import { useEffect, useState } from 'react';
+import { getSrc } from '@/utils';
 
 const useVideoThumbnail = (props: { videoUrl: string, seekTo?: number }) => {
-  const [thumbnail, setThumbnail] = useState(assets.loader);
+  const [thumbnail, setThumbnail] = useState('/images/placeholder-white.webp');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { videoUrl, seekTo = 1.0 } = props;
 
-  const getThumbnail = () => new Promise<string>((resolve, reject) => {
+  const getThumbnail = () => new Promise<string>(async (resolve, reject) => {
     const video = document.createElement('video');
+    video.src = await getSrc(videoUrl);
     video.crossOrigin = 'anonymous';
     let currentTime = seekTo;
-    video.src = videoUrl;
-
     setLoading(true);
 
     video.onloadedmetadata = () => {
@@ -23,17 +23,15 @@ const useVideoThumbnail = (props: { videoUrl: string, seekTo?: number }) => {
 
     video.onseeked = () => {
       const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
       canvas.height = video.videoHeight;
       canvas.width = video.videoWidth;
-
-      const ctx = canvas.getContext('2d');
-
-      if (ctx) {
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      } else {
-        reject('Failed to get canvas context');
-      }
-
+      
+      if (!ctx) return reject('Failed to get canvas context');
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      video.src = '';
+      video.load();
+      
       resolve(canvas.toDataURL('image/png'));
     };
 

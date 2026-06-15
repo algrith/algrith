@@ -1,7 +1,8 @@
+import { authorization } from '@/middleware';
 import { NextRequest } from 'next/server';
 import { uploadFile } from '@/utils/gcs';
 
-export const POST = async (req: NextRequest) => {
+export const POST = authorization(async (req: NextRequest) => {
   const formData = await req.formData();
   
   try {
@@ -14,13 +15,13 @@ export const POST = async (req: NextRequest) => {
       data: { url }
     });
   } catch (error) {
-    console.error('Error uploading file: ', error);
+    console.error('Error uploading file --> ', error);
 
     return Response.json({
-      message: 'File upload failed.',
-      code: 'file_upload_failed',
+      message: 'Server error.',
+      code: 'server_error',
       success: false,
       data: null
     }, { status: 500 });
   }
-};
+});

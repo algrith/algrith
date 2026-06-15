@@ -1,72 +1,23 @@
+import { createMessage } from '@/utils/server/controllers';
 import { Message, Conversation } from '@/libs/schema';
 import { authorization } from '@/middleware';
 import { NextResponse } from 'next/server';
-import { getSocket } from '@/libs/socket';
 import { dbConnect } from '@/utils/db';
-import { Document } from 'mongodb';
 
 const POST = authorization(async (req, ctx, user) => {
   try {
-    const { text = '', attachments = [], type = 'message', temp_id } = await req.json();
-    const { conversationId } = await ctx.params as { conversationId?: string };
+    const { conversationId } = await ctx.params as { conversationId: string };
+    const payload = await req.json();
     await dbConnect();
     
-    if (!text?.trim() && !attachments.length) return NextResponse.json({
-      message: 'Text or attachment is required',
-      code: 'empty_message',
-      success: false,
-      data: null
-    }, { status: 400 });
+    const message = await createMessage(user, conversationId, payload);
+    if (message instanceof NextResponse) return message;
     
-    const conversation = await Conversation.findOne({
-      'participants.user': user.id,
-      _id: conversationId,
-      active: true
-    });
-    
-    if (!conversation) return NextResponse.json({
-      message: 'Conversation not found',
-      code: 'conversation_not_found',
-      success: false,
-      data: null
-    }, { status: 404 });
-    
-    const senderRole = conversation.participants.find((participant: Document) => (
-      participant.user.id === user.id
-    ))?.role ?? 'customer';
-    
-    const message = await Message.create({
-      conversation: conversationId,
-      attachments,
-      text,
-      type,
-      sender: {
-        role: senderRole,
-        user: user.id
-      }
-    });
-    
-    await Conversation.updateOne({ _id: conversationId }, {
-      last_message: {
-        text: text ?? '📎 Attachment',
-        createdAt: message.createdAt,
-        _id: message.id,
-        sender: user.id
-      }
-    });
-    
-    const populated = await message.populate('sender.user', 'name email role');
-    const socket = getSocket();
-    socket?.to(conversation.id).emit('message:new', populated);
-
     return NextResponse.json({
       message: 'Message created successfully',
       code: 'message_created',
       success: true,
-      data: {
-        ...populated.toJSON(),
-        temp_id
-      }
+      data: message
     }, { status: 201 });
   } catch (error) {
     console.error('Server error --> ', error);

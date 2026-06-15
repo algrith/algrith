@@ -1,3 +1,4 @@
+import { createConversation, createMessage } from '@/utils/server/controllers';
 import { Conversation, } from '@/libs/schema';
 import { authorization } from '@/middleware';
 import { NextResponse } from 'next/server';
@@ -7,64 +8,23 @@ import mongoose from 'mongoose';
 
 const POST = authorization(async (req, ctx, user) => {
   try {
-    const { customerId, orderId, type } = await req.json();
+    const { customerId, message: messagePayload, orderId } = await req.json();
     await dbConnect();
     
-    if (type === 'support' && !customerId && user.role !== 'customer') return NextResponse.json({
-      message: 'customerId required',
-      code: 'missing_customer_id',
-      success: false,
-      data: null
-    }, { status: 400 });
+    const conversation = await createConversation(user, customerId, messagePayload, orderId);
+    if (conversation instanceof NextResponse) return conversation;
     
-    if (type === 'order' && !orderId) return NextResponse.json({
-      message: 'orderId required for order conversations',
-      code: 'missing_order_id',
-      success: false,
-      data: null
-    }, { status: 400 });
-    
-    const isStaff = ['admin', 'moderator'].includes(user.role);
-    const customer = isStaff ? customerId : user.id;
-    const agentOrAdmin = isStaff ? user.id : null;
-    
-    const participantRole = (userId: string) => {
-      if (userId === agentOrAdmin?.toString()) {
-        return user.role === 'admin' ? 'admin' : 'moderator';
-      }
-      
-      return 'customer';
-    };
-    
-    const participantIds = [customer, agentOrAdmin].filter(Boolean);
-    
-    const participants = participantIds.map((userId) => ({
-      role: participantRole(userId.toString()),
-      last_read: null,
-      user: userId
-    }));
-    
-    const existing = orderId ? await Conversation.findOne({ order: orderId }) : null;
-
-    if (existing) return NextResponse.json({
-      message: 'Conversation retrieved successfully',
-      code: 'conversation_retrieved',
-      data: existing,
-      success: true
-    });
-    
-    const conversation = await Conversation.create({
-      order: orderId,
-      participants,
-      active: true,
-      type
-    });
+    const message = await createMessage(user, conversation.id, messagePayload);
+    if (message instanceof NextResponse) return message;
     
     return NextResponse.json({
       message: 'Conversation created successfully',
       code: 'conversation_created',
-      data: conversation,
-      success: true
+      success: true,
+      data: {
+        conversation,
+        message
+      }
     }, { status: 201 });
   } catch (error) {
     console.error('Server error --> ', error);

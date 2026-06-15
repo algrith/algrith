@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { ChatState } from '@/types';
+import { ChatState, Message } from '@/types';
 
 const initialState: ChatState = {
   showConversations: false,
@@ -10,8 +10,9 @@ const initialState: ChatState = {
     list: []
   },
   conversation: {
+    index: undefined,
     data: undefined,
-    loading: false
+    loading: false,
   },
   messages: {
     loading: false,
@@ -41,6 +42,17 @@ export const chatSlice = createSlice({
         ...action.payload
       };
     },
+    updateMessage: (state, action: PayloadAction<Partial<Message>>) => {
+      const messageUpdates = action.payload;
+
+      state.messages.list = state.messages.list.map((message) => {
+        if (message.temp_id === action.payload.temp_id) {
+          return { ...message, ...messageUpdates };
+        }
+
+        return message;
+      });
+    },
     setShowConversations: (state, action: PayloadAction<boolean>) => {
       state.showConversations = action.payload;
     }
@@ -53,6 +65,7 @@ export const {
   setShowConversations,
   setConversations,
   setConversation,
+  updateMessage,
   setMessages
 } = actions;
 

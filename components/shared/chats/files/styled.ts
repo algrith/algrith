@@ -24,34 +24,60 @@ export const ImagePreviewWrapper = styled.div`
 `;
 
 export const ChatFilesWrapper = styled.div`
-  ${tw`w-full flex flex-col gap-2 max-h-64 overflow-y-auto`};
+  ${tw`w-full flex flex-col gap-2 max-h-36 overflow-y-auto`};
+  
+  &.in-message {
+    ${tw`max-h-64`};
+
+    .file-wrapper .close-btn {
+      ${tw`hidden`};
+    }
+  }
   
   .group {
     ${tw`w-full flex flex-col items-start gap-2`};
 
     h6 {
-      ${tw`text-theme-text/70`};
+      ${tw`text-gray-400 dark:text-gray-300 font-semibold tracking-wide`};
     }
 
     .files {
       ${tw`w-full grid gap-1.5`};
 
-      &.documents {
-        ${tw`grid-cols-1 lg:grid-cols-2`};
-      }
-      
-      &.images {
-        &:not(.in-message) {
-          ${tw`grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`};
+      .file-wrapper {
+        ${tw`relative`};
+
+        .close-btn {
+          ${tw`absolute top-1 right-1 p-0 w-5 h-5 z-1 text-white`};
+
+          .ant-btn-icon {
+            ${tw`flex justify-center items-center text-sm`};
+          }
         }
-        
+      }
+
+      &.image, &.video {
+        ${tw`grid-cols-2 lg:grid-cols-3 xl:grid-cols-4`};
+
         &.double-view {
-          ${tw`grid-cols-2`};
+          ${tw`lg:grid-cols-2`};
+
+          .ant-image {
+            ${tw`h-24`};
+          }
         }
         
         &.single-view {
           ${tw`grid-cols-1`};
+
+          .ant-image {
+            ${tw`w-auto h-auto`};
+          }
         }
+      }
+
+      &.document {
+        ${tw`grid-cols-1 lg:grid-cols-2`};
       }
       
       .ant-image {

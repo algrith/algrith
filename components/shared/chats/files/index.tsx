@@ -1,31 +1,38 @@
-import { Fragment, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Image } from 'antd';
 
 import GroupHeader from '@/components/shared/chats/files/group-header';
 import { Attachment, GroupedFiles, Message } from '@/types';
-import { getGroupPreview, getPreview } from './preview';
+import { getGroupPreview } from './preview';
 import { ChatFilesWrapper } from './styled';
 import Document from './document';
-import VideoFile from './video';
+import File from './file';
 
 const { PreviewGroup } = Image;
 
-const Files = (props: { message: Message; inMessage?: boolean; }) => {
+const Files = (props: { onRemove?: (fileId: string) => void; message: Message; inMessage?: boolean; }) => {
   const [groupedFiles, setGroupedFiles] = useState<GroupedFiles>({});
   const hasMultipleGroups = Object.keys(groupedFiles).length > 1;
-  const { inMessage = false, message } = props;
+  const { inMessage = false, onRemove, message } = props;
   const files = message?.attachments ?? [];
 
-  const getNonDocumentFileClassName = (isMultipleFiles = false) => {
-    const layout = isMultipleFiles ? 'double-view' : 'single-file';
-  
-    return [
-      inMessage ? 'in-message' : '',
-      inMessage ? layout : '',
-      'images files'
-    ].join(' ')
-    .trim();
+  const getFilesClassName = (files: Array<Attachment>, groupType: string) => {
+    const fileLength = files.length;
+    let layout = '';
+
+    if (groupType !== 'document') {
+      if (inMessage) {
+        layout = fileLength > 1 ? 'double-view' : 'single-view';
+      } else {
+        if (fileLength === 2) layout = 'double-view';
+        if (fileLength === 1) layout = 'single-view';
+      }
+    }
+
+    return [layout, groupType, 'files'].join(' ').trim();
   };
+
+  const handleFileRemoval = (fileId: string) => () => onRemove?.(fileId)
   
   const groupFiles = () => {
     const groupedFiles: GroupedFiles = {};
@@ -50,74 +57,39 @@ const Files = (props: { message: Message; inMessage?: boolean; }) => {
   if (!files?.length) return null;
 
   return (
-    <ChatFilesWrapper>
+    <ChatFilesWrapper className={inMessage ? 'in-message' : ''}>
       {Object.entries(groupedFiles).map(([groupType, files]) => (
-        <Fragment key={groupType}>
-          {groupType === 'document' && (
-            <div className="group">
-              <GroupHeader
-                hasMultipleGroups={hasMultipleGroups}
-                pluralize={files.length > 1}
-                groupType={groupType}
-              />
-
-              <div className="documents files">
+        <div className={`${groupType} group`} key={groupType}>
+          <GroupHeader
+            groupType={groupType as keyof GroupedFiles}
+            hasMultipleGroups={hasMultipleGroups}
+            pluralize={files.length > 1}
+          />
+          
+          <div className={getFilesClassName(files, groupType)}>
+            {groupType === 'document' ? (
+              files.map((file: Attachment) => (
+                <Document
+                  onRemove={handleFileRemoval(file.id)}
+                  message={message}
+                  key={file.url}
+                  file={file}
+                />
+              ))
+            ) : (
+              <PreviewGroup preview={getGroupPreview(files, groupType === 'video')}>
                 {files.map((file: Attachment) => (
-                  <Document
+                  <File
+                    onRemove={handleFileRemoval(file.id)}
                     message={message}
                     key={file.url}
                     file={file}
                   />
                 ))}
-              </div>
-            </div>
-          )}
-          
-          {groupType === 'video' && (
-            <div className="group">
-              <GroupHeader
-                hasMultipleGroups={hasMultipleGroups}
-                pluralize={files.length > 1}
-                groupType="video"
-              />
-              
-              <div className={getNonDocumentFileClassName(files.length > 1)}>
-                <PreviewGroup preview={getGroupPreview(message, true)}>
-                  {files.map((file: Attachment) => (
-                    <VideoFile
-                      message={message}
-                      key={file.url}
-                      file={file}
-                    />
-                  ))}
-                </PreviewGroup>
-              </div>
-            </div>
-          )}
-
-          {groupType === 'image' && (
-            <div className="group">
-              <GroupHeader
-                hasMultipleGroups={hasMultipleGroups}
-                pluralize={files.length > 1}
-                groupType={groupType}
-              />
-              
-              <div className={getNonDocumentFileClassName(files.length > 1)}>
-                <PreviewGroup preview={getGroupPreview(message)}>
-                  {files.map((file: Attachment) => (
-                    <Image
-                      src={`/images/placeholder-white.webp?original=${file.url}`}
-                      preview={getPreview(file, message)}
-                      alt={file.name}
-                      key={file.url}
-                    />
-                  ))}
-                </PreviewGroup>
-              </div>
-            </div>
-          )}
-        </Fragment>
+              </PreviewGroup>
+            )}
+          </div>
+        </div>
       ))}
     </ChatFilesWrapper>
   );

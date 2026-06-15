@@ -1,24 +1,27 @@
 'use client';
 
-import { ArrowsAltOutlined, CaretLeftOutlined, CheckOutlined, CloseOutlined, ExclamationCircleOutlined, MinusOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
+import { ArrowsAltOutlined, CaretLeftOutlined, CheckOutlined, CloseOutlined, ExclamationCircleOutlined, MinusOutlined, PaperClipOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
 import { ChangeEvent, FormEvent, useEffect, useState, useRef } from 'react';
+import { Avatar, Badge, Spin, Switch, Tooltip } from 'antd';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { Avatar, Badge, Spin } from 'antd';
 import { User } from 'next-auth';
 
+import { createOrderConversation, fetchMessages, fetchConversations, sendMessage, updateOrderStatus } from './slices';
 import { Attachment, Conversation as ConversationModel, Message as MessageModel, OrderModel } from '@/types';
 import { ChatsWrapper, ChatWrapper, EmptyWrapper, MessageWrapper, ConversationWrapper } from './styled';
-import { createOrderConversation, fetchMessages, fetchConversations, sendMessage } from './slices';
-import { setConversation, setMessages, setShowConversations } from './reducer';
+import { setConversation, setMessages, setShowConversations, updateMessage } from './reducer';
 import { getDateFormat, getFileFormData, randomId } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import useScrollToLastChild from '@/hooks/scroll-to-view';
-import { Input } from '@/components/shared/input';
+import { TextArea } from '@/components/shared/input';
 import { FileUploadButton } from '../input/file';
 import Button from '@/components/shared/button';
+import useClassName from '@/hooks/class-name';
+import Prompt from '../feedback/prompt';
 import useRoute from '@/hooks/route';
 import { Fetch } from '@/utils/api';
+import Link from '../button/link';
 import Files from './files';
 
 const defaultMessage: Partial<MessageModel> = {
@@ -27,8 +30,8 @@ const defaultMessage: Partial<MessageModel> = {
   text: ''
 };
 
-const Conversation = (props: { conversation: ConversationModel; inChatHeader?: boolean }) => {
-  const { conversation, inChatHeader = false } = props;
+const Conversation = (props: { conversation: ConversationModel; inChatHeader?: boolean, index?: number; }) => {
+  const { conversation, inChatHeader = false, index } = props;
   const order = conversation.order as OrderModel;
   const dispatch = useAppDispatch();
   const router = useRouter();
@@ -39,13 +42,23 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
   
   const selectConversation = () => {
     if (inChatHeader) return;
-    dispatch(setConversation({ data: conversation }));
+    
+    dispatch(setConversation({
+      data: conversation,
+      index
+    }));
   };
   
   const openOrder = () => {
     if (!inChatHeader || !order || conversation.type !== 'order') return;
     router.push(`/dashboard/orders/${order.id}`);
   };
+
+  useEffect(() => {
+    // Update conversation index in case
+    // of deletion, reordering, etc.
+    dispatch(setConversation({ index }));
+  }, [index]);
 
   return (
     <ConversationWrapper className={inChatHeader ? 'in-chat-header' : ''} onClick={selectConversation}>
@@ -63,7 +76,7 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
 
         {(!inChatHeader && conversation.last_message) && (
           <span className="message">
-            {conversation.last_message.text}
+            {conversation.last_message.text || <PaperClipOutlined />}
             {' '}•{' '}
             <small>
               {getDateFormat(conversation.last_message.createdAt).time}
@@ -125,13 +138,18 @@ const Message = ({ message }: { message: MessageModel }) => {
 const Chats = () => {
   const { order: { data: order } } = useAppSelector((state) => state.dashboard);
   const { showConversations, ...rest } = useAppSelector((state) => state.chat);
-  const { list: conversations, total_unread } = rest.conversations;
+  const { list: conversations, total_unread, loading } = rest.conversations;
   const { data: conversation } = rest.conversation;
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { routes } = useRoute();
   
   const isMinimized = conversation && !showConversations;
+
+  const className = useClassName([
+    showConversations ? 'show' : '',
+    loading ? 'loading' : ''
+  ]);
   
   const handleSetupOrderChat = () => {
     if (!order || !session?.user) return;
@@ -141,8 +159,8 @@ const Chats = () => {
       data: {
         participants: [{ role: user.role || 'customer', user }],
         id: 'NEW_CONVERSATION',
-        order: order.id,
-        type: 'order'
+        type: 'order',
+        order
       }
     }));
   };
@@ -166,7 +184,7 @@ const Chats = () => {
   }, []);
 
   return (
-    <ChatsWrapper className={showConversations ? 'show' : ''}>
+    <ChatsWrapper className={className}>
       <div className="header" onClick={toggleChatsWidget}>
         {conversation ? (
           <>
@@ -195,11 +213,14 @@ const Chats = () => {
       <div className="conversations">
         {conversation ? (
           <Chat />
+        ) : loading ? (
+          <Spin />
         ) : Boolean(conversations.length) ? (
-          conversations.map((conversation) => (
+          conversations.map((conversation, index) => (
             <Conversation
               conversation={conversation}
               key={conversation.id}
+              index={index}
             />
           ))
         ) : (
@@ -223,66 +244,62 @@ const Chats = () => {
 };
 
 const Chat = () => {
-  const [sendingMessage, setSendingMessage] = useState(false);
+  const { order: { data: order } } = useAppSelector((state) => state.dashboard);
   const [message, setMessage] = useState(defaultMessage);
   const chat = useAppSelector((state) => state.chat);
   const { loading, list: messages } = chat.messages;
   const { data: conversation } = chat.conversation;
+  const isFiles = message.attachments?.length;
   const messagesContainerRef = useRef(null);
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const user = session?.user;
-
+  const disabled = !user;
+  
   const role = user?.role || 'customer';
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { files, value, id } = e.target;
-    let newValue = value as string | Array<Attachment>;
-
-    if (id === 'attachments' && files) {
-      const attachments = [...(message?.attachments || [])];
-
-      for (const file of files) {
-        const url = URL.createObjectURL(file);
-
-        attachments.push({
-          created_at: new Date().toISOString(),
-          name: file.name.replaceAll(' ', '-'),
-          mime_type: file.type,
-          size: file.size,
-          url
-        });
-      }
-
-      newValue = attachments;
-    }
-    
-    setMessage((prev) => ({
-      ...prev,
-      [id]: newValue
-    }));
-  };
+  const className = useClassName([
+    isFiles ? 'has-files' : '',
+    'input'
+  ]);
 
   const uploadAttachments = async (message: MessageModel) => {
-    if (!message.attachments.length) return message;
-    const attachments = [...message.attachments];
+    const attachments = message.attachments.map((file): Attachment => ({
+      ...file,
+      status: 'uploading'
+    }));
+
+    dispatch(updateMessage({
+      ...message,
+      attachments: [...attachments]
+    }));
+
+    let successful = true;
     
-    for (const [index, file] of message.attachments.entries()) {
+    for (const [index, file] of attachments.entries()) {
       const formData = await getFileFormData(file, `orders/chat`);
-      
+
       const { success, data } = await Fetch({
         method: 'POST',
         path: '/files',
         body: formData
       });
-      
+
+      if (!success) successful = false;
+
       attachments[index] = {
         ...file,
+        status: success ? 'uploaded' : 'failed',
         url: success ? data.url : file.url
       };
+
+      dispatch(updateMessage({
+        ...message,
+        attachments: [...attachments]
+      }));
     }
 
-    return { ...message, attachments };
+    return successful ? { ...message, attachments } : undefined;
   };
 
   const handleSendOrderMessage = async (e: FormEvent) => {
@@ -296,7 +313,6 @@ const Chat = () => {
     } as MessageModel;
     
     setMessage(defaultMessage);
-    setSendingMessage(true);
 
     dispatch(setMessages({
       list: [
@@ -304,19 +320,71 @@ const Chat = () => {
         newMessage
       ]
     }));
-    
-    if (conversation?.id === 'NEW_CONVERSATION') {
-      const customerId = !['moderator', 'admin'].includes(role) ? user.id : '';
 
-      await dispatch(createOrderConversation(
-        conversation.order as string,
-        customerId
-      ));
+    if (isFiles) {
+      const updatedMessage = await uploadAttachments(newMessage);
+      if (updatedMessage) newMessage = updatedMessage;
     }
 
-    newMessage = await uploadAttachments(newMessage);
+    if (!newMessage) return;
+
+    if (newMessage.metadata?.order_status_info) return dispatch(updateOrderStatus(newMessage));
+
+    if (conversation?.id === 'NEW_CONVERSATION') {
+      const customerId = !['moderator', 'admin'].includes(role) ? user.id : '';
+      return await dispatch(createOrderConversation(
+        conversation.order as string,
+        customerId,
+        newMessage
+      ));
+    }
+    
     dispatch(sendMessage(newMessage));
-    setSendingMessage(false);
+  };
+
+  const handleChange = (e: ChangeEvent<HTMLElement>) => {
+    const { files, value, id } = e.target as HTMLInputElement;
+    let newValue = value as string | Array<Attachment>;
+
+    if (id === 'attachments' && files) {
+      const attachments = [...(message?.attachments || [])];
+
+      for (const file of files) {
+        const url = URL.createObjectURL(file);
+
+        attachments.push({
+          created_at: new Date().toISOString(),
+          name: file.name.replaceAll(' ', '-'),
+          mime_type: file.type,
+          status: 'pending',
+          size: file.size,
+          id: randomId(),
+          url
+        });
+      }
+
+      newValue = attachments;
+    }
+    
+    setMessage((prev) => ({
+      ...prev,
+      [id]: newValue
+    }));
+  };
+
+  const markOrderAsDelivered = () => {
+    const newMessage = { ...message };
+    if ('metadata' in message) delete newMessage['metadata'];
+    else newMessage.metadata = {
+      order_status_info: `Order delivered by ${user?.email}`
+    };
+
+    setMessage(newMessage);
+  };
+
+  const removeFile = (fileId: string) => {
+    const attachments = message.attachments?.filter((file) => file.id !== fileId);
+    setMessage((prev) => ({ ...prev, attachments }));
   };
 
   useScrollToLastChild({
@@ -335,6 +403,14 @@ const Chat = () => {
       <div className="messages">
         {loading ? (
           <Spin />
+        ) : disabled ? (
+          <EmptyWrapper>
+            Your session has expired.
+            <br />
+            <Link type="primary" href="/auth" size="small" asButton>
+              Login
+            </Link>
+          </EmptyWrapper>
         ) : Boolean(messages.length) ? (
           messages.map((message) => (
             <Message
@@ -349,29 +425,50 @@ const Chat = () => {
         )}
       </div>
 
-      <form onSubmit={handleSendOrderMessage} className="input">
-        <Files message={message as MessageModel} />
+      <form onSubmit={handleSendOrderMessage} className={className}>
+        <Files onRemove={removeFile} message={message as MessageModel} />
+        {role === 'admin' && order?.status === 'pending' && (
+          <div className="order-delivery">
+            <small>Mark order as delivered</small>
+            <Prompt
+              description="Do you wish to proceed?"
+              onConfirmed={markOrderAsDelivered}
+              title="Confirm Action"
+              target="deliverOrder"
+            >
+              <Tooltip title={!isFiles ? 'Add files to mark order as delivered' : ''} color="red">
+                <Switch
+                  checked={Boolean(message.metadata?.order_status_info)}
+                  disabled={!isFiles}
+                  size="small"
+                />
+              </Tooltip>
+            </Prompt>
+          </div>
+        )}
 
         <div className="controls">
           <FileUploadButton
             onChange={handleChange}
-            disabled={loading}
+            disabled={disabled}
             id="attachments"
             multiple
           />
 
-          <Input
+          <TextArea
             placeholder="Type your message..."
             onChange={handleChange}
             value={message.text}
             size="small"
             autoFocus
             id="text"
+            autoSize
+            rows={1}
           />
           
           <Button
             icon={<SendOutlined />}
-            disabled={loading}
+            disabled={disabled}
             htmlType="submit"
             size="small"
             rounded
