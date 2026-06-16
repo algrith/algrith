@@ -103,8 +103,12 @@ export const ChatsWrapper = styled.div`
   &.show {
     ${tw`w-full md:w-96 bottom-0`};
 
-    .header .ant-badge .ant-badge-count {
-      ${tw`relative top-0 right-0`};
+    .header {
+      ${tw`h-[50px] lg:h-[43.5px]`};
+
+      .ant-badge .ant-badge-count {
+        ${tw`relative top-0 right-0`};
+      }
     }
   }
   
@@ -160,11 +164,11 @@ export const ChatWrapper = styled.div`
       ${tw`flex items-end gap-2 w-full`};
 
       textarea {
-        ${tw`max-h-[150px] pt-1`};
+        ${tw`!min-h-14 lg:!min-h-10 max-h-[150px] pt-3 lg:pt-1`};
       }
 
       .ant-btn {
-        ${tw`flex items-center justify-center w-10 h-10 bg-theme-primary/20 hover:bg-theme-primary/30`};
+        ${tw`flex items-center justify-center w-14 lg:w-10 h-14 lg:h-10 bg-theme-primary/20 hover:bg-theme-primary/30`};
 
         .ant-btn-icon {
           ${tw`flex items-center justify-center w-full h-full`};
