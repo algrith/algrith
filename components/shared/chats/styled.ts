@@ -13,7 +13,11 @@ export const ConversationWrapper = styled.h3`
   }
   
   .ant-btn {
-    ${tw`!p-0 h-auto !bg-transparent shadow-none text-gray-100 hover:text-white text-xm`};
+    ${tw`!p-0 h-auto leading-[1] !bg-transparent shadow-none text-gray-100 hover:text-white text-xm`};
+
+    .anticon {
+      ${tw`text-2xl`};
+    }
   }
   
   .text {
@@ -120,9 +124,13 @@ export const ChatsWrapper = styled.div`
       
       .ant-btn {
         ${tw`flex-grow !p-0 h-auto !bg-transparent shadow-none text-gray-100 hover:text-white text-xm`};
+
+        .anticon {
+          ${tw`text-xl lg:text-lg`};
+        }
         
         &:first-of-type .anticon {
-          ${tw`text-xl flex items-center`};
+          ${tw`text-xl flex items-center -mt-0.5`};
         }
       }
     }
