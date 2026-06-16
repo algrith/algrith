@@ -24,7 +24,7 @@ export const ImagePreviewWrapper = styled.div`
 `;
 
 export const ChatFilesWrapper = styled.div`
-  ${tw`w-full flex flex-col gap-2 max-h-36 overflow-y-auto`};
+  ${tw`w-full flex flex-col gap-6 max-h-36 overflow-y-auto`};
   
   &.in-message {
     ${tw`max-h-64`};
@@ -81,10 +81,10 @@ export const ChatFilesWrapper = styled.div`
       }
       
       .ant-image {
-        ${tw`bg-gray-100 dark:bg-gray-800 rounded-lg p-1 w-full h-16 mb-1.5 overflow-hidden`};
+        ${tw`flex justify-center items-center bg-gray-100 dark:bg-gray-800 rounded-lg w-full h-16 overflow-hidden`};
 
         img {
-          ${tw`object-contain w-full h-full`};
+          ${tw`object-cover w-full h-full`};
         }
       }
     }

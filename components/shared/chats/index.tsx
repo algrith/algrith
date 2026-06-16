@@ -11,13 +11,13 @@ import { createOrderConversation, fetchMessages, fetchConversations, sendMessage
 import { resetMessage, setConversation, setMessage, setMessages, setShowConversations, updateMessage } from './reducer';
 import { Attachment, Conversation as ConversationModel, Message as MessageModel, OrderModel } from '@/types';
 import { ChatsWrapper, ChatWrapper, MessageWrapper, ConversationWrapper } from './styled';
-import { EmptyWrapper, StatusBadgeWrapper } from '../layout/styled';
 import { getDateFormat, getFileFormData, randomId } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import useScrollToLastChild from '@/hooks/scroll-to-view';
-import { Input, TextArea } from '@/components/shared/input';
+import { TextArea } from '@/components/shared/input';
 import { FileUploadButton } from '../input/file';
 import Button from '@/components/shared/button';
+import { EmptyWrapper } from '../layout/styled';
 import useClassName from '@/hooks/class-name';
 import Prompt from '../feedback/prompt';
 import useRoute from '@/hooks/route';
@@ -58,7 +58,7 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
   return (
     <ConversationWrapper className={inChatHeader ? 'in-chat-header' : ''} onClick={selectConversation}>
       {inChatHeader && <Button icon={<CaretLeftOutlined onClick={handleBackToConversations} />} />}
-      <span><Avatar icon={<UserOutlined />} size="small" /></span>
+      <span><Avatar icon={<UserOutlined />} size={inChatHeader ? 'small' : 'default'} /></span>
       
       <span className="text" onClick={openOrder}>
         <span className="title">
@@ -70,13 +70,14 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
         </span>
 
         {(!inChatHeader && conversation.last_message) && (
-          <span className="message">
-            {conversation.last_message.text || <PaperClipOutlined />}
-            {' '}•{' '}
+          <div className="message">
+            <span className="last-message">
+              {conversation.last_message.text || <PaperClipOutlined />}
+            </span>
             <small>
               {getDateFormat(conversation.last_message.createdAt).time}
             </small>
-          </span>
+          </div>
         )}
       </span>
     </ConversationWrapper>
@@ -140,6 +141,9 @@ const ConversationTypeStatus = () => {
   const dispatch = useAppDispatch();
   const user = session?.user;
   
+  const canDeliverOrder = type === 'order' && order?.status === 'pending';
+  const canCloseCase = type === 'support';
+
   const markOrderAsDelivered = () => {
     const newMessage = { ...message };
     if ('metadata' in message) delete newMessage['metadata'];
@@ -150,34 +154,28 @@ const ConversationTypeStatus = () => {
     dispatch(setMessage(newMessage));
   };
 
-  if (user?.role !== 'admin') return null;
+  if (user?.role !== 'admin' || (!canDeliverOrder && !canCloseCase)) return null;
 
   return (
     <div className="order-delivery">
-      {(type === 'order' && order && typeof order === 'object') && (
-        order.status === 'pending' ? (
-          <>
-            <small>Mark order as delivered</small>
-            <Prompt
-              description="Do you wish to proceed?"
-              onConfirmed={markOrderAsDelivered}
-              title="Confirm Action"
-              target="deliverOrder"
-            >
-              <Tooltip title={!isFiles ? 'Add files to mark order as delivered' : ''} color="red">
-                <Switch
-                  checked={Boolean(message.metadata?.order_status_info)}
-                  disabled={!isFiles}
-                  size="small"
-                />
-              </Tooltip>
-            </Prompt>
-          </>
-        ) : (
-          <StatusBadgeWrapper className={order.status}>
-            {order.status}
-          </StatusBadgeWrapper>
-        )
+      {canDeliverOrder && (
+        <>
+          <small>Mark order as delivered</small>
+          <Prompt
+            description="Do you wish to proceed?"
+            onConfirmed={markOrderAsDelivered}
+            title="Confirm Action"
+            target="deliverOrder"
+          >
+            <Tooltip title={!isFiles ? 'Add files to mark order as delivered' : ''} color="red">
+              <Switch
+                checked={Boolean(message.metadata?.order_status_info)}
+                disabled={!isFiles}
+                size="small"
+              />
+            </Tooltip>
+          </Prompt>
+        </>
       )}
       
       {/* {(type === 'support') && ()} */}
@@ -463,9 +461,8 @@ const Chat = () => {
             id="attachments"
             multiple
           />
-
-          <Input />
-          {/* <TextArea
+          
+          <TextArea
             placeholder="Type your message..."
             onChange={handleChange}
             value={message.text}
@@ -474,7 +471,7 @@ const Chat = () => {
             id="text"
             autoSize
             rows={1}
-          /> */}
+          />
           
           <Button
             icon={<SendOutlined />}

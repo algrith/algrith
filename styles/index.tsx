@@ -5,6 +5,7 @@ import tw, { css, GlobalStyles as BaseStyles } from 'twin.macro';
 import { ScrollToTopController } from '@algrith/scroll-to-top';
 import useScrollToElement from '@/hooks/scroll-to-element';
 import useToggleNavbar from '@/hooks/toggle-tavbar';
+import useLazyLoader from '@/hooks/lazy-loader';
 import '@algrith/scroll-to-top/dist/index.css';
 import { Global } from '@emotion/react';
 import useRoute from '@/hooks/route';
@@ -45,6 +46,7 @@ const GlobalStyles = () => {
   const { closeNavbar } = useToggleNavbar();
   const { routes } = useRoute();
 	useScrollToElement();
+  useLazyLoader();
   
   const restrictedScrollToTopControllerRoutes = [routes.isDashboard, routes.auth];
   const showScrollToTopController = !restrictedScrollToTopControllerRoutes.some(Boolean);

@@ -1,11 +1,11 @@
 import tw, { styled } from 'twin.macro';
-import { borderCss } from '../layout/styled';
+import { squareWaves } from '../layout/styled';
 
 export const ConversationWrapper = styled.h3`
-  ${tw`flex items-center gap-2 text-xm font-semibold tracking-wide overflow-hidden`};
+  ${tw`flex items-center gap-2 text-xm font-semibold tracking-wide overflow-hidden z-1`};
 
   &:not(.in-chat-header) {
-    ${tw`gap-3 p-4 text-gray-700 dark:text-gray-300 dark:bg-gray-900 cursor-pointer`};
+    ${tw`gap-3 p-4 text-gray-700 dark:text-gray-300 hover:bg-white dark:bg-gray-900/40 hover:dark:bg-gray-900/60 hover:shadow hover:dark:shadow-gray-700 cursor-pointer`};
 
     &:not(:last-of-type) {
       ${tw`border-b border-b-gray-100 dark:border-b-gray-700`};
@@ -20,7 +20,15 @@ export const ConversationWrapper = styled.h3`
     ${tw`flex flex-col overflow-hidden`};
     
     .message {
-      ${tw`text-md w-full whitespace-nowrap overflow-ellipsis overflow-hidden`};
+      ${tw`flex gap-4 text-md w-full `};
+
+      .last-message {
+        ${tw`whitespace-nowrap overflow-ellipsis overflow-hidden`};
+      }
+      
+      small {
+        ${tw`flex-grow`};
+      }
     }
     
     .title {
@@ -30,7 +38,7 @@ export const ConversationWrapper = styled.h3`
 `;
 
 export const MessageWrapper = styled.div`
-  ${tw`flex w-full`};
+  ${tw`flex w-full z-1`};
 
   &:last-of-type {
     ${tw`mb-10`};
@@ -40,23 +48,23 @@ export const MessageWrapper = styled.div`
     ${tw`justify-end`};
 
     .message {
-      ${tw`rounded-br-3xl rounded-tr rounded-tl-xl rounded-bl-xl pr-4`};
+      ${tw`rounded-br-3xl rounded-tr rounded-tl-xl rounded-bl-xl`};
     }
   }
   
   .message {
-    ${tw`flex gap-3 w-4/5 rounded-tl rounded-tr-xl rounded-br-xl rounded-bl-3xl px-3 py-2 bg-gray-200 text-gray-700 dark:bg-gray-900 dark:text-gray-300`};
+    ${tw`flex gap-3 w-4/5 rounded-tl rounded-tr-xl rounded-br-xl rounded-bl-3xl p-1 bg-gray-100 text-gray-700 dark:bg-gray-900/70 dark:text-gray-300 shadow`};
 
     .ant-avatar .anticon {
       ${tw`font-semibold text-2xl`};
     }
     
     .details {
-      ${tw`flex flex-col w-full`};
+      ${tw`flex flex-col w-full gap-2`};
 
       .metadata {
-        ${tw`flex flex-row items-center justify-end w-full text-xs`};
-
+        ${tw`flex gap-2 items-center justify-end w-full text-xs pr-1.5`};
+        
         .delivered {
           ${tw`text-orange-500`};
         }
@@ -74,7 +82,7 @@ export const MessageWrapper = styled.div`
         ${tw`w-full`};
 
         .text {
-          ${tw`whitespace-pre`};
+          ${tw`whitespace-pre-wrap p-1 leading-tight`};
         }
       }
       
@@ -86,7 +94,7 @@ export const MessageWrapper = styled.div`
 `;
 
 export const ChatsWrapper = styled.div`
-  ${tw`fixed w-[70.94px] md:w-96 -bottom-112 left-0 md:left-auto md:right-8 bg-transparent shadow-lg transition-all duration-500`};
+  ${tw`fixed z-1 w-[70.94px] md:w-96 rounded-t-xl -bottom-112 left-0 md:left-auto md:right-8 bg-white dark:bg-gray-900 shadow-lg transition-all duration-500`};
   
   &.loading .conversations {
     ${tw`justify-center items-center`};
@@ -121,7 +129,8 @@ export const ChatsWrapper = styled.div`
   }
   
   .conversations {
-    ${tw`w-full h-112 flex flex-col bg-white dark:bg-black overflow-hidden`};
+    ${tw`w-full h-112 flex flex-col overflow-hidden`};
+    ${squareWaves()};
   }
 `;
 
@@ -137,15 +146,14 @@ export const ChatWrapper = styled.div`
   }
   
   .input {
-    ${tw`relative flex flex-col gap-2 w-full p-3`};
+    ${tw`relative flex flex-col gap-2 w-full p-3 pt-1 z-1`};
 
     .order-delivery {
-      ${tw`flex gap-3 items-center px-3 py-1.5 absolute right-0 bottom-[calc(100% - 4px)] rounded-t-xl rounded-tl-3xl w-auto bg-white dark:bg-black`};
+      ${tw`flex gap-3 items-center justify-end w-full dark:text-gray-300`};
     }
 
-    &.has-files, &.has-files .order-delivery {
-      ${tw`!border-0 !border-t rounded-t-xl`};
-      ${borderCss};
+    &.has-files {
+      ${tw`rounded-xl bg-white dark:bg-gray-900`};
     }
 
     .controls {

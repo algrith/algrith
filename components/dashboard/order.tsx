@@ -15,8 +15,6 @@ import { FontRole, FontsList } from '../shared/input/fonts';
 import { Swatches } from '../shared/input/color/palette';
 import { formatCurrency, getDateFormat } from '@/utils';
 import { EmptyWrapper } from '../shared/layout/styled';
-import useLazyLoader from '@/hooks/lazy-loader';
-import Conversations from '../shared/chats';
 import Link from '../shared/button/link';
 import { fetchOrder } from './slices';
 import Button from '../shared/button';
@@ -28,7 +26,6 @@ const Order = () => {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { orderId } = useParams();
-  useLazyLoader();
 
   const handleActiveFontRole = (role: FontRole) => {
     setActiveFontRole(role);
@@ -301,8 +298,6 @@ const Order = () => {
                     Download Invoice
                   </Link>
                 </div> */}
-
-                <Conversations />
               </div>
             </div>
           </div>
