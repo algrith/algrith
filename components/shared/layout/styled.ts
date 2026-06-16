@@ -16,7 +16,7 @@ export const squareWaves = (inverse: boolean = false, height = '') => css`
 		${height && `height: ${height}`};
 
 		@media (max-width: 768px) {
-			${tw`h-full`};
+			${tw`h-[100dvh]`};
 		}
 	}
 
