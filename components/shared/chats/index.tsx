@@ -15,7 +15,7 @@ import { EmptyWrapper, StatusBadgeWrapper } from '../layout/styled';
 import { getDateFormat, getFileFormData, randomId } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import useScrollToLastChild from '@/hooks/scroll-to-view';
-import { TextArea } from '@/components/shared/input';
+import { Input, TextArea } from '@/components/shared/input';
 import { FileUploadButton } from '../input/file';
 import Button from '@/components/shared/button';
 import useClassName from '@/hooks/class-name';
@@ -464,6 +464,7 @@ const Chat = () => {
             multiple
           />
 
+          <Input />
           {/* <TextArea
             placeholder="Type your message..."
             onChange={handleChange}
