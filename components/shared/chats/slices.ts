@@ -60,13 +60,13 @@ export const setupOrderChat = (order?: OrderModel, user?: User) => (dispatch: Ap
 export const fetchOrderConversation = (orderId: string) => async (dispatch: AppDispatch) => {
   dispatch(setOrderConversation({ loading: true }));
 
-  const { data } = await Fetch({
+  const { success, data } = await Fetch({
     path: `/conversations/orders/${orderId}`
   });
   
   dispatch(setOrderConversation({
-    data: data.conversation,
-    unread: data.unread,
+    data: data?.conversation || undefined,
+    unread: data?.unread ?? 0,
     loading: false
   }));
 };
