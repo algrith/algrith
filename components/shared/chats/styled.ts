@@ -2,7 +2,7 @@ import tw, { styled } from 'twin.macro';
 import { squareWaves } from '../layout/styled';
 
 export const ConversationWrapper = styled.h3`
-  ${tw`flex items-center gap-2 text-xm font-semibold tracking-wide overflow-hidden z-1`};
+  ${tw`flex items-center gap-2 text-xl lg:text-xm font-semibold tracking-wide overflow-hidden z-1`};
 
   &:not(.in-chat-header) {
     ${tw`gap-3 p-4 text-gray-700 dark:text-gray-300 hover:bg-white dark:bg-gray-900/40 hover:dark:bg-gray-900/60 hover:shadow hover:dark:shadow-gray-700 cursor-pointer`};
@@ -17,17 +17,13 @@ export const ConversationWrapper = styled.h3`
   }
   
   .text {
-    ${tw`flex flex-col overflow-hidden`};
+    ${tw`w-full flex flex-col overflow-hidden`};
     
     .message {
-      ${tw`flex gap-4 justify-between text-md w-full `};
+      ${tw`flex gap-4 justify-between text-md w-full`};
 
       .last-message {
         ${tw`whitespace-nowrap overflow-ellipsis overflow-hidden`};
-      }
-      
-      small {
-        ${tw`flex-grow`};
       }
     }
     
@@ -104,7 +100,7 @@ export const ChatsWrapper = styled.div`
     ${tw`w-full md:w-96 bottom-0`};
 
     .header {
-      ${tw`h-[50px] lg:h-[43.5px]`};
+      ${tw`h-[50px] lg:h-[43.5px] text-xl lg:text-lg`};
 
       .ant-badge .ant-badge-count {
         ${tw`relative top-0 right-0`};
@@ -113,7 +109,7 @@ export const ChatsWrapper = styled.div`
   }
   
   .header {
-    ${tw`w-full h-[43.5px] relative flex gap-0 md:gap-4 justify-between items-center px-5 py-3 rounded-t-xl text-white bg-theme-primary font-semibold cursor-pointer`};
+    ${tw`w-full h-[43.5px] lg:text-lg relative flex gap-0 md:gap-4 justify-between items-center px-5 py-3 rounded-t-xl text-white bg-theme-primary font-semibold cursor-pointer`};
     
     .ant-badge .ant-badge-count {
       ${tw`absolute -top-8 -right-9 md:relative md:top-0 md:right-0 shadow-none duration-300`};

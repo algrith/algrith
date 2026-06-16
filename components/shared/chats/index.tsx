@@ -60,7 +60,7 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
       {inChatHeader && <Button icon={<CaretLeftOutlined onClick={handleBackToConversations} />} />}
       <span><Avatar icon={<UserOutlined />} size={inChatHeader ? 'small' : 'default'} /></span>
       
-      <span className="text" onClick={openOrder}>
+      <div className="text" onClick={openOrder}>
         <span className="title">
           {conversation.type === 'order' ? (
             `${order.plan.name} • #${order.reference}`
@@ -79,7 +79,7 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
             </small>
           </div>
         )}
-      </span>
+      </div>
     </ConversationWrapper>
   );
 };
