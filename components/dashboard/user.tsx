@@ -50,13 +50,15 @@ const User = ({ id }: { id: string }) => {
       <div className="content">
         {user && (
           <div className="metadata">
-            <p>Joined: {getDateFormat(user.createdAt).full}</p>
+            <div className="left">
+              <p>Joined: {getDateFormat(user.createdAt).full}</p>
 
-            <p>
-              Status: <StatusBadgeWrapper className={verification}>
-                {verification}
-              </StatusBadgeWrapper>
-            </p>
+              <p>
+                Status: <StatusBadgeWrapper className={verification}>
+                  {verification}
+                </StatusBadgeWrapper>
+              </p>
+            </div>
           </div>
         )}
 

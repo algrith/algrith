@@ -27,6 +27,10 @@ export const DashboardWrapper = styled.div`
 export const MainViewWrapper = styled.div`
   ${tw`h-full w-full overflow-y-auto`};
 
+  .ant-badge .ant-badge-count {
+    ${tw`shadow-none`};
+  }
+
   &.loading {
     ${tw`flex justify-center items-center bg-black/20 rounded-xl`};
   }
@@ -47,7 +51,19 @@ export const MainViewWrapper = styled.div`
     ${tw`w-full h-full flex flex-col gap-8 py-4`};
     
     .metadata {
-      ${tw`flex flex-col gap-2 text-gray-600 dark:text-gray-400 font-mono text-sm`};
+      ${tw`flex justify-between gap-2 text-gray-600 dark:text-gray-400 text-sm`};
+
+      .left {
+        ${tw`flex flex-col gap-2 font-mono`};
+      }
+      
+      .ant-btn > span {
+        ${tw`text-xm tracking-wide`};
+        
+        &.ant-btn-icon {
+          ${tw`text-xl`};
+        }
+      }
     }
     
     .columns {

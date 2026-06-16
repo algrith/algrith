@@ -125,14 +125,6 @@ export const ChatsWrapper = styled.div`
   }
 `;
 
-export const EmptyWrapper = styled.div`
-  ${tw`w-full h-full justify-center flex flex-col gap-2 items-center p-4`};
-
-  p {
-    ${tw`text-center`};
-  }
-`;
-
 export const ChatWrapper = styled.div`
   ${tw`w-full h-full flex flex-col gap-1`};
 

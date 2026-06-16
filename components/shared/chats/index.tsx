@@ -1,16 +1,17 @@
 'use client';
 
 import { ArrowsAltOutlined, CaretLeftOutlined, CheckOutlined, CloseOutlined, ExclamationCircleOutlined, MinusOutlined, PaperClipOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
-import { ChangeEvent, FormEvent, useEffect, useState, useRef } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef } from 'react';
 import { Avatar, Badge, Spin, Switch, Tooltip } from 'antd';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { User } from 'next-auth';
 
-import { createOrderConversation, fetchMessages, fetchConversations, sendMessage, updateOrderStatus } from './slices';
+import { createOrderConversation, fetchMessages, fetchConversations, sendMessage, updateOrderStatus, setupOrderChat } from './slices';
+import { resetMessage, setConversation, setMessage, setMessages, setShowConversations, updateMessage } from './reducer';
 import { Attachment, Conversation as ConversationModel, Message as MessageModel, OrderModel } from '@/types';
-import { ChatsWrapper, ChatWrapper, EmptyWrapper, MessageWrapper, ConversationWrapper } from './styled';
-import { setConversation, setMessages, setShowConversations, updateMessage } from './reducer';
+import { ChatsWrapper, ChatWrapper, MessageWrapper, ConversationWrapper } from './styled';
+import { EmptyWrapper, StatusBadgeWrapper } from '../layout/styled';
 import { getDateFormat, getFileFormData, randomId } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import useScrollToLastChild from '@/hooks/scroll-to-view';
@@ -23,12 +24,6 @@ import useRoute from '@/hooks/route';
 import { Fetch } from '@/utils/api';
 import Link from '../button/link';
 import Files from './files';
-
-const defaultMessage: Partial<MessageModel> = {
-  temp_id: randomId(),
-  attachments: [],
-  text: ''
-};
 
 const Conversation = (props: { conversation: ConversationModel; inChatHeader?: boolean, index?: number; }) => {
   const { conversation, inChatHeader = false, index } = props;
@@ -135,6 +130,61 @@ const Message = ({ message }: { message: MessageModel }) => {
   );
 };
 
+const ConversationTypeStatus = () => {
+  const { message, ...chat } = useAppSelector((state) => state.chat);
+  const { data: conversation } = chat.conversation;
+  const order = conversation?.order as OrderModel;
+  const isFiles = message.attachments?.length;
+  const { data: session } = useSession();
+  const { type } = conversation ?? {};
+  const dispatch = useAppDispatch();
+  const user = session?.user;
+  
+  const markOrderAsDelivered = () => {
+    const newMessage = { ...message };
+    if ('metadata' in message) delete newMessage['metadata'];
+    else newMessage.metadata = {
+      order_status_info: `Order delivered by ${user?.email}`
+    };
+
+    dispatch(setMessage(newMessage));
+  };
+
+  if (user?.role !== 'admin') return null;
+
+  return (
+    <div className="order-delivery">
+      {(type === 'order' && order && typeof order === 'object') && (
+        order.status === 'pending' ? (
+          <>
+            <small>Mark order as delivered</small>
+            <Prompt
+              description="Do you wish to proceed?"
+              onConfirmed={markOrderAsDelivered}
+              title="Confirm Action"
+              target="deliverOrder"
+            >
+              <Tooltip title={!isFiles ? 'Add files to mark order as delivered' : ''} color="red">
+                <Switch
+                  checked={Boolean(message.metadata?.order_status_info)}
+                  disabled={!isFiles}
+                  size="small"
+                />
+              </Tooltip>
+            </Prompt>
+          </>
+        ) : (
+          <StatusBadgeWrapper className={order.status}>
+            {order.status}
+          </StatusBadgeWrapper>
+        )
+      )}
+      
+      {/* {(type === 'support') && ()} */}
+    </div>
+  );
+};
+
 const Chats = () => {
   const { order: { data: order } } = useAppSelector((state) => state.dashboard);
   const { showConversations, ...rest } = useAppSelector((state) => state.chat);
@@ -152,17 +202,7 @@ const Chats = () => {
   ]);
   
   const handleSetupOrderChat = () => {
-    if (!order || !session?.user) return;
-    const { user } = session;
-    
-    dispatch(setConversation({
-      data: {
-        participants: [{ role: user.role || 'customer', user }],
-        id: 'NEW_CONVERSATION',
-        type: 'order',
-        order
-      }
-    }));
+    dispatch(setupOrderChat(order, session?.user))
   };
 
   const toggleChatsWidget = () => {
@@ -244,9 +284,7 @@ const Chats = () => {
 };
 
 const Chat = () => {
-  const { order: { data: order } } = useAppSelector((state) => state.dashboard);
-  const [message, setMessage] = useState(defaultMessage);
-  const chat = useAppSelector((state) => state.chat);
+  const { message, ...chat } = useAppSelector((state) => state.chat);
   const { loading, list: messages } = chat.messages;
   const { data: conversation } = chat.conversation;
   const isFiles = message.attachments?.length;
@@ -312,8 +350,8 @@ const Chat = () => {
       ...message
     } as MessageModel;
     
-    setMessage(defaultMessage);
-
+    dispatch(resetMessage());
+    
     dispatch(setMessages({
       list: [
         ...messages,
@@ -366,25 +404,14 @@ const Chat = () => {
       newValue = attachments;
     }
     
-    setMessage((prev) => ({
-      ...prev,
+    dispatch(setMessage({
       [id]: newValue
     }));
   };
 
-  const markOrderAsDelivered = () => {
-    const newMessage = { ...message };
-    if ('metadata' in message) delete newMessage['metadata'];
-    else newMessage.metadata = {
-      order_status_info: `Order delivered by ${user?.email}`
-    };
-
-    setMessage(newMessage);
-  };
-
   const removeFile = (fileId: string) => {
     const attachments = message.attachments?.filter((file) => file.id !== fileId);
-    setMessage((prev) => ({ ...prev, attachments }));
+    dispatch(setMessage({ attachments }));
   };
 
   useScrollToLastChild({
@@ -427,25 +454,7 @@ const Chat = () => {
 
       <form onSubmit={handleSendOrderMessage} className={className}>
         <Files onRemove={removeFile} message={message as MessageModel} />
-        {role === 'admin' && order?.status === 'pending' && (
-          <div className="order-delivery">
-            <small>Mark order as delivered</small>
-            <Prompt
-              description="Do you wish to proceed?"
-              onConfirmed={markOrderAsDelivered}
-              title="Confirm Action"
-              target="deliverOrder"
-            >
-              <Tooltip title={!isFiles ? 'Add files to mark order as delivered' : ''} color="red">
-                <Switch
-                  checked={Boolean(message.metadata?.order_status_info)}
-                  disabled={!isFiles}
-                  size="small"
-                />
-              </Tooltip>
-            </Prompt>
-          </div>
-        )}
+        <ConversationTypeStatus />
 
         <div className="controls">
           <FileUploadButton

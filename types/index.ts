@@ -315,6 +315,12 @@ export interface Attachment {
 
 export interface ChatState {
 	showConversations: boolean;
+	message: Partial<Message>;
+	orderConversation: {
+		data?: Conversation;
+		loading: boolean;
+		unread: number;
+	};
 	conversations: {
 		list: Array<Conversation>;
 		total_unread: number;

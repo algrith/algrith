@@ -1,9 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 import { ChatState, Message } from '@/types';
+import { randomId } from '@/utils';
+
+const defaultMessage: Partial<Message> = {
+  temp_id: randomId(),
+  attachments: [],
+  text: ''
+};
 
 const initialState: ChatState = {
   showConversations: false,
+  message: defaultMessage,
+  orderConversation: {
+    data: undefined,
+    loading: false,
+    unread: 0
+  },
   conversations: {
     total_unread: 0,
     loading: false,
@@ -24,6 +37,12 @@ export const chatSlice = createSlice({
   name: 'chat',
   initialState,
   reducers: {
+    setOrderConversation: (state, action: PayloadAction<Partial<ChatState['orderConversation']>>) => {
+      state.orderConversation = {
+        ...state.orderConversation,
+        ...action.payload
+      };
+    },
     setConversations: (state, action: PayloadAction<Partial<ChatState['conversations']>>) => {
       state.conversations = {
         ...state.conversations,
@@ -55,6 +74,15 @@ export const chatSlice = createSlice({
     },
     setShowConversations: (state, action: PayloadAction<boolean>) => {
       state.showConversations = action.payload;
+    },
+    setMessage: (state, action: PayloadAction<Partial<Message>>) => {
+      state.message = {
+        ...state.message,
+        ...action.payload
+      };
+    },
+    resetMessage: (state, action: PayloadAction) => {
+      state.message = defaultMessage;
     }
   }
 })
@@ -62,11 +90,14 @@ export const chatSlice = createSlice({
 const { reducer, actions } = chatSlice;
 
 export const {
+  setOrderConversation,
   setShowConversations,
   setConversations,
   setConversation,
   updateMessage,
-  setMessages
+  resetMessage,
+  setMessages,
+  setMessage
 } = actions;
 
 export default reducer;

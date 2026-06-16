@@ -1,23 +1,31 @@
 'use client';
 
-import { Divider, Image, Spin } from 'antd';
+import { MessageOutlined } from '@ant-design/icons';
+import { Badge, Divider, Image, Spin } from 'antd';
+import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { BillingCycleBadgeWrapper, MainViewWrapper, SummaryWrapper, AddonWrapper, InfoWrapper, PlanWrapper } from './styled';
+import { fetchOrderConversation, setupOrderChat } from '../shared/chats/slices';
+import { setConversation, setShowConversations } from '../shared/chats/reducer';
 import { StatusBadgeWrapper } from '@/components/shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { FontRole, FontsList } from '../shared/input/fonts';
 import { Swatches } from '../shared/input/color/palette';
 import { formatCurrency, getDateFormat } from '@/utils';
+import { EmptyWrapper } from '../shared/layout/styled';
 import useLazyLoader from '@/hooks/lazy-loader';
 import Conversations from '../shared/chats';
 import Link from '../shared/button/link';
 import { fetchOrder } from './slices';
+import Button from '../shared/button';
 
 const Order = () => {
+  const { orderConversation: { data: conversation, unread } } = useAppSelector((state) => state.chat);
   const { order: { data: order, loading } } = useAppSelector((state) => state.dashboard);
   const [activeFontRole, setActiveFontRole] = useState<FontRole>('heading');
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { orderId } = useParams();
   useLazyLoader();
@@ -26,9 +34,22 @@ const Order = () => {
     setActiveFontRole(role);
   };
 
+  const handleOrderChat = () => {
+    if (!conversation) dispatch(setupOrderChat(order, session?.user));
+    else dispatch(setConversation({ data: conversation }));
+    dispatch(setShowConversations(true));
+  };
+  
+  const closeChatWidget = () => {
+    dispatch(setConversation({ data: undefined }));
+    dispatch(setShowConversations(false));
+  };
+
   useEffect(() => {
     if (!orderId || typeof orderId !== 'string') return;
+    dispatch(fetchOrderConversation(orderId));
     dispatch(fetchOrder(orderId));
+    closeChatWidget();
   }, []);
 
   return (
@@ -36,7 +57,10 @@ const Order = () => {
       {loading ? (
         <Spin />
       ) : !order ? (
-        'Oops! Could not retrieve order.'
+        <EmptyWrapper>
+          <h1>404 Not Found</h1>
+          <p>Oops! Could not retrieve order.</p>
+        </EmptyWrapper>
       ) : (
         <>
           <header>
@@ -46,12 +70,22 @@ const Order = () => {
 
           <div className="content">
             <div className="metadata">
-              <div>Date: {getDateFormat(order?.paid_at).full}</div>
+              <div className="left">
+                <div>Date: {getDateFormat(order?.paid_at).full}</div>
 
-              <div>
-                Status: <StatusBadgeWrapper className={order.status}>
-                  {order.status}
-                </StatusBadgeWrapper>
+                <div>
+                  Status: <StatusBadgeWrapper className={order.status}>
+                    {order.status}
+                  </StatusBadgeWrapper>
+                </div>
+              </div>
+
+              <div className="right">
+                <Badge count={unread} offset={[-15, 0]}>
+                  <Button onClick={handleOrderChat} icon={<MessageOutlined />} type="primary" size="small" rounded>
+                    Order Chat
+                  </Button>
+                </Badge>
               </div>
             </div>
 

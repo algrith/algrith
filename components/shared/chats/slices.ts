@@ -1,9 +1,10 @@
-import { setConversation, setConversations, setMessages } from './reducer';
+import { setConversation, setConversations, setMessages, setOrderConversation } from './reducer';
 import { setOrder } from '@/components/dashboard/reducer';
+import { Message, OrderModel } from '@/types';
 import { AppDispatch, store } from '@/store';
 import { moveToFront } from '@/utils';
 import { Fetch } from '@/utils/api';
-import { Message } from '@/types';
+import { User } from 'next-auth';
 
 export const createOrderConversation = (orderId: string, customerId: string, message: Message) => async (dispatch: AppDispatch) => {
   const { conversations } = store.getState().chat;
@@ -40,6 +41,33 @@ export const createOrderConversation = (orderId: string, customerId: string, mes
         ...data.conversation
       }
     })
+  }));
+};
+
+export const setupOrderChat = (order?: OrderModel, user?: User) => (dispatch: AppDispatch) => {
+  if (!order || !user) return;
+  
+  dispatch(setConversation({
+    data: {
+      participants: [{ role: user.role || 'customer', user }],
+      id: 'NEW_CONVERSATION',
+      type: 'order',
+      order
+    }
+  }));
+};
+
+export const fetchOrderConversation = (orderId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setOrderConversation({ loading: true }));
+
+  const { data } = await Fetch({
+    path: `/conversations/orders/${orderId}`
+  });
+  
+  dispatch(setOrderConversation({
+    data: data.conversation,
+    unread: data.unread,
+    loading: false
   }));
 };
 

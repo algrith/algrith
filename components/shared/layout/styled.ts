@@ -720,6 +720,18 @@ export const WavesWrapper = styled.div`
 	}
 `;
 
+export const EmptyWrapper = styled.div`
+  ${tw`w-full h-full justify-center flex flex-col gap-2 items-center p-4`};
+
+	h1 {
+  	${tw`text-3xl`};
+	}
+	
+	p {
+    ${tw`text-center`};
+  }
+`;
+
 export const Overlay = styled.div`
 	${tw`fixed hidden inset-0 z-[21] bg-black/60 h-screen w-screen`};
 	
