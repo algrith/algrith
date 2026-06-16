@@ -464,7 +464,7 @@ const Chat = () => {
             multiple
           />
 
-          <TextArea
+          {/* <TextArea
             placeholder="Type your message..."
             onChange={handleChange}
             value={message.text}
@@ -473,7 +473,7 @@ const Chat = () => {
             id="text"
             autoSize
             rows={1}
-          />
+          /> */}
           
           <Button
             icon={<SendOutlined />}
