@@ -20,7 +20,7 @@ export const ConversationWrapper = styled.h3`
     ${tw`flex flex-col overflow-hidden`};
     
     .message {
-      ${tw`flex gap-4 text-md w-full `};
+      ${tw`flex gap-4 justify-between text-md w-full `};
 
       .last-message {
         ${tw`whitespace-nowrap overflow-ellipsis overflow-hidden`};
@@ -64,7 +64,7 @@ export const MessageWrapper = styled.div`
 
       .metadata {
         ${tw`flex gap-2 items-center justify-end w-full text-xs pr-1.5`};
-        
+
         .delivered {
           ${tw`text-orange-500`};
         }
