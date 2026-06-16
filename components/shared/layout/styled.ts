@@ -14,6 +14,10 @@ export const squareWaves = (inverse: boolean = false, height = '') => css`
 	&:after {
 		${tw`absolute w-[110%] h-full inset-0 z-0 pointer-events-none content`};
 		${height && `height: ${height}`};
+
+		@media (max-width: 768px) {
+			${tw`h-full`};
+		}
 	}
 
 	/* 🌊 Teal wave */
