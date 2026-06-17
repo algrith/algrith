@@ -21,7 +21,7 @@ const Orders = () => {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const router = useRouter();
-  
+
   const isAdmin = session?.user.role === 'admin';
   const columns: ColumnsType<OrderModel> = [
     {
@@ -50,7 +50,7 @@ const Orders = () => {
       width: 300
     },
     {
-      render: (status) => <Status isOrderStatus isEditable status={status} />,
+      render: (_, order) => <Status payload={order} isEditable />,
       dataIndex: 'status',
       align: 'center',
       title: 'Status',

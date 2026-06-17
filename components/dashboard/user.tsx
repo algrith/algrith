@@ -15,7 +15,6 @@ const User = ({ id }: { id: string }) => {
   const dashboard = useAppSelector((state) => state.dashboard);
   const { loading: isFetchingOrders, list: orders } = dashboard.orders;
   const { loading: isFetchingUser, data: user } = dashboard.user;
-  const verification = user?.is_verified ? 'verified' : 'unverified';
   const [isDeleting, setDeleting] = useState(false);
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
@@ -54,7 +53,7 @@ const User = ({ id }: { id: string }) => {
               <p>Joined: {getDateFormat(user.createdAt).full}</p>
 
               <p>
-                Status: <Status status={verification} />
+                Status: <Status payload={session?.user} />
               </p>
             </div>
           </div>

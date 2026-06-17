@@ -286,6 +286,7 @@ export interface OrderModel {
 	status: 'pending' | 'completed' | 'delivered' | 'cancelled';
 	requirements: OrderRequirements;
 	addons: 	Array<Addon>;
+	conversation?: string;
 	user?: User | string;
 	addon_total: number;
 	createdAt?: string;

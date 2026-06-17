@@ -8,20 +8,20 @@ const initialState: LayoutState = {
 		collapsed: false
 	},
   orders: {
-    loading: false,
+    loading: true,
     list: []
   },
   users: {
-    loading: false,
+    loading: true,
     list: []
   },
   order: {
     data: undefined,
-    loading: false
+    loading: true
   },
   user: {
     data: undefined,
-    loading: false
+    loading: true
   }
 }
 

@@ -26,13 +26,14 @@ const Order = () => {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { orderId } = useParams();
+  const user = session?.user;
 
   const handleActiveFontRole = (role: FontRole) => {
     setActiveFontRole(role);
   };
 
   const handleOrderChat = () => {
-    if (!conversation) dispatch(setupOrderChat(order, session?.user));
+    if (!conversation) dispatch(setupOrderChat(order, user));
     else dispatch(setConversation({ data: conversation }));
     dispatch(setShowConversations(true));
   };
@@ -71,7 +72,7 @@ const Order = () => {
                 <div>Date: {getDateFormat(order?.paid_at).full}</div>
 
                 <div>
-                  Status: <Status status={order.status} />
+                  Status: <Status isEditable={user?.role === 'admin'} payload={order} />
                 </div>
               </div>
 

@@ -14,21 +14,21 @@ const initialState: ChatState = {
   message: defaultMessage,
   orderConversation: {
     data: undefined,
-    loading: false,
+    loading: true,
     unread: 0
   },
   conversations: {
     total_unread: 0,
-    loading: false,
+    loading: true,
     list: []
   },
   conversation: {
     index: undefined,
     data: undefined,
-    loading: false,
+    loading: true,
   },
   messages: {
-    loading: false,
+    loading: true,
     list: []
   }
 }

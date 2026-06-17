@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { User } from 'next-auth';
 
-import { createOrderConversation, fetchMessages, fetchConversations, sendMessage, updateOrderStatus, setupOrderChat } from './slices';
+import { createOrderConversation, fetchMessages, fetchConversations, sendMessage, deliverOrder, setupOrderChat } from './slices';
 import { resetMessage, setConversation, setMessage, setMessages, setShowConversations, updateMessage } from './reducer';
 import { Attachment, Conversation as ConversationModel, Message as MessageModel, OrderModel } from '@/types';
 import { ChatsWrapper, ChatWrapper, MessageWrapper, ConversationWrapper } from './styled';
@@ -71,12 +71,8 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
 
         {(!inChatHeader && conversation.last_message) && (
           <div className="message">
-            <span className="last-message">
-              {conversation.last_message.text || <PaperClipOutlined />}
-            </span>
-            <small>
-              {getDateFormat(conversation.last_message.createdAt).time}
-            </small>
+            <p className="last-message" dangerouslySetInnerHTML={{ __html: conversation.last_message.text || <PaperClipOutlined />}} />
+            <small>{getDateFormat(conversation.last_message.createdAt).time}</small>
           </div>
         )}
       </div>
@@ -219,8 +215,8 @@ const Chats = () => {
   };
 
   useEffect(() => {
-    if (user) dispatch(fetchConversations());
-  }, []);
+    if (showConversations) dispatch(fetchConversations());
+  }, [showConversations]);
 
   if (routes.auth || !user) return null;
 
@@ -367,7 +363,7 @@ const Chat = () => {
 
     if (!newMessage) return;
 
-    if (newMessage.metadata?.order_status_info) return dispatch(updateOrderStatus(newMessage));
+    if (newMessage.metadata?.order_status_info) return dispatch(deliverOrder(newMessage));
 
     if (conversation?.id === 'NEW_CONVERSATION') {
       const customerId = !['moderator', 'admin'].includes(role) ? user.id : '';

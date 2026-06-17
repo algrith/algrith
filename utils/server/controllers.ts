@@ -1,12 +1,12 @@
 import { Conversation as ConversationModel, Message as MessageModel } from '@/types';
-import { Message, Conversation } from '@/libs/schema';
+import { Message, Conversation, Order } from '@/libs/schema';
 import { NextResponse } from 'next/server';
 import { getSocket } from '@/libs/socket';
 import { User } from 'next-auth';
 
 export const createConversation = async (user: User, customerId: string, message: MessageModel, orderId: string) => {
   const userRole = user.role || 'customer';
-  const type = message.type || 'order';
+  const type = message?.type || 'order';
   
   if (type === 'support' && !customerId && userRole !== 'customer') return NextResponse.json({
     message: 'customerId required',
@@ -51,12 +51,19 @@ export const createConversation = async (user: User, customerId: string, message
   
   let conversation = orderId ? await Conversation.findOne({ order: orderId }) : null;
   
-  if (!conversation) conversation = await Conversation.create({
-    order: orderId,
-    participants,
-    active: true,
-    type
-  });
+  if (!conversation) {
+    conversation = await Conversation.create({
+      order: orderId,
+      participants,
+      active: true,
+      type
+    });
+
+    // Attach conversation to order.
+    const order = await Order.updateOne({ _id: orderId }, {
+      conversation: conversation.id
+    });
+  }
 
   return conversation as ConversationModel;
 };

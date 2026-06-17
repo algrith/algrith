@@ -493,7 +493,7 @@ export const SiderWrapper = styled(Sider)`
 `;
 
 export const StatusWrapper = styled.div`
-  ${tw`inline-block w-auto text-sm font-bold px-3 p-1 rounded-full capitalize text-gray-100 tracking-wide`};
+  ${tw`inline-flex gap-2 w-auto text-sm font-bold px-3 p-1 rounded-full capitalize text-gray-100 tracking-wide`};
 	
 	&.cancelled, &.unverified {
     ${tw`bg-red-500`};
@@ -512,25 +512,29 @@ export const StatusWrapper = styled.div`
   }
 	
 	&.editable {
-		${tw`min-w-[78.85px] h-[20px] p-0`};
+		${tw`h-[20px] p-0`};
+	}
+	
+	.ant-spin path {
+		${tw`fill-white`};
 	}
 	
 	.ant-select {
-		${tw`!h-full !w-full`};
-
+		${tw`!h-full items-center`};
+		
 		.ant-select-selection-item {
-			${tw`w-full !px-0 text-sm font-bold text-gray-100 tracking-wide leading-[1]`};
+			${tw`!px-0 text-sm font-bold text-gray-100 tracking-wide leading-[1] text-left`};
 		}
 
 		.ant-select-selector {
-			${tw`!px-0 !h-full !w-full !bg-none bg-transparent border-none rounded-full`};
+			${tw`h-full w-auto !bg-none !bg-transparent border-none rounded-full`};
 		}
 		
 		.ant-select-arrow {
-			${tw`right-2`};
+			${tw`relative inset-0 mt-0 mr-1.5 pointer-events-none`};
 
 			.anticon {
-				${tw`w-4 text-gray-100`};
+				${tw`w-4 text-gray-100 pointer-events-none`};
 			}
 		}
 	}

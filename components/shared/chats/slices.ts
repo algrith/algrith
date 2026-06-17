@@ -1,5 +1,5 @@
 import { setConversation, setConversations, setMessages, setOrderConversation } from './reducer';
-import { setOrder } from '@/components/dashboard/reducer';
+import { setOrder, setOrders } from '@/components/dashboard/reducer';
 import { Message, OrderModel } from '@/types';
 import { AppDispatch, store } from '@/store';
 import { moveToFront } from '@/utils';
@@ -84,7 +84,30 @@ export const fetchMessages = (conversationId: string) => async (dispatch: AppDis
   }));
 };
 
-export const updateOrderStatus = (message: Message) => async (dispatch: AppDispatch) => {
+export const updateOrderStatus = (order: OrderModel) => async (dispatch: AppDispatch) => {
+  const { orders: { list: orders }, order: { data: activeOrder } } = store.getState().dashboard;
+  const { status, id } = order;
+  
+  const { success, data } = await Fetch({
+    path: `/orders/${id}/status`,
+    body: { status },
+    method: 'PATCH'
+  });
+
+  if (success) {
+    if (!order.conversation) dispatch(fetchConversations());
+    if (activeOrder) dispatch(setOrder(data.order));
+    
+    dispatch(setOrders({
+      list: orders.map((order) => {
+        if (order.id === id) return data.order;
+        return order;
+      })
+    }))
+  }
+};
+
+export const deliverOrder = (message: Message) => async (dispatch: AppDispatch) => {
   const { order: { data: order } } = store.getState().dashboard;
   const {
     conversation: { data: conversation, index },

@@ -49,7 +49,7 @@ const Users = () => {
       key: 'orders'
     },
     {
-      render: (is_verified) => <Status status={is_verified ? 'verified' : 'unverified'} />,
+      render: (_, user) => <Status payload={user} />,
       dataIndex: 'is_verified',
       title: 'Status',
       align: 'center',

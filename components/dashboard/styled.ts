@@ -25,7 +25,7 @@ export const DashboardWrapper = styled.div`
 `;
 
 export const MainViewWrapper = styled.div`
-  ${tw`h-full w-full overflow-y-auto`};
+  ${tw`flex flex-col h-full w-full overflow-y-auto`};
 
   &.loading {
     ${tw`flex justify-center items-center bg-black/20 rounded-xl`};
@@ -44,7 +44,7 @@ export const MainViewWrapper = styled.div`
   }
   
   .content {
-    ${tw`w-full h-full flex flex-col gap-8 py-4`};
+    ${tw`w-full flex flex-col flex-grow gap-8 py-4 pb-10`};
     
     .metadata {
       ${tw`flex justify-between gap-2 text-gray-600 dark:text-gray-400 text-sm`};

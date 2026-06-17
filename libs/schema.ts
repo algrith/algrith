@@ -152,6 +152,10 @@ const orderSchema = new mongoose.Schema({
       }
     }
   },
+  conversation: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Conversation'
+  },
   customer: {
     phone: String,
     email: String,

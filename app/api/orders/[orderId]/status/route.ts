@@ -7,7 +7,7 @@ import { dbConnect } from '@/utils/db';
 const PATCH = authorization(async (req, ctx, user) => {
   try {
     const validStatuses = ['pending', 'completed', 'delivered', 'cancelled'];
-    const { message: messagePayload, status } = await req.json();
+    const { message: messagePayload = {}, status } = await req.json();
     const { orderId } = await ctx.params as { orderId: string };
     await dbConnect();
 
@@ -29,18 +29,20 @@ const PATCH = authorization(async (req, ctx, user) => {
     
     let conversation = await Conversation.findOne({ order: orderId });
 
+    if (!messagePayload.text) messagePayload.text = `Order marked as <b>${status}</b> by ${user.email}.`;
+
     if (!conversation) {
       conversation = await createConversation(user, order.user.toString(), messagePayload, orderId);
       if (conversation instanceof NextResponse) return conversation;
     }
     
-    const order_status_info = messagePayload?.metadata?.order_status_info ?? `Order ${status} by ${user.email}.`;
-    const text = messagePayload?.text ?? order_status_info;
+    const order_status_info = messagePayload?.metadata?.order_status_info ?? messagePayload.text;
     
     const message = await createMessage(user, conversation._id, {
       ...(messagePayload ?? {}),
-      metadata: { order_status_info },
-      text
+      metadata: {
+        order_status_info
+      }
     });
 
     if (message instanceof NextResponse) return message;
@@ -62,7 +64,7 @@ const PATCH = authorization(async (req, ctx, user) => {
       code: 'server_error',
       success: false,
       data: null
-    });
+    }, { status: 500 });
   }
 });
 

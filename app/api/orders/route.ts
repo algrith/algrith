@@ -21,7 +21,7 @@ const POST = authorization(async (request, ctx, user) => {
       ...order
     });
     
-    console.log(`Order created --> : ${result.id}`);
+    console.log(`Order created --> ${result.id}`);
 
     const handlebarOptions: NodemailerExpressHandlebarsOptions = {
       viewEngine: {
