@@ -5,7 +5,7 @@ export const ConversationWrapper = styled.h3`
   ${tw`flex items-center gap-2 text-xl lg:text-xm font-semibold tracking-wide overflow-hidden z-1`};
 
   &:not(.in-chat-header) {
-    ${tw`gap-3 p-4 text-gray-700 dark:text-gray-300 hover:bg-white dark:bg-gray-900/40 hover:dark:bg-gray-900/60 hover:shadow hover:dark:shadow-gray-700 cursor-pointer`};
+    ${tw`gap-3 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-white dark:bg-gray-900/40 hover:dark:bg-gray-900/60 hover:shadow hover:dark:shadow-gray-700 cursor-pointer`};
 
     &:not(:last-of-type) {
       ${tw`border-b border-b-gray-100 dark:border-b-gray-700`};
@@ -125,7 +125,7 @@ export const ChatsWrapper = styled.div`
   }
   
   .conversations {
-    ${tw`w-full h-112 overflow-y-auto`};
+    ${tw`w-full h-112 !overflow-y-auto`};
     ${squareWaves()};
   }
 `;
