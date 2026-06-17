@@ -97,7 +97,7 @@ export const ChatsWrapper = styled.div`
   ${tw`fixed z-1 w-full md:w-96 rounded-t-xl -bottom-full md:-bottom-112 left-0 md:left-auto md:right-8 bg-white dark:bg-gray-900 shadow-lg transition-all duration-500`};
   
   &.loading .conversations {
-    ${tw`justify-center items-center`};
+    ${tw`flex justify-center items-center`};
   }
   
   &.show {
@@ -125,7 +125,7 @@ export const ChatsWrapper = styled.div`
   }
   
   .conversations {
-    ${tw`w-full h-112 flex flex-col overflow-hidden`};
+    ${tw`w-full h-112 overflow-y-auto`};
     ${squareWaves()};
   }
 `;
