@@ -5,6 +5,8 @@ import { Avatar, Badge } from 'antd';
 
 import useResizeHeaderOnScroll from '@/hooks/resize-header-on-scroll';
 import { HeaderWrapper } from '@/components/shared/layout/styled';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { setShowConversations } from '../chats/reducer';
 import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
 import useClassName from '@/hooks/class-name';
@@ -14,13 +16,19 @@ import useRoute from '@/hooks/route';
 import Button from '../button';
 
 const Header = () => {
+  const { conversations: { total_unread } } = useAppSelector((state) => state.chat);
   const { openNavbar } = useToggleNavbar();
+  const dispatch = useAppDispatch();
   const { routes } = useRoute();
   useResizeHeaderOnScroll();
 
   const className = useClassName([
     (routes.isDashboard || routes.auth) ? 'wide' : ''
   ]);
+
+  const openChatWidget = () => {
+    dispatch(setShowConversations(true));
+  };
   
   return (
     <HeaderWrapper id="header" className={className}>
@@ -37,10 +45,10 @@ const Header = () => {
 
           {!routes.auth && (
             <>
-              <Badge className="chat-icon" count={30} size="small" dot>
+              <Badge className="chat-icon" count={total_unread} size="small" dot>
                 <Button
                   prependedIcon={<CommentOutlined />}
-                  onClick={openNavbar}
+                  onClick={openChatWidget}
                   htmlType="button"
                   size="small"
                 />

@@ -13,7 +13,7 @@ const SidebarToggler = () => {
   return (
     <>
       <Overlay onClick={handleSidebar} className={show ? 'open' : 'closed'} />
-      {!showConversations && <Toggler onClick={handleSidebar} />}
+      {!showConversations && <Toggler noOffset onClick={handleSidebar} />}
     </>
   );
 };
