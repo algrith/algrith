@@ -44,7 +44,7 @@ export const MainViewWrapper = styled.div`
   }
   
   .content {
-    ${tw`w-full flex flex-col flex-grow gap-8 py-4 pb-10`};
+    ${tw`w-full flex flex-col flex-grow gap-8 py-4 md:pb-10`};
     
     .metadata {
       ${tw`flex justify-between gap-2 text-gray-600 dark:text-gray-400 text-sm`};
