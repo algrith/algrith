@@ -203,7 +203,7 @@ export const HeaderWrapper = styled(Header)`
 		${tw`h-[3rem] shadow-lg backdrop-blur-lg`};
 		
 		.controls {
-			${tw`scale-85`};
+			${tw`origin-right scale-85`};
 		}
 		
 		#brand {
