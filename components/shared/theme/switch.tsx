@@ -6,9 +6,6 @@ import { DarkThemeIconWrapper, LightThemeIconWrapper, SystemThemeIconWrapper, Th
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setTheme, setIsSystemTheme } from './reducer';
 import useClickAway from '@/hooks/click-away';
-import useClassName from '@/hooks/class-name';
-import useViewport from '@/hooks/viewport';
-import useRoute from '@/hooks/route';
 import { Themes } from '@/types';
 
 const ThemeSwitch = () => {
@@ -16,8 +13,6 @@ const ThemeSwitch = () => {
   const themeSwitchContainerRef = useRef<HTMLDivElement>(null);
   const themeSwitchRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
-  const { pathname, routes } = useRoute();
-  const { viewport } = useViewport();
   const dispatch = useAppDispatch();
   
   const activeThemeClass = {
@@ -59,34 +54,12 @@ const ThemeSwitch = () => {
     dispatch(setTheme(theme));
   };
 
-  const repositionThemeSwitch = () => {
-    if (!themeSwitchContainerRef.current) return;
-
-    const themeSwitch = themeSwitchContainerRef.current.classList;
-    
-    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-      themeSwitch.add('scrolled');
-    } else {
-      themeSwitch.remove('scrolled');
-    }
-  };
-
-  const className = useClassName([
-    routes.auth ? 'in-auth-page wide' : '',
-    routes.isDashboard ? 'wide' : ''
-  ]);
-
   useEffect(() => {
-    window.addEventListener('scroll', repositionThemeSwitch);
     applyTheme();
-
-    return () => {
-      window.removeEventListener('scroll', repositionThemeSwitch);
-    };
-  }, [viewport, pathname]);
+  }, []);
 
   return (
-    <ThemeWrapper ref={themeSwitchContainerRef} className={className}>
+    <ThemeWrapper ref={themeSwitchContainerRef}>
       <div ref={themeSwitchRef} onClick={() => setOpen(!open)} className="inner">
         <label className="sr-only">Theme</label>
         <button type="button" aria-haspopup="true" aria-expanded="false" name="theme_switch">

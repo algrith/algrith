@@ -116,7 +116,7 @@ export const ChatsWrapper = styled.div`
     ${tw`w-full h-[43.5px] lg:text-lg relative flex gap-0 md:gap-4 justify-between items-center px-5 py-3 rounded-t-xl text-white bg-theme-primary font-semibold cursor-pointer`};
     
     .ant-badge .ant-badge-count {
-      ${tw`absolute -top-8 -right-9 md:relative md:top-0 md:right-0 shadow-none duration-300`};
+      ${tw`absolute -top-8 -right-9 md:relative md:top-0 md:right-0 duration-300`};
     }
     
     .controls {

@@ -29,6 +29,10 @@ const customStyles = css`
     ${tw`disabled:cursor-not-allowed`};
   }
   
+  .ant-badge :is(.ant-badge-count, .ant-badge-dot) {
+    ${tw`shadow-none`};
+  }
+  
   .ant-select-dropdown {
     ${darkBgGradient.twoLayers};
     

@@ -27,10 +27,6 @@ export const DashboardWrapper = styled.div`
 export const MainViewWrapper = styled.div`
   ${tw`h-full w-full overflow-y-auto`};
 
-  .ant-badge .ant-badge-count {
-    ${tw`shadow-none`};
-  }
-
   &.loading {
     ${tw`flex justify-center items-center bg-black/20 rounded-xl`};
   }

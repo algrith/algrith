@@ -7,17 +7,18 @@ import { TogglerWrapper } from '@/components/shared/layout/styled';
 import useClassName from '@/hooks/class-name';
 
 const Toggler = ({ onClick }: { onClick: () => void }) => {
-  const [togglerOffsetClass, setTogglerOffsetClass] = useState('');
+  const [togglerOffsetClass, setTogglerOffsetClass] = useState('offset');
   const togglerClassName = useClassName([togglerOffsetClass, 'toggler']);
   
   const offsetToggler = () => {
-    const scrollPosition = document.body.scrollTop || document.documentElement.scrollTop;
-    setTogglerOffsetClass(scrollPosition > 200 ? 'offset' : '');
+    const scrollToTopElement = document.querySelector('#algrith-scroll-to-top-controller');
+    setTogglerOffsetClass(scrollToTopElement?.checkVisibility() ? 'offset' : '');
   };
   
   useEffect(() => {
     window.addEventListener('scroll', offsetToggler);
-    
+    offsetToggler();
+
     return () => {
       window.removeEventListener('scroll', offsetToggler);
     }

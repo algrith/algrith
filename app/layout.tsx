@@ -5,7 +5,6 @@ import { ContentWrapper, LayoutWrapper } from '@/components/shared/layout/styled
 import AntDesignThemeProvider from '@/components/shared/theme/provider';
 import AuthProvider from '@/components/shared/auth-provider';
 import SchemaMarkup from '@/components/shared/schema/markup';
-import ThemeSwitch from '@/components/shared/theme/switch';
 import Alert from '@/components/shared/feedback/alert';
 import Header from '@/components/shared/layout/header';
 import Navbar from '@/components/shared/layout/navbar';
@@ -165,7 +164,6 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
               <LayoutWrapper>
                 <Header />
                 <Navbar />
-                <ThemeSwitch />
 
                 <ContentWrapper>
                   {children}

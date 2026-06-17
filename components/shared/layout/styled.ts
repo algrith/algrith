@@ -179,7 +179,7 @@ export const SectionCardWrapper = styled.div`
 `;
 
 export const TogglerWrapper = styled(Button)`
-  ${tw`md:hidden fixed bottom-8 right-12 z-10`};
+  ${tw`md:hidden fixed bottom-8 right-8 z-10`};
 
   &.offset {
     ${tw`right-32`};
@@ -197,10 +197,14 @@ export const LayoutWrapper = styled(Layout)`
 `;
 
 export const HeaderWrapper = styled(Header)`
-	${tw`w-full h-[4.4rem] px-0 fixed top-0 z-20 bg-transparent`};
+	${tw`w-full h-[4.4rem] px-0 fixed top-0 z-20 bg-transparent transition-all duration-500`};
 
 	&.scrolled {
-		${tw`scale-x-[1] scale-y-[0.7] origin-top shadow-lg backdrop-blur-lg`};
+		${tw`h-[3rem] shadow-lg backdrop-blur-lg`};
+		
+		#brand {
+			${tw`origin-left scale-[0.7]`};
+		}
 	}
 	
 	&.wide .wrapper {
@@ -212,11 +216,7 @@ export const HeaderWrapper = styled(Header)`
 	}
 	
 	#brand {
-		${tw`flex justify-start items-center transition-all ease-in-out duration-500 lg:ml-2 xl:ml-0`};
-
-		&.scrolled {
-			${tw`origin-top-left scale-x-[0.7] scale-y-[1]`};
-		}
+		${tw`flex justify-start items-center transition-all ease-in-out duration-500 -ml-0.5`};
 
 		a {
 			${tw`transform origin-left scale-65 w-64 flex justify-start items-center self-center uppercase mx-auto text-center transition-all ease-in-out duration-1000`};
@@ -239,11 +239,23 @@ export const HeaderWrapper = styled(Header)`
 		}
 	}
 	
-	.menu {
-		${tw`lg:hidden shadow-none dark:text-theme-primary bg-transparent px-1 outline-none focus:outline-none border-none transform scale-y-75 transition-transform ease-in-out duration-1000`};
+	.controls {
+		${tw`flex gap-4 items-center justify-end`};
 		
+		.chat-icon {
+			${tw``};
+		}
+
 		.anticon {
-			${tw`text-3xl text-gray-600 dark:text-white`};
+			${tw`text-4xl text-gray-600 dark:text-white`};
+		}
+		
+		.ant-btn {
+			${tw`shadow-none dark:text-theme-primary bg-transparent !p-0 outline-none focus:outline-none border-none`};
+		
+			&.menu {
+				${tw` px-1 transform scale-y-75`};
+			}
 		}
 	}
 `;
