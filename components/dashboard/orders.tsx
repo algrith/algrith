@@ -1,14 +1,15 @@
 'use client';
 
-import { EllipsisOutlined } from '@ant-design/icons';
+import { MoreOutlined } from '@ant-design/icons';
 import Dropdown from 'antd/es/dropdown/dropdown';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { MenuProps } from 'antd';
 
-import { StatusBadgeWrapper, TableWrapper } from '../shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { TableWrapper } from '../shared/layout/styled';
+import Status from '../shared/layout/status';
 import { Addon, OrderModel } from '@/types';
 import { ColumnsType } from 'antd/es/table';
 import { MainViewWrapper } from './styled';
@@ -49,7 +50,7 @@ const Orders = () => {
       width: 300
     },
     {
-      render: (status) => <StatusBadgeWrapper className={status}>{status}</StatusBadgeWrapper>,
+      render: (status) => <Status isOrderStatus isEditable status={status} />,
       dataIndex: 'status',
       align: 'center',
       title: 'Status',
@@ -80,7 +81,7 @@ const Orders = () => {
 
         return (
           <Dropdown menu={{ items }} trigger={['hover']}>
-          <EllipsisOutlined />
+          <MoreOutlined />
 					</Dropdown>
         );
       },

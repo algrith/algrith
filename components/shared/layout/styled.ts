@@ -129,26 +129,6 @@ export const ContentWrapper = styled(Content)`
 	${tw`w-full bg-transparent text-theme-text h-full pt-[4.4rem]`};
 `;
 
-export const StatusBadgeWrapper = styled.span`
-  ${tw`text-sm font-bold px-3 py-1 rounded-full capitalize text-gray-100`};
-	
-	&.cancelled, &.unverified {
-    ${tw`bg-red-500`};
-  }
-	
-  &.delivered, &.verified {
-    ${tw`bg-green-600`};
-  }
-	
-  &.completed {
-    ${tw`bg-orange-500`};
-  }
-  
-  &.pending {
-    ${tw`bg-gray-500`};
-  }
-`;
-
 export const SectionCardWrapper = styled.div`
   ${tw`w-full`};
 
@@ -440,7 +420,7 @@ export const TableWrapper = styled(Table)`
         }
 				
 				.anticon {
-					${tw`text-4xl`};
+					${tw`text-3xl`};
 				}
 
         p {
@@ -452,8 +432,8 @@ export const TableWrapper = styled(Table)`
 
   .ant-pagination-item-active {
     ${tw`border-[#ecd7b1]`};
-  }
-  
+	}
+	
   a {
     ${tw`font-semibold`};
   }
@@ -510,6 +490,50 @@ export const SiderWrapper = styled(Sider)`
       }
     }
   }
+`;
+
+export const StatusWrapper = styled.div`
+  ${tw`inline-block w-auto text-sm font-bold px-3 p-1 rounded-full capitalize text-gray-100 tracking-wide`};
+	
+	&.cancelled, &.unverified {
+    ${tw`bg-red-500`};
+  }
+	
+  &.delivered, &.verified {
+    ${tw`bg-green-600`};
+  }
+	
+  &.completed {
+    ${tw`bg-orange-500`};
+  }
+  
+  &.pending {
+    ${tw`bg-gray-500`};
+  }
+	
+	&.editable {
+		${tw`min-w-[78.85px] h-[20px] p-0`};
+	}
+	
+	.ant-select {
+		${tw`!h-full !w-full`};
+
+		.ant-select-selection-item {
+			${tw`w-full !px-0 text-sm font-bold text-gray-100 tracking-wide leading-[1]`};
+		}
+
+		.ant-select-selector {
+			${tw`!px-0 !h-full !w-full !bg-none bg-transparent border-none rounded-full`};
+		}
+		
+		.ant-select-arrow {
+			${tw`right-2`};
+
+			.anticon {
+				${tw`w-4 text-gray-100`};
+			}
+		}
+	}
 `;
 
 export const NavbarWrapper = styled.nav`

@@ -5,9 +5,9 @@ import { useEffect, useState } from 'react';
 import { Spin } from 'antd';
 
 import { MainViewWrapper, InfoWrapper, SummaryWrapper } from './styled';
-import { StatusBadgeWrapper } from '@/components/shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { deleteUser, fetchOrders, fetchUser } from './slices';
+import Status from '../shared/layout/status';
 import { getDateFormat } from '@/utils';
 import Button from '../shared/button';
 
@@ -54,9 +54,7 @@ const User = ({ id }: { id: string }) => {
               <p>Joined: {getDateFormat(user.createdAt).full}</p>
 
               <p>
-                Status: <StatusBadgeWrapper className={verification}>
-                  {verification}
-                </StatusBadgeWrapper>
+                Status: <Status status={verification} />
               </p>
             </div>
           </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import { EllipsisOutlined } from '@ant-design/icons';
+import { MoreOutlined } from '@ant-design/icons';
 import Dropdown from 'antd/es/dropdown/dropdown';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
@@ -8,8 +8,9 @@ import { useEffect } from 'react';
 import { MenuProps } from 'antd';
 import { User } from 'next-auth';
 
-import { StatusBadgeWrapper, TableWrapper } from '../shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { TableWrapper } from '../shared/layout/styled';
+import Status from '../shared/layout/status';
 import { ColumnsType } from 'antd/es/table';
 import { MainViewWrapper } from './styled';
 import { getDateFormat } from '@/utils';
@@ -48,15 +49,7 @@ const Users = () => {
       key: 'orders'
     },
     {
-      render: (is_verified) => {
-        const verification = is_verified ? 'verified' : 'unverified';
-        
-        return (
-          <StatusBadgeWrapper className={verification}>
-            {verification}
-          </StatusBadgeWrapper>
-        );
-      },
+      render: (is_verified) => <Status status={is_verified ? 'verified' : 'unverified'} />,
       dataIndex: 'is_verified',
       title: 'Status',
       align: 'center',
@@ -80,7 +73,7 @@ const Users = () => {
 
         return (
           <Dropdown menu={{ items }} trigger={['hover']}>
-          <EllipsisOutlined />
+          <MoreOutlined />
 					</Dropdown>
         );
       },

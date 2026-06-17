@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node dist/server.js",
-    "dev": "tsx server.ts",
+    "custom-dev": "tsx server.ts",
     "build": "next build",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dev": "next dev"
   },
   "dependencies": {
     "@algrith/scroll-to-top": "^1.0.4",

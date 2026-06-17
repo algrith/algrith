@@ -9,12 +9,12 @@ import { useEffect, useState } from 'react';
 import { BillingCycleBadgeWrapper, MainViewWrapper, SummaryWrapper, AddonWrapper, InfoWrapper, PlanWrapper } from './styled';
 import { fetchOrderConversation, setupOrderChat } from '../shared/chats/slices';
 import { setConversation, setShowConversations } from '../shared/chats/reducer';
-import { StatusBadgeWrapper } from '@/components/shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { FontRole, FontsList } from '../shared/input/fonts';
 import { Swatches } from '../shared/input/color/palette';
 import { formatCurrency, getDateFormat } from '@/utils';
 import { EmptyWrapper } from '../shared/layout/styled';
+import Status from '../shared/layout/status';
 import Link from '../shared/button/link';
 import { fetchOrder } from './slices';
 import Button from '../shared/button';
@@ -71,9 +71,7 @@ const Order = () => {
                 <div>Date: {getDateFormat(order?.paid_at).full}</div>
 
                 <div>
-                  Status: <StatusBadgeWrapper className={order.status}>
-                    {order.status}
-                  </StatusBadgeWrapper>
+                  Status: <Status status={order.status} />
                 </div>
               </div>
 

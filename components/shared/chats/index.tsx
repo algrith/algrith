@@ -191,6 +191,7 @@ const Chats = () => {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { routes } = useRoute();
+  const user = session?.user;
   
   const isMinimized = conversation && !showConversations;
 
@@ -200,7 +201,7 @@ const Chats = () => {
   ]);
   
   const handleSetupOrderChat = () => {
-    dispatch(setupOrderChat(order, session?.user))
+    dispatch(setupOrderChat(order, user))
   };
 
   const toggleChatsWidget = () => {
@@ -218,11 +219,11 @@ const Chats = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchConversations());
+    if (user) dispatch(fetchConversations());
   }, []);
 
-  if (routes.auth) return null;
-  
+  if (routes.auth || !user) return null;
+
   return (
     <ChatsWrapper className={className}>
       <div className="header" onClick={toggleChatsWidget}>
