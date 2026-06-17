@@ -9,6 +9,7 @@ import Alert from '@/components/shared/feedback/alert';
 import Header from '@/components/shared/layout/header';
 import Navbar from '@/components/shared/layout/navbar';
 import Footer from '@/components/shared/layout/footer';
+import Chats from '@/components/shared/chats';
 import { fontClassNames } from '@/libs/fonts';
 import { inProduction } from '@/utils/server';
 import ReduxProvider from '@/store/provider';
@@ -171,6 +172,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
                 </ContentWrapper>
 
                 <Alert />
+                <Chats />
               </LayoutWrapper>
             </AntDesignThemeProvider>
           </body>

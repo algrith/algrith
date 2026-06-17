@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { TogglerWrapper } from '@/components/shared/layout/styled';
 import useClassName from '@/hooks/class-name';
 
-const Toggler = ({ noOffset = false, onClick }: { onClick: () => void; noOffset: boolean; }) => {
+const Toggler = ({ noOffset, onClick }: { onClick: () => void; noOffset?: boolean; }) => {
   const [togglerOffsetClass, setTogglerOffsetClass] = useState('offset');
   const togglerClassName = useClassName([togglerOffsetClass, 'toggler']);
   

@@ -221,6 +221,8 @@ const Chats = () => {
     dispatch(fetchConversations());
   }, []);
 
+  if (routes.auth) return null;
+  
   return (
     <ChatsWrapper className={className}>
       <div className="header" onClick={toggleChatsWidget}>

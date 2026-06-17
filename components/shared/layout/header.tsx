@@ -16,7 +16,7 @@ import useRoute from '@/hooks/route';
 import Button from '../button';
 
 const Header = () => {
-  const { conversations: { total_unread } } = useAppSelector((state) => state.chat);
+  const { conversations: { total_unread }, showConversations } = useAppSelector((state) => state.chat);
   const { openNavbar } = useToggleNavbar();
   const dispatch = useAppDispatch();
   const { routes } = useRoute();
@@ -27,7 +27,7 @@ const Header = () => {
   ]);
 
   const openChatWidget = () => {
-    dispatch(setShowConversations(true));
+    dispatch(setShowConversations(!showConversations));
   };
   
   return (
