@@ -243,7 +243,7 @@ export const HeaderWrapper = styled(Header)`
 		${tw`flex gap-4 items-center justify-end`};
 		
 		.chat-icon {
-			${tw``};
+			${tw`lg:hidden`};
 		}
 
 		.anticon {
@@ -254,7 +254,11 @@ export const HeaderWrapper = styled(Header)`
 			${tw`shadow-none dark:text-theme-primary bg-transparent !p-0 outline-none focus:outline-none border-none`};
 		
 			&.menu {
-				${tw` px-1 transform scale-y-75`};
+				${tw`lg:hidden px-1`};
+
+				.anticon {
+					${tw`text-3xl`};
+				}
 			}
 		}
 	}
