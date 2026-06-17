@@ -247,7 +247,7 @@ export const HeaderWrapper = styled(Header)`
 		}
 
 		.anticon {
-			${tw`text-4xl text-gray-600 dark:text-white`};
+			${tw`text-4xl text-gray-600 dark:text-white scale-75`};
 		}
 		
 		.ant-btn {
@@ -257,7 +257,7 @@ export const HeaderWrapper = styled(Header)`
 				${tw`lg:hidden px-1`};
 
 				.anticon {
-					${tw`text-3xl`};
+					${tw`text-3xl scale-x-100 scale-y-75`};
 				}
 			}
 		}
