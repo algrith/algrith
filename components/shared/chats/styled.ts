@@ -94,37 +94,25 @@ export const MessageWrapper = styled.div`
 `;
 
 export const ChatsWrapper = styled.div`
-  ${tw`fixed z-1 w-[70.94px] md:w-96 rounded-t-xl -bottom-112 left-0 md:left-auto md:right-8 bg-white dark:bg-gray-900 shadow-lg transition-all duration-500`};
+  ${tw`fixed z-1 w-full md:w-96 rounded-t-xl -bottom-full md:-bottom-112 left-0 md:left-auto md:right-8 bg-white dark:bg-gray-900 shadow-lg transition-all duration-500`};
   
   &.loading .conversations {
     ${tw`justify-center items-center`};
   }
-
+  
   &.show {
-    ${tw`w-full md:w-96 bottom-0`};
-
-    .header {
-      ${tw`h-[50px] lg:h-[43.5px] text-xl lg:text-lg`};
-
-      .ant-badge .ant-badge-count {
-        ${tw`relative top-0 right-0`};
-      }
-    }
+    ${tw`bottom-0`};
   }
   
   .header {
-    ${tw`w-full h-[43.5px] lg:text-lg relative flex gap-0 md:gap-4 justify-between items-center px-5 py-3 rounded-t-xl text-white bg-theme-primary font-semibold cursor-pointer`};
-    
-    .ant-badge .ant-badge-count {
-      ${tw`absolute -top-8 -right-9 md:relative md:top-0 md:right-0 duration-300`};
-    }
+    ${tw`w-full h-[50px] text-xl relative flex gap-4 justify-between items-center px-5 py-3 rounded-t-xl text-white bg-theme-primary font-semibold cursor-pointer`};
     
     .controls {
       ${tw`flex gap-3 items-center`};
       
       .ant-btn {
         ${tw`flex-grow !p-0 h-auto !bg-transparent shadow-none text-gray-100 hover:text-white text-xm`};
-
+        
         .anticon {
           ${tw`text-xl lg:text-lg`};
         }

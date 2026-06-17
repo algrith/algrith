@@ -255,7 +255,7 @@ export const HeaderWrapper = styled(Header)`
 		}
 		
 		.ant-btn {
-			${tw`shadow-none dark:text-theme-primary bg-transparent !p-0 outline-none focus:outline-none border-none`};
+			${tw`shadow-none dark:text-theme-primary !bg-transparent !p-0 outline-none focus:outline-none border-none`};
 		
 			&.menu {
 				${tw`lg:hidden px-1`};
