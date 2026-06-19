@@ -105,10 +105,10 @@ export const CardWrapper = styled.div`
 `;
 
 export const Cards = styled.div`
-  ${tw`grid md:grid-cols-2 lg:grid-cols-4 gap-8`};
+  ${tw`grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8`};
 
-  &.irresponsive {
-    ${tw`grid-cols-2 gap-4`};
+  &.responsive {
+    ${tw`grid-cols-1`};
   }
   
   &.cols-3 {
@@ -120,7 +120,7 @@ export const Cards = styled.div`
   }
 
   .item {
-    ${tw`flex gap-2 items-center justify-between rounded-xl dark:backdrop-blur-sm dark:bg-transparent px-7 py-6 border dark:border-gray-500 border-gray-400/50`};
+    ${tw`flex gap-2 justify-between rounded-xl dark:backdrop-blur-sm dark:bg-transparent px-7 py-6 border dark:border-gray-500 border-gray-400/50`};
     ${squareWaves()};
 
     &.centered {

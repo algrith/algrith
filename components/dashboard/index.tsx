@@ -63,7 +63,7 @@ const Dashboard = () => {
   return (
     <MainViewWrapper>
       <div className="content">
-        <Cards className={`irresponsive cols-${orderStatusAnalytics.length}`}>
+        <Cards className={`cols-${orderStatusAnalytics.length}`}>
           {orderStatusAnalytics.map((item) => (
             <div className="item" key={item.title} title={item.description}>
               <div className="metadata">
@@ -79,9 +79,7 @@ const Dashboard = () => {
             </div>
           ))}
         </Cards>
-      </div>
-
-      <div className="content">
+        
         <div className="columns reversed">
           <div className="column">
             <PieChart
@@ -96,13 +94,11 @@ const Dashboard = () => {
             <Revenue />
           </div>
         </div>
-      </div>
 
-      <header>
-        <h1>Order Summary by Plan</h1>
-      </header>
-
-      <div className="content">
+        <header>
+          <h1>Order Summary by Plan</h1>
+        </header>
+        
         <Cards className={`cols-${orderPlansAnalytics.length}`}>
           {orderPlansAnalytics.map((item) => (
             <div className="item" key={item.title}>
