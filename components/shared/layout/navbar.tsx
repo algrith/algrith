@@ -6,10 +6,10 @@ import { Avatar } from 'antd';
 
 import { MenuButton, NavbarWrapper, Overlay } from './styled';
 import Link from '@/components/shared/button/link';
+import { useAppSelector } from '@/store/hooks';
 import useViewport from '@/hooks/viewport';
 import { assets } from '@/libs/assets';
 import useRoute from '@/hooks/route';
-import { useAppSelector } from '@/store/hooks';
 
 const socials = [
 	{
