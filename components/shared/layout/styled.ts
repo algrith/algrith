@@ -545,7 +545,7 @@ export const StatusWrapper = styled.div`
 `;
 
 export const NavbarWrapper = styled.nav`
-	${tw`flex items-center relative lg:order-1`};
+	${tw`flex items-center relative lg:order-1 overscroll-contain`};
 	
 	&.open .wrapper {
 		${tw`right-0 lg:right-auto backdrop-blur-lg`};
@@ -757,7 +757,7 @@ export const EmptyWrapper = styled.div`
 `;
 
 export const Overlay = styled.div`
-	${tw`fixed inset-0 z-[21] bg-black/60 h-screen w-screen`};
+	${tw`fixed inset-0 z-[21] bg-black/60 h-screen w-screen overscroll-contain`};
 `;
 
 export const borderCss = css`
