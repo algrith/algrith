@@ -1,5 +1,5 @@
-import tw, { styled } from 'twin.macro';
 import { squareWaves } from '../layout/styled';
+import tw, { styled } from 'twin.macro';
 
 export const ConversationWrapper = styled.h3`
   ${tw`flex items-center gap-2 text-xl lg:text-xm font-semibold tracking-wide overflow-hidden z-1`};
@@ -94,7 +94,8 @@ export const MessageWrapper = styled.div`
 `;
 
 export const ChatsWrapper = styled.div`
-  ${tw`fixed z-1 w-full md:w-96 rounded-t-xl -bottom-full md:-bottom-112 left-0 md:left-auto md:right-8 bg-white dark:bg-gray-900 shadow-lg transition-all duration-500`};
+  ${tw`!fixed z-1 w-full md:w-96 rounded-t-xl -bottom-full md:-bottom-112 left-0 md:left-auto md:right-8 bg-white dark:bg-gray-900 shadow-lg transition-all duration-500`};
+  ${squareWaves()};
   
   &.loading .conversations {
     ${tw`flex justify-center items-center`};
@@ -126,7 +127,6 @@ export const ChatsWrapper = styled.div`
   
   .conversations {
     ${tw`w-full h-112 !overflow-y-auto overscroll-contain`};
-    ${squareWaves()};
   }
 `;
 
