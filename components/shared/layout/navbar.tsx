@@ -9,6 +9,7 @@ import Link from '@/components/shared/button/link';
 import useViewport from '@/hooks/viewport';
 import { assets } from '@/libs/assets';
 import useRoute from '@/hooks/route';
+import { useAppSelector } from '@/store/hooks';
 
 const socials = [
 	{
@@ -34,6 +35,7 @@ const links = [
 ];
 
 const Navbar = () => {
+	const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
 	const [visibilityClass, setVisibilityClass] = useState('');
   const { pathname, routes } = useRoute();
   const { isRouteChanged } = useRoute();
@@ -83,6 +85,12 @@ const Navbar = () => {
 							{link.text}
 						</Link>
 					))}
+
+					{!authUser && (
+						<Link className={getClassName('/auth')} href="/auth">
+							Login
+						</Link>
+					)}
 				</div>
 				
 				<div className="bottom">

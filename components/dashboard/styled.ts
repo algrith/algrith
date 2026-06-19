@@ -107,6 +107,10 @@ export const CardWrapper = styled.div`
 export const Cards = styled.div`
   ${tw`grid md:grid-cols-2 lg:grid-cols-4 gap-8`};
 
+  &.irresponsive {
+    ${tw`grid-cols-2 gap-4`};
+  }
+  
   &.cols-3 {
     ${tw`md:grid-cols-3 lg:grid-cols-3`};
   }

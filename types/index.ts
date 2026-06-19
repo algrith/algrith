@@ -185,6 +185,65 @@ export interface FeedbackPayload {
   show?: FeedbackState['show']
 };
 
+export interface DashboardState {
+	analytics: {
+		loading: boolean;
+		data: {
+      status: Record<OrderStatus, number>;
+      plan: Record<Plans, {
+				average_revenue: number;
+				total_revenue: number;
+				count: number;
+			}>;
+      timeline: Array<{
+				revenue: number;
+				month: number;
+				count: number;
+        year: number;
+			}>;
+      addon: Array<{
+        total_revenue: number;
+        id: Addon['id'];
+        count: number;
+      }>;
+      revenue: {
+        addon_total: number;
+        average: number;
+        total: number;
+      };
+      summary: {
+        one_time_payment_orders: number;
+        total_orders: number;
+        paid_orders: number;
+      };
+    };
+	};
+	profile: {
+		loading: boolean;
+		data?: User;
+	};
+	sidebar: {
+		collapsedBeforeHover: boolean;
+		collapsed: boolean;
+	},
+	orders: {
+		list: Array<OrderModel>;
+		loading: boolean;
+	};
+	users: {
+		list: Array<OrderModel>;
+		loading: boolean;
+	};
+	order: {
+		data?: OrderModel;
+		loading: boolean;
+	};
+	user: {
+		loading: boolean;
+		data?: User;
+	};
+};
+
 export interface AppThemeState {
 	isSystemTheme: boolean;
   theme: Themes;
@@ -238,61 +297,6 @@ export interface Conversation {
 	}>;
 	last_message?: Pick<Message, 'sender' | 'text'> & {
 		createdAt: string
-	};
-};
-
-export interface LayoutState {
-	analytics: {
-		loading: boolean;
-		data: {
-      status: Record<OrderStatus, number>;
-      plan: Record<Plans, {
-				average_revenue: number;
-				total_revenue: number;
-				count: number;
-			}>;
-      timeline: Array<{
-				revenue: number;
-				month: number;
-				count: number;
-        year: number;
-			}>;
-      addon: Array<{
-        total_revenue: number;
-        id: Addon['id'];
-        count: number;
-      }>;
-      revenue: {
-        addon_total: number;
-        average: number;
-        total: number;
-      };
-      summary: {
-        one_time_payment_orders: number;
-        total_orders: number;
-        paid_orders: number;
-      };
-    };
-	};
-	sidebar: {
-		collapsedBeforeHover: boolean;
-		collapsed: boolean;
-	},
-	orders: {
-		list: Array<OrderModel>;
-		loading: boolean;
-	};
-	users: {
-		list: Array<OrderModel>;
-		loading: boolean;
-	};
-	order: {
-		data?: OrderModel;
-		loading: boolean;
-	};
-	user: {
-		loading: boolean;
-		data?: User;
 	};
 };
 

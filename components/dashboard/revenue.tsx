@@ -1,7 +1,6 @@
 'use client';
 
 import { LineChartOutlined } from '@ant-design/icons';
-import { useSession } from 'next-auth/react';
 import { Divider } from 'antd';
 
 import { useAppSelector } from '@/store/hooks';
@@ -22,11 +21,10 @@ const getFallbackColor = (index: number) => {
 };
 
 const Revenue = () => {
-  const { analytics: { data: analytics } } = useAppSelector((state) => state.dashboard);
+  const { profile: { data: authUser }, analytics: { data: analytics } } = useAppSelector((state) => state.dashboard);
   const addonPercent = analytics.revenue.total > 0 ? ((analytics.revenue.addon_total / analytics.revenue.total) * 100).toFixed(1) : '0.0';
   const maxRevenue = Math.max(...Object.values(analytics.plan).map((plan) => plan.total_revenue), 1);
-  const { data: session } = useSession();
-  const isAdmin = session?.user.role === 'admin';
+  const isAdmin = authUser?.role === 'admin';
   
   return (
     <RevenueWrapper>

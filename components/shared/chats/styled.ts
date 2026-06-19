@@ -32,7 +32,7 @@ export const ConversationWrapper = styled.h3`
     }
     
     .title {
-      ${tw`w-full whitespace-nowrap overflow-ellipsis overflow-hidden`};
+      ${tw`w-full whitespace-nowrap overflow-ellipsis overflow-hidden capitalize`};
     }
   }
 `;
@@ -125,7 +125,7 @@ export const ChatsWrapper = styled.div`
   }
   
   .conversations {
-    ${tw`w-full h-112 !overflow-y-auto`};
+    ${tw`w-full h-112 !overflow-y-auto overscroll-contain`};
     ${squareWaves()};
   }
 `;

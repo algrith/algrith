@@ -1,9 +1,9 @@
 'use client';
 
 import { Avatar, Badge, MenuProps, Dropdown } from 'antd';
-import { signOut, useSession } from 'next-auth/react';
 import { CommentOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/navigation';
+import { signOut } from 'next-auth/react';
 
 import useResizeHeaderOnScroll from '@/hooks/resize-header-on-scroll';
 import { HeaderWrapper } from '@/components/shared/layout/styled';
@@ -20,10 +20,9 @@ import Navbar from './navbar';
 
 const Header = () => {
   const { conversations: { total_unread }, showConversations } = useAppSelector((state) => state.chat);
-  const { data: session } = useSession();
+  const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
   const dispatch = useAppDispatch();
   const { routes } = useRoute();
-  const user = session?.user;
   const router = useRouter();
   useResizeHeaderOnScroll();
   
@@ -61,7 +60,7 @@ const Header = () => {
       <div className="controls">
         <ThemeSwitch />
 
-        {(!routes.auth && user) && (
+        {(!routes.auth && authUser) && (
           <div className="user-controls">
             <Badge className="chat-icon" count={total_unread} size="small" dot>
               <Button

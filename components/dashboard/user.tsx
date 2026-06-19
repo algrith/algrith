@@ -1,6 +1,5 @@
 'use client';
 
-import { useSession } from 'next-auth/react';
 import { useEffect, useState } from 'react';
 import { Spin } from 'antd';
 
@@ -12,15 +11,14 @@ import { getDateFormat } from '@/utils';
 import Button from '../shared/button';
 
 const User = ({ id }: { id: string }) => {
-  const dashboard = useAppSelector((state) => state.dashboard);
+  const { profile: { data: authUser }, ...dashboard } = useAppSelector((state) => state.dashboard);
   const { loading: isFetchingOrders, list: orders } = dashboard.orders;
   const { loading: isFetchingUser, data: user } = dashboard.user;
   const [isDeleting, setDeleting] = useState(false);
-  const { data: session } = useSession();
   const dispatch = useAppDispatch();
 
-  const isLoggedInUser = id === session?.user.id;
-  const isAdmin = session?.user.role === 'admin';
+  const isLoggedInUser = id === authUser?.id;
+  const isAdmin = authUser?.role === 'admin';
   const canDeleteUser = isAdmin || isLoggedInUser;
 
   const handleDeleteAccount = async () => {
@@ -52,9 +50,9 @@ const User = ({ id }: { id: string }) => {
             <div className="left">
               <p>Joined: {getDateFormat(user.createdAt).full}</p>
 
-              <p>
-                Status: <Status payload={session?.user} />
-              </p>
+              <div>
+                Status: <Status payload={authUser} />
+              </div>
             </div>
           </div>
         )}

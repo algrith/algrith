@@ -603,7 +603,7 @@ export const NavbarWrapper = styled.nav`
 		}
 
 		.bottom {
-			${tw`lg:hidden flex justify-between items-center flex-grow-0 flex-shrink relative p-4 w-full bg-gray-200 mt-2`};
+			${tw`lg:hidden flex justify-between items-center flex-grow-0 flex-shrink relative px-4 w-full bg-gray-200`};
 			${darkBgGradient.twoLayers};
 
 			.copyright {

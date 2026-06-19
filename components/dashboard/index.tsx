@@ -63,7 +63,7 @@ const Dashboard = () => {
   return (
     <MainViewWrapper>
       <div className="content">
-        <Cards className={`cols-${orderStatusAnalytics.length}`}>
+        <Cards className={`irresponsive cols-${orderStatusAnalytics.length}`}>
           {orderStatusAnalytics.map((item) => (
             <div className="item" key={item.title} title={item.description}>
               <div className="metadata">

@@ -1,6 +1,6 @@
 import { signOut } from 'next-auth/react';
 
-import { setAnalytics, setOrder, setOrders, setUser, setUsers } from './reducer';
+import { setAnalytics, setOrder, setOrders, setProfile, setUser, setUsers } from './reducer';
 import { AppDispatch, store } from '@/store';
 import { Fetch } from '@/utils/api';
 
@@ -13,6 +13,19 @@ export const deleteUser = (userId: string, isLoggedInUser = false) => async (dis
   if (success && isLoggedInUser) signOut({
     redirectTo: '/auth'
   });
+};
+
+export const fetchUserProfile = (userId: string) => async (dispatch: AppDispatch) => {
+  dispatch(setProfile({ loading: true }));
+
+  const { data: user } = await Fetch({
+    path: `/users/${userId}`
+  });
+
+  dispatch(setProfile({
+    data: user || undefined,
+    loading: false
+  }));
 };
 
 export const fetchOrders = (userId?: string) => async (dispatch: AppDispatch) => {

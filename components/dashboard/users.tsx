@@ -2,7 +2,6 @@
 
 import { MoreOutlined } from '@ant-design/icons';
 import Dropdown from 'antd/es/dropdown/dropdown';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { MenuProps } from 'antd';
@@ -17,12 +16,11 @@ import { getDateFormat } from '@/utils';
 import { fetchUsers } from './slices';
 
 const Users = () => {
-  const { users } = useAppSelector((state) => state.dashboard);
-  const { data: session } = useSession();
+  const { profile: { data: authUser }, users } = useAppSelector((state) => state.dashboard);
   const dispatch = useAppDispatch();
   const router = useRouter();
   
-  const isAdmin = session?.user.role === 'admin';
+  const isAdmin = authUser?.role === 'admin';
 
   const columns: ColumnsType<User> = [
     {

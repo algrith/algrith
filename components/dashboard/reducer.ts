@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { LayoutState } from '@/types';
+import { DashboardState } from '@/types';
 
-const initialState: LayoutState = {
+const initialState: DashboardState = {
   analytics: {
     loading: true,
     data: {
@@ -48,6 +48,10 @@ const initialState: LayoutState = {
       }
     }
   },
+  profile: {
+    data: undefined,
+    loading: false
+  },
   sidebar: {
 		collapsedBeforeHover: false,
 		collapsed: false
@@ -71,37 +75,43 @@ const initialState: LayoutState = {
 }
 
 export const layoutSlice = createSlice({
-  name: 'layout',
+  name: 'dashboard',
   initialState,
   reducers: {
-    setAnalytics: (state, action: PayloadAction<Partial<LayoutState['analytics']>>) => {
+    setAnalytics: (state, action: PayloadAction<Partial<DashboardState['analytics']>>) => {
       state.analytics = {
         ...state.analytics,
         ...action.payload
       };
     },
-    updateSidebar: (state, action: PayloadAction<Partial<LayoutState['sidebar']>>) => {
+    updateSidebar: (state, action: PayloadAction<Partial<DashboardState['sidebar']>>) => {
       state.sidebar = { ...state.sidebar, ...action.payload };
     },
-    setOrders: (state, action: PayloadAction<Partial<LayoutState['orders']>>) => {
+    setProfile: (state, action: PayloadAction<Partial<DashboardState['profile']>>) => {
+      state.profile = {
+        ...state.profile,
+        ...action.payload
+      };
+    },
+    setOrders: (state, action: PayloadAction<Partial<DashboardState['orders']>>) => {
       state.orders = {
         ...state.orders,
         ...action.payload
       };
     },
-    setUsers: (state, action: PayloadAction<Partial<LayoutState['users']>>) => {
+    setUsers: (state, action: PayloadAction<Partial<DashboardState['users']>>) => {
       state.users = {
         ...state.users,
         ...action.payload
       };
     },
-    setOrder: (state, action: PayloadAction<Partial<LayoutState['order']>>) => {
+    setOrder: (state, action: PayloadAction<Partial<DashboardState['order']>>) => {
       state.order = {
         ...state.order,
         ...action.payload
       };
     },
-    setUser: (state, action: PayloadAction<Partial<LayoutState['user']>>) => {
+    setUser: (state, action: PayloadAction<Partial<DashboardState['user']>>) => {
       state.user = {
         ...state.user,
         ...action.payload
@@ -115,6 +125,7 @@ const { reducer, actions } = layoutSlice;
 export const {
   updateSidebar,
   setAnalytics,
+  setProfile,
   setOrders,
   setUsers,
   setOrder,

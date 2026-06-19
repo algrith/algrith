@@ -2,7 +2,6 @@
 
 import { MessageOutlined } from '@ant-design/icons';
 import { Badge, Divider, Image, Spin } from 'antd';
-import { useSession } from 'next-auth/react';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
@@ -20,20 +19,18 @@ import { fetchOrder } from './slices';
 import Button from '../shared/button';
 
 const Order = () => {
+  const { profile: { data: authUser }, order: { data: order, loading } } = useAppSelector((state) => state.dashboard);
   const { orderConversation: { data: conversation, unread } } = useAppSelector((state) => state.chat);
-  const { order: { data: order, loading } } = useAppSelector((state) => state.dashboard);
   const [activeFontRole, setActiveFontRole] = useState<FontRole>('heading');
-  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { orderId } = useParams();
-  const user = session?.user;
 
   const handleActiveFontRole = (role: FontRole) => {
     setActiveFontRole(role);
   };
 
   const handleOrderChat = () => {
-    if (!conversation) dispatch(setupOrderChat(order, user));
+    if (!conversation) dispatch(setupOrderChat(order, authUser));
     else dispatch(setConversation({ data: conversation }));
     dispatch(setShowConversations(true));
   };
@@ -72,7 +69,7 @@ const Order = () => {
                 <div>Date: {getDateFormat(order?.paid_at).full}</div>
 
                 <div>
-                  Status: <Status isEditable={user?.role === 'admin'} payload={order} />
+                  Status: <Status isEditable={authUser?.role === 'admin'} payload={order} />
                 </div>
               </div>
 

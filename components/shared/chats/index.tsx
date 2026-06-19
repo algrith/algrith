@@ -3,7 +3,6 @@
 import { ArrowsAltOutlined, CaretLeftOutlined, CheckOutlined, CloseOutlined, ExclamationCircleOutlined, MinusOutlined, PaperClipOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
 import { ChangeEvent, FormEvent, useEffect, useRef } from 'react';
 import { Avatar, Badge, Spin, Switch, Tooltip } from 'antd';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { User } from 'next-auth';
 
@@ -81,10 +80,10 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
 };
 
 const Message = ({ message }: { message: MessageModel }) => {
+  const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
   const sender = (message.sender.user as User);
-  const { data: session } = useSession();
 
-  const isSender = sender?.id === session?.user.id;
+  const isSender = sender?.id === authUser?.id;
 
   const statusIcon = {
     failed: <ExclamationCircleOutlined />,
@@ -128,14 +127,13 @@ const Message = ({ message }: { message: MessageModel }) => {
 };
 
 const ConversationTypeStatus = () => {
+  const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
   const { message, ...chat } = useAppSelector((state) => state.chat);
   const { data: conversation } = chat.conversation;
   const order = conversation?.order as OrderModel;
   const isFiles = message.attachments?.length;
-  const { data: session } = useSession();
   const { type } = conversation ?? {};
   const dispatch = useAppDispatch();
-  const user = session?.user;
   
   const canDeliverOrder = type === 'order' && order?.status === 'pending';
   const canCloseCase = type === 'support';
@@ -144,13 +142,13 @@ const ConversationTypeStatus = () => {
     const newMessage = { ...message };
     if ('metadata' in message) delete newMessage['metadata'];
     else newMessage.metadata = {
-      order_status_info: `Order delivered by ${user?.email}`
+      order_status_info: `Order delivered by ${authUser?.email}`
     };
 
     dispatch(setMessage(newMessage));
   };
 
-  if (user?.role !== 'admin' || (!canDeliverOrder && !canCloseCase)) return null;
+  if (authUser?.role !== 'admin' || (!canDeliverOrder && !canCloseCase)) return null;
 
   return (
     <div className="order-delivery">
@@ -180,14 +178,12 @@ const ConversationTypeStatus = () => {
 };
 
 const Chats = () => {
-  const { order: { data: order } } = useAppSelector((state) => state.dashboard);
+  const { profile: { data: authUser }, order: { data: order } } = useAppSelector((state) => state.dashboard);
   const { showConversations, ...rest } = useAppSelector((state) => state.chat);
   const { list: conversations, total_unread, loading } = rest.conversations;
   const { data: conversation } = rest.conversation;
-  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { routes } = useRoute();
-  const user = session?.user;
   
   const isMinimized = conversation && !showConversations;
 
@@ -197,7 +193,7 @@ const Chats = () => {
   ]);
   
   const handleSetupOrderChat = () => {
-    dispatch(setupOrderChat(order, user))
+    dispatch(setupOrderChat(order, authUser))
   };
 
   const toggleChatsWidget = () => {
@@ -218,7 +214,7 @@ const Chats = () => {
     if (showConversations) dispatch(fetchConversations());
   }, [showConversations]);
 
-  if (routes.auth || !user) return null;
+  if (routes.auth || !authUser) return null;
 
   return (
     <ChatsWrapper className={className}>
@@ -281,17 +277,16 @@ const Chats = () => {
 };
 
 const Chat = () => {
+  const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
   const { message, ...chat } = useAppSelector((state) => state.chat);
   const { loading, list: messages } = chat.messages;
   const { data: conversation } = chat.conversation;
   const isFiles = message.attachments?.length;
   const messagesContainerRef = useRef(null);
-  const { data: session } = useSession();
   const dispatch = useAppDispatch();
-  const user = session?.user;
-  const disabled = !user;
+  const disabled = !authUser;
   
-  const role = user?.role || 'customer';
+  const role = authUser?.role || 'customer';
 
   const className = useClassName([
     isFiles ? 'has-files' : '',
@@ -340,10 +335,10 @@ const Chat = () => {
   const handleSendOrderMessage = async (e: FormEvent) => {
     e.preventDefault();
     
-    if (!user) return;
+    if (!authUser) return;
 
     let newMessage = {
-      sender: { role, user },
+      sender: { role, authUser },
       ...message
     } as MessageModel;
     
@@ -366,7 +361,7 @@ const Chat = () => {
     if (newMessage.metadata?.order_status_info) return dispatch(deliverOrder(newMessage));
 
     if (conversation?.id === 'NEW_CONVERSATION') {
-      const customerId = !['moderator', 'admin'].includes(role) ? user.id : '';
+      const customerId = (!['moderator', 'admin'].includes(role) ? authUser.id : '') as string;
       return await dispatch(createOrderConversation(
         conversation.order as string,
         customerId,

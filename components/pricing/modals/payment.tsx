@@ -1,7 +1,6 @@
 'use client';
 
 import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { ModalProps } from 'antd';
 
@@ -19,6 +18,7 @@ import useClassName from '@/hooks/class-name';
 import { UploadFile } from 'antd/es/upload';
 import { Fetch } from '@/utils/api';
 import Addons from '../addons';
+import { useAppSelector } from '@/store/hooks';
 
 const requirementsModel: OrderRequirements = {
   business_name: '',
@@ -38,6 +38,7 @@ const customerModel = {
 };
 
 const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
+  const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
   const [view, setView] = useState<'requirements' | 'payment' | 'addons'>('addons');
   const [loading, setLoading] = useState({ files: false, order: false });
   const [requirements, setRequirements] = useState(requirementsModel);
@@ -46,7 +47,6 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   const isLoading = Object.values(loading).some(Boolean);
   const [exchangeRate, setExchangeRate] = useState(0);
   const [open, setOpen] = useState(false);
-  const { data: session } = useSession();
   const router = useRouter();
   const discount = 0;
   const tax = 0;
@@ -200,8 +200,8 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     setOpen(!!plan);
 
     setCustomer({
-      email: session?.user.email || '',
-      name: session?.user.name || '',
+      email: authUser?.email || '',
+      name: authUser?.name || '',
       phone: ''
     });
   }, [plan]);
