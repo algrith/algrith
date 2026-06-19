@@ -552,7 +552,7 @@ export const NavbarWrapper = styled.nav`
 	}
 	
 	.wrapper {
-		${tw`transition-all z-50 ease-in-out duration-500 shadow lg:shadow-none bg-white lg:bg-transparent dark:bg-transparent fixed lg:relative top-0 -right-full lg:right-auto flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center w-10/12 md:w-5/12 lg:w-auto h-[100dvh] lg:h-auto text-gray-600`};
+		${tw`transition-all z-50 ease-in-out duration-500 shadow lg:shadow-none bg-white lg:bg-transparent dark:bg-transparent fixed lg:relative top-0 -right-full lg:right-auto flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center w-10/12 md:w-5/12 lg:w-auto h-[100dvh] lg:h-auto text-gray-600 overscroll-contain`};
 
 		@media (min-width: 1024px) {
 			background-image: none !important;
