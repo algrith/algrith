@@ -44,6 +44,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   const [customer, setCustomer] = useState(customerModel);
   const [addons, setAddons] = useState<Array<Addon>>([]);
   const isLoading = Object.values(loading).some(Boolean);
+  const [exchangeRate, setExchangeRate] = useState(0);
   const [open, setOpen] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
@@ -76,15 +77,6 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     setRequirements((prev) => ({ ...prev, [id]: newValue }));
   };
 
-  const handleCustomerChange = (e: ChangeEvent) => {
-    const { id, value } = e.target as HTMLInputElement;
-    setCustomer((prev) => ({ ...prev, [id]: value }));
-  };
-
-  const handleAddons = (addons: Array<Addon>) => {
-    setAddons(addons);
-  };
-
   const handleSuccess = async (data: BaseObject) => {
     const requirements = await uploadOrderFiles();
     
@@ -110,6 +102,15 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     setLoading((prev) => ({ ...prev, order: false }));
     if (success) router.push('/dashboard/orders');
     handleReset();
+  };
+
+  const handleCustomerChange = (e: ChangeEvent) => {
+    const { id, value } = e.target as HTMLInputElement;
+    setCustomer((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleAddons = (addons: Array<Addon>) => {
+    setAddons(addons);
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -165,6 +166,14 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     return newRequirements;
   };
 
+  const getExchangeRate = async () => {
+    const { success, data } = await Fetch({
+      path: '/payment/exchange-rate'
+    });
+
+    if (success) setExchangeRate(data.rate);
+  };
+
   const handleRequirements = () => {
     setView('payment');
   };
@@ -187,6 +196,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   };
 
   useEffect(() => {
+    getExchangeRate();
     setOpen(!!plan);
 
     setCustomer({
@@ -380,6 +390,21 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
         )}
 
         <div className="footer">
+          {/* <Paystack
+            amount={total * exchangeRate}
+            onSuccess={handleSuccess}
+            description={description}
+            disabled={isLoading}
+            loading={isLoading}
+            title={plan?.name}
+            htmlType="submit"
+            block={false}
+            {...customer}
+            size="small"
+          >
+            {buttonText}
+          </Paystack> */}
+          
           {view !== 'addons' && (
             <Button onClick={handleBack} disabled={isLoading} type="secondary" size="small">
               Back
@@ -392,7 +417,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
             </Button>
           ) : (
             <>
-              <FlutterWave
+              {/* <FlutterWave
                 onSuccess={handleSuccess}
                 description={description}
                 disabled={isLoading}
@@ -404,22 +429,22 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
                 size="small"
               >
                 {buttonText}
-              </FlutterWave>
+              </FlutterWave> */}
 
-              {/* <Paystack
+              <Paystack
+                amount={total * exchangeRate}
                 onSuccess={handleSuccess}
                 description={description}
                 disabled={isLoading}
                 loading={isLoading}
                 title={plan?.name}
                 htmlType="submit"
-                amount={total}
                 block={false}
                 {...customer}
                 size="small"
               >
                 {buttonText}
-              </Paystack> */}
+              </Paystack>
             </>
           )}
         </div>

@@ -287,7 +287,6 @@ export const PlanWrapper = styled(CardWrapper)`
 `;
 
 export const RevenueWrapper = styled.div`
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   ${tw`w-full rounded-xl p-6 backdrop-blur`};
   ${borderCss};
 

@@ -17,7 +17,7 @@ const Paystack = ({ onSuccess, amount, phone, name, email, ...rest }: PaystackPr
       // channels: ['card', 'apple_pay', 'bank_transfer', 'ussd', 'mobile_money'],
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
       reference: (new Date()).getTime().toString(),
-      amount: amount * 1390 * 100,
+      amount: amount * 100,
       // currency: 'USD',
       // metadata: {
       //   custom_fields: [
@@ -36,14 +36,14 @@ const Paystack = ({ onSuccess, amount, phone, name, email, ...rest }: PaystackPr
         console.log(transaction);
         onSuccess?.(transaction);
       },
-      onCancel: () => {
-        console.log('Transaction canceled');
+      onLoad: (response) => {
+        console.log('Loaded --> ', response);
       },
       onError: (error) => {
         console.log('Error --> ', error.message);
       },
-      onLoad: (response) => {
-        console.log('Loaded --> ', response);
+      onCancel: () => {
+        console.log('Transaction canceled');
       }
     });
   };

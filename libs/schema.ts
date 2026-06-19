@@ -190,7 +190,7 @@ const orderSchema = new mongoose.Schema({
     action: String,
     price: Number,
     name: {
-      enum: ['Professional', 'Enterprise', 'Business', 'Starter'],
+      enum: ['professional', 'enterprise', 'business', 'starter'],
       type: String
     }
   }
