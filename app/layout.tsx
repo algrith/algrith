@@ -7,7 +7,6 @@ import AuthProvider from '@/components/shared/auth-provider';
 import SchemaMarkup from '@/components/shared/schema/markup';
 import Alert from '@/components/shared/feedback/alert';
 import Header from '@/components/shared/layout/header';
-import Navbar from '@/components/shared/layout/navbar';
 import Footer from '@/components/shared/layout/footer';
 import Chats from '@/components/shared/chats';
 import { fontClassNames } from '@/libs/fonts';
@@ -164,7 +163,6 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode; }>) => (
             <AntDesignThemeProvider>
               <LayoutWrapper>
                 <Header />
-                <Navbar />
 
                 <ContentWrapper>
                   {children}

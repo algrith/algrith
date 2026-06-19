@@ -1,19 +1,14 @@
 'use client';
 
-import { CloseOutlined, FacebookFilled, LinkedinFilled, XOutlined } from '@ant-design/icons';
-import { signOut, useSession } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import { Avatar, Dropdown } from 'antd';
-import { MenuProps } from 'antd';
+import { CloseOutlined, FacebookFilled, LinkedinFilled, MenuOutlined, XOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
+import { Avatar } from 'antd';
 
-import useToggleNavbar from '@/hooks/toggle-tavbar';
+import { MenuButton, NavbarWrapper, Overlay } from './styled';
 import Link from '@/components/shared/button/link';
-import useClassName from '@/hooks/class-name';
-import { NavbarWrapper } from './styled';
-import UserAvatar from '../avatar/user';
+import useViewport from '@/hooks/viewport';
 import { assets } from '@/libs/assets';
 import useRoute from '@/hooks/route';
-import Button from '../button';
 
 const socials = [
 	{
@@ -39,85 +34,69 @@ const links = [
 ];
 
 const Navbar = () => {
-	const { data: session, status } = useSession();
-  const { closeNavbar } = useToggleNavbar();
+	const [visibilityClass, setVisibilityClass] = useState('');
   const { pathname, routes } = useRoute();
-	const loading = status === 'loading';
-	const router = useRouter();
-	const user = session?.user;
-
-	const accountMenuItems: MenuProps['items'] = [
-    {
-			onClick: () => router.push('/dashboard'),
-			label: 'Dashboard',
-			key: 'dashboard'
-		},
-		{
-			onClick: () => signOut(),
-			label: 'Logout',
-			key: 'logout',
-			danger: true
-		}
-  ];
+  const { isRouteChanged } = useRoute();
+  const { dimensions } = useViewport();
 
 	const getClassName = (path: string) => [
 		pathname === path ? 'active' : '',
 		'ripple-node',
 	].filter(Boolean).join(' ');
 
-  const className = useClassName([
-    routes.isDashboard ? 'wide' : '',
-		'navlinks'
-  ]);
-  
+	const toggleNavbar = () => {
+		setVisibilityClass(!visibilityClass ? 'open' : '');
+	};
+
+	const closeNavbar = () => {
+		setVisibilityClass('');
+	};
+
+	useEffect(() => {
+		closeNavbar();
+	}, [isRouteChanged, dimensions]);
+	
   if (routes.auth) return null;
 
 	return (
-		<NavbarWrapper className={className} id="nav-menu">
-			<div className="top">
-				<h1 id="navbar-title">
-					<Avatar src={assets.brand.logos.black} className="light" alt="algrith_logo" />
-					<Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
-				</h1>
-
-				<Button
-					prependedIcon={<CloseOutlined />}
-					onClick={closeNavbar}
-					htmlType="button"
-					className="menu"
-				/>
-			</div>
-
-			<div id="navbar-links">
-				{links.map((link) => (
-					<Link className={getClassName(link.href)} key={link.href} href={link.href}>
-						{link.text}
-					</Link>
-				))}
-
-				{!user ? (
-					<Link className="ripple-node" href="/auth">Login</Link>
-				) : (
-					<Dropdown menu={{items: accountMenuItems}} trigger={['hover']}>
-						<span className="account">
-							<UserAvatar className="user-avatar" />
-							<span className="name">{user.name}</span>
-						</span>
-					</Dropdown>
-				)}
-			</div>
+		<NavbarWrapper className={visibilityClass}>
+			{visibilityClass && <Overlay onClick={closeNavbar} />}
 			
-			<div className="bottom">
-				<div id="navbar-footer-brand" className="copyright">
-					© Copyright <span> Algrith {new Date().getFullYear()} </span>
+			<MenuButton
+				prependedIcon={visibilityClass ? <CloseOutlined /> : <MenuOutlined />}
+				className={visibilityClass}
+				onClick={toggleNavbar}
+				htmlType="button"
+			/>
+
+			<div className="wrapper">
+				<div className="top">
+					<h1 id="navbar-title">
+						<Avatar src={assets.brand.logos.black} className="light" alt="algrith_logo" />
+						<Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
+					</h1>
 				</div>
 
-				<div id="navbar-footer-socials" className="socials">
-					{socials.map((social, index) => (
-						<span key={index}>
-							{social.icon}
-						</span>
+				<div className="links">
+					{links.map((link) => (
+						<Link className={getClassName(link.href)} key={link.href} href={link.href}>
+							{link.text}
+						</Link>
 					))}
+				</div>
+				
+				<div className="bottom">
+					<div className="copyright">
+						© Copyright <span> Algrith {new Date().getFullYear()} </span>
+					</div>
+
+					<div className="socials">
+						{socials.map((social, index) => (
+							<span key={index}>
+								{social.icon}
+							</span>
+						))}
+					</div>
 				</div>
 			</div>
 		</NavbarWrapper>

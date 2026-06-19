@@ -1,6 +1,6 @@
 import { signOut } from 'next-auth/react';
 
-import { setOrder, setOrders, setUser, setUsers } from './reducer';
+import { setAnalytics, setOrder, setOrders, setUser, setUsers } from './reducer';
 import { AppDispatch, store } from '@/store';
 import { Fetch } from '@/utils/api';
 
@@ -50,6 +50,19 @@ export const fetchUser = (userId: string) => async (dispatch: AppDispatch) => {
   
   dispatch(setUser({
     data: user || undefined,
+    loading: false
+  }));
+};
+
+export const fetchOrdersAnalytics = () => async (dispatch: AppDispatch) => {
+  dispatch(setAnalytics({ loading: true }));
+
+  const { data: analytics, success } = await Fetch({
+    path: `/analytics/orders`
+  });
+  
+  dispatch(setAnalytics({
+    data: success ? analytics : {},
     loading: false
   }));
 };

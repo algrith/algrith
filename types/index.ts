@@ -242,6 +242,38 @@ export interface Conversation {
 };
 
 export interface LayoutState {
+	analytics: {
+		loading: boolean;
+		data: {
+      status: Record<OrderStatus, number>;
+      plan: Record<Plans, {
+				average_revenue: number;
+				total_revenue: number;
+				count: number;
+			}>;
+      timeline: Array<{
+				revenue: number;
+				month: number;
+				count: number;
+        year: number;
+			}>;
+      addon: Array<{
+        total_revenue: number;
+        id: Addon['id'];
+        count: number;
+      }>;
+      revenue: {
+        addon_total: number;
+        average: number;
+        total: number;
+      };
+      summary: {
+        one_time_payment_orders: number;
+        total_orders: number;
+        paid_orders: number;
+      };
+    };
+	};
 	sidebar: {
 		collapsedBeforeHover: boolean;
 		collapsed: boolean;
@@ -283,12 +315,12 @@ export interface AsyncAction {
 };
 
 export interface OrderModel {
-	status: 'pending' | 'completed' | 'delivered' | 'cancelled';
 	requirements: OrderRequirements;
 	addons: 	Array<Addon>;
 	conversation?: string;
 	user?: User | string;
 	addon_total: number;
+	status: OrderStatus;
 	createdAt?: string;
 	customer: Customer;
 	reference: string;
@@ -394,6 +426,13 @@ export interface Message {
 	}
 };
 
+export enum OrderStatus {
+	COMPLETED = 'completed',
+	DELIVERED = 'delivered',
+	CANCELLED = 'cancelled',
+	PENDING = 'pending'
+};
+
 export interface Addon {
 	billing_cycle: 'one-time' | 'monthly';
 	price: number;
@@ -402,13 +441,13 @@ export interface Addon {
 };
 
 export interface Plan {
-	name: 'Professional' | 'Enterprise' | 'Business' | 'Starter';
 	one_time_payment: boolean;
 	features: Array<string>;
 	most_popular: boolean;
 	description: string;
 	action: string;
 	price: number;
+	name: Plans;
 };
 
 export type Colors = {
@@ -443,6 +482,13 @@ export enum Routes {
   SIGN_UP = 'signUp',
   SIGN_IN = 'signIn',
   ORDERS = 'orders'
+};
+
+export enum Plans {
+	PROFESSIONAL = 'professional',
+	ENTERPRISE = 'enterprise',
+	BUSINESS = 'business',
+	STARTER = 'starter'
 };
 
 declare global {

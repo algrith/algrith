@@ -1,26 +1,45 @@
 'use client';
 
-import { CommentOutlined, MenuOutlined } from '@ant-design/icons';
-import { Avatar, Badge } from 'antd';
+import { Avatar, Badge, MenuProps, Dropdown } from 'antd';
+import { signOut, useSession } from 'next-auth/react';
+import { CommentOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/navigation';
 
 import useResizeHeaderOnScroll from '@/hooks/resize-header-on-scroll';
 import { HeaderWrapper } from '@/components/shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setShowConversations } from '../chats/reducer';
-import useToggleNavbar from '@/hooks/toggle-tavbar';
 import Link from '@/components/shared/button/link';
 import useClassName from '@/hooks/class-name';
 import ThemeSwitch from '../theme/switch';
+import UserAvatar from '../avatar/user';
 import { assets } from '@/libs/assets';
 import useRoute from '@/hooks/route';
 import Button from '../button';
+import Navbar from './navbar';
 
 const Header = () => {
   const { conversations: { total_unread }, showConversations } = useAppSelector((state) => state.chat);
-  const { openNavbar } = useToggleNavbar();
+  const { data: session } = useSession();
   const dispatch = useAppDispatch();
   const { routes } = useRoute();
+  const user = session?.user;
+  const router = useRouter();
   useResizeHeaderOnScroll();
+  
+	const accountMenuItems: MenuProps['items'] = [
+    {
+			onClick: () => router.push('/dashboard'),
+			label: 'Dashboard',
+			key: 'dashboard'
+		},
+		{
+			onClick: () => signOut(),
+			label: 'Logout',
+			key: 'logout',
+			danger: true
+		}
+  ];
 
   const className = useClassName([
     (routes.isDashboard || routes.auth) ? 'wide' : ''
@@ -32,37 +51,34 @@ const Header = () => {
   
   return (
     <HeaderWrapper id="header" className={className}>
-      <div className="wrapper">
-        <div id="brand">
-          <Link id="brand-title" href="/">
-            <Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
-            <Avatar src={assets.brand.logos.black} className="light" alt="algrith_logo" />
-          </Link>
-        </div>
+      <div id="brand">
+        <Link id="brand-title" href="/">
+          <Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
+          <Avatar src={assets.brand.logos.black} className="light" alt="algrith_logo" />
+        </Link>
+      </div>
 
-        <div className="controls">
-          <ThemeSwitch />
+      <div className="controls">
+        <ThemeSwitch />
 
-          {!routes.auth && (
-            <>
-              <Badge className="chat-icon" count={total_unread} size="small" dot>
-                <Button
-                  prependedIcon={<CommentOutlined />}
-                  onClick={openChatWidget}
-                  htmlType="button"
-                  size="small"
-                />
-              </Badge>
-
+        {(!routes.auth && user) && (
+          <div className="user-controls">
+            <Badge className="chat-icon" count={total_unread} size="small" dot>
               <Button
-                prependedIcon={<MenuOutlined />}
-                onClick={openNavbar}
+                prependedIcon={<CommentOutlined />}
+                onClick={openChatWidget}
                 htmlType="button"
-                className="menu"
+                size="small"
               />
-            </>
-          )}
-        </div>
+            </Badge>
+
+            <Dropdown menu={{items: accountMenuItems}} trigger={['hover']}>
+              <UserAvatar />
+            </Dropdown>
+          </div>
+        )}
+
+        <Navbar />
       </div>
     </HeaderWrapper>
   );

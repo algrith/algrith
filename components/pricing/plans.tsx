@@ -27,7 +27,7 @@ const Plans = ({ inHomePage = false }) => {
   const router = useRouter();
   
   const handleClick = (plan: Plan) => () =>  {
-    if (plan.name === 'Enterprise') return router.push('/contact-us');
+    if (plan.name === 'enterprise') return router.push('/contact-us');
     if (!session?.user) redirectToAuth(plan);
     setPlan(plan);
   };
@@ -79,7 +79,7 @@ const Plans = ({ inHomePage = false }) => {
               
               <div className="price">
                 <p className="amount">
-                  {plan.name !== 'Enterprise' ? formatCurrency(plan.price) : 'Custom'}
+                  {plan.name !== 'enterprise' ? formatCurrency(plan.price) : 'Custom'}
                 </p>
                 
                 {plan.one_time_payment && (

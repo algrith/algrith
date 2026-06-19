@@ -98,7 +98,7 @@ export const PlansWrapper = styled.div`
         }
         
         .name {
-          ${tw`text-3xl text-theme-primary dark:text-white font-extrabold mb-2 tracking-widest`};
+          ${tw`text-3xl text-theme-primary dark:text-white font-extrabold mb-2 tracking-widest capitalize`};
 
           .ant-tag {
             ${tw`-mt-0.5 ml-3 rounded-full tracking-wide`};

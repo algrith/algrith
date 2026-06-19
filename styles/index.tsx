@@ -1,10 +1,9 @@
 'use client';
 
-import { darkBgGradient, Overlay } from '@/components/shared/layout/styled';
+import { darkBgGradient } from '@/components/shared/layout/styled';
 import tw, { css, GlobalStyles as BaseStyles } from 'twin.macro';
 import { ScrollToTopController } from '@algrith/scroll-to-top';
 import useScrollToElement from '@/hooks/scroll-to-element';
-import useToggleNavbar from '@/hooks/toggle-tavbar';
 import useLazyLoader from '@/hooks/lazy-loader';
 import '@algrith/scroll-to-top/dist/index.css';
 import { Global } from '@emotion/react';
@@ -44,10 +43,13 @@ const customStyles = css`
       }
     }
   }
+  
+  .grecaptcha-badge {
+    ${tw`invisible`};
+  }
 `;
 
 const GlobalStyles = () => {
-  const { closeNavbar } = useToggleNavbar();
   const { routes } = useRoute();
 	useScrollToElement();
   useLazyLoader();
@@ -66,7 +68,6 @@ const GlobalStyles = () => {
       <BaseStyles />
       <Global styles={customStyles} />
       {showScrollToTopController && <ScrollToTopController />}
-      <Overlay onClick={closeNavbar} id="overlay" />
     </>
   );
 };

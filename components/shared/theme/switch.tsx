@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setTheme, setIsSystemTheme } from './reducer';
 import useClickAway from '@/hooks/click-away';
 import { Themes } from '@/types';
+import useRoute from '@/hooks/route';
 
 const ThemeSwitch = () => {
   const { isSystemTheme, theme } = useAppSelector((state) => state.theme);
@@ -14,6 +15,7 @@ const ThemeSwitch = () => {
   const themeSwitchRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
+  const { pathname } = useRoute();
   
   const activeThemeClass = {
     light: !isSystemTheme && theme === 'light' ? 'active' : '',
@@ -56,7 +58,7 @@ const ThemeSwitch = () => {
 
   useEffect(() => {
     applyTheme();
-  }, []);
+  }, [pathname]);
 
   return (
     <ThemeWrapper ref={themeSwitchContainerRef}>

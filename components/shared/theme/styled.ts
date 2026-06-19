@@ -23,7 +23,7 @@ export const DarkThemeIconWrapper = styled.svg`
 `;
 
 export const ThemeWrapper = styled.div` 
-  ${tw`relative z-20 md:bg-transparent flex items-center w-auto transition-all ease-in-out duration-500`};
+  ${tw`relative md:order-2 z-20 md:bg-transparent flex items-center w-auto transition-all ease-in-out duration-500`};
   
   .inner {
     ${tw`flex items-center dark:bg-dark-mode-secondary bg-white px-2 rounded-lg py-1`};

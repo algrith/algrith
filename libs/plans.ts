@@ -1,4 +1,4 @@
-import { Addon, Plan } from '@/types';
+import { Addon, Plan, Plans } from '@/types';
 
 export const addons: Array<Addon> = [
   {
@@ -51,7 +51,7 @@ export const plans: Array<Plan> = [
     one_time_payment: true,
     action: 'Get Started',
     most_popular: false,
-    name: 'Starter',
+    name: Plans.STARTER,
     price: 499,
     features: [
       'Up to 5 pages (Home, About, Services, Contact, Blog)',
@@ -67,8 +67,8 @@ export const plans: Array<Plan> = [
     description: 'Growing businesses that need a powerful, conversion-focused website.',
     one_time_payment: true,
     action: 'Get Started',
+    name: Plans.BUSINESS,
     most_popular: true,
-    name: 'Business',
     price: 1199,
     features: [
       'Includes everything in Started, plus:',
@@ -84,9 +84,9 @@ export const plans: Array<Plan> = [
   },
   {
     description: 'Established businesses needing a full-featured, high-performance web presence.',
+    name: Plans.PROFESSIONAL,
     one_time_payment: true,
     action: 'Get Started',
-    name: 'Professional',
     most_popular: false,
     price: 2499,
     features: [
@@ -106,8 +106,8 @@ export const plans: Array<Plan> = [
     description: 'Large organizations, SaaS products, and complex platforms requiring scalable',
     action: 'Book a Session',
     one_time_payment: false,
+    name: Plans.ENTERPRISE,
     most_popular: false,
-    name: 'Enterprise',
     price: 0,
     features: [
       'Includes everything in Professional, plus:',

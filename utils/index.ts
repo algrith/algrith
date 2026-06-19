@@ -31,6 +31,11 @@ export const getFileFormData = async (fileObject: Attachment | File, dirName: st
   return formData;
 };
 
+export const roundNumber = (value: number, decimalPlaces: number = 2): number => {
+  const factor = 10 ** decimalPlaces;
+  return Math.round(value * factor) / factor;
+};
+
 export const formatCurrency = (value?: number | string, currency = 'USD') => {
 	if (typeof value === 'string') return value;
 	return new Intl.NumberFormat('en-US', {

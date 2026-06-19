@@ -40,7 +40,7 @@ const TableOfContent = ({ targetRef, items }: TableOfContentProps) => {
 
   return (
     <TableOfContentWrapper>
-      <Overlay onClick={toggleTableOfContent} className={showOverlay ? 'open' : 'closed'} />
+      {showOverlay && <Overlay onClick={toggleTableOfContent} />}
 
       <div className={className}>
         <h2>Table of Content</h2>

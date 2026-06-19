@@ -4,6 +4,7 @@ import { MoreOutlined } from '@ant-design/icons';
 import Dropdown from 'antd/es/dropdown/dropdown';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import capitalize from 'lodash/capitalize';
 import { useEffect } from 'react';
 import { MenuProps } from 'antd';
 
@@ -25,7 +26,7 @@ const Orders = () => {
   const isAdmin = session?.user.role === 'admin';
   const columns: ColumnsType<OrderModel> = [
     {
-      render: (plan) => plan?.name || '-',
+      render: (plan) => capitalize(plan?.name || '-'),
       dataIndex: 'plan',
       title: 'Package',
       key: 'plan'
