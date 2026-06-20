@@ -432,7 +432,7 @@ export const TableWrapper = styled(Table)`
 `;
 
 export const SiderWrapper = styled(Sider)`
-  ${tw`relative min-h-full max-h-full overflow-y-auto duration-500`};
+  ${tw`relative min-h-full max-h-full overflow-y-auto duration-500 overscroll-contain`};
   background: rgb(var(--colors-theme-secondary-bg))!important;
   min-width: 20% !important;
 
@@ -545,14 +545,14 @@ export const StatusWrapper = styled.div`
 `;
 
 export const NavbarWrapper = styled.nav`
-	${tw`flex items-center relative lg:order-1 overscroll-contain`};
+	${tw`flex items-center relative lg:order-1`};
 	
 	&.open .wrapper {
 		${tw`right-0 lg:right-auto backdrop-blur-lg`};
 	}
 	
 	.wrapper {
-		${tw`transition-all z-50 ease-in-out duration-500 shadow lg:shadow-none bg-white lg:bg-transparent dark:bg-transparent fixed lg:relative top-0 -right-full lg:right-auto flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center w-10/12 md:w-5/12 lg:w-auto h-[100dvh] lg:h-auto text-gray-600 overscroll-contain`};
+		${tw`transition-all z-50 ease-in-out duration-500 shadow lg:shadow-none bg-white lg:bg-transparent dark:bg-transparent fixed lg:relative top-0 -right-full lg:right-auto flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center w-10/12 md:w-5/12 lg:w-auto h-[100dvh] lg:h-auto text-gray-600 overflow-y-auto overscroll-contain`};
 
 		@media (min-width: 1024px) {
 			background-image: none !important;
@@ -757,7 +757,7 @@ export const EmptyWrapper = styled.div`
 `;
 
 export const Overlay = styled.div`
-	${tw`fixed inset-0 z-[21] bg-black/60 h-screen w-screen overscroll-contain`};
+	${tw`fixed inset-0 z-[21] bg-black/60 h-screen w-screen overflow-hidden overscroll-contain`};
 `;
 
 export const borderCss = css`
