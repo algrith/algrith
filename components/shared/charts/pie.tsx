@@ -16,7 +16,9 @@ const PieChart = ({ angleField, title, unit, ...props }: Partial<PieConfig & { u
     angleField: angleField || 'value',
     colorField: 'name',
     innerRadius: 0.66,
+    autoFit: true,
     legend: false,
+    padding: 15,
     height: 300,
     width: 300,
     tooltip: {
