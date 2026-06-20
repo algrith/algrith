@@ -95,9 +95,9 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <header>
+        {/* <header>
           <h1>Order Summary by Plan</h1>
-        </header>
+        </header> */}
         
         <Cards className={`cols-${orderPlansAnalytics.length}`}>
           {orderPlansAnalytics.map((item) => (

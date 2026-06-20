@@ -1,32 +1,41 @@
 'use client';
 
-import { ConfigProvider, Pie, PieConfig } from '@ant-design/plots';
+import { Pie, PieConfig } from '@ant-design/plots';
 import { useAppSelector } from '@/store/hooks';
 import { ChartWrapper } from './styled';
 import { BaseObject } from '@/types';
 
 const PieChart = ({ angleField, title, unit, ...props }: Partial<PieConfig & { unit?: string; }>) => {
   const { theme } = useAppSelector((state) => state.theme);
+
+  const themeStyle = {
+    fill: theme === 'dark' ? 'white' : 'rgb(0 0 0/.9)'
+  };
+
   const config: PieConfig = {
     angleField: angleField || 'value',
     colorField: 'name',
     innerRadius: 0.66,
     legend: false,
     height: 300,
-    width: 300,
     tooltip: {
-      valueFormatter: (d: string) => `${d}%`,
+      valueFormatter: (d: string) => `${d}${unit}`,
       field: 'value',
       name: ''
     },
     labels: [
       {
-        style: { fontWeight: 'bold', fontSize: 10, dy: -8 },
-        text: (d: BaseObject) => d.value ? d.name : ''
+        text: (d: BaseObject) => d.value ? d.name : '',
+        style: {
+          fontWeight: 'bold',
+          ...themeStyle,
+          fontSize: 13,
+          dy: -8
+        }
       },
       {
         text: (d: BaseObject) => d.value ? `${d.value}${unit}` : '',
-        style: { fontSize: 14, dy: 9 }
+        style: { ...themeStyle, fontSize: 14, dy: 9 }
       }
     ],
     style: {
@@ -44,15 +53,13 @@ const PieChart = ({ angleField, title, unit, ...props }: Partial<PieConfig & { u
   };
 
   return (
-    <ConfigProvider common={{ theme }}>
-      <ChartWrapper>
-        {title && <h2>{title}</h2>}
+    <ChartWrapper>
+      {title && <h2>{title}</h2>}
 
-        <div className="container">
-          <Pie {...config} />
-        </div>
-      </ChartWrapper>
-    </ConfigProvider>
+      <div className="container">
+        <Pie {...config} />
+      </div>
+    </ChartWrapper>
   );
 };
 
