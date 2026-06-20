@@ -18,6 +18,7 @@ const PieChart = ({ angleField, title, unit, ...props }: Partial<PieConfig & { u
     innerRadius: 0.66,
     legend: false,
     height: 300,
+    width: 300,
     tooltip: {
       valueFormatter: (d: string) => `${d}${unit}`,
       field: 'value',

@@ -6,7 +6,7 @@ export const ChartWrapper = styled.div`
   ${borderCss};
   
   .container {
-    ${tw`w-full flex flex-col items-center justify-center`};
+    ${tw`w-full flex flex-col items-center justify-center overflow-hidden`};
   }
   
   h2 {
