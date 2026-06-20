@@ -151,6 +151,17 @@ const callbacks: NextAuthConfig['callbacks'] = {
   }
 };
 
+const cookies: NextAuthConfig['cookies'] = {
+  sessionToken: {
+    options: {
+      secure: inProduction,
+      sameSite: 'lax',
+      httpOnly: true,
+      path: '/'
+    },
+  },
+};
+
 const pages = {
   signOut: '/auth/sign-out',
   signIn: '/auth',
@@ -162,5 +173,6 @@ export const { handlers, signOut, signIn, auth } = NextAuth({
   session: { strategy: 'jwt' },
   callbacks,
   providers,
+  cookies,
   pages
 });

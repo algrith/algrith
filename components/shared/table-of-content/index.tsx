@@ -1,17 +1,17 @@
 import { useEffect, useState } from 'react';
 
+import useWindowDimensions from '@/hooks/viewport';
 import { TableOfContentWrapper } from './styled';
 import useClassName from '@/hooks/class-name';
 import { TableOfContentProps } from '@/types';
 import { Overlay } from '../layout/styled';
-import useViewport from '@/hooks/viewport';
 import Toggler from '../layout/toggler';
 import Link from '../button/link';
 
 const TableOfContent = ({ targetRef, items }: TableOfContentProps) => {
   const [activeItemId, setActiveItemId] = useState(items[0]?.id);
+  const { viewport } = useWindowDimensions();
   const [show, setShow] = useState(false);
-  const { viewport } = useViewport();
 
   const showOverlay = ['md', 'sm'].includes(viewport) && show;
   

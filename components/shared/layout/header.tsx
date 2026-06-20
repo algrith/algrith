@@ -2,14 +2,15 @@
 
 import { Avatar, Badge, MenuProps, Dropdown } from 'antd';
 import { CommentOutlined } from '@ant-design/icons';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signOut } from 'next-auth/react';
 
-import useResizeHeaderOnScroll from '@/hooks/resize-header-on-scroll';
 import { HeaderWrapper } from '@/components/shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { setShowConversations } from '../chats/reducer';
 import Link from '@/components/shared/button/link';
+import useWindowDimensions from '@/hooks/viewport';
 import useClassName from '@/hooks/class-name';
 import ThemeSwitch from '../theme/switch';
 import UserAvatar from '../avatar/user';
@@ -21,10 +22,12 @@ import Navbar from './navbar';
 const Header = () => {
   const { conversations: { total_unread }, showConversations } = useAppSelector((state) => state.chat);
   const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
+  const { isRouteChanged, pathname, routes } = useRoute();
+  const [openNavbar, setOpenNavbar] = useState(false);
+  const [isScrolled, setScrolled] = useState(false);
+  const { dimensions } = useWindowDimensions();
   const dispatch = useAppDispatch();
-  const { routes } = useRoute();
   const router = useRouter();
-  useResizeHeaderOnScroll();
   
 	const accountMenuItems: MenuProps['items'] = [
     {
@@ -40,16 +43,49 @@ const Header = () => {
 		}
   ];
 
+  const resizeHeaderOnScroll = () => {
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+      setScrolled(true);
+    } else {
+      setScrolled(false);
+    }
+  };
+
   const className = useClassName([
-    (routes.isDashboard || routes.auth) ? 'wide' : ''
+    (routes.isDashboard || routes.auth) ? 'wide' : '',
+    !openNavbar ? (isScrolled ? 'scrolled' : '') : ''
   ]);
 
   const openChatWidget = () => {
     dispatch(setShowConversations(!showConversations));
   };
+
+  const toggleNavbar = () => {
+		setOpenNavbar(!openNavbar);
+	};
+
+	const closeNavbar = () => {
+		setOpenNavbar(false);
+	};
+
+  useEffect(() => {
+    window.addEventListener('scroll', resizeHeaderOnScroll);
+    resizeHeaderOnScroll();
+
+    return () => {
+      window.removeEventListener('scroll', resizeHeaderOnScroll);
+    }
+  }, []);
+
+  useEffect(() => {
+		closeNavbar();
+	}, [
+    dimensions.width,
+    isRouteChanged
+  ]);
   
   return (
-    <HeaderWrapper id="header" className={className}>
+    <HeaderWrapper className={className}>
       <div id="brand">
         <Link id="brand-title" href="/">
           <Avatar src={assets.brand.logos.white} className="dark" alt="algrith_logo" />
@@ -77,7 +113,13 @@ const Header = () => {
           </div>
         )}
 
-        <Navbar />
+        {!routes.auth && (
+          <Navbar
+            toggleNavbar={toggleNavbar}
+            pathname={pathname}
+            open={openNavbar}
+          />
+        )}
       </div>
     </HeaderWrapper>
   );

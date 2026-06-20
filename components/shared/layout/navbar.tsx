@@ -1,15 +1,12 @@
 'use client';
 
 import { CloseOutlined, FacebookFilled, LinkedinFilled, MenuOutlined, XOutlined } from '@ant-design/icons';
-import { useEffect, useState } from 'react';
 import { Avatar } from 'antd';
 
 import { MenuButton, NavbarWrapper, Overlay } from './styled';
 import Link from '@/components/shared/button/link';
 import { useAppSelector } from '@/store/hooks';
-import useViewport from '@/hooks/viewport';
 import { assets } from '@/libs/assets';
-import useRoute from '@/hooks/route';
 
 const socials = [
 	{
@@ -34,34 +31,19 @@ const links = [
 	{ text: 'Contact', href: '/contact-us' }
 ];
 
-const Navbar = () => {
+const Navbar = (props: { toggleNavbar?: () => void; pathname: string; open?: boolean; }) => {
 	const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
-	const [visibilityClass, setVisibilityClass] = useState('');
-  const { isRouteChanged, pathname, routes } = useRoute();
-  const { dimensions } = useViewport();
+	const { toggleNavbar, pathname, open } = props;
+  const visibilityClass = open ? 'open' : '';
 
 	const getClassName = (path: string) => [
 		pathname === path ? 'active' : '',
 		'ripple-node',
 	].filter(Boolean).join(' ');
 
-	const toggleNavbar = () => {
-		setVisibilityClass(!visibilityClass ? 'open' : '');
-	};
-
-	const closeNavbar = () => {
-		setVisibilityClass('');
-	};
-
-	useEffect(() => {
-		closeNavbar();
-	}, [isRouteChanged, dimensions]);
-	
-  if (routes.auth) return null;
-
 	return (
-		<NavbarWrapper id="navbar" className={visibilityClass}>
-			{visibilityClass && <Overlay onClick={closeNavbar} />}
+		<NavbarWrapper className={visibilityClass}>
+			{visibilityClass && <Overlay onClick={toggleNavbar} />}
 			
 			<MenuButton
 				prependedIcon={visibilityClass ? <CloseOutlined /> : <MenuOutlined />}

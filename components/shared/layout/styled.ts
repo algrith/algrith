@@ -184,10 +184,6 @@ export const HeaderWrapper = styled(Header)`
 		
 		.right {
 			${tw`origin-right scale-85`};
-
-			#navbar {
-				${tw`scale-[1.176]`};
-			}
 		}
 		
 		#brand {
@@ -225,7 +221,7 @@ export const HeaderWrapper = styled(Header)`
 	
 	.right {
 		${tw`flex gap-4 items-center justify-end transition-all duration-500`};
-
+		
 		.user {
 			${tw`flex items-center gap-4 md:order-3`};
 
@@ -552,11 +548,11 @@ export const NavbarWrapper = styled.nav`
 	${tw`flex items-center relative lg:order-1`};
 	
 	&.open .wrapper {
-		${tw`right-0 lg:right-auto backdrop-blur-lg`};
+		${tw`right-0 lg:right-auto bg-white dark:bg-transparent backdrop-blur-lg w-10/12`};
 	}
 	
 	.wrapper {
-		${tw`transition-all z-50 ease-in-out duration-500 shadow lg:shadow-none bg-white lg:bg-transparent dark:bg-transparent fixed lg:relative top-0 -right-full lg:right-auto flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center w-10/12 md:w-5/12 lg:w-auto h-[100dvh] lg:h-auto text-gray-600 overflow-y-auto overscroll-contain`};
+		${tw`w-0 lg:w-auto h-[100dvh] lg:h-auto z-50 fixed lg:relative top-0 -right-full lg:right-auto flex flex-col lg:flex-row justify-between lg:justify-end lg:items-center text-gray-600 overflow-y-auto overscroll-contain transition-all ease-in-out duration-500 shadow lg:shadow-none`};
 
 		@media (min-width: 1024px) {
 			background-image: none !important;

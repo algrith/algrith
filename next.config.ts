@@ -8,13 +8,13 @@ export default removeImports()(
     productionBrowserSourceMaps: true,
     reactStrictMode: false,
     output: 'standalone',
-    turbopack: {
-      root: path.join(__dirname, '.')
-    },
     experimental: {
       serverActions: {
         bodySizeLimit: '200mb'
       }
+    },
+    turbopack: {
+      root: path.join(__dirname, '.')
     }
   })
 );
