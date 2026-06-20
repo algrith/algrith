@@ -57,11 +57,11 @@ const Header = () => {
         </Link>
       </div>
 
-      <div className="controls">
+      <div className="right">
         <ThemeSwitch />
 
         {(!routes.auth && authUser) && (
-          <div className="user-controls">
+          <div className="user">
             <Badge className="chat-icon" count={total_unread} size="small" dot>
               <Button
                 prependedIcon={<CommentOutlined />}

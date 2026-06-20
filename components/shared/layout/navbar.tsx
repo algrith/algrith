@@ -37,8 +37,7 @@ const links = [
 const Navbar = () => {
 	const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
 	const [visibilityClass, setVisibilityClass] = useState('');
-  const { pathname, routes } = useRoute();
-  const { isRouteChanged } = useRoute();
+  const { isRouteChanged, pathname, routes } = useRoute();
   const { dimensions } = useViewport();
 
 	const getClassName = (path: string) => [

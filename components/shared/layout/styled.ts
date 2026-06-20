@@ -182,9 +182,9 @@ export const HeaderWrapper = styled(Header)`
 	&.scrolled {
 		${tw`h-[3rem] shadow-lg backdrop-blur-lg`};
 		
-		.controls {
-			${tw`origin-right scale-85`};
-		}
+		// .right {
+		// 	${tw`origin-right scale-85`};
+		// }
 		
 		#brand {
 			${tw`origin-left scale-[0.7]`};
@@ -219,10 +219,10 @@ export const HeaderWrapper = styled(Header)`
 		}
 	}
 	
-	.controls {
+	.right {
 		${tw`flex gap-4 items-center justify-end transition-all duration-500`};
 
-		.user-controls {
+		.user {
 			${tw`flex items-center gap-4 md:order-3`};
 
 			.ant-avatar .anticon {
