@@ -94,7 +94,7 @@ export const MessageWrapper = styled.div`
 `;
 
 export const ChatsWrapper = styled.div`
-  ${tw`!fixed z-1 w-full md:w-96 rounded-t-xl -bottom-full md:-bottom-112 left-0 md:left-auto md:right-8 bg-white dark:bg-gray-900 shadow-lg transition-all duration-500`};
+  ${tw`!fixed z-[21] w-full md:w-96 rounded-t-xl -bottom-full md:-bottom-112 left-0 md:left-auto md:right-8 bg-white dark:bg-gray-900 shadow-lg transition-all duration-500`};
   ${squareWaves()};
   
   &.loading .conversations {
@@ -138,7 +138,7 @@ export const ChatWrapper = styled.div`
   }
 
   .messages {
-    ${tw`flex flex-col gap-3 w-full h-full p-4 overflow-y-auto`};
+    ${tw`flex flex-col gap-3 w-full h-full p-4 overflow-y-auto overscroll-contain`};
   }
   
   .input {

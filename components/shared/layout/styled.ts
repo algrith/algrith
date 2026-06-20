@@ -757,7 +757,7 @@ export const EmptyWrapper = styled.div`
 `;
 
 export const Overlay = styled.div`
-	${tw`fixed inset-0 z-[21] bg-black/60 h-screen w-screen overflow-hidden overscroll-contain`};
+	${tw`fixed inset-0 z-[21] bg-black/60 h-[100dvh] w-screen overflow-hidden overscroll-contain`};
 `;
 
 export const borderCss = css`

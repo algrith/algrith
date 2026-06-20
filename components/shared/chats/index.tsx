@@ -13,10 +13,10 @@ import { ChatsWrapper, ChatWrapper, MessageWrapper, ConversationWrapper } from '
 import { getDateFormat, getFileFormData, randomId } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import useScrollToLastChild from '@/hooks/scroll-to-view';
+import { EmptyWrapper, Overlay } from '../layout/styled';
 import { TextArea } from '@/components/shared/input';
 import { FileUploadButton } from '../input/file';
 import Button from '@/components/shared/button';
-import { EmptyWrapper } from '../layout/styled';
 import useClassName from '@/hooks/class-name';
 import Prompt from '../feedback/prompt';
 import useRoute from '@/hooks/route';
@@ -217,62 +217,66 @@ const Chats = () => {
   if (routes.auth || !authUser) return null;
 
   return (
-    <ChatsWrapper className={className}>
-      <div className="header" onClick={toggleChatsWidget}>
-        {conversation ? (
-          <>
-            <Conversation conversation={conversation} inChatHeader />
+    <>
+      {showConversations && <Overlay onClick={toggleChatWidget} />}
 
-            <div className="controls">
-              <Button
-                icon={isMinimized ? <ArrowsAltOutlined /> : <MinusOutlined />}
-                onClick={toggleChatWidget}
+      <ChatsWrapper className={className}>
+        <div className="header" onClick={toggleChatsWidget}>
+          {conversation ? (
+            <>
+              <Conversation conversation={conversation} inChatHeader />
+
+              <div className="controls">
+                <Button
+                  icon={isMinimized ? <ArrowsAltOutlined /> : <MinusOutlined />}
+                  onClick={toggleChatWidget}
+                />
+                
+                <Button
+                  onClick={closeChatWidget}
+                  icon={<CloseOutlined />}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              Chats
+              {Boolean(total_unread) && <Badge count={total_unread} />}
+            </>
+          )}
+        </div>
+
+        <div className="conversations">
+          {conversation ? (
+            <Chat />
+          ) : loading ? (
+            <Spin />
+          ) : Boolean(conversations.length) ? (
+            conversations.map((conversation, index) => (
+              <Conversation
+                conversation={conversation}
+                key={conversation.id}
+                index={index}
               />
+            ))
+          ) : (
+            <EmptyWrapper>
+              <p>
+                You do not have any conversations yet!
+                <br />
+                Start a conversation for this order.
+              </p>
               
-              <Button
-                onClick={closeChatWidget}
-                icon={<CloseOutlined />}
-              />
-            </div>
-          </>
-        ) : (
-          <>
-            Chats
-            {Boolean(total_unread) && <Badge count={total_unread} />}
-          </>
-        )}
-      </div>
-
-      <div className="conversations">
-        {conversation ? (
-          <Chat />
-        ) : loading ? (
-          <Spin />
-        ) : Boolean(conversations.length) ? (
-          conversations.map((conversation, index) => (
-            <Conversation
-              conversation={conversation}
-              key={conversation.id}
-              index={index}
-            />
-          ))
-        ) : (
-          <EmptyWrapper>
-            <p>
-              You do not have any conversations yet!
-              <br />
-              Start a conversation for this order.
-            </p>
-            
-            {routes.order && (
-              <Button onClick={handleSetupOrderChat} type="primary" size="small">
-                Create Chat
-              </Button>
-            )}
-          </EmptyWrapper>
-        )}
-      </div>
-    </ChatsWrapper>
+              {routes.order && (
+                <Button onClick={handleSetupOrderChat} type="primary" size="small">
+                  Create Chat
+                </Button>
+              )}
+            </EmptyWrapper>
+          )}
+        </div>
+      </ChatsWrapper>
+    </>
   );
 };
 

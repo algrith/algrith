@@ -264,7 +264,7 @@ export const PingAnimationWrapper = styled.div`
 `;
 
 export const WelcomeIntroWrapper = styled.div`
-  ${tw`relative flex justify-center items-center w-screen h-screen xl:bg-fixed px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144 bg-transparent z-1`};
+  ${tw`relative flex justify-center items-center w-screen h-[100dvh] xl:bg-fixed px-6 md:px-12 lg:px-16 xl:px-24 2xl:px-144 bg-transparent z-1`};
 
   .inner {
     ${tw`relative h-full w-full flex flex-col justify-center items-center`};
