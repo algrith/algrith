@@ -60,7 +60,7 @@ const Navbar = () => {
   if (routes.auth) return null;
 
 	return (
-		<NavbarWrapper className={visibilityClass}>
+		<NavbarWrapper id="navbar" className={visibilityClass}>
 			{visibilityClass && <Overlay onClick={closeNavbar} />}
 			
 			<MenuButton

@@ -182,9 +182,13 @@ export const HeaderWrapper = styled(Header)`
 	&.scrolled {
 		${tw`h-[3rem] shadow-lg backdrop-blur-lg`};
 		
-		// .right {
-		// 	${tw`origin-right scale-85`};
-		// }
+		.right {
+			${tw`origin-right scale-85`};
+
+			#navbar {
+				${tw`scale-[1.176]`};
+			}
+		}
 		
 		#brand {
 			${tw`origin-left scale-[0.7]`};
