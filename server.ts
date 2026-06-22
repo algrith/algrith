@@ -7,7 +7,7 @@ import { inProduction } from '@/utils/server';
 import { initSocket } from '@/libs/socket';
 
 const port = parseInt(process.env.PORT || '3000', 10);
-const hostname = 'localhost';
+const hostname = '0.0.0.0';
 const dev = !inProduction;
 
 const app = next({ dev, hostname, port });
