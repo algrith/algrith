@@ -219,7 +219,6 @@ userSchema.pre('deleteOne', { document: true, query: false }, async function () 
   await Order.deleteMany({ user: this._id });
 });
 
-ConversationSchema.index({ order: 1 }, { unique: true, sparse: true });
 ConversationSchema.index({ 'participants.user': 1, updatedAt: -1 });
 MessageSchema.index({ conversation: 1, createdAt: 1 });
 

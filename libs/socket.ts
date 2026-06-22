@@ -1,19 +1,13 @@
 import { verifyToken } from '@/utils/tokens';
 import { Server } from 'socket.io';
 
-let io: Server;
-
 export const initSocket = (server: Server) => {
-  if (io) return io;
+  if (globalThis.__io) return globalThis.__io;
 
   server.use(async (socket, next) => {
     const token = socket.handshake.auth.token;
-    
-    if (!token) {
-      return next(new Error('Unauthorized'));
-    }
-    console.log('SOCKET TOKEN: ', token);
-    
+    if (!token) return next(new Error('Unauthorized'));
+
     const payload = await verifyToken(token);
     socket.data.user = payload;
     next();
@@ -23,38 +17,30 @@ export const initSocket = (server: Server) => {
     const user = socket.data.user;
     socket.join(`user:${user.id}`);
 
-    socket.on('conversation:leave', (conversationId: string) => {
-      socket.leave(conversationId);
-    });
-    
-    socket.on('conversation:join', (conversationId: string) => {
-      socket.join(conversationId);
-    });
+    socket.on('conversation:leave', (conversationId: string) => socket.leave(conversationId));
+    socket.on('conversation:join',  (conversationId: string) => socket.join(conversationId));
 
     socket.on('typing:start', (conversationId: string) => {
       socket.to(conversationId).emit('typing:start', {
         conversationId,
-        user: {
-          name: user.name,
-          _id: user.id
-        }
+        user: { name: user.name, id: user.id }
       });
     });
 
     socket.on('typing:stop', (conversationId: string) => {
       socket.to(conversationId).emit('typing:stop', {
-        userId: user.id,
-        conversationId
+        conversationId,
+        userId: user.id
       });
     });
 
     socket.on('disconnect', () => {
-      console.log('Socket connection disconnected!');
+      console.log('Socket disconnected:', user.id);
     });
   });
 
-  io = server;
+  globalThis.__io = server;
   return server;
 };
 
-export const getSocket = (): Server | null => io;
+export const getSocket = (): Server | null => globalThis.__io ?? null;

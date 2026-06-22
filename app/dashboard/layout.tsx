@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     <DashboardWrapper>
       <DashboardSidebar />
 
-      <div className="main-view">
+      <div className="container">
         {children}
       </div>
       

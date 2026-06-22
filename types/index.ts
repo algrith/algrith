@@ -5,6 +5,7 @@ import { SizeType } from 'antd/es/config-provider/SizeContext';
 import { FontOption } from '@/components/shared/input/fonts';
 import { LinkProps as NextLinkProps } from 'next/link';
 import { TypeOpen } from 'antd/es/message/interface';
+import { Server } from 'socket.io';
 import { User } from 'next-auth';
 
 export type AuthTypes = 'signIn' | 'signUp' | 'forgotPassword' | 'passwordReset' | 'emailVerification' | 'resendVerification';
@@ -502,4 +503,6 @@ declare global {
 		};
 		typingTimeout: NodeJS.Timeout;
 	}
+	
+	var __io: Server | undefined;
 };

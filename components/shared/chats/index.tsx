@@ -19,6 +19,7 @@ import { FileUploadButton } from '../input/file';
 import Button from '@/components/shared/button';
 import useClassName from '@/hooks/class-name';
 import Prompt from '../feedback/prompt';
+import useSocket from '@/hooks/socket';
 import useRoute from '@/hooks/route';
 import { Fetch } from '@/utils/api';
 import Link from '../button/link';
@@ -82,9 +83,8 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
 const Message = ({ message }: { message: MessageModel }) => {
   const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
   const sender = (message.sender.user as User);
-
   const isSender = sender?.id === authUser?.id;
-
+  
   const statusIcon = {
     failed: <ExclamationCircleOutlined />,
     delivered: <CheckOutlined />,
@@ -184,6 +184,7 @@ const Chats = () => {
   const { data: conversation } = rest.conversation;
   const dispatch = useAppDispatch();
   const { routes } = useRoute();
+  useSocket();
   
   const isMinimized = conversation && !showConversations;
 
@@ -342,7 +343,7 @@ const Chat = () => {
     if (!authUser) return;
 
     let newMessage = {
-      sender: { role, authUser },
+      sender: { role, user: authUser },
       ...message
     } as MessageModel;
     

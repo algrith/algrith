@@ -111,8 +111,9 @@ export const createMessage = async (user: User, conversationId: string, payload:
   });
   
   const populated = await message.populate('sender.user', 'name email role');
+
   const socket = getSocket();
   socket?.to(conversation.id).emit('message:new', populated);
-
+  
   return { ...populated.toJSON(), temp_id } as MessageModel;
 };

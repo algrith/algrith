@@ -20,6 +20,7 @@ const appUrl = process.env.NEXT_PUBLIC_APP_URL;
 
 export const viewport: Viewport = {
   width: 'device-width',
+  viewportFit: 'cover',
   initialScale: 1,
   maximumScale: 1,
   themeColor: [
