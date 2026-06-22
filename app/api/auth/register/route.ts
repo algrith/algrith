@@ -26,7 +26,7 @@ const registerUser = async (user: Partial<AuthState['model']>) => {
     auth_provider: 'email'
   });
 
-  const { access_token } = await generateTokens({ id: newUser.id });
+  const { access_token } = await generateTokens({ id: newUser.id, name: newUser.name });
   const hashedToken = crypto.createHash('sha256').update(access_token).digest('hex');
   
   await Token.create({

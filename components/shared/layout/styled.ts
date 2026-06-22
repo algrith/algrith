@@ -2,9 +2,9 @@
 
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import tw, { css, styled } from 'twin.macro';
+import { Layout, Modal, Table } from 'antd';
 import { keyframes } from '@emotion/react';
 import Sider from 'antd/es/layout/Sider';
-import { Layout, Table } from 'antd';
 import Button from '../button';
 
 export const squareWaves = (inverse: boolean = false, height = '') => css`
@@ -481,6 +481,32 @@ export const SiderWrapper = styled(Sider)`
         ${tw`items-center`};
       }
     }
+  }
+`;
+
+export const ModalWrapper = styled(Modal)`
+  .ant-modal-content {
+    ${darkBgGradient.fourLayers};
+  }
+  
+  .ant-modal-header {
+    ${tw`dark:bg-transparent backdrop-blur-lg`};
+  }
+  
+  .ant-modal-close {
+    ${tw`dark:text-white`};
+  }
+
+  .ant-modal-body {
+    ${tw`min-h-96 max-h-[80dvh] overflow-y-auto`};
+    
+    .content {
+      ${tw`flex flex-col gap-12 pt-4 text-gray-500 dark:text-gray-400 font-bold tracking-wide`};
+    }
+  }
+
+  .ant-modal-title {
+    ${tw`font-bold text-3xl pr-8 dark:text-gray-300`};
   }
 `;
 

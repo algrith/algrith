@@ -1,10 +1,11 @@
 'use client';
 
-import { MoreOutlined } from '@ant-design/icons';
+import { BookOutlined, MoreOutlined } from '@ant-design/icons';
 import Dropdown from 'antd/es/dropdown/dropdown';
 import { useRouter } from 'next/navigation';
 import capitalize from 'lodash/capitalize';
 import { useEffect } from 'react';
+import { User } from 'next-auth';
 import { MenuProps } from 'antd';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
@@ -15,6 +16,7 @@ import { ColumnsType } from 'antd/es/table';
 import { MainViewWrapper } from './styled';
 import { getDateFormat } from '@/utils';
 import { fetchOrders } from './slices';
+import Button from '../shared/button';
 
 const Orders = () => {
   const { profile: { data: authUser }, orders } = useAppSelector((state) => state.dashboard);
@@ -40,6 +42,12 @@ const Orders = () => {
       dataIndex: 'paid_at',
       key: 'paid_at',
       title: 'Date'
+    },
+    {
+      render: (assignees) => assignees?.map((assignee: User) => assignee.name).join(', ') || '-',
+      dataIndex: 'assignees',
+      title: 'Assigned',
+      key: 'assigned'
     },
     {
       render: (addons) => addons?.map((addon: Addon) => addon.text).join(', ') || '-',
@@ -98,6 +106,10 @@ const Orders = () => {
     }
   };
 
+  const createOrder = () => {
+    router.push('/pricing');
+  };
+
   useEffect(() => {
     dispatch(fetchOrders());
   }, []);
@@ -106,6 +118,10 @@ const Orders = () => {
     <MainViewWrapper>
       <header>
         <h1>Orders</h1>
+        
+        <Button onClick={createOrder} icon={<BookOutlined />} type="primary" size="small" rounded>
+          Create Order
+        </Button>
       </header>
 
       <div className="content">

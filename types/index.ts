@@ -92,6 +92,12 @@ export interface CustomNotificationProps {
 	type: string;
 };
 
+export interface ConversationParticipant {
+	role: 'customer' | 'moderator' | 'admin' | 'system';
+	user: User | string;
+	last_read?: string;
+};
+
 export interface FilesGroupHeaderProps {
   groupType: keyof GroupedFiles;
   hasMultipleGroups: boolean;
@@ -286,16 +292,12 @@ export interface ContactModel {
 };
 
 export interface Conversation {
-	order: OrderModel | string;
+	participants: Array<ConversationParticipant>;
+	order?: OrderModel | string;
 	type: 'order' | 'support';
 	temp_id?: string;
 	active?: boolean;
 	id: string;
-	participants: Array<{
-		role: 'customer' | 'moderator' | 'admin' | 'system';
-		user: User | string;
-		last_read?: string;
-	}>;
 	last_message?: Pick<Message, 'sender' | 'text'> & {
 		createdAt: string
 	};
@@ -321,6 +323,7 @@ export interface AsyncAction {
 
 export interface OrderModel {
 	requirements: OrderRequirements;
+	assignees: Array<User>;
 	addons: 	Array<Addon>;
 	conversation?: string;
 	user?: User | string;
@@ -354,6 +357,7 @@ export interface Attachment {
 export interface ChatState {
 	showConversations: boolean;
 	message: Partial<Message>;
+	showOrdersModal: boolean;
 	orderConversation: {
 		data?: Conversation;
 		loading: boolean;
@@ -373,6 +377,10 @@ export interface ChatState {
 		list: Array<Message>;
 		loading: boolean;
 	};
+  typing?: {
+    conversationId: string;
+		participant: string;
+  };
 };
 
 export interface AuthState {

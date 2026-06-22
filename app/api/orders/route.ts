@@ -3,9 +3,9 @@ import hbs, { NodemailerExpressHandlebarsOptions }  from 'nodemailer-express-han
 import nodemailer from 'nodemailer';
 import path from 'path';
 
+import { Order, User as UserModel } from '@/libs/schema';
 import { authorization } from '@/middleware';
 import { dbConnect } from '@/utils/db';
-import { Order } from '@/libs/schema';
 import { User } from 'next-auth';
 
 const POST = authorization(async (request, ctx, user) => {
@@ -16,8 +16,12 @@ const POST = authorization(async (request, ctx, user) => {
     const userId = user.id as string;
     await dbConnect();
     
+    const admin = await UserModel.findOne({ role: 'admin', is_verified: true });
+    const assignees = admin ? [admin.id] : [];
+
     const result = await Order.create({
       user: userId,
+      assignees,
       ...order
     });
     
@@ -109,8 +113,14 @@ const GET = authorization(async (request, ctx, user) => {
 
 const fetchOrders = async (user: User) => {
   await dbConnect();
-  const options = user.role !== 'admin' ? { user: user.id } : {};
-  return await Order.find(options).sort({ createdAt: -1 });
+  const isStaff = ['admin', 'moderator'].includes(user.role);
+  const options = isStaff ? (
+    user.role === 'moderator' ? { assignees: user.id } : {}
+  ) : {
+    user: user.id
+  };
+  
+  return await Order.find(options).populate('assignees', 'id name email').sort({ createdAt: -1 });
 };
 
 export { POST, GET };

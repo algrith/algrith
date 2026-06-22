@@ -33,6 +33,13 @@ const GET = authorization(async (request, ctx, user) => {
     const params = (await ctx.params) as { userId: string };
     const { userId } = params;
 
+    if (!userId) return Response.json({
+      message: 'User ID missing',
+      code: 'missing_user_id',
+      success: false,
+      data: null
+    }, { status: 400 });
+
     await dbConnect();
     const account = await User.findOne({ _id: userId });
     

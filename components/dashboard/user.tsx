@@ -33,6 +33,7 @@ const User = ({ id }: { id: string }) => {
   };
 
   useEffect(() => {
+    if (!id) return;
     dispatch(fetchOrders(id));
     dispatch(fetchUser(id));
   }, [id]);

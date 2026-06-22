@@ -1,15 +1,16 @@
 'use client';
 
 import { ArrowsAltOutlined, CaretLeftOutlined, CheckOutlined, CloseOutlined, ExclamationCircleOutlined, MinusOutlined, PaperClipOutlined, SendOutlined, UserOutlined } from '@ant-design/icons';
-import { ChangeEvent, FormEvent, useEffect, useRef } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { Avatar, Badge, Spin, Switch, Tooltip } from 'antd';
 import { useRouter } from 'next/navigation';
+import { Socket } from 'socket.io-client';
 import { User } from 'next-auth';
 
+import { resetMessage, setConversation, setMessage, setMessages, setShowConversations, setShowOrdersModal, updateMessage } from './reducer';
 import { createOrderConversation, fetchMessages, fetchConversations, sendMessage, deliverOrder, setupOrderChat } from './slices';
-import { resetMessage, setConversation, setMessage, setMessages, setShowConversations, updateMessage } from './reducer';
 import { Attachment, Conversation as ConversationModel, Message as MessageModel, OrderModel } from '@/types';
-import { ChatsWrapper, ChatWrapper, MessageWrapper, ConversationWrapper } from './styled';
+import { ChatsWrapper, ChatWrapper, MessageWrapper, ConversationWrapper, MetadataWrapper } from './styled';
 import { getDateFormat, getFileFormData, randomId } from '@/utils';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import useScrollToLastChild from '@/hooks/scroll-to-view';
@@ -18,6 +19,7 @@ import { TextArea } from '@/components/shared/input';
 import { FileUploadButton } from '../input/file';
 import Button from '@/components/shared/button';
 import useClassName from '@/hooks/class-name';
+import OrdersModal from './modals/orders';
 import Prompt from '../feedback/prompt';
 import useSocket from '@/hooks/socket';
 import useRoute from '@/hooks/route';
@@ -62,10 +64,12 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
       
       <div className="text" onClick={openOrder}>
         <span className="title">
-          {conversation.type === 'order' ? (
+          {(conversation.type === 'order' && order) ? (
             `${order.plan.name} • #${order.reference}`
-          ) : (
+          ) : conversation.type === 'support' ? (
             `Support • #${order.reference}`
+          ) : (
+            conversation.type 
           )}
         </span>
 
@@ -126,172 +130,17 @@ const Message = ({ message }: { message: MessageModel }) => {
   );
 };
 
-const ConversationTypeStatus = () => {
-  const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
-  const { message, ...chat } = useAppSelector((state) => state.chat);
-  const { data: conversation } = chat.conversation;
-  const order = conversation?.order as OrderModel;
-  const isFiles = message.attachments?.length;
-  const { type } = conversation ?? {};
-  const dispatch = useAppDispatch();
-  
-  const canDeliverOrder = type === 'order' && order?.status === 'pending';
-  const canCloseCase = type === 'support';
-
-  const markOrderAsDelivered = () => {
-    const newMessage = { ...message };
-    if ('metadata' in message) delete newMessage['metadata'];
-    else newMessage.metadata = {
-      order_status_info: `Order delivered by ${authUser?.email}`
-    };
-
-    dispatch(setMessage(newMessage));
-  };
-
-  if (authUser?.role !== 'admin' || (!canDeliverOrder && !canCloseCase)) return null;
-
-  return (
-    <div className="order-delivery">
-      {canDeliverOrder && (
-        <>
-          <small>Mark order as delivered</small>
-          <Prompt
-            description="Do you wish to proceed?"
-            onConfirmed={markOrderAsDelivered}
-            title="Confirm Action"
-            target="deliverOrder"
-          >
-            <Tooltip title={!isFiles ? 'Add files to mark order as delivered' : ''} color="red">
-              <Switch
-                checked={Boolean(message.metadata?.order_status_info)}
-                disabled={!isFiles}
-                size="small"
-              />
-            </Tooltip>
-          </Prompt>
-        </>
-      )}
-      
-      {/* {(type === 'support') && ()} */}
-    </div>
-  );
-};
-
-const Chats = () => {
-  const { profile: { data: authUser }, order: { data: order } } = useAppSelector((state) => state.dashboard);
-  const { showConversations, ...rest } = useAppSelector((state) => state.chat);
-  const { list: conversations, total_unread, loading } = rest.conversations;
-  const { data: conversation } = rest.conversation;
-  const dispatch = useAppDispatch();
-  const { routes } = useRoute();
-  useSocket();
-  
-  const isMinimized = conversation && !showConversations;
-
-  const className = useClassName([
-    showConversations ? 'show' : '',
-    loading ? 'loading' : ''
-  ]);
-  
-  const handleSetupOrderChat = () => {
-    dispatch(setupOrderChat(order, authUser))
-  };
-
-  const toggleChatsWidget = () => {
-    if (conversation) return;
-    dispatch(setShowConversations(!showConversations));
-  };
-
-  const toggleChatWidget = () => {
-    dispatch(setShowConversations(!showConversations));
-  };
-
-  const closeChatWidget = () => {
-    dispatch(setShowConversations(!showConversations));
-    dispatch(setConversation({ data: undefined }));
-  };
-
-  useEffect(() => {
-    if (showConversations) dispatch(fetchConversations());
-  }, [showConversations]);
-
-  if (routes.auth || !authUser) return null;
-
-  return (
-    <>
-      {showConversations && <Overlay onClick={toggleChatWidget} />}
-
-      <ChatsWrapper className={className}>
-        <div className="header" onClick={toggleChatsWidget}>
-          {conversation ? (
-            <>
-              <Conversation conversation={conversation} inChatHeader />
-
-              <div className="controls">
-                <Button
-                  icon={isMinimized ? <ArrowsAltOutlined /> : <MinusOutlined />}
-                  onClick={toggleChatWidget}
-                />
-                
-                <Button
-                  onClick={closeChatWidget}
-                  icon={<CloseOutlined />}
-                />
-              </div>
-            </>
-          ) : (
-            <>
-              Chats
-              {Boolean(total_unread) && <Badge count={total_unread} />}
-            </>
-          )}
-        </div>
-
-        <div className="conversations">
-          {conversation ? (
-            <Chat />
-          ) : loading ? (
-            <Spin />
-          ) : Boolean(conversations.length) ? (
-            conversations.map((conversation, index) => (
-              <Conversation
-                conversation={conversation}
-                key={conversation.id}
-                index={index}
-              />
-            ))
-          ) : (
-            <EmptyWrapper>
-              <p>
-                You do not have any conversations yet!
-                <br />
-                Start a conversation for this order.
-              </p>
-              
-              {routes.order && (
-                <Button onClick={handleSetupOrderChat} type="primary" size="small">
-                  Create Chat
-                </Button>
-              )}
-            </EmptyWrapper>
-          )}
-        </div>
-      </ChatsWrapper>
-    </>
-  );
-};
-
-const Chat = () => {
+const Chat = ({ socket }: { socket: Socket | null }) => {
   const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
   const { message, ...chat } = useAppSelector((state) => state.chat);
   const { loading, list: messages } = chat.messages;
   const { data: conversation } = chat.conversation;
+  const [isTyping, setTyping] = useState(false);
   const isFiles = message.attachments?.length;
   const messagesContainerRef = useRef(null);
+  const role = authUser?.role || 'customer';
   const dispatch = useAppDispatch();
   const disabled = !authUser;
-  
-  const role = authUser?.role || 'customer';
 
   const className = useClassName([
     isFiles ? 'has-files' : '',
@@ -368,7 +217,7 @@ const Chat = () => {
     if (conversation?.id === 'NEW_CONVERSATION') {
       const customerId = (!['moderator', 'admin'].includes(role) ? authUser.id : '') as string;
       return await dispatch(createOrderConversation(
-        conversation.order as string,
+        (conversation.order as OrderModel).id,
         customerId,
         newMessage
       ));
@@ -380,6 +229,8 @@ const Chat = () => {
   const handleChange = (e: ChangeEvent<HTMLElement>) => {
     const { files, value, id } = e.target as HTMLInputElement;
     let newValue = value as string | Array<Attachment>;
+
+    if (id === 'text' && value && !isTyping) setTyping(true);
 
     if (id === 'attachments' && files) {
       const attachments = [...(message?.attachments || [])];
@@ -411,6 +262,10 @@ const Chat = () => {
     dispatch(setMessage({ attachments }));
   };
 
+  const handleBlur = () => {
+    socket?.emit(`typing:stop`, conversation?.id);
+  };
+
   useScrollToLastChild({
 		parentRef: messagesContainerRef,
 		targetSelector: '.message',
@@ -421,6 +276,15 @@ const Chat = () => {
     if (!conversation || conversation.id === 'NEW_CONVERSATION' || conversation.temp_id) return;
     dispatch(fetchMessages(conversation.id));
   }, [conversation?.id]);
+
+  useEffect(() => {
+    if (!isTyping) return;
+
+    socket?.emit(`typing:start`, conversation?.id);
+    setTimeout(() => {
+      setTyping(false);
+    }, 10000);
+  }, [isTyping]);
   
   return (
     <ChatWrapper className={loading ? 'loading' : ''} ref={messagesContainerRef}>
@@ -451,7 +315,7 @@ const Chat = () => {
 
       <form onSubmit={handleSendOrderMessage} className={className}>
         <Files onRemove={removeFile} message={message as MessageModel} />
-        <ConversationTypeStatus />
+        <Metadata />
 
         <div className="controls">
           <FileUploadButton
@@ -465,6 +329,7 @@ const Chat = () => {
             placeholder="Type your message..."
             onChange={handleChange}
             value={message.text}
+            onBlur={handleBlur}
             size="small"
             autoFocus
             id="text"
@@ -482,6 +347,169 @@ const Chat = () => {
         </div>
       </form>
     </ChatWrapper>
+  );
+};
+
+const Metadata = () => {
+  const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
+  const { message, typing, ...chat } = useAppSelector((state) => state.chat);
+  const { data: conversation } = chat.conversation;
+  const order = conversation?.order as OrderModel;
+  const isFiles = message.attachments?.length;
+  const { type } = conversation ?? {};
+  const dispatch = useAppDispatch();
+  
+  const canDeliverOrder = type === 'order' && order?.status === 'pending';
+  const isTyping = typing && conversation?.id === typing.conversationId;
+  const canCloseCase = type === 'support';
+
+  const markOrderAsDelivered = () => {
+    const newMessage = { ...message };
+    if ('metadata' in message) delete newMessage['metadata'];
+    else newMessage.metadata = {
+      order_status_info: `Order delivered by ${authUser?.email}`
+    };
+
+    dispatch(setMessage(newMessage));
+  };
+
+  if (authUser?.role !== 'admin' || (!canDeliverOrder && !canCloseCase)) return null;
+
+  return (
+    <MetadataWrapper className={isTyping ? 'typing' : ''}>
+      {isTyping && (
+        <small className="typing-indicator">
+          {typing?.participant || 'User'} is typing...
+        </small>
+      )}
+      
+      {canDeliverOrder && (
+        <div className="order-update">
+          <small>Mark order as delivered</small>
+          <Prompt
+            description="Do you wish to proceed?"
+            onConfirmed={markOrderAsDelivered}
+            title="Confirm Action"
+            target="deliverOrder"
+          >
+            <Tooltip title={!isFiles ? 'Add files to mark order as delivered' : ''} color="red">
+              <Switch
+                checked={Boolean(message.metadata?.order_status_info)}
+                disabled={!isFiles}
+                size="small"
+              />
+            </Tooltip>
+          </Prompt>
+        </div>
+      )}
+      
+      {/* {(type === 'support') && ()} */}
+    </MetadataWrapper>
+  );
+};
+
+const Chats = () => {
+  const { profile: { data: authUser }, order: { data: order } } = useAppSelector((state) => state.dashboard);
+  const { showConversations, showOrdersModal, ...rest } = useAppSelector((state) => state.chat);
+  const { list: conversations, total_unread, loading } = rest.conversations;
+  const { data: conversation } = rest.conversation;
+  const dispatch = useAppDispatch();
+  const { routes } = useRoute();
+  const socket = useSocket();
+  
+  const isMinimized = conversation && !showConversations;
+  const inOrderPage = routes.order;
+
+  const className = useClassName([
+    showConversations ? 'show' : '',
+    loading ? 'loading' : ''
+  ]);
+  
+  const handleSetupOrderChat = () => {
+    if (!inOrderPage) return dispatch(setShowOrdersModal(true));
+    dispatch(setupOrderChat(order, authUser))
+  };
+
+  const toggleChatsWidget = () => {
+    if (conversation) return;
+    dispatch(setShowConversations(!showConversations));
+  };
+
+  const toggleChatWidget = () => {
+    dispatch(setShowConversations(!showConversations));
+  };
+
+  const closeChatWidget = () => {
+    dispatch(setShowConversations(!showConversations));
+    dispatch(setConversation({ data: undefined }));
+  };
+
+  useEffect(() => {
+    if (showConversations) dispatch(fetchConversations());
+  }, [showConversations]);
+
+  if (routes.auth || !authUser) return null;
+
+  return (
+    <>
+      {showConversations && <Overlay onClick={toggleChatWidget} />}
+      <OrdersModal />
+
+      <ChatsWrapper className={className}>
+        <div className="header" onClick={toggleChatsWidget}>
+          {conversation ? (
+            <>
+              <Conversation conversation={conversation} inChatHeader />
+
+              <div className="controls">
+                <Button
+                  icon={isMinimized ? <ArrowsAltOutlined /> : <MinusOutlined />}
+                  onClick={toggleChatWidget}
+                />
+                
+                <Button
+                  onClick={closeChatWidget}
+                  icon={<CloseOutlined />}
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              Chats
+              {Boolean(total_unread) && <Badge count={total_unread} />}
+            </>
+          )}
+        </div>
+
+        <div className="conversations">
+          {conversation ? (
+            <Chat socket={socket} />
+          ) : loading ? (
+            <Spin />
+          ) : Boolean(conversations.length) ? (
+            conversations.map((conversation, index) => (
+              <Conversation
+                conversation={conversation}
+                key={conversation.id}
+                index={index}
+              />
+            ))
+          ) : (
+            <EmptyWrapper>
+              <p>
+                You do not have any conversations yet!
+                <br />
+                Start a conversation{inOrderPage ? 'for this order' : ''}.
+              </p>
+              
+              <Button onClick={handleSetupOrderChat} type="primary" size="small">
+                Create Chat
+              </Button>
+            </EmptyWrapper>
+          )}
+        </div>
+      </ChatsWrapper>
+    </>
   );
 };
 

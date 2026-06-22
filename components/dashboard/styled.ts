@@ -38,7 +38,7 @@ export const MainViewWrapper = styled.div`
       ${tw`text-gray-600 dark:text-gray-200 text-2xl font-bold tracking-wide`};
     }
 
-    span {
+    >span {
       ${tw`text-gray-700 font-bold font-mono bg-gray-300 dark:bg-gray-400 rounded-full px-4 pt-0.5`};
     }
   }

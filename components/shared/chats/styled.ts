@@ -37,6 +37,26 @@ export const ConversationWrapper = styled.h3`
   }
 `;
 
+export const MetadataWrapper = styled.div`
+  ${tw`flex items-center justify-end w-full dark:text-gray-300 line-clamp-1`};
+
+  &.typing {
+    ${tw`justify-between`};
+  }
+  
+  .typing-indicator {
+    ${tw`left-3 text-[9px] text-orange-400 dark:text-gray-300 font-semibold tracking-wide`};
+  }
+  
+  .order-update {
+    ${tw`line-clamp-1 flex gap-2 justify-end`};
+  }
+  
+  small {
+    ${tw`line-clamp-1 overflow-ellipsis overflow-hidden`};
+  }
+`;
+
 export const MessageWrapper = styled.div`
   ${tw`flex w-full z-1`};
 
@@ -143,10 +163,6 @@ export const ChatWrapper = styled.div`
   
   .input {
     ${tw`relative flex flex-col gap-2 w-full p-3 pt-1 z-1`};
-
-    .order-delivery {
-      ${tw`flex gap-3 items-center justify-end w-full dark:text-gray-300`};
-    }
 
     &.has-files {
       ${tw`rounded-xl bg-white dark:bg-gray-900`};

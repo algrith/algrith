@@ -21,8 +21,8 @@ export const generateTokens = async (payload: object) => {
 export const verifyToken = async (token: string) => {
   try {
     const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-    await jwtVerify(token, secret);
-    return token;
+    const decoded = await jwtVerify(token, secret);
+    return decoded.payload;
   } catch (error) {
     console.error('Invalid token');
     return undefined;

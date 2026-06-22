@@ -1,8 +1,10 @@
 import { Conversation as ConversationModel, Message as MessageModel } from '@/types';
-import { Message, Conversation, Order } from '@/libs/schema';
+import { Message, Conversation, Order, User as UserModel } from '@/libs/schema';
 import { NextResponse } from 'next/server';
-import { getSocket } from '@/libs/socket';
+import { Socket } from '@/libs/socket';
 import { User } from 'next-auth';
+
+const socket = new Socket();
 
 export const createConversation = async (user: User, customerId: string, message: MessageModel, orderId: string) => {
   const userRole = user.role || 'customer';
@@ -29,42 +31,47 @@ export const createConversation = async (user: User, customerId: string, message
     data: null
   }, { status: 400 });
   
-  const isStaff = ['admin', 'moderator'].includes(userRole);
-  const customer = isStaff ? customerId : user.id;
-  const agentOrAdmin = isStaff ? user.id : null;
-  
-  const participantRole = (userId?: string | null) => {
-    if (userId === agentOrAdmin?.toString()) {
-      return userRole === 'admin' ? 'admin' : 'moderator';
-    }
-    
-    return 'customer';
-  };
-  
-  const participantIds = [customer, agentOrAdmin].filter(Boolean);
-  
-  const participants = participantIds.map((userId) => ({
-    role: participantRole(userId),
-    last_read: null,
-    user: userId
-  }));
-  
   let conversation = orderId ? await Conversation.findOne({ order: orderId }) : null;
   
   if (!conversation) {
+    let participants = [];
+
+    if (type === 'order') {
+      const order = await Order.findOne({ _id: orderId });
+      const participantIds = [...order.assignees, order.user];
+      
+      for (const participantId of participantIds) {
+        const participant = await UserModel.findOne({ _id: participantId });
+        
+        participants.push({
+          role: participant.role,
+          user: participant.id,
+          last_read: null
+        });
+      }
+    } else {
+      const admin = await UserModel.findOne({ role: 'admin' });
+      
+      participants = [
+        { role: admin.role, user: admin.id, last_read: null },
+        { role: user.role, user: user.id, last_read: null }
+      ];
+    }
+
     conversation = await Conversation.create({
       order: orderId,
       participants,
       active: true,
       type
     });
-
+    
     // Attach conversation to order.
-    const order = await Order.updateOne({ _id: orderId }, {
+    await Order.updateOne({ _id: orderId }, {
       conversation: conversation.id
     });
   }
 
+  conversation = await conversation.populate('order', 'reference status plan.name');
   return conversation as ConversationModel;
 };
 
@@ -110,10 +117,7 @@ export const createMessage = async (user: User, conversationId: string, payload:
     }
   });
   
-  const populated = await message.populate('sender.user', 'name email role');
-
-  const socket = getSocket();
-  socket?.to(conversation.id).emit('message:new', populated);
-  
-  return { ...populated.toJSON(), temp_id } as MessageModel;
+  const populated = (await message.populate('sender.user', 'name email role')).toJSON();
+  socket.emitNewMessage(user, conversation, populated);
+  return { ...populated, temp_id } as MessageModel;
 };

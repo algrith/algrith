@@ -12,6 +12,8 @@ const defaultMessage: Partial<Message> = {
 const initialState: ChatState = {
   showConversations: false,
   message: defaultMessage,
+  showOrdersModal: false,
+  typing: undefined,
   orderConversation: {
     data: undefined,
     loading: true,
@@ -25,10 +27,10 @@ const initialState: ChatState = {
   conversation: {
     index: undefined,
     data: undefined,
-    loading: true,
+    loading: false
   },
   messages: {
-    loading: true,
+    loading: false,
     list: []
   }
 }
@@ -72,6 +74,9 @@ export const chatSlice = createSlice({
         return message;
       });
     },
+    setTyping: (state, action: PayloadAction<ChatState['typing']>) => {
+      state.typing = action.payload;
+    },
     setShowConversations: (state, action: PayloadAction<boolean>) => {
       state.showConversations = action.payload;
     },
@@ -80,6 +85,13 @@ export const chatSlice = createSlice({
         ...state.message,
         ...action.payload
       };
+    },
+    setShowOrdersModal: (state, action: PayloadAction<boolean>) => {
+      state.showOrdersModal = action.payload;
+    },
+    pushToMessages: (state, action: PayloadAction<Message>) => {
+      state.messages.list.push(action.payload);
+      state.conversations.total_unread += 1;
     },
     resetMessage: (state, action: PayloadAction) => {
       state.message = defaultMessage;
@@ -92,12 +104,15 @@ const { reducer, actions } = chatSlice;
 export const {
   setOrderConversation,
   setShowConversations,
+  setShowOrdersModal,
   setConversations,
   setConversation,
+  pushToMessages,
   updateMessage,
   resetMessage,
   setMessages,
-  setMessage
+  setMessage,
+  setTyping,
 } = actions;
 
 export default reducer;
