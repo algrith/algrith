@@ -20,7 +20,7 @@ export const DashboardWrapper = styled.div`
   ${tw`flex w-full relative h-[calc(100dvh - 4.4rem)] z-1`};
 
   .container {
-    ${tw`w-full h-full flex-grow p-8 z-1`};
+    ${tw`w-full h-full flex-grow p-8 z-1 overflow-hidden`};
   }
 `;
 
