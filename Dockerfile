@@ -38,5 +38,5 @@ COPY --from=builder /app/public ./public
 
 EXPOSE 3000
 
-CMD ["npx", "tsx", "server.ts"]
-# CMD ["node", "server.js"]
+# CMD ["npx", "tsx", "server.ts"]
+CMD ["node", "server.js"]
