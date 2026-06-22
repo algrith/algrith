@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node dist/server.js",
     "custom-dev": "tsx server.ts",
+    "start": "tsx server.ts",
     "build": "next build",
     "lint": "next lint",
     "dev": "next dev"
