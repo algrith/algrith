@@ -36,7 +36,7 @@ COPY --from=builder /app/server.ts ./server.ts
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/public ./public
 
-EXPOSE 8080
+# EXPOSE 8080
 
 # CMD ["npx", "tsx", "server.ts"]
 CMD ["npm", "run", "start"]
