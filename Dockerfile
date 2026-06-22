@@ -1,17 +1,3 @@
-# FROM node:20-alpine
-
-# WORKDIR /usr/app
-
-# COPY . .
-
-# COPY .env .env
-
-# RUN npm ci
-
-# RUN npm run build
-
-# CMD ["npm", "start"]
-
 # Install dependencies only when needed
 FROM node:22-alpine AS installer
 
@@ -44,10 +30,13 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 # Copy necessary files from builder
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY --from=builder /app/.next/static ./.next/static
+COPY --from=builder /app/server.ts ./server.ts
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/public ./public
 
 EXPOSE 3000
 
-CMD ["node", "server.js"]
+CMD ["npx", "tsx", "server.ts"]
+# CMD ["node", "server.js"]
