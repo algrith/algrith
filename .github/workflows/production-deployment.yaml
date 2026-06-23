@@ -98,7 +98,7 @@ jobs:
           gcloud run deploy algrith-socket \
           --source ./socket-server \
           --region ${{ secrets.GCS_REGION }} \
-          --no-allow-unauthenticated
+          --allow-unauthenticated
       
       - name: Get socket build logs
         if: steps.deploy-socket.outcome == 'failure'
