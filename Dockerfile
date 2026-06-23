@@ -29,6 +29,9 @@ ENV NODE_ENV=production
 
 WORKDIR /app
 
+# Install Nginx
+RUN apk add --no-cache nginx
+
 # Copy necessary files from builder
 # COPY --from=builder /app/.next/static ./.next/static
 # COPY --from=builder /app/.next/standalone ./
@@ -49,9 +52,22 @@ COPY --from=builder /app/utils ./utils
 COPY --from=builder /app/types ./types
 COPY --from=builder /app/libs ./libs
 
+# Copy Nginx config
+COPY nginx.conf /etc/nginx/http.d/default.conf
+
+# Startup script — runs Nginx + pm2 together
+RUN echo '#!/bin/sh' > /start.sh && \
+  echo 'nginx' >> /start.sh && \
+  echo 'npx pm2-runtime ecosystem.config.js' >> /start.sh && \
+  chmod +x /start.sh
+
 EXPOSE 8080
 
-CMD ["npx", "pm2-runtime", "ecosystem.config.js"]
+CMD ["/start.sh"]
+
+# EXPOSE 8080
+
+# CMD ["npx", "pm2-runtime", "ecosystem.config.js"]
 
 
 
