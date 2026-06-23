@@ -81,7 +81,7 @@ const useSocket = () => {
     if (!token || ref.current?.connected) return;
 
     const socket = io(process.env.NEXT_PUBLIC_APP_URL, {
-      transports: ['polling', 'websocket'],
+      transports: ['websocket'],
       path: '/api/socket',
       auth: { token }
     });
