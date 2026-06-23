@@ -45,6 +45,9 @@ COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/utils ./utils
+COPY --from=builder /app/types ./types
+COPY --from=builder /app/libs ./libs
 
 EXPOSE 8080
 
