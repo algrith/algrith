@@ -2,7 +2,7 @@
   "name": "algrith-socket",
   "version": "1.0.0",
   "scripts": {
-    "start": "npx tsx --env-file=.env index.ts\""
+    "start": "npx tsx --env-file=.env index.ts"
   },
   "dependencies": {
     "socket.io": "^4.8.3",
