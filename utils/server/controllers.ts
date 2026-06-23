@@ -3,6 +3,7 @@ import { Message, Conversation, Order, User as UserModel } from '@/libs/schema';
 import { NextResponse } from 'next/server';
 import { Socket } from '@/libs/socket';
 import { User } from 'next-auth';
+import { emitToUser } from './socket';
 
 const socket = new Socket();
 
@@ -118,6 +119,7 @@ export const createMessage = async (user: User, conversationId: string, payload:
   });
   
   const populated = (await message.populate('sender.user', 'name email role')).toJSON();
-  socket.emitNewMessage(user, conversation, populated);
+  emitToUser(user.id as string, 'message:new', { user, conversation, populated});
+  // socket.emitNewMessage(user, conversation, populated);
   return { ...populated, temp_id } as MessageModel;
 };

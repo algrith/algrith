@@ -24,7 +24,7 @@ export const verifyToken = async (token: string) => {
     const decoded = await jwtVerify(token, secret);
     return decoded.payload;
   } catch (error) {
-    console.error('Error verifying token --> ', error);
+    console.error('Error verifying token --> ', (error as Error)?.message);
     return undefined;
   }
 };

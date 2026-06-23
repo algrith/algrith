@@ -88,6 +88,15 @@ jobs:
             JWT_SECRET=${{ secrets.JWT_SECRET }}
             AUTH_URL=${{ secrets.AUTH_URL }}
       
+      - name: Copy .env to socket server
+        run: cp .env socket-server/.env
+      
+      - name: Deploy socket server
+        run: |
+          gcloud run deploy algrith-socket \
+          --source ./socket-server \
+          --region ${{ secrets.GCS_REGION }}
+      
       - name: Cleanup Old Images
         run: |
           gcloud artifacts docker images list \

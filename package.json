@@ -3,11 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "dev": "concurrently \"next dev\" \"tsx --env-file=./.env socket-server/index.ts\"",
     "custom-dev": "tsx server.ts",
-    "start": "tsx server.ts",
+    "start": "next start",
     "build": "next build",
-    "lint": "next lint",
-    "dev": "next dev"
+    "lint": "next lint"
   },
   "dependencies": {
     "@algrith/scroll-to-top": "^1.0.4",
@@ -54,6 +54,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "babel-plugin-macros": "^3.1.0",
+    "concurrently": "^10.0.3",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",
