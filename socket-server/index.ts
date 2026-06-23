@@ -6,6 +6,7 @@ import { Conversation } from '@/libs/schema';
 import { dbConnect } from '@/utils/db';
 
 const port = parseInt(process.env.PORT || '3001', 10);
+const hostname = '0.0.0.0';
 
 const httpServer = createServer(async (req, res) => {
   // Health check
@@ -20,7 +21,7 @@ const httpServer = createServer(async (req, res) => {
     req.on('data', (chunk) => { body += chunk; });
     req.on('end', () => {
       const { userId, event, data } = JSON.parse(body);
-      
+
       if (event === 'message:new') {
         for (const participant of data.conversation.participants) {
           if (participant.user?.toString() === userId) continue;
@@ -100,7 +101,7 @@ io.use(async (socket, next) => {
 dbConnect().then(() => {
   console.log('> Database connection established');
 
-  httpServer.listen(port, () => {
+  httpServer.listen(port, hostname, () => {
     console.log(`> Socket server ready on port ${port}`);
   });
 }).catch((error) => {
