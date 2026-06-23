@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"next dev\" \"tsx --env-file=./.env socket-server/index.ts\"",
-    "custom-dev": "tsx server.ts",
     "start": "next start",
     "build": "next build",
     "lint": "next lint"
