@@ -92,12 +92,25 @@ jobs:
         run: cp .env socket-server/.env
       
       - name: Deploy socket server
+        id: deploy-socket
+        continue-on-error: true
         run: |
           gcloud run deploy algrith-socket \
           --source ./socket-server \
           --region ${{ secrets.GCS_REGION }} \
-          --verbosity=debug \
           --no-allow-unauthenticated
+      
+      - name: Get socket build logs
+        if: failure()
+        run: |
+          BUILD_ID=$(gcloud builds list \
+            --project=${{ secrets.GCS_PROJECT_ID }} \
+            --region=${{ secrets.GCS_REGION }} \
+            --limit=1 \
+            --format="value(id)")
+          gcloud builds log $BUILD_ID \
+            --project=${{ secrets.GCS_PROJECT_ID }} \
+            --region=${{ secrets.GCS_REGION }}
       
       - name: Cleanup Old Images
         run: |
