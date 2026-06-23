@@ -46,7 +46,7 @@ COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/public ./public
 
-EXPOSE 8080
+# EXPOSE 8080
 
 CMD ["npx", "pm2-runtime", "ecosystem.config.js"]
 
