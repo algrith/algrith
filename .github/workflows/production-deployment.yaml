@@ -101,7 +101,7 @@ jobs:
           --no-allow-unauthenticated
       
       - name: Get socket build logs
-        if: failure()
+        if: steps.deploy-socket.outcome == 'failure'
         run: |
           BUILD_ID=$(gcloud builds list \
             --project=${{ secrets.GCS_PROJECT_ID }} \
@@ -111,6 +111,10 @@ jobs:
           gcloud builds log $BUILD_ID \
             --project=${{ secrets.GCS_PROJECT_ID }} \
             --region=${{ secrets.GCS_REGION }}
+      
+      - name: Fail if socket deploy failed
+        if: steps.deploy-socket.outcome == 'failure'
+        run: exit 1
       
       - name: Cleanup Old Images
         run: |
