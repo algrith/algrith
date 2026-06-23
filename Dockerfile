@@ -57,8 +57,9 @@ COPY nginx.conf /etc/nginx/http.d/default.conf
 
 # Startup script — runs Nginx + pm2 together
 RUN echo '#!/bin/sh' > /start.sh && \
-  echo 'nginx' >> /start.sh && \
-  echo 'npx pm2-runtime ecosystem.config.js' >> /start.sh && \
+  echo 'npx pm2-runtime ecosystem.config.js &' >> /start.sh && \
+  echo 'sleep 3' >> /start.sh && \
+  echo 'nginx -g "daemon off;"' >> /start.sh && \
   chmod +x /start.sh
 
 EXPOSE 8080

@@ -4,6 +4,7 @@ module.exports = {
       args: "server.js",
       name: "nextjs",
       script: "node",
+      cwd: "/app",
       env: {
         NODE_ENV: "production",
         PORT: 3000,
@@ -13,6 +14,7 @@ module.exports = {
       args: "tsx --env-file=./.env socket-server/index.ts",
       name: "socket",
       script: "npx",
+      cwd: "/app",
       env: {
         NODE_ENV: "production",
         PORT: 3001,
