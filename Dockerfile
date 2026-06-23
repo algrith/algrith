@@ -63,9 +63,6 @@ CMD ["npx", "pm2-runtime", "ecosystem.config.js"]
 
 
 
-
-
-
 # Install dependencies only when needed
 # FROM node:22-alpine AS installer
 
