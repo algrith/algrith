@@ -46,6 +46,7 @@ jobs:
           echo "CONTACT_MAIL_AUTH_PASSWORD=${{ secrets.CONTACT_MAIL_AUTH_PASSWORD }}" >> .env
           echo "AUTH_GOOGLE_CLIENT_SECRET=${{ secrets.AUTH_GOOGLE_CLIENT_SECRET }}" >> .env
           echo "CONTACT_MAIL_AUTH_PORT=${{ secrets.CONTACT_MAIL_AUTH_PORT }}" >> .env
+          echo "NEXT_PUBLIC_SOCKET_URL=${{ secrets.NEXT_PUBLIC_SOCKET_URL }}" >> .env
           echo "CONTACT_MAIL_AUTH_HOST=${{ secrets.CONTACT_MAIL_AUTH_HOST }}" >> .env
           echo "AUTH_GOOGLE_CLIENT_ID=${{ secrets.AUTH_GOOGLE_CLIENT_ID }}" >> .env
           echo "CONTACT_MAIL_RECEIVER=${{ secrets.CONTACT_MAIL_RECEIVER }}" >> .env
@@ -53,6 +54,7 @@ jobs:
           echo "NEXT_PUBLIC_APP_URL=${{ secrets.NEXT_PUBLIC_APP_URL }}" >> .env
           echo "CONTACT_MAIL_SENDER=${{ secrets.CONTACT_MAIL_SENDER }}" >> .env
           echo "NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}" >> .env
+          echo "SOCKET_SERVER_URL=${{ secrets.SOCKET_SERVER_URL }}" >> .env
           echo "MONGODB_PASSWORD=${{ secrets.MONGODB_PASSWORD }}" >> .env
           echo "MONGODB_USERNAME=${{ secrets.MONGODB_USERNAME }}" >> .env
           echo "GCS_CLIENT_EMAIL=${{ secrets.GCS_CLIENT_EMAIL }}" >> .env
@@ -87,25 +89,6 @@ jobs:
             AUTH_SECRET=${{ secrets.AUTH_SECRET }}
             JWT_SECRET=${{ secrets.JWT_SECRET }}
             AUTH_URL=${{ secrets.AUTH_URL }}
-      
-      # - name: Copy .env to socket server
-      #   run: cp .env socket-server/.env
-      
-      # - name: Copy shared files to socket server
-      #   run: |
-      #     mkdir -p socket-server/utils socket-server/libs socket-server/types
-      #     cp utils/tokens.ts socket-server/utils/tokens.ts
-      #     cp libs/schema.ts socket-server/libs/schema.ts
-      #     cp types/index.ts socket-server/types/index.ts
-      #     cp utils/db.ts socket-server/utils/db.ts
-      
-      # - name: Deploy socket server
-      #   id: deploy-socket
-      #   run: |
-      #     gcloud run deploy algrith-socket \
-      #     --source ./socket-server \
-      #     --region ${{ secrets.GCS_REGION }} \
-      #     --allow-unauthenticated
       
       - name: Cleanup Old Images
         run: |
