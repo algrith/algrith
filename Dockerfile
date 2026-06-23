@@ -36,7 +36,13 @@ COPY --from=builder /app/server.ts ./server.ts
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/public ./public
 
-# EXPOSE 8080
+# ✅ Everything server.ts needs at runtime
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/utils ./utils
+COPY --from=builder /app/types ./types
+COPY --from=builder /app/libs ./libs
+
+EXPOSE 8080
 
 # CMD ["npx", "tsx", "server.ts"]
 CMD ["npm", "run", "start"]
