@@ -91,6 +91,14 @@ jobs:
       - name: Copy .env to socket server
         run: cp .env socket-server/.env
       
+      - name: Copy shared files to socket server
+        run: |
+          mkdir -p socket-server/utils socket-server/libs socket-server/types
+          cp utils/tokens.ts socket-server/utils/tokens.ts
+          cp libs/schema.ts socket-server/libs/schema.ts
+          cp types/index.ts socket-server/types/index.ts
+          cp utils/db.ts socket-server/utils/db.ts
+      
       - name: Deploy socket server
         id: deploy-socket
         continue-on-error: true
