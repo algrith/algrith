@@ -5,8 +5,8 @@ module.exports = {
       name: "nextjs",
       script: "node",
       env: {
+        PORT: process.env.PORT || 3000,
         NODE_ENV: "production",
-        PORT: 3000,
       },
     },
     // {
