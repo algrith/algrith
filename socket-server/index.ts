@@ -1,9 +1,9 @@
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
-import { verifyToken } from '@/utils/tokens';
-import { Conversation } from '@/libs/schema';
-import { dbConnect } from '@/utils/db';
+import { verifyToken } from '../utils/tokens';
+import { Conversation } from '../libs/schema';
+import { dbConnect } from '../utils/db';
 
 const port = parseInt(process.env.PORT || '3001', 10);
 const hostname = '0.0.0.0';

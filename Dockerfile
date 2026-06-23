@@ -30,14 +30,25 @@ ENV NODE_ENV=production
 WORKDIR /app
 
 # Copy necessary files from builder
+# COPY --from=builder /app/.next/static ./.next/static
+# COPY --from=builder /app/.next/standalone ./
+# COPY --from=builder /app/public ./public
+
+# EXPOSE 3000
+
+# CMD ["node", "server.js"]
+
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/.next/standalone ./
 COPY --from=builder /app/public ./public
+COPY --from=builder /app/socket-server ./socket-server
+COPY --from=builder /app/ecosystem.config.js ./ecosystem.config.js
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/tsconfig.json ./tsconfig.json
 
 EXPOSE 3000
 
-CMD ["node", "server.js"]
-
+CMD ["npx", "pm2-runtime", "ecosystem.config.js"]
 
 
 
