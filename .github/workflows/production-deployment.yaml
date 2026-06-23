@@ -101,7 +101,6 @@ jobs:
       
       - name: Deploy socket server
         id: deploy-socket
-        continue-on-error: true
         run: |
           gcloud run deploy algrith-socket \
           --source ./socket-server \
