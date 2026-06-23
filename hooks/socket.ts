@@ -86,7 +86,7 @@ const useSocket = () => {
     //   auth: { token }
     // });
 
-    const socket = io(process.env.NEXT_PUBLIC_SOCKET_URL, {
+    const socket = io(process.env.NEXT_PUBLIC_APP_URL, {
       transports: ['websocket'],
       path: '/socket',
       auth: { token }
