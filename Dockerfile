@@ -46,7 +46,7 @@ COPY --from=builder /app/ecosystem.config.js ./ecosystem.config.js
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
 
-EXPOSE 3000
+EXPOSE 8080
 
 CMD ["npx", "pm2-runtime", "ecosystem.config.js"]
 
