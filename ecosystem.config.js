@@ -9,14 +9,14 @@ module.exports = {
         NODE_ENV: "production",
       },
     },
-    // {
-    //   args: "tsx --env-file=./.env socket-server/index.ts",
-    //   name: "socket",
-    //   script: "npx",
-    //   env: {
-    //     NODE_ENV: "production",
-    //     PORT: 3001,
-    //   },
-    // },
+    {
+      args: "tsx --env-file=./.env socket-server/index.ts",
+      name: "socket",
+      script: "npx",
+      env: {
+        PORT: process.env.PORT || 3001,
+        NODE_ENV: "production",
+      },
+    },
   ],
 };
