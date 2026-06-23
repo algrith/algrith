@@ -95,7 +95,9 @@ jobs:
         run: |
           gcloud run deploy algrith-socket \
           --source ./socket-server \
-          --region ${{ secrets.GCS_REGION }}
+          --region ${{ secrets.GCS_REGION }} \
+          --verbosity=debug \
+          --no-allow-unauthenticated
       
       - name: Cleanup Old Images
         run: |
