@@ -33,6 +33,7 @@
     "next-auth": "^5.0.0-beta.31",
     "next-remove-imports": "^1.0.12",
     "nodemailer-express-handlebars": "^7.0.0",
+    "pm2": "^5.4.3",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
     "react-multi-carousel": "^2.8.5",
@@ -40,8 +41,7 @@
     "socket.io": "^4.8.3",
     "socket.io-client": "^4.8.3",
     "twin.macro": "^3.4.1",
-    "zod": "^4.4.2",
-    "pm2": "^5.3.0"
+    "zod": "^4.4.2"
   },
   "devDependencies": {
     "@babel/plugin-syntax-typescript": "^7.25.9",
