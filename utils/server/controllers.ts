@@ -1,11 +1,8 @@
 import { Conversation as ConversationModel, Message as MessageModel } from '@/types';
 import { Message, Conversation, Order, User as UserModel } from '@/libs/schema';
+import { socketEmitter } from '@/utils/server/socket';
 import { NextResponse } from 'next/server';
-import { Socket } from '@/libs/socket';
 import { User } from 'next-auth';
-import { emitToUser } from './socket';
-
-const socket = new Socket();
 
 export const createConversation = async (user: User, customerId: string, message: MessageModel, orderId: string) => {
   const userRole = user.role || 'customer';
@@ -119,7 +116,6 @@ export const createMessage = async (user: User, conversationId: string, payload:
   });
   
   const populated = (await message.populate('sender.user', 'name email role')).toJSON();
-  emitToUser(user.id as string, 'message:new', { user, conversation, populated});
-  // socket.emitNewMessage(user, conversation, populated);
+  socketEmitter('message:new', { user, conversation, populated});
   return { ...populated, temp_id } as MessageModel;
 };

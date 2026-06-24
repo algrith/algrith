@@ -1,6 +1,7 @@
 import { createServer } from 'http';
 import { Server } from 'socket.io';
 
+import { SocketEvents } from '../utils/server/socket';
 import { verifyToken } from '../utils/tokens';
 import { Conversation } from '../libs/schema';
 import { dbConnect } from '../utils/db';
@@ -21,18 +22,10 @@ const httpServer = createServer(async (req, res) => {
     req.on('data', (chunk) => { body += chunk; });
     req.on('end', () => {
       const { userId, event, data } = JSON.parse(body);
-
-      if (event === 'message:new') {
-        for (const participant of data.conversation.participants) {
-          if (participant.user?.toString() === userId) continue;
-          
-          io.in(`user:${participant.user}`).emit('message:new', {
-            conversation: data.conversation,
-            message: data.populated
-          });
-        }
-      }
-
+      const events = new SocketEvents(userId, io);
+      type EventType = keyof typeof events;
+      events?.[event as EventType]?.(data);
+      
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ ok: true }));
     });
