@@ -16,10 +16,11 @@ const GET = authorization(async (request, ctx, user) => {
 
   try {
     await dbConnect();
+
     const order = await Order.findOne({
-      ...(role !== 'admin' ? { user: id } : {}),
+      ...(role !== 'admin' && { user: id }),
       _id: orderId,
-    });
+    }).populate('assignees', 'id name email');
 
     return Response.json({
       message: 'Order retrieved!',

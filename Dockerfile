@@ -33,11 +33,11 @@ WORKDIR /app
 RUN apk add --no-cache nginx
 
 COPY --from=builder /app/ecosystem.config.js ./ecosystem.config.js
-COPY --from=builder /app/socket-server ./socket-server
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/socket ./socket
 COPY --from=builder /app/public ./public
 COPY --from=builder /app/utils ./utils
 COPY --from=builder /app/types ./types

@@ -9,6 +9,7 @@ import { User } from 'next-auth';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { TableWrapper } from '../shared/layout/styled';
+import Presence from '../shared/layout/presence';
 import Status from '../shared/layout/status';
 import { ColumnsType } from 'antd/es/table';
 import { MainViewWrapper } from './styled';
@@ -24,6 +25,7 @@ const Users = () => {
 
   const columns: ColumnsType<User> = [
     {
+      render: (_, user) => <><Presence userId={user.id as string} /> {user.name}</>,
       dataIndex: 'name',
       title: 'Name',
       key: 'name'
@@ -40,11 +42,10 @@ const Users = () => {
       title: 'Joined'
     },
     {
-      render: (user) => user?.orders_count || 0,
-      dataIndex: 'orders',
+      dataIndex: 'orders_count',
+      key: 'orders_count',
       align: 'center',
-      title: 'Orders',
-      key: 'orders'
+      title: 'Orders'
     },
     {
       render: (_, user) => <Status payload={user} />,

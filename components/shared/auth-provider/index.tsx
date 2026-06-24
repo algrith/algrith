@@ -5,6 +5,7 @@ import { ReactNode, useEffect } from 'react';
 
 import { fetchUserProfile } from '@/components/dashboard/slices';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import useSocket from '@/hooks/socket';
 import useRoute from '@/hooks/route';
 
 const NextAuthProvider = ({ children }: { children: React.ReactNode }) => (
@@ -20,6 +21,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const { data: session, status } = useSession();
   const { isProtectedRoute } = useRoute();
   const dispatch = useAppDispatch();
+  useSocket();
   
   useEffect(() => {
     if (status === 'authenticated' && session.user && !authUser && !loading) {

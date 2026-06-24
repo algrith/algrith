@@ -1,5 +1,6 @@
 import { createConversation, createMessage } from '@/utils/server/controllers';
 import { Order, Conversation } from '@/libs/schema';
+import { socketEmitter } from '@/utils/socket';
 import { authorization } from '@/middleware';
 import { NextResponse } from 'next/server';
 import { dbConnect } from '@/utils/db';
@@ -18,7 +19,7 @@ const PATCH = authorization(async (req, ctx, user) => {
       data: null
     }, { status: 400 });
 
-    const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+    const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true }).populate('assignees', 'id name email');
 
     if (!order) return NextResponse.json({
       message: 'Order not found',
@@ -26,7 +27,9 @@ const PATCH = authorization(async (req, ctx, user) => {
       success: false,
       data: null
     }, { status: 404 });
-    
+
+    socketEmitter('order:updated', order);
+
     let conversation = await Conversation.findOne({ order: orderId });
 
     if (!messagePayload.text) messagePayload.text = `Order marked as <b>${status}</b> by ${user.email}.`;

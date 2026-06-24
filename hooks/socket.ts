@@ -1,59 +1,58 @@
 'use client';
 
-import { pushToMessages, setConversations, setTyping } from '@/components/shared/chats/reducer';
-import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { BaseObject, Conversation, Message } from '@/types';
-import { useCallback, useEffect, useRef } from 'react';
-import { io, Socket } from 'socket.io-client';
-import { inProduction } from '@/utils/server';
 import { useSession } from 'next-auth/react';
+import { useEffect, useState } from 'react';
+import { Socket } from 'socket.io-client';
+import cloneDeep from 'lodash/cloneDeep';
+
+import { pushToMessages, setConversations, setTyping } from '@/components/shared/chats/reducer';
+import { setOrders, setPresence, setUsers } from '@/components/dashboard/reducer';
+import { ChatEventData, OrderModel, TypingEventData, BaseObject } from '@/types';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { disconnectSocket, getSocket } from '@/utils/socket';
 import { moveToFront } from '@/utils';
-
-type ChatEventHandler = (event: string, data: ChatEventData) => void;
-
-type ChatEventData = MessageEventData | TypingEventData;
-
-type MessageEventData = {
-  conversation: Conversation;
-  message: Message;
-};
-
-type TypingEventData = {
-  conversationId: string;
-  participant: string;
-};
 
 const CONVERSATION_EVENTS = new Set([
   'message:updated',
   'message:deleted',
-  'order:updated',
   'message:new',
   'typing'
 ]);
 
+const PRESENCE_EVENTS = new Set([
+  'presence:synced',
+  'presence'
+]);
+
+const ORDER_EVENTS = new Set([
+  'order:updated',
+  'order:new'
+]);
+
 const useSocket = () => {
-  const { conversations } = useAppSelector((state) => state.chat);
-  const ref = useRef<Socket | null>(null);
+  const { conversations: { list: conversations } } = useAppSelector((state) => state.chat);
+  const { users, orders } = useAppSelector((state) => state.dashboard);
+  const [socket, setSocket] = useState<Socket | null>(null);
   const { data: session } = useSession();
   const token = session?.user?.access_token;
   const dispatch = useAppDispatch();
 
-  const getConversationIndex = (conversationId: string) => {
-    return conversations.list.findIndex(({ id }) => id === conversationId);
-  };
+  const getConversationIndex = (cid: string) => conversations.findIndex(({ id }) => id === cid);
+  const getOrderIndex = (orderId: string) => orders.list.findIndex(({ id }) => id === orderId);
+  const getUserIndex = (userId: string) => users.list.findIndex(({ id }) => id === userId);
 
-  const chatEventHandler: ChatEventHandler = useCallback((event, data) => {
+  const chatEventHandler = (event: string, data: ChatEventData) => {
     switch (event) {
       case 'message:new':
       case 'message:updated':
       case 'message:deleted':
         if (!('conversation' in data && 'message' in data)) return;
-        
+
         const { conversation, message } = data;
         const conversationIndex = getConversationIndex(conversation.id);
 
         if (conversationIndex < 0) dispatch(setConversations({
-          list: [conversation, ...conversations.list]
+          list: [conversation, ...conversations]
         }));
         
         dispatch(pushToMessages(message));
@@ -61,62 +60,81 @@ const useSocket = () => {
         if (conversationIndex > 0) {
           dispatch(setConversations({
             list: moveToFront(
-              conversations.list,
+              conversations,
               conversationIndex
             )
           }));
         }
-
         break;
       case 'typing':
         dispatch(setTyping(data as TypingEventData));
         break;
-      case 'order:updated':
-        console.log('[order event]', event, data);
-        // dispatch(updateOrder(data));
-        break;
     }
-  }, []);
+  };
+
+  const orderEventHandler = (event: string, order: OrderModel) => {
+    if (event === 'order:updated') {
+      const orderIndex = getOrderIndex(order.id);
+      if (orderIndex < 0) return;
+      
+      const list = cloneDeep(orders.list);
+      list[orderIndex] = order;
+      dispatch(setOrders({
+        list
+      }));
+    }
+
+    if (event === 'order:new') {
+      dispatch(setOrders({ list: [order, ...orders.list] }));
+      const userIndex = getUserIndex(order.user as string);
+
+      if (userIndex >= 0) {
+        const list = cloneDeep(users.list);
+        list[userIndex].orders_count += 1;
+        dispatch(setUsers({ list }));
+      }
+    }
+  };
+
+  // Event listeners
+  useEffect(() => {
+    if (!socket) return;
+    
+    socket.onAny((event: string, data: ChatEventData) => {
+      if (!CONVERSATION_EVENTS.has(event)) return;
+      console.log('Chat event --> ', event, data);
+      chatEventHandler(event, data);
+    });
+  }, [conversations, socket]);
 
   useEffect(() => {
-    if (!token || ref.current?.connected) return;
-    
-    let socketUrl = process.env.NEXT_PUBLIC_APP_URL;
-    
-    if (!inProduction) {
-      socketUrl = socketUrl.replace(/\d$/, '1');
-    }
-    
-    const socket = io(socketUrl, {
-      transports: ['polling'],
-      path: '/socket',
-      auth: { token }
-    });
-    
-    ref.current = socket;
+    if (!socket) return;
 
-    socket.on('connect_error', (err) => console.error('Socket error --> ', err.message));
-    socket.on('connect', () => console.log('Socket connected --> ', socket.id));
-    socket.on('disconnect', () => console.log('Socket disconnected'));
-    
+    socket.onAny((event: string, data: OrderModel) => {
+      if (!ORDER_EVENTS.has(event)) return;
+      console.log('Order event --> ', event, data);
+      orderEventHandler(event, data);
+    });
+  }, [socket, orders, users]);
+
+  useEffect(() => {
+    if (!socket) return;
+
     socket.onAny((event: string, data: BaseObject) => {
-      console.log('Socket event received --> ', event, data);
-      if (!CONVERSATION_EVENTS.has(event)) return;
-      chatEventHandler(event, data as ChatEventData);
+      if (!PRESENCE_EVENTS.has(event)) return;
+      console.log('Presence event --> ', event, data);
+      dispatch(setPresence(data));
     });
+  }, [socket]);
 
-    return () => {
-      socket.off('connect_error');
-      socket.off('disconnect');
-      socket.off('connect');
-      socket.disconnect();
-      socket.offAny();
-
-      ref.current = null;
-    };
+  // Socket init
+  useEffect(() => {
+    if (!token) return;
+    setSocket(getSocket(token));
+    return () => disconnectSocket();
   }, [token]);
-
-  return ref.current;
+  
+  return socket;
 };
 
 export default useSocket;

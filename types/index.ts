@@ -13,6 +13,8 @@ export type InlineFeedbackWrapperProps = Omit<InlineFeedbackProps, 'target'> & P
 export type OAuthProviderIcons = Partial<Record<ProviderType | OAuthProviderId, string>>;
 export type FileUploadButtonProps = InputHTMLAttributes<HTMLInputElement> & ButtonProps;
 export type TextCase = 'capitalize' | 'uppercase' | 'lowercase';
+export type ChatEventData = MessageEventData | TypingEventData;
+export type Presence = Record<string, 'online' | 'offline'>;
 export type AsyncActionTargets = keyof AsyncActionsState;
 export type TextAlignment = 'center' | 'right' | 'left';
 export type BaseStringObject = Record<string, string>;
@@ -193,6 +195,7 @@ export interface FeedbackPayload {
 };
 
 export interface DashboardState {
+	presences: Presence;
 	analytics: {
 		loading: boolean;
 		data: {
@@ -238,7 +241,7 @@ export interface DashboardState {
 		loading: boolean;
 	};
 	users: {
-		list: Array<OrderModel>;
+		list: Array<User>;
 		loading: boolean;
 	};
 	order: {
@@ -271,6 +274,16 @@ export interface FeedbackState {
   message: string;
   target?: string;
   show?: boolean;
+};
+
+export type MessageEventData = {
+	conversation: Conversation;
+	message: Message;
+};
+
+export type TypingEventData = {
+	conversationId: string;
+	participant: string;
 };
 
 export interface GroupedFiles {

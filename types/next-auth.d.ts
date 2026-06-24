@@ -20,6 +20,7 @@ declare module 'next-auth' {
 		auth_provider: 'google' | 'email';
 		refresh_token?: string;
 		access_token?: string;
+		orders_count: number;
 		is_verified: boolean;
 		createdAt?; string;
 		error?: BaseObject;

@@ -1,5 +1,39 @@
 import { squareWaves } from '../layout/styled';
+import { keyframes } from '@emotion/react';
 import tw, { styled } from 'twin.macro';
+
+const typing = keyframes`
+  0%, 60%, 100% {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+
+  30% {
+    transform: translateY(-3px);
+    opacity: 1;
+  }
+`;
+
+export const TypingIndicatorWrapper = styled.div`
+  ${tw`flex items-center gap-1 text-[10px] bg-gray-300 dark:bg-gray-900/70 px-2 py-0.5 rounded-full text-gray-600 dark:text-gray-400 font-semibold tracking-wide`};
+  
+  .animators {
+    ${tw`relative flex items-center gap-1`};
+
+    span {
+      ${tw`w-1 h-1 rounded-full bg-gray-600 dark:bg-gray-500`};
+      animation: ${typing} 1.4s infinite ease-in-out;
+
+      &:nth-of-type(2) {
+        animation-delay: 0.2s;
+      }
+
+      &:nth-of-type(3) {
+        animation-delay: 0.4s;
+      }
+    }
+  }
+`;
 
 export const ConversationWrapper = styled.h3`
   ${tw`flex items-center gap-2 text-xl lg:text-xm font-semibold tracking-wide overflow-hidden z-1`};
@@ -42,10 +76,6 @@ export const MetadataWrapper = styled.div`
 
   &.typing {
     ${tw`justify-between`};
-  }
-  
-  .typing-indicator {
-    ${tw`left-3 text-[9px] text-orange-400 dark:text-gray-300 font-semibold tracking-wide`};
   }
   
   .order-update {

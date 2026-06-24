@@ -5,14 +5,14 @@ import { Spin } from 'antd';
 
 import { MainViewWrapper, InfoWrapper, SummaryWrapper } from './styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { deleteUser, fetchOrders, fetchUser } from './slices';
+import { deleteUser, fetchUser } from './slices';
+import Presence from '../shared/layout/presence';
 import Status from '../shared/layout/status';
 import { getDateFormat } from '@/utils';
 import Button from '../shared/button';
 
 const User = ({ id }: { id: string }) => {
   const { profile: { data: authUser }, ...dashboard } = useAppSelector((state) => state.dashboard);
-  const { loading: isFetchingOrders, list: orders } = dashboard.orders;
   const { loading: isFetchingUser, data: user } = dashboard.user;
   const [isDeleting, setDeleting] = useState(false);
   const dispatch = useAppDispatch();
@@ -34,7 +34,6 @@ const User = ({ id }: { id: string }) => {
 
   useEffect(() => {
     if (!id) return;
-    dispatch(fetchOrders(id));
     dispatch(fetchUser(id));
   }, [id]);
   
@@ -72,7 +71,10 @@ const User = ({ id }: { id: string }) => {
                   <div className="info">
                     <div className="item">
                       <p className="label">Name</p>
-                      <p className="value">{user.name}</p>
+                      <p className="value centered">
+                        <Presence userId={id} />
+                        {user.name}
+                      </p>
                     </div>
 
                     <div className="item">
@@ -91,8 +93,8 @@ const User = ({ id }: { id: string }) => {
           </div>
 
           <div className="column">
-            <SummaryWrapper className={isFetchingOrders ? 'loading' : ''}>
-              {isFetchingOrders ? (
+            <SummaryWrapper className={isFetchingUser ? 'loading' : ''}>
+              {isFetchingUser ? (
                 <Spin />
               ) : !user ? (
                 'Oops! Could not retrieve order info!'
@@ -103,29 +105,31 @@ const User = ({ id }: { id: string }) => {
                   <div className="summary">
                     <p className="item">
                       <span>Total Orders</span>
-                      <span>{orders.length}</span>
+                      <span>{user?.orders_count}</span>
                     </p>
                   </div>
                 </>
               )}
             </SummaryWrapper>
 
-            <div className="links">
-              {canDeleteUser && (
-                <Button
-                  onClick={handleDeleteAccount}
-                  loading={isDeleting}
-                  size="small"
-                  danger
-                >
-                  Delete {isLoggedInUser ? 'Account' : 'User'}
-                </Button>
-              )}
-              
-              {/* <Link href="">
-                Download Invoice
-              </Link> */}
-            </div>
+            {user && (
+              <div className="links">
+                {canDeleteUser && (
+                  <Button
+                    onClick={handleDeleteAccount}
+                    loading={isDeleting}
+                    size="small"
+                    danger
+                  >
+                    Delete {isLoggedInUser ? 'Account' : 'User'}
+                  </Button>
+                )}
+                
+                {/* <Link href="">
+                  Download Invoice
+                </Link> */}
+              </div>
+            )}
           </div>
         </div>
       </div>

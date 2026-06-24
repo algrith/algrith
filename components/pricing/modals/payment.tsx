@@ -14,11 +14,11 @@ import FileUpload from '@/components/shared/input/file';
 import { Input } from '@/components/shared/input';
 import Button from '@/components/shared/button';
 import { PaymentModalWrapper } from './styled';
+import { useAppSelector } from '@/store/hooks';
 import useClassName from '@/hooks/class-name';
 import { UploadFile } from 'antd/es/upload';
 import { Fetch } from '@/utils/api';
 import Addons from '../addons';
-import { useAppSelector } from '@/store/hooks';
 
 const requirementsModel: OrderRequirements = {
   business_name: '',
@@ -31,22 +31,16 @@ const requirementsModel: OrderRequirements = {
   colors: []
 };
 
-const customerModel = {
-  phone: '',
-  email: '',
-  name: ''
-};
-
 const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
   const [view, setView] = useState<'requirements' | 'payment' | 'addons'>('addons');
   const [loading, setLoading] = useState({ files: false, order: false });
   const [requirements, setRequirements] = useState(requirementsModel);
-  const [customer, setCustomer] = useState(customerModel);
   const [addons, setAddons] = useState<Array<Addon>>([]);
   const isLoading = Object.values(loading).some(Boolean);
   const [exchangeRate, setExchangeRate] = useState(0);
   const [open, setOpen] = useState(false);
+  const [phone, setPhone] = useState('');
   const router = useRouter();
   const discount = 0;
   const tax = 0;
@@ -60,6 +54,12 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     'content',
     view
   ]);
+  
+  const customer = {
+    email: authUser?.email as string,
+    name: authUser?.name as string,
+    phone
+  };
 
   const title = {
     addons: 'Would you like to select some addons?',
@@ -104,13 +104,13 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     handleReset();
   };
 
-  const handleCustomerChange = (e: ChangeEvent) => {
-    const { id, value } = e.target as HTMLInputElement;
-    setCustomer((prev) => ({ ...prev, [id]: value }));
-  };
-
   const handleAddons = (addons: Array<Addon>) => {
     setAddons(addons);
+  };
+
+  const handlePhoneChange = (e: ChangeEvent) => {
+    const { value } = e.target as HTMLInputElement;
+    setPhone(value);
   };
 
   const handleSubmit = (e: FormEvent) => {
@@ -179,10 +179,10 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   };
 
   const handleReset = () => {
-    setCustomer(customerModel);
     setView('addons');
     setOpen(false);
     setAddons([]);
+    setPhone('');
   };
 
   const handleBack = () => {
@@ -194,16 +194,10 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
 
     setView(newView);
   };
-
+  
   useEffect(() => {
     getExchangeRate();
     setOpen(!!plan);
-
-    setCustomer({
-      email: authUser?.email || '',
-      name: authUser?.name || '',
-      phone: ''
-    });
   }, [plan]);
 
   return (
@@ -349,30 +343,30 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
               <h2>Billing Information</h2>
 
               <Input
-                onChange={handleCustomerChange}
+                value={authUser?.name as string}
                 placeholder="E.g: John Doe"
-                value={customer.name}
                 label="Full Name"
                 tabIndex={0}
                 autoFocus
                 id="name"
+                readOnly
                 required
               />
 
               <Input
                 placeholder="E.g: johndoe@email.com"
-                onChange={handleCustomerChange}
-                value={customer.email}
+                value={customer.email as string}
                 label="Email"
                 type="email"
                 id="email"
+                readOnly
                 required
               />
               
               <Input
                 placeholder="e.g. +88 9209 635"
-                onChange={handleCustomerChange}
-                value={customer.phone}
+                onChange={handlePhoneChange}
+                value={phone}
                 label="Phone"
                 id="phone"
                 type="tel"

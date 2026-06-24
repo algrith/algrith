@@ -52,6 +52,7 @@ const googleLogin = async (request: NextRequest, token: string) => {
   }
 
   const tokens = await generateTokens({
+    role: user.role,
     name: user.name,
     id: user.id
   });
@@ -105,6 +106,7 @@ const credentialsLogin = async (payload: object) => {
   }, { status: 401 });
 
   const tokens = await generateTokens({
+    role: user.role,
     name: user.name,
     id: user.id
   });

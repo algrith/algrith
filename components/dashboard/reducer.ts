@@ -3,6 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { DashboardState } from '@/types';
 
 const initialState: DashboardState = {
+  presences: {},
   analytics: {
     loading: true,
     data: {
@@ -116,6 +117,9 @@ export const layoutSlice = createSlice({
         ...state.user,
         ...action.payload
       };
+    },
+    setPresence: (state, action: PayloadAction<DashboardState['presences']>) => {
+      state.presences = { ...state.presences, ...action.payload };
     }
   }
 })
@@ -125,6 +129,7 @@ const { reducer, actions } = layoutSlice;
 export const {
   updateSidebar,
   setAnalytics,
+  setPresence,
   setProfile,
   setOrders,
   setUsers,

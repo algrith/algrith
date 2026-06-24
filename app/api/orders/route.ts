@@ -3,10 +3,11 @@ import hbs, { NodemailerExpressHandlebarsOptions }  from 'nodemailer-express-han
 import nodemailer from 'nodemailer';
 import path from 'path';
 
+import { fetchOrders } from '@/utils/server/controllers';
 import { Order, User as UserModel } from '@/libs/schema';
+import { socketEmitter } from '@/utils/socket';
 import { authorization } from '@/middleware';
 import { dbConnect } from '@/utils/db';
-import { User } from 'next-auth';
 
 const POST = authorization(async (request, ctx, user) => {
   try {
@@ -25,7 +26,9 @@ const POST = authorization(async (request, ctx, user) => {
       ...order
     });
     
+    const populated = await result.populate('assignees', 'id name email');
     console.log(`Order created --> ${result.id}`);
+    socketEmitter('order:new', populated);
 
     const handlebarOptions: NodemailerExpressHandlebarsOptions = {
       viewEngine: {
@@ -71,26 +74,29 @@ const POST = authorization(async (request, ctx, user) => {
       }
     };
 
-    const data = await transporter.sendMail(mailOption);
+    await transporter.sendMail(mailOption);
 
     return Response.json({
-      message: 'Mail sent!',
-      success: true,
-      data
+      message: 'Order created successfully',
+      code: 'order_created',
+      data: populated,
+      success: true
     });
   } catch (error) {
     console.error('Server Error', error);
     
     return Response.json({
       message: 'Server Error',
+      code: 'server_error',
       success: false,
-      data: {}
+      data: null
     }, { status: 500 });
   }
 });
 
 const GET = authorization(async (request, ctx, user) => {
   try {
+    await dbConnect();
     const orders = await fetchOrders(user);
 
     return Response.json({
@@ -110,17 +116,5 @@ const GET = authorization(async (request, ctx, user) => {
     }, { status: 500 });
   }
 });
-
-const fetchOrders = async (user: User) => {
-  await dbConnect();
-  const isStaff = ['admin', 'moderator'].includes(user.role);
-  const options = isStaff ? (
-    user.role === 'moderator' ? { assignees: user.id } : {}
-  ) : {
-    user: user.id
-  };
-  
-  return await Order.find(options).populate('assignees', 'id name email').sort({ createdAt: -1 });
-};
 
 export { POST, GET };

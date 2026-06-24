@@ -484,6 +484,18 @@ export const SiderWrapper = styled(Sider)`
   }
 `;
 
+export const PresenceWrapper = styled.span`
+	${tw`mx-1 my-0.5 w-2.5 h-2.5 rounded-full hidden shadow`};
+	
+	&.online {
+		${tw`inline-block bg-green-600`};
+	}
+	
+	&.small {
+		${tw`w-1.5 h-1.5`};
+	}
+`;
+
 export const ModalWrapper = styled(Modal)`
   .ant-modal-content {
     ${darkBgGradient.fourLayers};

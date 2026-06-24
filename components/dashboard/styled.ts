@@ -231,6 +231,10 @@ export const InfoWrapper = styled(CardWrapper)`
           ${tw`capitalize`};
         }
 
+        &.centered {
+          ${tw`items-center`};
+        }
+
         .ant-image {
           ${tw`rounded-xl overflow-hidden w-auto lg:h-20 p-1.5`};
           ${borderCss};

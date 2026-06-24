@@ -1,6 +1,6 @@
 import { Conversation as ConversationModel, Message as MessageModel } from '@/types';
 import { Message, Conversation, Order, User as UserModel } from '@/libs/schema';
-import { socketEmitter } from '@/utils/server/socket';
+import { socketEmitter } from '@/utils/socket';
 import { NextResponse } from 'next/server';
 import { User } from 'next-auth';
 
@@ -116,6 +116,17 @@ export const createMessage = async (user: User, conversationId: string, payload:
   });
   
   const populated = (await message.populate('sender.user', 'name email role')).toJSON();
-  socketEmitter('message:new', { user, conversation, populated});
+  socketEmitter('message:new', { user, conversation, message: populated });
   return { ...populated, temp_id } as MessageModel;
+};
+
+export const fetchOrders = async (user: User) => {
+  const isStaff = ['admin', 'moderator'].includes(user.role);
+  const options = isStaff ? (
+    user.role === 'moderator' ? { assignees: user.id } : {}
+  ) : {
+    user: user.id
+  };
+  
+  return await Order.find(options).populate('assignees', 'id name email').sort({ createdAt: -1 });
 };

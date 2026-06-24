@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next dev\" \"tsx --env-file=./.env socket-server/index.ts\"",
+    "dev": "concurrently \"next dev\" \"tsx --env-file=./.env socket/index.ts\"",
     "start": "next start",
     "build": "next build",
     "lint": "next lint"

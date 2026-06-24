@@ -21,7 +21,7 @@ export const fetchUserProfile = (userId: string) => async (dispatch: AppDispatch
   const { data: user } = await Fetch({
     path: `/users/${userId}`
   });
-
+  
   dispatch(setProfile({
     data: user || undefined,
     loading: false

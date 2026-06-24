@@ -1,6 +1,6 @@
 import { authorization } from '@/middleware';
+import { Order, User } from '@/libs/schema';
 import { dbConnect } from '@/utils/db';
-import { User } from '@/libs/schema';
 
 const DELETE = authorization(async (request, ctx, user) => {
   try {
@@ -41,13 +41,18 @@ const GET = authorization(async (request, ctx, user) => {
     }, { status: 400 });
 
     await dbConnect();
+
+    const orders_count = await Order.find({ user: userId }).countDocuments();
     const account = await User.findOne({ _id: userId });
-    
+
     return Response.json({
       message: 'User retrieved successfully',
-      code: 'retrieved_successfully',
+      code: 'user_retrieved',
       success: true,
-      data: account
+      data: {
+        ...account.toJSON(),
+        orders_count
+      }
     });
   } catch (error) {
     console.error('Server Error', error);

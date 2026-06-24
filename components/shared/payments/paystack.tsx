@@ -6,7 +6,7 @@ import { PaystackProps } from '@/types';
 import Button from '../button';
 
 const Paystack = ({ onSuccess, amount, phone, name, email, ...rest }: PaystackProps) => {
-  const [firstName, lastName = ''] = name.split(' ');
+  const [firstName, lastName = ''] = name?.split(' ');
   const disabled = !email || !name;
 
   const payWithPaystack = async () => {

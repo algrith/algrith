@@ -1,13 +1,19 @@
+import { Server, Socket } from 'socket.io';
 import { createServer } from 'http';
-import { Server } from 'socket.io';
 
-import { SocketEvents } from '../utils/server/socket';
+import { Conversation, User } from '../libs/schema';
+import { BaseObject, Presence } from '../types';
+import { SocketEvents } from '../utils/socket';
 import { verifyToken } from '../utils/tokens';
-import { Conversation } from '../libs/schema';
 import { dbConnect } from '../utils/db';
 
 const port = parseInt(process.env.PORT || '3001', 10);
+const PRESENCE_ROOM = 'presence:global';
 const hostname = '0.0.0.0';
+
+const broadcastPresence = (socket: Socket, data: BaseObject) => {
+  socket.to(PRESENCE_ROOM).emit('presence', data);
+};
 
 const httpServer = createServer(async (req, res) => {
   // Health check
@@ -27,6 +33,7 @@ const httpServer = createServer(async (req, res) => {
       events?.[event as EventType]?.(data);
       
       res.writeHead(200, { 'Content-Type': 'application/json' });
+      console.log('Emitted event processed --> ', event, data);
       res.end(JSON.stringify({ ok: true }));
     });
     return;
@@ -50,9 +57,14 @@ io.on('connection', async (socket) => {
   if (!user) return;
 
   socket.join(`user:${user.id}`);
+  socket.join(PRESENCE_ROOM);
 
-  socket.on('conversation:join',  (id: string) => socket.join(id));
-  socket.on('conversation:leave', (id: string) => socket.leave(id));
+  if (user.role === 'admin') {
+    const admin = await User.findOne({ _id: user.id });
+    if (admin) socket.join('admins');
+  }
+  
+  broadcastPresence(socket, { status: 'online', userId: user.id });
 
   socket.on('typing:start', async (conversationId: string) => {
     const conversation = await Conversation.findById(conversationId).lean();
@@ -77,9 +89,34 @@ io.on('connection', async (socket) => {
       socket.in(`user:${participant.user}`).emit('typing', undefined);
     }
   });
+  
+  socket.on('presence:sync', async () => {
+    const sockets = await io.in(PRESENCE_ROOM).fetchSockets();
+
+    const onlineUsers = sockets.reduce((users, { data }) => {
+      const socketUserId = data.user?.id;
+      if (!socketUserId) return users;
+
+      if (socketUserId !== user.id) {
+        users[socketUserId] = 'online';
+      }
+
+      return users;
+    }, {} as Presence);
+
+    socket.emit('presence:synced', onlineUsers);
+  });
 
   socket.on('disconnect', () => {
     console.log('Socket disconnected --> ', user.id);
+
+    setTimeout(async () => {
+      const sockets = await io.in(`user:${user.id}`).fetchSockets();
+      if (sockets.length === 0) broadcastPresence(socket, {
+        status: 'offline',
+        userId: user.id
+      });
+    }, 3000);
   });
 });
 

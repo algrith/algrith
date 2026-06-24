@@ -35,7 +35,34 @@ const GET = authorization(async (request, ctx, user) => {
 
   try {
     await dbConnect();
-    const users = await User.find({ }).sort({ createdAt: -1 });
+    
+    const users = await User.aggregate([
+      { $sort: { createdAt: -1 } },
+      {
+        $lookup: {
+          foreignField: 'user',
+          localField: '_id',
+          from: 'orders',
+          as: 'orders',
+          pipeline: [
+            { $project: { _id: 1 } }
+          ]
+        }
+      },
+      {
+        $addFields: {
+          orders_count: { $size: '$orders' },
+          id: { $toString: '$_id' }
+        }
+      },
+      {
+        $project: {
+          password: 0,
+          orders: 0,
+          _id: 0
+        }
+      }
+    ]);
     
     return Response.json({
       message: 'Users retrieved successfully',

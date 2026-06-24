@@ -11,7 +11,7 @@ module.exports = {
       },
     },
     {
-      args: "tsx --env-file=./.env socket-server/index.ts",
+      args: "tsx --env-file=./.env socket/index.ts",
       name: "socket",
       script: "npx",
       cwd: "/app",
