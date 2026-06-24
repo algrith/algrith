@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { BaseObject, Conversation, Message } from '@/types';
 import { useCallback, useEffect, useRef } from 'react';
 import { io, Socket } from 'socket.io-client';
+import { inProduction } from '@/utils/server';
 import { useSession } from 'next-auth/react';
 import { moveToFront } from '@/utils';
 
@@ -79,13 +80,19 @@ const useSocket = () => {
 
   useEffect(() => {
     if (!token || ref.current?.connected) return;
-
-    const socket = io(process.env.NEXT_PUBLIC_APP_URL, {
-      transports: ['websocket'],
+    
+    let socketUrl = process.env.NEXT_PUBLIC_APP_URL;
+    
+    if (!inProduction) {
+      socketUrl = socketUrl.replace(/\d$/, '1');
+    }
+    
+    const socket = io(socketUrl, {
+      transports: ['polling'],
       path: '/socket',
       auth: { token }
     });
-
+    
     ref.current = socket;
 
     socket.on('connect_error', (err) => console.error('Socket error --> ', err.message));
