@@ -24,9 +24,8 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (status === 'authenticated' && session.user && !authUser && !loading) {
       dispatch(fetchUserProfile(session.user.id));
-      console.log('Removed intended route.');
     }
-
+    
     if (status === 'unauthenticated' && isProtectedRoute) {
       console.log('Logging out...');
     }
