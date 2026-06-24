@@ -2,16 +2,16 @@ import { Server, Socket } from 'socket.io';
 import { createServer } from 'http';
 
 import { Conversation, User } from '../libs/schema';
-import { BaseObject, Presence } from '../types';
 import { SocketEvents } from '../utils/socket';
 import { verifyToken } from '../utils/tokens';
 import { dbConnect } from '../utils/db';
+import { Presence } from '../types';
 
 const port = parseInt(process.env.PORT || '3001', 10);
 const PRESENCE_ROOM = 'presence:global';
 const hostname = '0.0.0.0';
 
-const broadcastPresence = (socket: Socket, data: BaseObject) => {
+const broadcastPresence = (socket: Socket, data: Presence) => {
   socket.to(PRESENCE_ROOM).emit('presence', data);
 };
 
@@ -64,7 +64,7 @@ io.on('connection', async (socket) => {
     if (admin) socket.join('admins');
   }
   
-  broadcastPresence(socket, { status: 'online', userId: user.id });
+  broadcastPresence(socket, { [user.id]: 'online' });
 
   socket.on('typing:start', async (conversationId: string) => {
     const conversation = await Conversation.findById(conversationId).lean();
@@ -113,8 +113,7 @@ io.on('connection', async (socket) => {
     setTimeout(async () => {
       const sockets = await io.in(`user:${user.id}`).fetchSockets();
       if (sockets.length === 0) broadcastPresence(socket, {
-        status: 'offline',
-        userId: user.id
+        [user.id]: 'offline'
       });
     }, 3000);
   });
