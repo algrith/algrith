@@ -80,14 +80,8 @@ const useSocket = () => {
   useEffect(() => {
     if (!token || ref.current?.connected) return;
 
-    // const socket = io(process.env.NEXT_PUBLIC_APP_URL, {
-    //   transports: ['websocket'],
-    //   path: '/api/socket',
-    //   auth: { token }
-    // });
-
     const socket = io(process.env.NEXT_PUBLIC_APP_URL, {
-      transports: ['polling', 'websocket'],
+      transports: ['websocket'],
       path: '/socket',
       auth: { token }
     });
