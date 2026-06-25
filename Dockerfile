@@ -47,11 +47,11 @@ COPY --from=builder /app/libs ./libs
 # Copy Nginx config
 COPY nginx.conf /etc/nginx/http.d/default.conf
 
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /app/entrypoint.sh
 
 EXPOSE 8080
 
-CMD ["/entrypoint.sh"]
+CMD ["/app/entrypoint.sh"]
 
 # Startup script — runs Nginx + pm2 together
 # RUN echo '#!/bin/sh' > /start.sh && \
