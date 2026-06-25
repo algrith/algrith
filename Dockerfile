@@ -34,6 +34,7 @@ RUN apk add --no-cache nginx
 
 COPY --from=builder /app/ecosystem.config.js ./ecosystem.config.js
 COPY --from=builder /app/tsconfig.json ./tsconfig.json
+COPY --from=builder /app/entrypoint.sh ./entrypoint.sh
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/.next/static ./.next/static
 COPY --from=builder /app/.next/standalone ./
@@ -46,13 +47,19 @@ COPY --from=builder /app/libs ./libs
 # Copy Nginx config
 COPY nginx.conf /etc/nginx/http.d/default.conf
 
-# Startup script — runs Nginx + pm2 together
-RUN echo '#!/bin/sh' > /start.sh && \
-  echo 'npx pm2-runtime ecosystem.config.js &' >> /start.sh && \
-  echo 'sleep 3' >> /start.sh && \
-  echo 'nginx -g "daemon off;"' >> /start.sh && \
-  chmod +x /start.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 8080
 
-CMD ["/start.sh"]
+CMD ["/entrypoint.sh"]
+
+# Startup script — runs Nginx + pm2 together
+# RUN echo '#!/bin/sh' > /start.sh && \
+#   echo 'npx pm2-runtime ecosystem.config.js &' >> /start.sh && \
+#   echo 'sleep 3' >> /start.sh && \
+#   echo 'nginx -g "daemon off;"' >> /start.sh && \
+#   chmod +x /start.sh
+
+# EXPOSE 8080
+
+# CMD ["/start.sh"]
