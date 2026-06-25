@@ -7,7 +7,8 @@ import { Server } from 'socket.io';
 let socket: Socket | null = null;
 
 export const socketEmitter = async (event: string, data: BaseObject) => {
-  const url = `${getSocketUrl()}/emit`;
+  const path = inProduction ? '/socket' : '';
+  const url = `${getSocketUrl()}${path}/emit`;
   const session = await auth();
   
   if (!session?.user) return console.error('Socket user not found');
