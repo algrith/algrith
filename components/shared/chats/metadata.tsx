@@ -12,15 +12,15 @@ import { OrderModel } from '@/types';
 const Metadata = () => {
   const { profile: { data: authUser } } = useAppSelector((state) => state.dashboard);
   const { message, typing, ...chat } = useAppSelector((state) => state.chat);
+  const isStaff = ['moderator', 'admin'].includes(authUser?.role as string);
   const { data: conversation } = chat.conversation;
   const order = conversation?.order as OrderModel;
   const isFiles = message.attachments?.length;
   const { type } = conversation ?? {};
   const dispatch = useAppDispatch();
   
+  const canDeliverOrder = type === 'order' && order?.status === 'pending' && isStaff;
   const isTyping = Boolean(typing && conversation?.id === typing.conversationId);
-  const isStaff = ['moderator', 'admin'].includes(authUser?.role as string);
-  const canDeliverOrder = type === 'order' && order?.status === 'pending';
   const canCloseCase = type === 'support';
 
   const markOrderAsDelivered = () => {

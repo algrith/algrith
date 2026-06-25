@@ -7,14 +7,15 @@ import { Server } from 'socket.io';
 let socket: Socket | null = null;
 
 export const socketEmitter = async (event: string, data: BaseObject) => {
-  const socketUrl = `${getSocketUrl()}/emit`;
+  const socketPath = inProduction ? '/socket' : '';
+  const url = `${getSocketUrl()}${socketPath}/emit`;
   const session = await auth();
 
   if (!session?.user) return console.error('Socket user not found');
   console.log('Socket event emitted --> ', event, data);
   const { user } = session;
   
-  await fetch(socketUrl, {
+  await fetch(url, {
     body: JSON.stringify({ userId: user.id, event, data }),
     headers: { 'Content-Type': 'application/json' },
     method: 'POST'
