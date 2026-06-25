@@ -19,6 +19,7 @@ const Metadata = () => {
   const dispatch = useAppDispatch();
   
   const isTyping = Boolean(typing && conversation?.id === typing.conversationId);
+  const isStaff = ['moderator', 'admin'].includes(authUser?.role as string);
   const canDeliverOrder = type === 'order' && order?.status === 'pending';
   const canCloseCase = type === 'support';
 
@@ -32,7 +33,7 @@ const Metadata = () => {
     dispatch(setMessage(newMessage));
   };
 
-  if (authUser?.role !== 'admin' || (!canDeliverOrder && !canCloseCase && !isTyping)) return null;
+  if (isStaff && !canDeliverOrder && !canCloseCase && !isTyping) return null;
 
   return (
     <MetadataWrapper className={isTyping ? 'typing' : ''}>

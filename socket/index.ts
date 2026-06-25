@@ -3,6 +3,7 @@ import { createServer } from 'http';
 
 import { Conversation, User } from '../libs/schema';
 import { SocketEvents } from '../utils/socket';
+import { User as UserModel } from 'next-auth';
 import { verifyToken } from '../utils/tokens';
 import { dbConnect } from '../utils/db';
 import { Presence } from '../types';
@@ -10,6 +11,23 @@ import { Presence } from '../types';
 const port = parseInt(process.env.PORT || '3001', 10);
 const PRESENCE_ROOM = 'presence:global';
 const hostname = '0.0.0.0';
+
+const syncPresence = async (socket: Socket, user: UserModel) => {
+  const sockets = await io.in(PRESENCE_ROOM).fetchSockets();
+
+  const onlineUsers = sockets.reduce((users, { data }) => {
+    const socketUserId = data.user?.id;
+    if (!socketUserId) return users;
+
+    if (socketUserId !== user.id) {
+      users[socketUserId] = 'online';
+    }
+
+    return users;
+  }, {} as Presence);
+  
+  socket.emit('presence:synced', onlineUsers);
+};
 
 const broadcastPresence = (socket: Socket, data: Presence) => {
   socket.to(PRESENCE_ROOM).emit('presence', data);
@@ -56,6 +74,7 @@ io.on('connection', async (socket) => {
   const user = socket.data.user;
   if (!user) return;
 
+  // Join relevant broadcast rooms.
   socket.join(`user:${user.id}`);
   socket.join(PRESENCE_ROOM);
 
@@ -63,17 +82,21 @@ io.on('connection', async (socket) => {
     const admin = await User.findOne({ _id: user.id });
     if (admin) socket.join('admins');
   }
-  
-  broadcastPresence(socket, { [user.id]: 'online' });
 
+  // Default event broadcast.
+  broadcastPresence(socket, { [user.id]: 'online' });
+  syncPresence(socket, user);
+
+  // Releted event listeners.
   socket.on('typing:start', async (conversationId: string) => {
     const conversation = await Conversation.findById(conversationId).lean();
     if (!conversation) return;
 
     for (const participant of conversation.participants) {
-      if (participant.user.toString() === user.id) continue;
+      const participantId = participant.user.toString();
+      if (participantId === user.id) continue;
 
-      socket.in(`user:${participant.user}`).emit('typing', {
+      socket.in(`user:${participantId}`).emit('typing', {
         participant: user.name,
         conversationId
       });
@@ -85,30 +108,14 @@ io.on('connection', async (socket) => {
     if (!conversation) return;
 
     for (const participant of conversation.participants) {
-      if (participant.user.toString() === user.id) continue;
-      socket.in(`user:${participant.user}`).emit('typing', undefined);
+      const participantId = participant.user.toString();
+      if (participantId === user.id) continue;
+      socket.in(`user:${participantId}`).emit('typing', undefined);
     }
-  });
-  
-  socket.on('presence:sync', async () => {
-    const sockets = await io.in(PRESENCE_ROOM).fetchSockets();
-
-    const onlineUsers = sockets.reduce((users, { data }) => {
-      const socketUserId = data.user?.id;
-      if (!socketUserId) return users;
-
-      if (socketUserId !== user.id) {
-        users[socketUserId] = 'online';
-      }
-
-      return users;
-    }, {} as Presence);
-
-    socket.emit('presence:synced', onlineUsers);
   });
 
   socket.on('disconnect', () => {
-    console.log('Socket disconnected --> ', user.id);
+    console.log('Socket disconnected --> ', socket.id);
 
     setTimeout(async () => {
       const sockets = await io.in(`user:${user.id}`).fetchSockets();

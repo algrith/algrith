@@ -30,14 +30,14 @@ const ORDER_EVENTS = new Set([
 ]);
 
 const useSocket = () => {
-  const { conversations: { list: conversations } } = useAppSelector((state) => state.chat);
   const { users, orders } = useAppSelector((state) => state.dashboard);
+  const { conversations } = useAppSelector((state) => state.chat);
   const [socket, setSocket] = useState<Socket | null>(null);
   const { data: session } = useSession();
   const token = session?.user?.access_token;
   const dispatch = useAppDispatch();
 
-  const getConversationIndex = (cid: string) => conversations.findIndex(({ id }) => id === cid);
+  const getConversationIndex = (cid: string) => conversations.list.findIndex(({ id }) => id === cid);
   const getOrderIndex = (orderId: string) => orders.list.findIndex(({ id }) => id === orderId);
   const getUserIndex = (userId: string) => users.list.findIndex(({ id }) => id === userId);
 
@@ -52,7 +52,7 @@ const useSocket = () => {
         const conversationIndex = getConversationIndex(conversation.id);
 
         if (conversationIndex < 0) dispatch(setConversations({
-          list: [conversation, ...conversations]
+          list: [conversation, ...conversations.list]
         }));
         
         dispatch(pushToMessages(message));
@@ -60,7 +60,7 @@ const useSocket = () => {
         if (conversationIndex > 0) {
           dispatch(setConversations({
             list: moveToFront(
-              conversations,
+              conversations.list,
               conversationIndex
             )
           }));
@@ -96,36 +96,22 @@ const useSocket = () => {
     }
   };
 
-  // Event listeners
-  useEffect(() => {
-    if (!socket) return;
-    
-    socket.onAny((event: string, data: ChatEventData) => {
-      if (!CONVERSATION_EVENTS.has(event)) return;
-      console.log('Chat event --> ', event, data);
-      chatEventHandler(event, data);
-    });
-  }, [conversations, socket]);
-
   useEffect(() => {
     if (!socket) return;
 
-    socket.onAny((event: string, data: OrderModel) => {
-      if (!ORDER_EVENTS.has(event)) return;
-      console.log('Order event --> ', event, data);
-      orderEventHandler(event, data);
-    });
-  }, [socket, orders, users]);
+    const eventHandler = (event: string, data: BaseObject) => {
+      console.log('New web socket event received --> ', event, data);
+      if (CONVERSATION_EVENTS.has(event)) chatEventHandler(event, data as ChatEventData);
+      if (ORDER_EVENTS.has(event)) orderEventHandler(event, data as OrderModel);
+      if (PRESENCE_EVENTS.has(event)) dispatch(setPresence(data));
+    };
 
-  useEffect(() => {
-    if (!socket) return;
+    socket.onAny(eventHandler);
 
-    socket.onAny((event: string, data: BaseObject) => {
-      if (!PRESENCE_EVENTS.has(event)) return;
-      console.log('Presence event --> ', event, data);
-      dispatch(setPresence(data));
-    });
-  }, [socket]);
+    return () => {
+      socket.offAny(eventHandler);
+    };
+  }, [conversations, socket, orders, users]);
 
   // Socket init
   useEffect(() => {
@@ -133,7 +119,7 @@ const useSocket = () => {
     setSocket(getSocket(token));
     return () => disconnectSocket();
   }, [token]);
-  
+
   return socket;
 };
 

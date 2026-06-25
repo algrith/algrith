@@ -23,32 +23,28 @@ export const socketEmitter = async (event: string, data: BaseObject) => {
 
 export const getSocket = (token: string) => {
   if (!socket) {
-    let socketUrl = process.env.NEXT_PUBLIC_APP_URL!;
+    let socketUrl = process.env.NEXT_PUBLIC_APP_URL;
     
     if (!inProduction) {
       socketUrl = socketUrl.replace(/\d$/, '1');
     }
-    
+
     socket = io(socketUrl, {
       transports: ['polling'],
       path: '/socket',
-      auth: { token }
+      auth: { token },
     });
-
+    
     socket.on('connect_error', (error) => console.error('Socket error --> ', error.message));
+    socket.on('connect', () => console.log('Socket connected --> ', socket?.id));
     socket.on('disconnect', () => console.log('Socket disconnected'));
-
-    socket.on('connect', () => {
-      console.log('Socket connected --> ', socket?.id);
-      socket?.emit('presence:sync');
-    });
   }
 
   return socket;
 };
 
 export const disconnectSocket = () => {
-  console.log('Socket offloaded --> ');
+  console.log('Socket offloaded');
   socket?.off('connect_error');
   socket?.off('disconnect');
   socket?.off('connect');
@@ -91,8 +87,14 @@ export class SocketEvents {
   };
 
   'order:updated' = (order: OrderModel) => {
-    const { io } = this;
-    io.in('admins').emit('order:updated', order);
+    const orderOwner = order.user as string;
+    const { userId, io } = this;
+    
+    if (orderOwner !== userId) {
+      io.to(`user:${orderOwner}`).emit('order:updated', order);
+    } else {
+      io.in('admins').emit('order:updated', order);
+    }
   };
 
   'order:new' = (order: OrderModel) => {

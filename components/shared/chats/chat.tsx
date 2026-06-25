@@ -11,12 +11,12 @@ import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import useScrollToLastChild from '@/hooks/scroll-to-view';
 import { TextArea } from '@/components/shared/input';
 import { getFileFormData, randomId } from '@/utils';
+import { useSocketContext } from '../layout/context';
 import { FileUploadButton } from '../input/file';
 import Button from '@/components/shared/button';
 import { EmptyWrapper } from '../layout/styled';
 import useClassName from '@/hooks/class-name';
 import { ChatWrapper } from './styled';
-import useSocket from '@/hooks/socket';
 import { Fetch } from '@/utils/api';
 import Link from '../button/link';
 import Metadata from './metadata';
@@ -32,8 +32,8 @@ const Chat = () => {
   const isFiles = message.attachments?.length;
   const messagesContainerRef = useRef(null);
   const role = authUser?.role || 'customer';
+  const socket = useSocketContext();
   const dispatch = useAppDispatch();
-  const socket = useSocket();
   const disabled = !authUser;
 
   const className = useClassName([
@@ -157,7 +157,7 @@ const Chat = () => {
   };
 
   const handleBlur = () => {
-    socket?.emit(`typing:stop`, conversation?.id);
+    if (isTyping) socket?.emit(`typing:stop`, conversation?.id);
   };
 
   useScrollToLastChild({
@@ -175,7 +175,9 @@ const Chat = () => {
     if (!isTyping) return;
 
     socket?.emit(`typing:start`, conversation?.id);
+
     setTimeout(() => {
+      socket?.emit(`typing:stop`, conversation?.id);
       setTyping(false);
     }, 10000);
   }, [isTyping]);

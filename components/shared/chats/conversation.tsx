@@ -37,10 +37,9 @@ const Conversation = (props: { conversation: ConversationModel; inChatHeader?: b
   };
 
   useEffect(() => {
-    // Update conversation index in case
-    // of deletion, reordering, etc.
-    dispatch(setConversation({ index }));
-  }, [index]);
+    // Set conversation index in case of deletion, re-ordering, or update of any kind etc.
+    if (inChatHeader && typeof index === 'number') dispatch(setConversation({ index }));
+  }, [inChatHeader, index]);
 
   return (
     <ConversationWrapper className={inChatHeader ? 'in-chat-header' : ''} onClick={selectConversation}>
