@@ -52,14 +52,3 @@ RUN chmod +x /app/entrypoint.sh
 EXPOSE 8080
 
 CMD ["/app/entrypoint.sh"]
-
-# Startup script — runs Nginx + pm2 together
-# RUN echo '#!/bin/sh' > /start.sh && \
-#   echo 'npx pm2-runtime ecosystem.config.js &' >> /start.sh && \
-#   echo 'sleep 3' >> /start.sh && \
-#   echo 'nginx -g "daemon off;"' >> /start.sh && \
-#   chmod +x /start.sh
-
-# EXPOSE 8080
-
-# CMD ["/start.sh"]
