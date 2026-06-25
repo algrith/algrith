@@ -177,7 +177,7 @@ export const LayoutWrapper = styled(Layout)`
 `;
 
 export const HeaderWrapper = styled(Header)`
-	${tw`2xl:w-8/12 mx-auto px-6 md:px-12 lg:px-14 xl:px-24 2xl:px-0 flex justify-between items-center w-full h-[4.4rem] fixed top-0 z-20 bg-transparent transition-all duration-500`};
+	${tw`w-full mx-auto px-6 md:px-12 lg:px-14 xl:px-24 flex justify-between items-center h-[4.4rem] fixed top-0 z-20 bg-transparent transition-all duration-500`};
 
 	&.scrolled {
 		${tw`h-[3rem] shadow-lg backdrop-blur-lg`};

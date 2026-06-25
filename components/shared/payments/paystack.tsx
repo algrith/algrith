@@ -3,6 +3,7 @@
 import React from 'react';
 
 import { PaystackProps } from '@/types';
+import { randomId } from '@/utils';
 import Button from '../button';
 
 const Paystack = ({ onSuccess, amount, phone, name, email, ...rest }: PaystackProps) => {
@@ -10,24 +11,16 @@ const Paystack = ({ onSuccess, amount, phone, name, email, ...rest }: PaystackPr
   const disabled = !email || !name;
 
   const payWithPaystack = async () => {
+    const reference = `algrith-${randomId()}-${(new Date()).getTime().toString()}`;
     const PaystackPopUp = (await import('@paystack/inline-js')).default;
     const popup = new PaystackPopUp();
 
     popup.newTransaction({
-      // channels: ['card', 'apple_pay', 'bank_transfer', 'ussd', 'mobile_money'],
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-      reference: (new Date()).getTime().toString(),
+      channels: ['card', 'bank_transfer', 'mobile_money', 'apple_pay', 'ussd'],
       amount: amount * 100,
       // currency: 'USD',
-      // metadata: {
-      //   custom_fields: [
-      //     {
-      //       value: 'Payment for subscription',
-      //       variable_name: 'description',
-      //       display_name: 'Description'
-      //     }
-      //   ]
-      // },
+      reference,
       firstName,
       lastName,
       phone,
