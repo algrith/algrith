@@ -34,8 +34,8 @@ const broadcastPresence = (socket: Socket, data: Presence) => {
 };
 
 const httpServer = createServer(async (req, res) => {
-  console.log('Socket server received request --> ', req.method, req.url, req.headers?.referer);
-  
+  console.log('Socket server received request --> ', req.method, req.url);
+
   // Health check
   if (req.method === 'GET' && req.url === '/health') {
     res.writeHead(200, { 'Content-Type': 'application/json' });
