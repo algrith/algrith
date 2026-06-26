@@ -39,7 +39,7 @@ export const MainViewWrapper = styled.div`
     }
 
     >span {
-      ${tw`w-60 capitalize flex gap-1.5 items-center justify-between text-white font-bold font-mono bg-gray-500 dark:bg-gray-500 rounded-full px-4 pt-0.5`};
+      ${tw`max-w-60 capitalize flex gap-1.5 items-center justify-between text-white font-bold font-mono bg-gray-500 dark:bg-gray-500 rounded-full px-4 pt-0.5`};
 
       .copy-btn {
         ${tw`w-8 !p-0 h-auto !bg-transparent text-white text-xm`};
@@ -50,7 +50,7 @@ export const MainViewWrapper = styled.div`
       }
       
       small {
-        ${tw`w-56 normal-case whitespace-nowrap overflow-ellipsis overflow-hidden`};
+        ${tw`max-w-56 normal-case whitespace-nowrap overflow-ellipsis overflow-hidden`};
       }
     }
   }
