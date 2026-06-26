@@ -17,7 +17,8 @@ const Paystack = ({ onSuccess, amount, phone, name, email, ...rest }: PaystackPr
 
     popup.newTransaction({
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-      amount: amount * 100,
+      amount: 100,
+      // amount: amount * 100,
       channels: ['card'],
       currency: 'NGN',
       reference,
