@@ -11,13 +11,13 @@ const Paystack = ({ onSuccess, amount, phone, name, email, ...rest }: PaystackPr
   const disabled = !email || !name;
 
   const payWithPaystack = async () => {
-    const reference = `algrith-${randomId()}-${(new Date()).getTime().toString()}`;
+    const reference = `ALG-${randomId()}-${(new Date()).getTime().toString()}`;
     const PaystackPopUp = (await import('@paystack/inline-js')).default;
     const popup = new PaystackPopUp();
 
     popup.newTransaction({
       key: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY,
-      amount: 100,
+      amount: 100 * 100,
       // amount: amount * 100,
       channels: ['card'],
       currency: 'NGN',
