@@ -384,21 +384,6 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
         )}
 
         <div className="footer">
-          {/* <Paystack
-            amount={total * exchangeRate}
-            onSuccess={handleSuccess}
-            description={description}
-            disabled={isLoading}
-            loading={isLoading}
-            title={plan?.name}
-            htmlType="submit"
-            block={false}
-            {...customer}
-            size="small"
-          >
-            {buttonText}
-          </Paystack> */}
-          
           {view !== 'addons' && (
             <Button onClick={handleBack} disabled={isLoading} type="secondary" size="small">
               Back
@@ -416,6 +401,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
                 description={description}
                 disabled={isLoading}
                 loading={isLoading}
+                title={plan?.name}
                 htmlType="submit"
                 amount={total}
                 block={false}

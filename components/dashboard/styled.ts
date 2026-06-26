@@ -35,11 +35,23 @@ export const MainViewWrapper = styled.div`
     ${tw`sticky top-0 z-1 flex items-center justify-between pb-4 border-b backdrop-blur border-gray-400/50 dark:border-gray-500/50`};
 
     h1 {
-      ${tw`text-gray-600 dark:text-gray-200 text-2xl font-bold tracking-wide`};
+      ${tw`flex-grow text-gray-600 dark:text-gray-200 text-2xl font-bold tracking-wide`};
     }
 
     >span {
-      ${tw`text-gray-700 font-bold font-mono bg-gray-300 dark:bg-gray-400 rounded-full px-4 pt-0.5`};
+      ${tw`w-60 capitalize flex gap-1.5 items-center justify-between text-white font-bold font-mono bg-gray-500 dark:bg-gray-500 rounded-full px-4 pt-0.5`};
+
+      .copy-btn {
+        ${tw`w-8 !p-0 h-auto !bg-transparent text-white text-xm`};
+
+        .anticon {
+          ${tw`text-white`};
+        }
+      }
+      
+      small {
+        ${tw`w-56 normal-case whitespace-nowrap overflow-ellipsis overflow-hidden`};
+      }
     }
   }
   

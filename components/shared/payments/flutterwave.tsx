@@ -5,13 +5,15 @@ import { FlutterwaveConfig } from 'flutterwave-react-v3/dist/types';
 import { PaystackProps } from '@/types';
 import Button from '../button';
 
-const FlutterWave = ({ onSuccess, description, title, amount, phone, name, email, ...rest }: PaystackProps) => {
+const FlutterWave = (props: PaystackProps) => {
+  const { onSuccess, description, title, amount, phone, name, email, ...rest } = props;
+  const reference = `ALG-${(new Date()).getTime().toString()}`;
   const disabled = !email || !name;
   
   const config: FlutterwaveConfig = {
     public_key: process.env.NEXT_PUBLIC_FLUTTERWAVE_PUBLIC_KEY,
-    payment_options: 'card,mobilemoney,ussd',
-    tx_ref: Date.now().toString(),
+    payment_options: 'card',
+    tx_ref: reference,
     amount: 1,
     currency: 'USD',
     customizations: {

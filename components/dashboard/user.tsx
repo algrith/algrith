@@ -41,7 +41,7 @@ const User = ({ id }: { id: string }) => {
     <MainViewWrapper>
       <header>
         <h1>Account Details</h1>
-        <span>{user?.role}</span>
+        {user?.role && <span>{user?.role}</span>}
       </header>
 
       <div className="content">

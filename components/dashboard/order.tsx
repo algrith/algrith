@@ -1,6 +1,6 @@
 'use client';
 
-import { MessageOutlined } from '@ant-design/icons';
+import { CheckCircleFilled, CopyFilled, MessageOutlined } from '@ant-design/icons';
 import { Badge, Divider, Image, Spin } from 'antd';
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -22,11 +22,21 @@ const Order = () => {
   const { profile: { data: authUser }, order: { data: order, loading } } = useAppSelector((state) => state.dashboard);
   const { orderConversation: { data: conversation, unread } } = useAppSelector((state) => state.chat);
   const [activeFontRole, setActiveFontRole] = useState<FontRole>('heading');
+  const [copyIcon, setCopyIcon] = useState(<CopyFilled />);
+  const [showCopyRef, setShowCopyRef] = useState(false);
   const dispatch = useAppDispatch();
   const { orderId } = useParams();
 
   const handleActiveFontRole = (role: FontRole) => {
     setActiveFontRole(role);
+  };
+
+  const copyTransactionReference = () => {
+    setCopyIcon(<CheckCircleFilled />);
+    navigator.clipboard.writeText(order?.reference as string);
+    setTimeout(() => {
+      setCopyIcon(<CopyFilled />);
+    }, 3000);
   };
 
   const handleOrderChat = () => {
@@ -60,7 +70,19 @@ const Order = () => {
         <>
           <header>
             <h1>Order Details</h1>
-            <span>Ref: {order.reference}</span>
+            <span onMouseLeave={() => setShowCopyRef(false)} onMouseEnter={() => setShowCopyRef(true)}>
+              <Button
+                icon={showCopyRef ? copyIcon : 'Ref:'}
+                onClick={copyTransactionReference}
+                className="copy-btn"
+                noLoaderMargin
+                size="small"
+              />
+
+              <small>
+                {order.reference}
+              </small>
+            </span>
           </header>
 
           <div className="content">

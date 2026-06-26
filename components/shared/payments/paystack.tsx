@@ -3,7 +3,6 @@
 import React from 'react';
 
 import { PaystackProps } from '@/types';
-import { randomId } from '@/utils';
 import Button from '../button';
 
 const Paystack = ({ onSuccess, amount, phone, name, email, ...rest }: PaystackProps) => {
@@ -11,8 +10,8 @@ const Paystack = ({ onSuccess, amount, phone, name, email, ...rest }: PaystackPr
   const disabled = !email || !name;
 
   const payWithPaystack = async () => {
-    const reference = `ALG-${randomId()}-${(new Date()).getTime().toString()}`;
     const PaystackPopUp = (await import('@paystack/inline-js')).default;
+    const reference = `ALG-${(new Date()).getTime().toString()}`;
     const popup = new PaystackPopUp();
 
     popup.newTransaction({
