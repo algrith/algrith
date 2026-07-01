@@ -9,7 +9,7 @@ const DELETE = authorization(async (request, ctx, user) => {
 
     return Response.json({
       message: 'Account deleted successfully',
-      code: 'account_deleted_successfully',
+      code: 'account_deleted',
       success: true,
       data: null
     });
@@ -32,7 +32,7 @@ const GET = authorization(async (request, ctx, user) => {
     
     return Response.json({
       message: 'Account retrieved successfully',
-      code: 'retrieved_successfully',
+      code: 'account_retrieved',
       success: true,
       data: account
     });

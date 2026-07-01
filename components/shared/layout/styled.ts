@@ -573,10 +573,10 @@ export const StatusWrapper = styled.div`
 		}
 		
 		.ant-select-arrow {
-			${tw`relative inset-0 mt-0 mr-1.5 pointer-events-none`};
+			${tw`z-0 relative inset-0 mt-0 mr-1.5`};
 
 			.anticon {
-				${tw`w-4 text-gray-100 pointer-events-none`};
+				${tw`w-4 text-gray-100`};
 			}
 		}
 	}

@@ -2,6 +2,41 @@ import { authorization } from '@/middleware';
 import { dbConnect } from '@/utils/db';
 import { Order } from '@/libs/schema';
 
+const DELETE = authorization(async (request, ctx, user) => {
+  try {
+    const { orderId } = await ctx.params as { orderId: string; };
+    const isAdmin = user.role === 'admin';
+
+    if (!orderId) return Response.json({
+      message: 'User not found',
+      code: 'user_not_found',
+      success: false,
+      data: null
+    }, { status: 404 });
+    
+    await dbConnect();
+    
+    const filter = isAdmin ? { _id: orderId } : { _id: orderId, user: user.id };
+    await Order.deleteOne(filter);
+
+    return Response.json({
+      message: 'Order deleted successfully',
+      code: 'order_deleted',
+      success: true,
+      data: null
+    });
+  } catch (error) {
+    console.error('Server Error', error);
+    
+    return Response.json({
+      message: 'Server Error',
+      code: 'server_error',
+      success: false,
+      data: null
+    }, { status: 500 });
+  }
+});
+
 const GET = authorization(async (request, ctx, user) => {
   const { orderId } = await ctx.params as { orderId?: string };
   
@@ -40,4 +75,4 @@ const GET = authorization(async (request, ctx, user) => {
   }
 });
 
-export { GET };
+export { DELETE, GET };

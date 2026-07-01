@@ -4,15 +4,29 @@ import { dbConnect } from '@/utils/db';
 
 const DELETE = authorization(async (request, ctx, user) => {
   try {
-    const params = (await ctx.params) as { userId: string };
-    const { userId } = params;
-
+    const { userId } = await ctx.params as { userId: string };
+    const isAdmin = user.role === 'admin';
+  
+    if (!userId) return Response.json({
+      message: 'Order ID is required',
+      code: 'order_id_required',
+      success: false,
+      data: null
+    }, { status: 400 });
+    
+    if (!isAdmin && userId !== user.id) return Response.json({
+      message: 'Operation forbidden',
+      code: 'unauthorized',
+      success: false,
+      data: null
+    }, { status: 403 });
+    
     await dbConnect();
     await User.deleteOne({ _id: userId });
 
     return Response.json({
       message: 'User deleted successfully',
-      code: 'deleted_successfully',
+      code: 'user_deleted',
       success: true,
       data: null
     });

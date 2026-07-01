@@ -58,12 +58,24 @@ const initialState: DashboardState = {
 		collapsed: false
 	},
   orders: {
+    hasNext: false,
+    hasPrev: false,
     loading: true,
-    list: []
+    limit: 50,
+    list: [],
+    total: 0,
+    pages: 1,
+    page: 1
   },
   users: {
+    hasNext: false,
+    hasPrev: false,
     loading: true,
-    list: []
+    limit: 50,
+    list: [],
+    total: 0,
+    pages: 1,
+    page: 1
   },
   order: {
     data: undefined,

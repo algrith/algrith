@@ -120,13 +120,75 @@ export const createMessage = async (user: User, conversationId: string, payload:
   return { ...populated, temp_id } as MessageModel;
 };
 
-export const fetchOrders = async (user: User) => {
+export const fetchOrders = async (user: User, { page = 1, limit = 50 } = {}) => {
   const isStaff = ['admin', 'moderator'].includes(user.role);
-  const options = isStaff ? (
+  const skip = (page - 1) * limit;
+  const filter = isStaff ? (
     user.role === 'moderator' ? { assignees: user.id } : {}
   ) : {
     user: user.id
   };
   
-  return await Order.find(options).populate('assignees', 'id name email').sort({ createdAt: -1 });
+  const [list, total] = await Promise.all([
+    Order.find(filter).populate('assignees', 'id name email').sort({ createdAt: -1 }).skip(skip).limit(limit),
+    Order.countDocuments(filter)
+  ]);
+
+  return {
+    pages: Math.ceil(total / limit),
+    hasNext: page * limit < total,
+    hasPrev: page > 1,
+    limit,
+    total,
+    list,
+    page
+  };
+};
+
+export const fetchUsers = async ({ page = 1, limit = 50 } = {}) => {
+  const skip = (page - 1) * limit;
+  
+  const [result] = await UserModel.aggregate([
+    { $sort: { createdAt: -1 } },
+    {
+      $lookup: {
+        pipeline: [{ $project: { _id: 1 } }],
+        foreignField: 'user',
+        localField: '_id',
+        from: 'orders',
+        as: 'orders'
+      }
+    },
+    {
+      $addFields: {
+        orders_count: { $size: '$orders' },
+        id: { $toString: '$_id' }
+      }
+    },
+    {
+      $project: {
+        password: 0,
+        orders: 0,
+        _id: 0
+      }
+    },
+    {
+      $facet: {
+        list: [{ $skip: skip }, { $limit: limit }],
+        meta: [{ $count: 'total' }]
+      }
+    }
+  ]);
+
+  const total = result.meta[0]?.total ?? 0;
+
+  return {
+    pages: Math.ceil(total / limit),
+    hasNext: page * limit < total,
+    hasPrev: page > 1,
+    list: result.list,
+    total,
+    limit,
+    page
+  };
 };

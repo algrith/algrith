@@ -238,11 +238,23 @@ export interface DashboardState {
 	},
 	orders: {
 		list: Array<OrderModel>;
+		hasNext: boolean;
+		hasPrev: boolean;
 		loading: boolean;
+		total: number;
+		limit: number;
+		pages: number;
+		page: number;
 	};
 	users: {
 		list: Array<User>;
+		hasNext: boolean;
+		hasPrev: boolean;
 		loading: boolean;
+		total: number;
+		limit: number;
+		pages: number;
+		page: number;
 	};
 	order: {
 		data?: OrderModel;

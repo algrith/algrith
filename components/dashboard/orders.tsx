@@ -1,22 +1,46 @@
 'use client';
 
+import { ColumnsType, TablePaginationConfig } from 'antd/es/table';
 import { BookOutlined, MoreOutlined } from '@ant-design/icons';
 import Dropdown from 'antd/es/dropdown/dropdown';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import capitalize from 'lodash/capitalize';
-import { useEffect } from 'react';
 import { User } from 'next-auth';
 import { MenuProps } from 'antd';
 
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { TableWrapper } from '../shared/layout/styled';
+import { deleteOrder, fetchOrders } from './slices';
+import Prompt from '../shared/feedback/prompt';
 import Status from '../shared/layout/status';
 import { Addon, OrderModel } from '@/types';
-import { ColumnsType } from 'antd/es/table';
 import { MainViewWrapper } from './styled';
 import { getDateFormat } from '@/utils';
-import { fetchOrders } from './slices';
 import Button from '../shared/button';
+
+const DeleteOrderLabel = ({ orderId }: { orderId: string }) => {
+  const [isDeleting, setDeleting] = useState(false);
+  const dispatch = useAppDispatch();
+  
+  const handleDeleteOrder = async () => {
+    setDeleting(true);
+    await dispatch(deleteOrder(orderId));
+    setDeleting(false);
+  };
+
+  return (
+    <Prompt
+      description="Do you wish to proceed?"
+      onConfirmed={handleDeleteOrder}
+      title="Confirm Action"
+      disabled={isDeleting}
+      target="deleteOrder"
+    >
+      Delete
+    </Prompt>
+  );
+};
 
 const Orders = () => {
   const { profile: { data: authUser }, orders } = useAppSelector((state) => state.dashboard);
@@ -78,10 +102,9 @@ const Orders = () => {
               key: 'owner'
             },
             {
-              onClick: () => {},
-              label: 'Delete',
-              danger: true,
-              key: 'delete'
+              label: <DeleteOrderLabel orderId={order.id} />,
+              key: 'delete',
+              danger: true
             }
           ] : [])
         ];
@@ -97,6 +120,16 @@ const Orders = () => {
       key: 'actions'
     }
   ];
+
+  const pagination: TablePaginationConfig = {
+    showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} orders`,
+    onChange: (page, pageSize) => dispatch(fetchOrders(pageSize, page)),
+    hideOnSinglePage: orders.pages < 2,
+    pageSize: orders.limit,
+    current: orders.page,
+    total: orders.total,
+    size: 'small',
+  };
 
   const onRow = (record: unknown) => {
     const order = record as OrderModel;
@@ -130,8 +163,9 @@ const Orders = () => {
           scroll={{ x: 'max-content' }}
           dataSource={orders.list}
           loading={orders.loading}
-          pagination={false}
+          pagination={pagination}
           onRow={onRow}
+          size="small"
           rowKey="id"
         />
       </div>

@@ -96,14 +96,21 @@ const POST = authorization(async (request, ctx, user) => {
 
 const GET = authorization(async (request, ctx, user) => {
   try {
+    const params = request.nextUrl.searchParams;
+    const limit = Number(params.get('limit')) || 50;
+    const page = Number(params.get('page')) || 1;
     await dbConnect();
-    const orders = await fetchOrders(user);
+
+    const data = await fetchOrders(user, {
+      limit,
+      page
+    });
 
     return Response.json({
       message: 'Orders retrieved!',
       code: 'orders_retrieved',
       success: true,
-      data: orders
+      data
     });
   } catch (error) {
     console.error('Server Error', error);

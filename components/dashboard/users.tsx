@@ -1,20 +1,44 @@
 'use client';
 
+import { ColumnsType, TablePaginationConfig } from 'antd/es/table';
 import { MoreOutlined } from '@ant-design/icons';
 import Dropdown from 'antd/es/dropdown/dropdown';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { MenuProps } from 'antd';
 import { User } from 'next-auth';
 
+import { StatusWrapper, TableWrapper } from '../shared/layout/styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
-import { TableWrapper } from '../shared/layout/styled';
+import { deleteUser, fetchUsers } from './slices';
 import Presence from '../shared/layout/presence';
+import Prompt from '../shared/feedback/prompt';
 import Status from '../shared/layout/status';
-import { ColumnsType } from 'antd/es/table';
 import { MainViewWrapper } from './styled';
 import { getDateFormat } from '@/utils';
-import { fetchUsers } from './slices';
+
+const DeleteUserLabel = ({ userId }: { userId: string }) => {
+  const [isDeleting, setDeleting] = useState(false);
+  const dispatch = useAppDispatch();
+  
+  const handleDeleteOrder = async () => {
+    setDeleting(true);
+    await dispatch(deleteUser(userId));
+    setDeleting(false);
+  };
+
+  return (
+    <Prompt
+      description="Do you wish to proceed?"
+      onConfirmed={handleDeleteOrder}
+      title="Confirm Action"
+      disabled={isDeleting}
+      target="deleteOrder"
+    >
+      Delete
+    </Prompt>
+  );
+};
 
 const Users = () => {
   const { profile: { data: authUser }, users } = useAppSelector((state) => state.dashboard);
@@ -22,7 +46,17 @@ const Users = () => {
   const router = useRouter();
   
   const isAdmin = authUser?.role === 'admin';
-
+  
+  const pagination: TablePaginationConfig = {
+    showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} users`,
+    onChange: (page, pageSize) => dispatch(fetchUsers(pageSize, page)),
+    hideOnSinglePage: users.pages < 2,
+    pageSize: users.limit,
+    current: users.page,
+    total: users.total,
+    size: 'small',
+  };
+  
   const columns: ColumnsType<User> = [
     {
       render: (_, user) => <><Presence userId={user.id as string} /> {user.name}</>,
@@ -36,10 +70,17 @@ const Users = () => {
       key: 'email'
     },
     {
-      render: (date) => (date ? getDateFormat(date).full : '-'),
+      render: (date) => (date ? getDateFormat(date).shortMonthDayFullYear : '-'),
       dataIndex: 'createdAt',
       key: 'createdAt',
       title: 'Joined'
+    },
+    {
+      render: (role) => <StatusWrapper>{role}</StatusWrapper>,
+      dataIndex: 'role',
+      align: 'center',
+      title: 'Role',
+      key: 'role'
     },
     {
       dataIndex: 'orders_count',
@@ -63,10 +104,9 @@ const Users = () => {
             key: 'view'
           },
           ...(isAdmin ? [{
-            onClick: () => {},
-            label: 'Delete',
-            danger: true,
-            key: 'delete'
+            label: <DeleteUserLabel userId={user.id as string} />,
+            key: 'delete',
+            danger: true
           }] : [])
         ];
 
@@ -106,8 +146,9 @@ const Users = () => {
           scroll={{ x: 'max-content' }}
           dataSource={users.list}
           loading={users.loading}
-          pagination={false}
+          pagination={pagination}
           onRow={onRow}
+          size="small"
           rowKey="id"
         />
       </div>

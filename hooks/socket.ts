@@ -85,8 +85,12 @@ const useSocket = () => {
     }
 
     if (event === 'order:new') {
-      dispatch(setOrders({ list: [order, ...orders.list] }));
       const userIndex = getUserIndex(order.user as string);
+      
+      dispatch(setOrders({
+        list: [order, ...orders.list],
+        total: orders.total + 1
+      }));
 
       if (userIndex >= 0) {
         const list = cloneDeep(users.list);

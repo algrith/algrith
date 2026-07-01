@@ -7,6 +7,7 @@ import { MainViewWrapper, InfoWrapper, SummaryWrapper } from './styled';
 import { useAppDispatch, useAppSelector } from '@/store/hooks';
 import { deleteUser, fetchUser } from './slices';
 import Presence from '../shared/layout/presence';
+import Prompt from '../shared/feedback/prompt';
 import Status from '../shared/layout/status';
 import { getDateFormat } from '@/utils';
 import Button from '../shared/button';
@@ -15,20 +16,13 @@ const User = ({ id }: { id: string }) => {
   const { profile: { data: authUser }, ...dashboard } = useAppSelector((state) => state.dashboard);
   const { loading: isFetchingUser, data: user } = dashboard.user;
   const [isDeleting, setDeleting] = useState(false);
-  const dispatch = useAppDispatch();
-
   const isLoggedInUser = id === authUser?.id;
   const isAdmin = authUser?.role === 'admin';
-  const canDeleteUser = isAdmin || isLoggedInUser;
-
+  const dispatch = useAppDispatch();
+  
   const handleDeleteAccount = async () => {
     setDeleting(true);
-    
-    await dispatch(deleteUser(
-      id as string,
-      isLoggedInUser
-    ));
-
+    await dispatch(deleteUser(id as string));
     setDeleting(false);
   };
 
@@ -114,15 +108,17 @@ const User = ({ id }: { id: string }) => {
 
             {user && (
               <div className="links">
-                {canDeleteUser && (
-                  <Button
-                    onClick={handleDeleteAccount}
-                    loading={isDeleting}
-                    size="small"
-                    danger
+                {(isAdmin || isLoggedInUser) && (
+                  <Prompt
+                    description="Do you wish to proceed?"
+                    onConfirmed={handleDeleteAccount}
+                    title="Confirm Action"
+                    target="deleteUser"
                   >
-                    Delete {isLoggedInUser ? 'Account' : 'User'}
-                  </Button>
+                    <Button loading={isDeleting} size="small" danger>
+                      Delete {isLoggedInUser ? 'Account' : 'User'}
+                    </Button>
+                  </Prompt>
                 )}
                 
                 {/* <Link href="">

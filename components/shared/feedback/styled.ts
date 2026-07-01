@@ -56,4 +56,4 @@ export const NotificationWrapper = styled(Flex)`
       color: white !important;
     }
   }
-}`;
+`;

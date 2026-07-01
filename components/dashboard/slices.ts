@@ -4,15 +4,42 @@ import { setAnalytics, setOrder, setOrders, setProfile, setUser, setUsers } from
 import { AppDispatch, store } from '@/store';
 import { Fetch } from '@/utils/api';
 
-export const deleteUser = (userId: string, isLoggedInUser = false) => async (dispatch: AppDispatch) => {
-  const { success } = await Fetch({
-    path: `/users/${userId}`,
-    method: 'DELETE'
-  });
+export const fetchOrders = (limit = 10, page = 1) => async (dispatch: AppDispatch) => {
+  dispatch(setOrders({ loading: true }));
 
-  if (success && isLoggedInUser) signOut({
-    redirectTo: '/auth'
+  const { data } = await Fetch({
+    path: `/orders?page=${page}&limit=${limit}`
   });
+  
+  dispatch(setOrders({
+    hasNext: data.hasNext || false,
+    hasPrev: data.hasPrev || false,
+    limit: data.limit || 50,
+    total: data.total || 0,
+    pages: data.pages || 1,
+    list: data.list || [],
+    page: data.page || 1,
+    loading: false
+  }));
+};
+
+export const fetchUsers = (limit = 50, page = 1) => async (dispatch: AppDispatch) => {
+  dispatch(setUsers({ loading: true }));
+
+  const { data } = await Fetch({
+    path: `/users?page=${page}&limit=${limit}`
+  });
+  
+  dispatch(setUsers({
+    hasNext: data.hasNext || false,
+    hasPrev: data.hasPrev || false,
+    limit: data.limit || 50,
+    total: data.total || 0,
+    pages: data.pages || 1,
+    list: data.list || [],
+    page: data.page || 1,
+    loading: false
+  }));
 };
 
 export const fetchUserProfile = (userId: string) => async (dispatch: AppDispatch) => {
@@ -28,16 +55,19 @@ export const fetchUserProfile = (userId: string) => async (dispatch: AppDispatch
   }));
 };
 
-export const fetchOrders = (userId?: string) => async (dispatch: AppDispatch) => {
-  dispatch(setOrders({ loading: true }));
+export const deleteOrder = (orderId: string) => async (dispatch: AppDispatch) => {
+  const { orders } = store.getState().dashboard;
 
-  const { data: orders } = await Fetch({
-    path: `/orders${userId ? `/users/${userId}` : ''}`
+  const { success } = await Fetch({
+    path: `/orders/${orderId}`,
+    method: 'DELETE'
   });
-  
+
+  if (!success) return;
+
   dispatch(setOrders({
-    list: orders || [],
-    loading: false
+    list: orders.list.filter(({ id }) => id !== orderId),
+    total: orders.total - 1
   }));
 };
 
@@ -51,6 +81,26 @@ export const fetchOrder = (orderId: string) => async (dispatch: AppDispatch) => 
   dispatch(setOrder({
     data: order || undefined,
     loading: false
+  }));
+};
+
+export const deleteUser = (userId: string) => async (dispatch: AppDispatch) => {
+  const { profile: { data }, users } = store.getState().dashboard;
+  const isLoggedInUser = data?.id === userId;
+  const isStaff = data?.role !== 'customer';
+
+  const { success } = await Fetch({
+    path: `/users/${userId}`,
+    method: 'DELETE'
+  });
+
+  if (success && isLoggedInUser) return signOut({
+    redirectTo: '/auth'
+  });
+
+  if (isStaff) dispatch(setUsers({
+    list: users.list.filter(({ id }) => id !== userId),
+    total: users.total - 1
   }));
 };
 
@@ -76,19 +126,6 @@ export const fetchOrdersAnalytics = () => async (dispatch: AppDispatch) => {
   
   dispatch(setAnalytics({
     data: success ? analytics : {},
-    loading: false
-  }));
-};
-
-export const fetchUsers = () => async (dispatch: AppDispatch) => {
-  dispatch(setUsers({ loading: true }));
-
-  const { data: users } = await Fetch({
-    path: `/users`
-  });
-  
-  dispatch(setUsers({
-    list: users || [],
     loading: false
   }));
 };
