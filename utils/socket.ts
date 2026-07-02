@@ -31,7 +31,7 @@ export const getSocket = (token: string) => {
     }
 
     socket = io(socketUrl, {
-      transports: ['websocket'],
+      transports: ['polling'],
       path: '/socket',
       auth: { token },
     });
