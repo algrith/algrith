@@ -73,7 +73,7 @@ const ContactForm = () => {
     e.preventDefault();
     
     setFeedback({ ...initialFeedback, loading: true });
-    const isTokenValid = await verifyReCaptchaToken();
+    const isTokenValid = await verifyReCaptchaToken('contact');
     const feedback = { ...initialFeedback };
 
     if (!isValidEmail(model.email)) {

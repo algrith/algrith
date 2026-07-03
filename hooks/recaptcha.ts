@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
 import { Fetch } from '@/utils/api';
+import { useEffect } from 'react';
 
 const useRecaptcha = () => {
   const recaptchaKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
-  const [isBadgeHidden, hideRecaptchaBadge] = useState(false);
   
-  const verifyReCaptchaToken = async (action: string = 'contact') => {
+  const verifyReCaptchaToken = async (action: string) => {
     const token = await executeRecaptcha(action);
 
     const response = await Fetch({
@@ -16,20 +15,18 @@ const useRecaptcha = () => {
 
     return response.success;
   };
-
+  
   const executeRecaptcha = async (action: string) => {
     return await window.grecaptcha.execute(recaptchaKey, {
       action
     });
   };
 
-  useEffect(() => {
-    if (!isBadgeHidden) return;
-    
+  const hideBadge = () => {
     const recaptchaElement = document.querySelector('.grecaptcha-badge');
     recaptchaElement?.setAttribute('style', 'display: none !important;');
-    hideRecaptchaBadge(!Boolean(recaptchaElement));
-  }, [isBadgeHidden]);
+    if (!recaptchaElement) setTimeout(hideBadge, 500);
+  };
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -39,9 +36,7 @@ const useRecaptcha = () => {
     document.body.appendChild(script);
     
     script.onload = () => {
-      setTimeout(() => {
-        hideRecaptchaBadge(true);
-      }, 300);
+      hideBadge();
     }
 
     return () => {
