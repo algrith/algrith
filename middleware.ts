@@ -49,7 +49,13 @@ export const inProtectedRoute = (pathname: string) => config.matcher.some((patte
 });
 
 export const middleware = async (request: NextRequest) => {
+  const userAgent = request.headers.get('user-agent') ?? '';
   const response = NextResponse.next();
+  
+  if (config.blockedUserAgents.some((pattern) => pattern.test(userAgent))) {
+    return new NextResponse('Forbidden', { status: 403 });
+  }
+
   return await rateLimit({
     response,
     request
@@ -57,6 +63,13 @@ export const middleware = async (request: NextRequest) => {
 };
 
 export const config = {
+  blockedUserAgents: [
+    /sppb-rce-poc/i,
+    /masscan/i,
+    /sqlmap/i,
+    /zgrab/i,
+    /nikto/i
+  ],
   matcher: [
     '/dashboard/orders/:orderId',
     '/dashboard/users/:userId',
