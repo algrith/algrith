@@ -304,18 +304,6 @@ export interface GroupedFiles {
   image?: Array<Attachment>;
 }
 
-export interface ContactModel {
-	customTopic?: string;
-	template?: string;
-	country?: string;
-	subject: string;
-	message: string;
-	topic?: string;
-	email: string;
-	phone: string;
-	name: string;
-};
-
 export interface Conversation {
 	participants: Array<ConversationParticipant>;
 	order?: OrderModel | string;

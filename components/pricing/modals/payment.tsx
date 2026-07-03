@@ -16,6 +16,7 @@ import Button from '@/components/shared/button';
 import { PaymentModalWrapper } from './styled';
 import { useAppSelector } from '@/store/hooks';
 import useClassName from '@/hooks/class-name';
+import useRecaptcha from '@/hooks/recaptcha';
 import { UploadFile } from 'antd/es/upload';
 import { Fetch } from '@/utils/api';
 import Addons from '../addons';
@@ -39,6 +40,7 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
   const [addons, setAddons] = useState<Array<Addon>>([]);
   const isLoading = Object.values(loading).some(Boolean);
   const [exchangeRate, setExchangeRate] = useState(0);
+  const { verifyReCaptchaToken } = useRecaptcha();
   const [open, setOpen] = useState(false);
   const [phone, setPhone] = useState('');
   const router = useRouter();
@@ -113,16 +115,13 @@ const PaymentModal = ({ plan, ...rest }: ModalProps & { plan?: Plan; }) => {
     setPhone(value);
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     
-    if (view === 'requirements') {
-      handleRequirements();
-    }
-
-    if (view === 'addons') {
-      setView('requirements');
-    }
+    if (view === 'requirements') return handleRequirements();
+    if (view === 'addons') return setView('requirements');
+    const isValid = await verifyReCaptchaToken('payment');
+    if (!isValid) return;
   };
 
   const uploadOrderFiles = async () => {

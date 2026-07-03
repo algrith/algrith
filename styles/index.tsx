@@ -43,10 +43,6 @@ const customStyles = css`
       }
     }
   }
-  
-  .grecaptcha-badge {
-    ${tw`invisible`};
-  }
 `;
 
 const GlobalStyles = () => {

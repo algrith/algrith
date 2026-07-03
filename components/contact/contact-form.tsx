@@ -4,7 +4,22 @@ import { SendOutlined } from '@ant-design/icons';
 import { Country, Input, Select, TextArea } from '@/components/shared/input';
 import Button from '@/components/shared/button';
 import { ContactFormWrapper } from './styled';
-import useSendMail from '@/hooks/mailer';
+import useRecaptcha from '@/hooks/recaptcha';
+import { isValidEmail } from '@/utils';
+import { Fetch } from '@/utils/api';
+
+const feedbackMessages = {
+  reCaptchaError: 'An error occurred! Please reload the page and try again.',
+  error: 'An error occurred while sending your message!',
+  invalidEmail: 'Your email address in invalid',
+  sent: 'Your message was sent successfully!'
+};
+
+const initialFeedback = {
+  loading: false,
+  success: false,
+  message: ''
+};
 
 const topicOptions = [
   {
@@ -41,8 +56,9 @@ const initialModel = {
 };
 
 const ContactForm = () => {
+  const [feedback, setFeedback] = useState(initialFeedback);
   const [model, updateModel] = useState(initialModel);
-  const { feedback, sendMail } = useSendMail();
+  const { verifyReCaptchaToken } = useRecaptcha();
   
   const handleChange = (key: string, value: string) => {
     const newModel = { ...model, [key]: value };
@@ -56,8 +72,35 @@ const ContactForm = () => {
   const handleSendMail = async (e: FormEvent) => {
     e.preventDefault();
     
-    const { success } = await sendMail(model);
-    if (success) updateModel(initialModel);
+    setFeedback({ ...initialFeedback, loading: true });
+    const isTokenValid = await verifyReCaptchaToken();
+    const feedback = { ...initialFeedback };
+
+    if (!isValidEmail(model.email)) {
+      feedback.message = feedbackMessages.invalidEmail;
+    }
+    
+    if (!isTokenValid) {
+      console.error('Google reCaptcha could not be initialized!');
+      feedback.message = feedbackMessages.reCaptchaError;
+    }
+
+    if (!feedback.message) {
+      const { success } = await Fetch({
+        path: '/contacts',
+        method: 'POST',
+        body: model
+      });
+
+      feedback.message = feedbackMessages[success ? 'sent' : 'error'];
+      feedback.success = success;
+    }
+
+    setFeedback(feedback);
+
+    if (feedback.success) {
+      updateModel(initialModel);
+    }
   };
 
   return (
